@@ -1,0 +1,3572 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marco — Estudiar con IA que enseña a pensar</title>
+<meta name="description" content="Marco es el compañero de estudio con IA que no da respuestas: hace las preguntas que llevan al alumno a entender. Y el profesor ve dónde se atascan.">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="author" content="Marco">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Marco — Estudiar con IA que enseña a pensar">
+<meta property="og:description" content="IA socrática para aulas reales. El alumno aprende a pensar. El profesor por fin sabe dónde se pierden.">
+<meta property="og:site_name" content="Marco">
+<meta property="og:locale" content="es_ES">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Marco — Estudiar con IA que enseña a pensar">
+<meta name="twitter:description" content="IA socrática para aulas reales. El alumno aprende a pensar. El profesor por fin sabe dónde se pierden.">
+
+<!-- Favicon SVG inline (monocromo, sin recursos externos) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0a0a'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='38' font-style='italic' fill='%23fafaf8' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #0a0a0a;
+  --white: #fafaf8;
+  --gray: #6b6b6b;
+  --light: #f0efeb;
+  --accent: #1a1a1a;
+  --green: #2d6a4f;
+  --red: #c0392b;
+  --amber: #e67e22;
+  --border: #e0dfd9;
+  --highlight: #fff3cd;
+  --note-bg: #f7f6f2;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--white);
+  color: var(--black);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── ICONS (line-art, hereda color del padre) ── */
+.icon {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  vertical-align: -0.18em;
+  flex-shrink: 0;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.icon-lg { width: 1.6em; height: 1.6em; }
+.icon-xl { width: 2.4em; height: 2.4em; }
+.icon-inline { vertical-align: -0.15em; margin-right: 0.35em; }
+
+/* ── NAVBAR ── */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: rgba(250, 250, 248, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid transparent;
+  transition: padding 0.6s cubic-bezier(0.5, 0, 0.2, 1), border-color 0.3s, background 0.3s, opacity 0.5s ease;
+}
+
+.navbar.scrolled {
+  padding: 0.55rem 2rem;
+  border-bottom-color: var(--border);
+}
+
+.nav-brand {
+  display: inline-block;
+  color: var(--black);
+  text-decoration: none;
+  line-height: 0;
+  transition: opacity 0.5s ease;
+}
+.nav-brand svg {
+  display: block;
+  width: 130px;
+  height: auto;
+  overflow: visible;
+  transition: width 0.75s cubic-bezier(0.5, 0, 0.2, 1);
+}
+.nav-brand.nb-collapsed svg {
+  width: 82px;
+}
+.nav-brand .nb-marco {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-style: italic;
+  font-size: 38px;
+  letter-spacing: -0.02em;
+  fill: var(--black);
+}
+.nav-brand .nb-aprende {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: -0.01em;
+  fill: var(--accent);
+}
+
+/* Hover-to-expand: por defecto solo [ ], al hacer hover se despliega.
+   La animación de los atributos SVG se controla con JS (más abajo) por
+   compatibilidad cross-browser. */
+
+body.intro-locked .navbar,
+body.intro-locked .floating-cta { opacity: 0; pointer-events: none; }
+.floating-cta { transition: opacity 0.5s ease; }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 0.82rem;
+  color: var(--gray);
+  text-decoration: none;
+  font-weight: 400;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--black); }
+
+.nav-cta {
+  font-size: 0.8rem !important;
+  color: var(--white) !important;
+  background: var(--black);
+  padding: 0.5rem 1.2rem;
+  border-radius: 100px;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.nav-cta:hover { transform: translateY(-1px); background: #222 !important; }
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.4rem;
+  color: var(--black);
+}
+.nav-toggle svg { width: 22px; height: 22px; display: block; }
+
+@media (max-width: 768px) {
+  .navbar { padding: 0.8rem 1.2rem; flex-wrap: wrap; }
+  .nav-toggle { display: inline-flex; }
+  .nav-links {
+    display: none;
+    flex-basis: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    margin-top: 0.6rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid var(--border);
+  }
+  .nav-links.open { display: flex; }
+  .nav-links li { padding: 0.7rem 0.2rem; border-bottom: 1px solid var(--border); }
+  .nav-links li:last-child { border-bottom: none; padding-top: 1rem; }
+  .nav-links a { font-size: 0.95rem; }
+  .nav-cta { display: inline-block; text-align: center; padding: 0.7rem 1.2rem; }
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 6rem 2rem 2rem;
+  position: relative;
+  background: var(--white);
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, #e8e4dc 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--black);
+  color: var(--white);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.4rem 1rem;
+  border-radius: 100px;
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeUp 0.6s ease 0.1s forwards;
+}
+
+/* Profile toggle */
+.profile-toggle {
+  display: inline-flex;
+  background: var(--light);
+  border-radius: 100px;
+  padding: 4px;
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeUp 0.6s ease 0.15s forwards;
+}
+
+.profile-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  padding: 0.5rem 1.4rem;
+  border-radius: 100px;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  color: var(--gray);
+  transition: all 0.25s;
+}
+
+.profile-btn.active {
+  background: var(--black);
+  color: var(--white);
+}
+
+.hero h1 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(2.6rem, 6.5vw, 5rem);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  max-width: 780px;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.7s ease 0.2s forwards;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--gray);
+}
+
+.hero-sub {
+  font-size: 1.05rem;
+  color: var(--gray);
+  max-width: 500px;
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+  font-weight: 300;
+  opacity: 0;
+  animation: fadeUp 0.7s ease 0.35s forwards;
+}
+
+.hero-ctas {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  opacity: 0;
+  animation: fadeUp 0.7s ease 0.5s forwards;
+}
+
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--black);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 500;
+  padding: 0.85rem 1.8rem;
+  border-radius: 100px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.cta-btn:hover { transform: translateY(-2px); background: #222; }
+.cta-btn svg { transition: transform 0.2s; }
+.cta-btn:hover svg { transform: translateX(3px); }
+
+.cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--gray);
+  text-decoration: none;
+  padding: 0.85rem 1.2rem;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cta-secondary:hover { border-color: var(--black); color: var(--black); }
+
+.scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.72rem;
+  color: var(--gray);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  animation: fadeUp 0.7s ease 0.8s forwards;
+}
+
+.scroll-hint::after {
+  content: '';
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--gray), transparent);
+  animation: scrollLine 1.5s ease infinite;
+}
+
+/* ── FLOATING CTA ── */
+.floating-cta {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--black);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.8rem 1.5rem;
+  border-radius: 100px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  transform: translateY(80px);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, background 0.2s;
+  pointer-events: none;
+}
+
+.floating-cta.visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: all;
+}
+
+.floating-cta:hover { background: #222; }
+
+@media (max-width: 600px) {
+  .floating-cta { right: 1rem; bottom: 1rem; font-size: 0.8rem; padding: 0.7rem 1.2rem; }
+}
+
+/* ── DEMO SECTION ── */
+.demo-section {
+  padding: 6rem 2rem;
+  background: var(--light);
+  position: relative;
+}
+
+.section-label {
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+}
+.section-label::before, .section-label::after {
+  content: "";
+  width: 24px;
+  height: 1px;
+  background: var(--border);
+}
+
+.section-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(2rem, 4.4vw, 3.2rem);
+  text-align: center;
+  margin-bottom: 1rem;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+.section-title em {
+  font-style: italic;
+  color: var(--gray);
+}
+
+.section-sub {
+  text-align: center;
+  color: var(--gray);
+  font-weight: 300;
+  max-width: 540px;
+  margin: 0 auto 3.5rem;
+  line-height: 1.7;
+  font-size: 0.98rem;
+}
+
+/* Demo tabs */
+.demo-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.demo-tab {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 0.4rem 1rem;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: var(--white);
+  cursor: pointer;
+  color: var(--gray);
+  transition: all 0.2s;
+}
+
+.demo-tab.active {
+  background: var(--black);
+  color: var(--white);
+  border-color: var(--black);
+}
+
+.demo-tab:hover:not(.active) { border-color: var(--gray); }
+
+/* App frame */
+.app-frame {
+  max-width: 920px;
+  margin: 0 auto;
+  background: var(--white);
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+}
+
+.app-topbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+}
+
+.app-dots { display: flex; gap: 6px; }
+.app-dots span { width: 11px; height: 11px; border-radius: 50%; background: var(--border); }
+.app-dots span:nth-child(1) { background: #ff6057; }
+.app-dots span:nth-child(2) { background: #ffbd2e; }
+.app-dots span:nth-child(3) { background: #28ca41; }
+
+.app-tab {
+  font-size: 0.78rem;
+  color: var(--gray);
+  background: var(--light);
+  padding: 0.25rem 0.8rem;
+  border-radius: 6px;
+  margin-left: auto;
+}
+
+/* Screens */
+.screen { display: none; padding: 1.5rem; min-height: 460px; }
+.screen.active { display: block; animation: screenFadeIn 0.3s ease; }
+
+@keyframes screenFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ─ Screen 0: Asignaturas ─ */
+.welcome-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+}
+
+.welcome-info .welcome-sub { font-size: 0.78rem; color: var(--gray); }
+.welcome-info .welcome-name { font-family: 'Instrument Serif', serif; font-size: 1.3rem; }
+
+.streak-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--black);
+  color: var(--white);
+  font-size: 0.72rem;
+  font-weight: 500;
+  padding: 0.3rem 0.8rem;
+  border-radius: 100px;
+}
+
+.notification-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  padding: 0.7rem 1rem;
+  margin-bottom: 1.2rem;
+  font-size: 0.8rem;
+  color: #991b1b;
+}
+
+.notification-bar .notif-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #ef4444;
+  flex-shrink: 0;
+}
+
+.subjects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0.8rem;
+}
+
+.subject-card {
+  background: var(--light);
+  border-radius: 14px;
+  padding: 1.2rem 1rem;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid transparent;
+  position: relative;
+}
+
+.subject-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  border-color: var(--border);
+}
+
+.subject-icon { font-size: 1.4rem; margin-bottom: 0.6rem; color: var(--black); display: inline-flex; }
+.subject-name { font-size: 0.85rem; font-weight: 500; margin-bottom: 0.2rem; }
+.subject-meta { font-size: 0.72rem; color: var(--gray); margin-bottom: 0.6rem; }
+
+.progress-bar-mini {
+  width: 100%;
+  height: 4px;
+  background: rgba(0,0,0,0.06);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.progress-bar-mini .fill {
+  height: 100%;
+  border-radius: 100px;
+  background: var(--black);
+  transition: width 0.8s ease;
+}
+
+.subject-pending {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ef4444;
+}
+
+/* ─ Screen 1: Cuadernos ─ */
+.notebooks-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1.2rem;
+}
+
+.back-btn {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--white);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem;
+  color: var(--gray);
+  transition: background 0.2s;
+}
+.back-btn:hover { background: var(--light); }
+
+.notebook-list { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1rem; }
+
+.notebook-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.9rem 1rem;
+  background: var(--light);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.notebook-item:hover { background: #e8e6e0; }
+
+.notebook-icon { font-size: 1.1rem; color: var(--black); display: inline-flex; }
+.notebook-info { flex: 1; }
+.notebook-title { font-size: 0.85rem; font-weight: 500; }
+.notebook-detail { font-size: 0.72rem; color: var(--gray); margin-top: 0.15rem; display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.notebook-summary { font-size: 0.72rem; color: #888; margin-top: 0.2rem; font-style: italic; }
+
+.notebook-progress {
+  width: 42px; height: 42px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.notebook-progress svg {
+  transform: rotate(-90deg);
+  width: 42px;
+  height: 42px;
+}
+
+.notebook-progress .pct-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: var(--black);
+}
+
+.new-notebook-btn {
+  width: 100%;
+  padding: 0.8rem;
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+  background: transparent;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  color: var(--gray);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.new-notebook-btn:hover { border-color: var(--black); color: var(--black); }
+
+/* New notebook modal */
+.modal-overlay {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: rgba(10,10,10,0.4);
+  z-index: 10;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+}
+
+.modal-overlay.active { display: flex; }
+
+.modal-box {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 360px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+}
+
+.modal-box h4 {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
+}
+
+.modal-box p {
+  font-size: 0.78rem;
+  color: var(--gray);
+  margin-bottom: 1rem;
+}
+
+.modal-input {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  outline: none;
+  margin-bottom: 0.8rem;
+  background: var(--light);
+}
+
+.modal-input:focus { border-color: var(--black); }
+
+.modal-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.modal-btn-primary {
+  flex: 1;
+  padding: 0.6rem;
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.modal-btn-secondary {
+  flex: 1;
+  padding: 0.6rem;
+  background: var(--light);
+  color: var(--gray);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+/* ─ Screen 2: Cuaderno abierto ─ */
+.notebook-open-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.ai-mode-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.68rem;
+  font-weight: 500;
+  padding: 0.25rem 0.7rem;
+  border-radius: 100px;
+  margin-left: auto;
+}
+
+.ai-mode-strict {
+  background: #eff6ff;
+  color: #1e40af;
+  border: 1px solid #bfdbfe;
+}
+
+.notebook-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+  height: 420px;
+}
+
+.notebook-layout-3 {
+  grid-template-columns: 1fr 1fr 200px;
+}
+
+@media (max-width: 768px) {
+  .notebook-layout, .notebook-layout-3 { grid-template-columns: 1fr; height: auto; }
+}
+
+.pdf-panel {
+  background: var(--light);
+  border-radius: 12px;
+  padding: 1rem;
+  overflow-y: auto;
+  position: relative;
+}
+
+.pdf-label {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.pdf-content {
+  font-size: 0.76rem;
+  line-height: 1.85;
+  color: #333;
+}
+
+.pdf-content h5 {
+  font-family: 'Instrument Serif', serif;
+  font-size: 0.95rem;
+  font-weight: normal;
+  margin: 0.8rem 0 0.4rem;
+  color: var(--black);
+}
+
+.pdf-content h5:first-child { margin-top: 0; }
+
+.pdf-highlight {
+  background: var(--highlight);
+  border-radius: 3px;
+  padding: 1px 3px;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.2s;
+  border-bottom: 2px solid #f0c040;
+}
+
+.pdf-highlight:hover {
+  background: #ffe69c;
+}
+
+.pdf-highlight::after {
+  content: '?';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  background: #f0c040;
+  color: var(--black);
+  font-size: 0.55rem;
+  font-weight: 700;
+  border-radius: 50%;
+  margin-left: 3px;
+  vertical-align: middle;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.pdf-highlight:hover::after { opacity: 1; }
+
+/* Chat panel */
+.chat-panel {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chat-header {
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.78rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.ai-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: pulse 2s ease infinite;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 0.8rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.msg {
+  max-width: 88%;
+  padding: 0.6rem 0.8rem;
+  border-radius: 12px;
+  font-size: 0.76rem;
+  line-height: 1.65;
+}
+
+.msg.user {
+  align-self: flex-end;
+  background: var(--black);
+  color: var(--white);
+  border-bottom-right-radius: 4px;
+}
+
+.msg.ai {
+  align-self: flex-start;
+  background: var(--light);
+  color: var(--black);
+  border-bottom-left-radius: 4px;
+}
+
+.msg .thinking {
+  font-size: 0.68rem;
+  color: var(--gray);
+  font-style: italic;
+  display: block;
+  margin-top: 0.3rem;
+}
+
+.chat-input-area {
+  padding: 0.6rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 0.4rem;
+}
+
+.chat-input {
+  flex: 1;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.45rem 0.7rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  outline: none;
+  background: var(--light);
+}
+
+.chat-send {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  border: none;
+  background: var(--black);
+  color: var(--white);
+  cursor: pointer;
+  font-size: 0.85rem;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* Notes panel */
+.notes-panel {
+  background: var(--note-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.notes-header {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.note-item {
+  font-size: 0.72rem;
+  line-height: 1.6;
+  color: #555;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.note-item:last-child { border-bottom: none; }
+
+.note-item .note-time {
+  font-size: 0.62rem;
+  color: #aaa;
+  display: block;
+  margin-top: 0.15rem;
+}
+
+.add-note-btn {
+  margin-top: auto;
+  padding: 0.4rem;
+  border: 1px dashed var(--border);
+  border-radius: 6px;
+  background: transparent;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.7rem;
+  color: var(--gray);
+  cursor: pointer;
+}
+
+/* ─ Screen 3: Panel profesor ─ */
+.teacher-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.teacher-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.8rem;
+  margin-bottom: 1.2rem;
+}
+
+@media (max-width: 700px) { .teacher-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.stat-card {
+  background: var(--light);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.stat-value {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.7rem;
+  letter-spacing: -0.02em;
+}
+
+.stat-label { font-size: 0.7rem; color: var(--gray); margin-top: 0.15rem; }
+
+.stat-change {
+  font-size: 0.65rem;
+  font-weight: 500;
+  margin-top: 0.3rem;
+}
+
+.stat-change.up { color: var(--green); }
+.stat-change.down { color: var(--red); }
+
+.teacher-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 700px) { .teacher-columns { grid-template-columns: 1fr; } }
+
+.teacher-card {
+  background: var(--light);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.teacher-card-title {
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* Heatmap visual */
+.heatmap-doc {
+  background: var(--white);
+  border-radius: 8px;
+  padding: 0.8rem;
+  border: 1px solid var(--border);
+}
+
+.heatmap-doc-line {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 0.2rem;
+  font-size: 0.72rem;
+  transition: background 0.2s;
+}
+
+.heat-high { background: #fecaca; color: #991b1b; }
+.heat-med { background: #fed7aa; color: #9a3412; }
+.heat-low { background: #fef9c3; color: #854d0e; }
+.heat-ok { background: #dcfce7; color: #166534; }
+
+.heat-indicator {
+  width: 10px; height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.heat-high .heat-indicator { background: #ef4444; }
+.heat-med .heat-indicator { background: #f97316; }
+.heat-low .heat-indicator { background: #eab308; }
+.heat-ok .heat-indicator { background: #22c55e; }
+
+.heatmap-legend {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 0.6rem;
+  font-size: 0.65rem;
+  color: var(--gray);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.legend-dot {
+  width: 8px; height: 8px;
+  border-radius: 2px;
+}
+
+/* Students at risk */
+.student-risk-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.student-risk-item:last-child { border-bottom: none; }
+
+.student-avatar {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--gray);
+  flex-shrink: 0;
+}
+
+.student-risk-info { flex: 1; }
+.student-risk-name { font-size: 0.78rem; font-weight: 500; }
+.student-risk-detail { font-size: 0.68rem; color: var(--gray); }
+
+.student-risk-action {
+  font-size: 0.68rem;
+  color: var(--black);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Activity feed */
+.feed-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.4rem 0;
+  font-size: 0.72rem;
+  color: #555;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+
+.feed-item:last-child { border-bottom: none; }
+
+.feed-time {
+  font-size: 0.65rem;
+  color: #aaa;
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-width: 55px;
+}
+
+/* ─ Screen 4: Quiz ─ */
+.quiz-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+}
+
+.quiz-progress-text {
+  font-size: 0.75rem;
+  color: var(--gray);
+}
+
+.quiz-progress-bar {
+  width: 120px;
+  height: 4px;
+  background: var(--border);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.quiz-progress-bar .fill {
+  height: 100%;
+  background: var(--green);
+  border-radius: 100px;
+  transition: width 0.5s ease;
+}
+
+.quiz-question-card {
+  background: var(--light);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.quiz-q-num {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--gray);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.quiz-q-text {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  margin-bottom: 1.2rem;
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.quiz-option {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.8rem 1rem;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.82rem;
+}
+
+.quiz-option:hover { border-color: var(--black); }
+
+.quiz-option .opt-letter {
+  width: 24px; height: 24px;
+  border-radius: 6px;
+  background: var(--light);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.quiz-option.selected {
+  border-color: var(--black);
+  background: var(--black);
+  color: var(--white);
+}
+
+.quiz-option.selected .opt-letter {
+  background: var(--white);
+  color: var(--black);
+}
+
+.quiz-option.wrong {
+  border-color: #ef4444;
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+.quiz-option.wrong .opt-letter { background: #fecaca; color: #991b1b; }
+
+.quiz-option.correct {
+  border-color: var(--green);
+  background: #f0fdf4;
+  color: #166534;
+}
+
+.quiz-option.correct .opt-letter { background: #dcfce7; color: #166534; }
+
+.quiz-feedback {
+  background: var(--light);
+  border-radius: 12px;
+  padding: 1rem;
+  font-size: 0.8rem;
+  line-height: 1.7;
+  display: none;
+}
+
+.quiz-feedback.visible { display: block; animation: fadeUp 0.3s ease; }
+
+.quiz-feedback-header {
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* ── FEATURES ── */
+.features-section {
+  padding: 6rem 2rem;
+  background: var(--white);
+}
+
+.features-grid {
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.2rem;
+}
+
+.feature-card {
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+}
+
+.feature-for {
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 0.6rem;
+}
+
+.feature-emoji { font-size: 1.6rem; margin-bottom: 1rem; color: var(--black); display: inline-flex; }
+.feature-title { font-size: 0.92rem; font-weight: 500; margin-bottom: 0.4rem; }
+.feature-desc { font-size: 0.8rem; color: var(--gray); line-height: 1.7; font-weight: 300; }
+
+/* ── PROFESSOR SECTION ── */
+.professor-section {
+  padding: 5rem 2rem;
+  background: var(--light);
+}
+
+.prof-grid {
+  max-width: 860px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+@media (max-width: 700px) { .prof-grid { grid-template-columns: 1fr; } }
+
+.prof-content h3 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.prof-content p {
+  font-size: 0.9rem;
+  color: var(--gray);
+  line-height: 1.8;
+  font-weight: 300;
+  margin-bottom: 1.5rem;
+}
+
+.prof-features {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.prof-feature {
+  display: flex;
+  gap: 0.8rem;
+  align-items: flex-start;
+}
+
+.prof-feature-icon {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  background: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.prof-feature-text h4 {
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 0.15rem;
+}
+
+.prof-feature-text p {
+  font-size: 0.78rem;
+  color: var(--gray);
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+.prof-visual {
+  background: var(--white);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+}
+
+/* ── SOCIAL PROOF ── */
+.proof-section {
+  padding: 5rem 2rem;
+  background: var(--white);
+}
+
+.proof-grid {
+  max-width: 860px;
+  margin: 2.5rem auto 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.2rem;
+}
+
+.proof-card {
+  background: var(--light);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.proof-quote {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  font-style: italic;
+  color: #444;
+  margin-bottom: 1rem;
+}
+
+.proof-author {
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.proof-role {
+  font-size: 0.7rem;
+  color: var(--gray);
+}
+
+.logos-section {
+  max-width: 700px;
+  margin: 3rem auto 0;
+  text-align: center;
+}
+
+.logos-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 1.5rem;
+}
+
+.logos-row {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.proof-stats {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  text-align: center;
+}
+.proof-stat-num {
+  font-family: 'Instrument Serif', serif;
+  font-size: 2.6rem;
+  font-style: italic;
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+.proof-stat-label {
+  font-size: 0.72rem;
+  color: var(--gray);
+  letter-spacing: 0.02em;
+}
+.proof-stat-cta .proof-stat-num { font-style: normal; opacity: 0.55; }
+.proof-stat-cta .proof-stat-num a:hover { opacity: 1; }
+@media (max-width: 600px) {
+  .proof-stats { gap: 2rem; }
+  .proof-stat-num { font-size: 2rem; }
+}
+
+.logo-placeholder {
+  width: 120px;
+  height: 44px;
+  background: var(--light);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  color: #bbb;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+/* ── FORM ── */
+.form-section {
+  padding: 5rem 2rem;
+  background: var(--black);
+  color: var(--white);
+}
+
+.form-section .section-label { color: #888; }
+.form-section .section-label::before, .form-section .section-label::after { background: #333; }
+.form-section .section-title { color: var(--white); }
+.form-section .section-sub { color: #888; }
+
+.form-wrap {
+  max-width: 580px;
+  margin: 0 auto;
+}
+
+/* Form progress */
+.form-progress {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 2rem;
+}
+
+.form-progress-step {
+  flex: 1;
+  height: 3px;
+  background: #2a2a2a;
+  border-radius: 100px;
+  transition: background 0.4s;
+}
+
+.form-progress-step.active { background: var(--white); }
+
+.form-step { display: none; }
+.form-step.active { display: block; animation: fadeUp 0.4s ease; }
+
+.form-group { margin-bottom: 1.2rem; }
+
+.form-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.4rem;
+  color: #ccc;
+}
+
+.form-label-hint {
+  font-weight: 300;
+  color: #777;
+  font-size: 0.72rem;
+}
+
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  background: #161616;
+  border: 1px solid #2a2a2a;
+  border-radius: 10px;
+  padding: 0.7rem 0.9rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  color: var(--white);
+  outline: none;
+  transition: border-color 0.2s;
+  appearance: none;
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: #555; }
+.form-select option { background: #161616; }
+.form-textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+
+.rating-group { display: flex; gap: 0.4rem; }
+
+.rating-btn {
+  flex: 1;
+  min-width: 36px;
+  padding: 0.55rem;
+  background: #161616;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  color: #888;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.rating-btn:hover, .rating-btn.selected {
+  background: var(--white);
+  color: var(--black);
+  border-color: var(--white);
+}
+
+.checkbox-group { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.6rem 0.8rem;
+  background: #161616;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  font-size: 0.82rem;
+  color: #ccc;
+}
+
+.checkbox-item input { accent-color: var(--white); width: 15px; height: 15px; }
+.checkbox-item:hover { border-color: #444; }
+
+.scale-group {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.scale-btn {
+  flex: 1;
+  padding: 0.5rem 0.2rem;
+  background: #161616;
+  border: 1px solid #2a2a2a;
+  border-radius: 6px;
+  color: #888;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.scale-btn:hover, .scale-btn.selected {
+  background: var(--white);
+  color: var(--black);
+  border-color: var(--white);
+}
+
+.scale-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.65rem;
+  color: #555;
+  margin-top: 0.3rem;
+}
+
+.form-nav {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.form-btn-next {
+  flex: 1;
+  padding: 0.85rem;
+  background: var(--white);
+  color: var(--black);
+  border: none;
+  border-radius: 100px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.form-btn-next:hover { transform: translateY(-2px); opacity: 0.9; }
+
+.form-btn-back {
+  padding: 0.85rem 1.5rem;
+  background: transparent;
+  color: #888;
+  border: 1px solid #333;
+  border-radius: 100px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.form-btn-back:hover { border-color: #666; color: #ccc; }
+
+/* Summary */
+.form-summary {
+  background: #161616;
+  border-radius: 12px;
+  padding: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #222;
+  font-size: 0.78rem;
+}
+
+.summary-item:last-child { border-bottom: none; }
+
+.summary-label { color: #777; }
+.summary-value { color: #ccc; text-align: right; max-width: 60%; }
+
+/* Thank you */
+.thankyou {
+  display: none;
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.thankyou-icon { font-size: 2.2rem; margin-bottom: 1rem; color: var(--black); display: inline-flex; justify-content: center; }
+.thankyou h3 {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+}
+.thankyou p { color: #888; font-weight: 300; font-size: 0.9rem; line-height: 1.7; }
+
+.thankyou .email-confirm {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #161616;
+  border: 1px solid #2a2a2a;
+  border-radius: 10px;
+  padding: 0.7rem 1.2rem;
+  margin-top: 1.2rem;
+  font-size: 0.8rem;
+  color: #aaa;
+}
+
+/* ── FOOTER ── */
+.footer {
+  padding: 3.5rem 2rem 2rem;
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  font-size: 0.78rem;
+  color: var(--gray);
+}
+.footer-grid {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+@media (max-width: 720px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+}
+@media (max-width: 420px) {
+  .footer-grid { grid-template-columns: 1fr; }
+}
+.footer-brand {
+  display: inline-block;
+  margin-bottom: 0.85rem;
+  line-height: 0;
+}
+.footer-brand svg {
+  display: block;
+  width: 160px;
+  height: auto;
+}
+.footer-brand .nb-marco {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-style: italic;
+  font-size: 38px;
+  letter-spacing: -0.02em;
+  fill: var(--black);
+}
+.footer-brand .nb-aprende {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: -0.01em;
+  fill: var(--accent);
+}
+.footer-tagline {
+  line-height: 1.6;
+  max-width: 240px;
+  font-weight: 300;
+}
+.footer-col-title {
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--black);
+  margin-bottom: 1rem;
+}
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+.footer-links a {
+  color: var(--gray);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.footer-links a:hover { color: var(--black); }
+.footer-bottom {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding-top: 1.8rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.72rem;
+}
+.footer-bottom-links {
+  display: flex;
+  gap: 1.5rem;
+}
+.footer-bottom-links a {
+  color: var(--gray);
+  text-decoration: none;
+}
+.footer-bottom-links a:hover { color: var(--black); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+@keyframes scrollLine {
+  0% { transform: scaleY(0); transform-origin: top; }
+  50% { transform: scaleY(1); transform-origin: top; }
+  51% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+
+/* Hidden */
+.hidden { display: none !important; }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .hero { padding: 5rem 1.2rem 2rem; }
+  .hero h1 { font-size: 2.2rem; }
+  .hero-sub { font-size: 0.95rem; }
+  .demo-section, .features-section, .form-section, .proof-section, .professor-section {
+    padding: 3.5rem 1.2rem;
+  }
+  .subjects-grid { grid-template-columns: repeat(2, 1fr); }
+  .proof-grid { grid-template-columns: 1fr; }
+  .features-grid { grid-template-columns: 1fr; }
+  .prof-grid { grid-template-columns: 1fr; }
+}
+
+/* ── INTRO SPLASH ── */
+.intro-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transition: background 0.5s ease, opacity 0.4s ease;
+}
+.intro-splash svg {
+  width: min(780px, 90vw);
+  height: auto;
+  display: block;
+  transform-origin: center center;
+}
+.intro-splash text.intro-marco {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-style: italic;
+  font-size: 38px;
+  fill: var(--black);
+  letter-spacing: -0.02em;
+}
+.intro-splash text.intro-aprende {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 13px;
+  fill: var(--accent);
+  letter-spacing: -0.01em;
+}
+.intro-splash.intro-flying { background: transparent; }
+.intro-splash.intro-flying svg {
+  transition: transform 0.85s cubic-bezier(0.65, 0, 0.3, 1), opacity 0.4s ease;
+}
+.intro-splash.intro-done { opacity: 0; }
+body.intro-locked { overflow: hidden; }
+@media (prefers-reduced-motion: reduce) {
+  .intro-splash { display: none !important; }
+}
+</style>
+</head>
+<body class="intro-locked">
+
+<!-- INTRO SPLASH (corchetes → marco → aprende) -->
+<div class="intro-splash" id="introSplash" aria-hidden="true">
+  <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+    <line stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" x1="160" y1="80" x2="160" y2="130">
+      <animate attributeName="stroke-dashoffset" from="1" to="0" begin="0.15s" dur="0.45s" fill="freeze"/>
+      <animate attributeName="x1" from="160" to="108" begin="0.75s" dur="0.85s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.5 0 0.2 1"/>
+      <animate attributeName="x2" from="160" to="108" begin="0.75s" dur="0.85s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.5 0 0.2 1"/>
+    </line>
+    <line stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" x1="160" y1="80" x2="170" y2="80">
+      <animate attributeName="stroke-dashoffset" from="1" to="0" begin="0.5s" dur="0.22s" fill="freeze"/>
+      <animate attributeName="x1" from="160" to="108" begin="0.75s" dur="0.85s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.5 0 0.2 1"/>
+      <animate attributeName="x2" from="170" to="169" begin="0.75s" dur="0.85s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.5 0 0.2 1"/>
+    </line>
+    <line stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" x1="160" y1="130" x2="170" y2="130">
+      <animate attributeName="stroke-dashoffset" from="1" to="0" begin="0.5s" dur="0.22s" fill="freeze"/>
+      <animate attributeName="x1" from="160" to="108" begin="0.75s" dur="0.85s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.5 0 0.2 1"/>
+      <animate attributeName="x2" from="170" to="169" begin="0.75s" dur="0.85s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.5 0 0.2 1"/>
+    </line>
+    <line stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" x1="190" y1="80" x2="190" y2="130">
+      <animate attributeName="stroke-dashoffset" from="1" to="0" begin="0.15s" dur="0.45s" fill="freeze"/>
+      <animate attributeName="x1" from="190" to="230" begin="0.75s" dur="0.85s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.5 0 0.2 1"/>
+      <animate attributeName="x2" from="190" to="230" begin="0.75s" dur="0.85s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.5 0 0.2 1"/>
+    </line>
+    <line stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" x1="190" y1="80" x2="180" y2="80">
+      <animate attributeName="stroke-dashoffset" from="1" to="0" begin="0.5s" dur="0.22s" fill="freeze"/>
+      <animate attributeName="x1" from="190" to="230" begin="0.75s" dur="0.85s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.5 0 0.2 1"/>
+      <animate attributeName="x2" from="180" to="169" begin="0.75s" dur="0.85s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.5 0 0.2 1"/>
+    </line>
+    <line stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" x1="190" y1="130" x2="180" y2="130">
+      <animate attributeName="stroke-dashoffset" from="1" to="0" begin="0.5s" dur="0.22s" fill="freeze"/>
+      <animate attributeName="x1" from="190" to="230" begin="0.75s" dur="0.85s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.5 0 0.2 1"/>
+      <animate attributeName="x2" from="180" to="169" begin="0.75s" dur="0.85s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.5 0 0.2 1"/>
+    </line>
+    <defs>
+      <clipPath id="introMarcoClip">
+        <rect x="175" y="78" width="0" height="54">
+          <animate attributeName="x" from="175" to="108" begin="0.75s" dur="0.85s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.5 0 0.2 1"/>
+          <animate attributeName="width" from="0" to="122" begin="0.75s" dur="0.85s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.5 0 0.2 1"/>
+        </rect>
+      </clipPath>
+      <clipPath id="introAprendeClip">
+        <rect x="199" y="130" width="0" height="22">
+          <animate attributeName="width" from="0" to="72" begin="1.85s" dur="0.7s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.5 0 0.2 1"/>
+        </rect>
+      </clipPath>
+    </defs>
+    <g clip-path="url(#introMarcoClip)">
+      <text x="118" y="118" class="intro-marco">Marco</text>
+    </g>
+    <g clip-path="url(#introAprendeClip)">
+      <text x="199" y="146" class="intro-aprende">aprende</text>
+    </g>
+  </svg>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <a href="#" class="nav-brand" aria-label="Marco aprende — inicio">
+    <svg viewBox="100 75 175 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect id="navBrandFrame" x="108" y="80" width="122" height="50" fill="none" stroke="none" pointer-events="none"/>
+      <line class="nb-l nb-l-v" x1="160" y1="80" x2="160" y2="130" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <line class="nb-l nb-tl-stub" x1="160" y1="80" x2="170" y2="80" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <line class="nb-l nb-bl-stub" x1="160" y1="130" x2="170" y2="130" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <line class="nb-l nb-r-v" x1="190" y1="80" x2="190" y2="130" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <line class="nb-l nb-tr-stub" x1="190" y1="80" x2="180" y2="80" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <line class="nb-l nb-br-stub" x1="190" y1="130" x2="180" y2="130" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <defs>
+        <clipPath id="navMarcoClip">
+          <rect class="nb-marco-clip" x="175" y="78" width="0" height="54"/>
+        </clipPath>
+        <clipPath id="navAprendeClip">
+          <rect class="nb-aprende-clip" x="199" y="130" width="0" height="22"/>
+        </clipPath>
+      </defs>
+      <g clip-path="url(#navMarcoClip)">
+        <text x="118" y="118" class="nb-marco">Marco</text>
+      </g>
+      <g clip-path="url(#navAprendeClip)">
+        <text x="199" y="146" class="nb-aprende">aprende</text>
+      </g>
+    </svg>
+  </a>
+  <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#demo">Demo</a></li>
+    <li><a href="#features">Funcionalidades</a></li>
+    <li><a href="#proof">Testimonios</a></li>
+    <li><a href="#feedback" class="nav-cta">Dar mi opinión</a></li>
+  </ul>
+</nav>
+
+<!-- FLOATING CTA -->
+<a href="#feedback" class="floating-cta" id="floatingCta">
+  <span id="floatingCtaText">Hablemos de un piloto</span> →
+</a>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <span class="badge">
+    <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="#28ca41"/></svg>
+    Abierto a colegios piloto
+  </span>
+
+  <div class="profile-toggle">
+    <button class="profile-btn active" onclick="setProfile('centro')">Soy centro</button>
+    <button class="profile-btn" onclick="setProfile('profesor')">Soy profesor/a</button>
+    <button class="profile-btn" onclick="setProfile('alumno')">Soy alumno/a</button>
+  </div>
+
+  <h1 id="heroTitle">Adoptar IA en el aula<br><em>sin perder el control.</em></h1>
+  <p class="hero-sub" id="heroSub">Visibilidad total sobre cómo estudian vuestros alumnos, qué departamentos adoptan la herramienta y dónde se concentran las dificultades. Datos reales para decisiones reales.</p>
+
+  <div class="hero-ctas">
+    <a href="#demo" class="cta-btn">
+      Ver la demo interactiva
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <a href="#feedback" class="cta-secondary">Solicitar piloto gratuito</a>
+  </div>
+  <div class="scroll-hint">Explora la demo</div>
+</section>
+
+<!-- DEMO -->
+<section class="demo-section" id="demo">
+  <p class="section-label reveal">Así funciona</p>
+  <h2 class="section-title reveal">No te lo contamos — te lo enseñamos</h2>
+  <p class="section-sub reveal">Navega por la plataforma como si fueras un alumno de 4º de la ESO repasando fracciones. Después, mira lo que ve su profesor.</p>
+
+  <div class="demo-tabs reveal">
+    <button class="demo-tab active" onclick="showScreen(0)"><svg class="icon icon-inline" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h7v18H6a2 2 0 0 1-2-2V5z"/><path d="M13 3h5a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-5"/><path d="M8 7h2M8 11h2"/></svg>Asignaturas</button>
+    <button class="demo-tab" onclick="showScreen(1)"><svg class="icon icon-inline" viewBox="0 0 24 24"><path d="M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2V4z"/><path d="M5 18a2 2 0 0 1 2-2h12"/><path d="M9 8h6M9 12h4"/></svg>Cuadernos</button>
+    <button class="demo-tab" onclick="showScreen(2)"><svg class="icon icon-inline" viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><path d="M12 7l1.5 3.5L17 12l-3.5 1.5L12 17l-1.5-3.5L7 12l3.5-1.5z"/></svg>Estudiar con IA</button>
+    <button class="demo-tab" onclick="showScreen(3)"><svg class="icon icon-inline" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>Panel profesor</button>
+    <button class="demo-tab" onclick="showScreen(4)"><svg class="icon icon-inline" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.8 2.8L16 9.5"/></svg>Quiz</button>
+    <button class="demo-tab" onclick="showScreen(5)"><svg class="icon icon-inline" viewBox="0 0 24 24"><path d="M3 21V10l9-6 9 6v11"/><path d="M9 21v-6h6v6"/><path d="M3 21h18"/></svg>Panel centro</button>
+  </div>
+
+  <div class="app-frame reveal" style="position:relative;">
+    <div class="app-topbar">
+      <div class="app-dots"><span></span><span></span><span></span></div>
+      <span class="app-tab" id="app-tab-label">Inicio — Mis asignaturas</span>
+    </div>
+
+    <!-- Screen 0: Asignaturas -->
+    <div class="screen active" id="screen-0">
+      <div class="welcome-bar">
+        <div class="welcome-info">
+          <div class="welcome-sub">Buenos días,</div>
+          <div class="welcome-name">Carlos García</div>
+        </div>
+        <div class="streak-badge"><svg class="icon" viewBox="0 0 24 24" style="stroke-width:1.8;"><path d="M12 3c1 3 3 4 3 7a3 3 0 0 1-6 0c0-1.3.5-2 1-3"/><path d="M7 14c0-1 .5-2 1-2.5C8 13 9 14 9 15a3 3 0 1 0 6 0c0-2.5-2-3-2-5 2 1.5 4 3.5 4 6.5a5 5 0 1 1-10 0z"/></svg>7 días seguidos</div>
+      </div>
+
+      <div class="notification-bar">
+        <span class="notif-dot"></span>
+        Tienes un ejercicio pendiente en <strong style="margin-left:3px;">Matemáticas</strong>
+        <span style="margin-left:auto;font-size:0.72rem;opacity:0.6;">Hace 2h</span>
+      </div>
+
+      <div class="subjects-grid">
+        <div class="subject-card" onclick="showScreen(1)">
+          <span class="subject-pending"></span>
+          <div class="subject-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M3 20L12 4l9 16z"/><path d="M8 17h8"/></svg></div>
+          <div class="subject-name">Matemáticas</div>
+          <div class="subject-meta">3 cuadernos · Tema 5</div>
+          <div class="progress-bar-mini"><div class="fill" style="width:65%"></div></div>
+        </div>
+        <div class="subject-card">
+          <div class="subject-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M3 5c3-1 6-1 9 1v15c-3-2-6-2-9-1z"/><path d="M21 5c-3-1-6-1-9 1v15c3-2 6-2 9-1z"/></svg></div>
+          <div class="subject-name">Lengua</div>
+          <div class="subject-meta">2 cuadernos · Tema 8</div>
+          <div class="progress-bar-mini"><div class="fill" style="width:82%"></div></div>
+        </div>
+        <div class="subject-card">
+          <div class="subject-icon"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><ellipse cx="12" cy="12" rx="4" ry="9"/></svg></div>
+          <div class="subject-name">Geografía</div>
+          <div class="subject-meta">1 cuaderno · Tema 3</div>
+          <div class="progress-bar-mini"><div class="fill" style="width:40%"></div></div>
+        </div>
+        <div class="subject-card">
+          <div class="subject-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M9 3h6"/><path d="M10 3v6L4 19a2 2 0 0 0 1.7 3h12.6A2 2 0 0 0 20 19l-6-10V3"/><path d="M7.5 14h9"/></svg></div>
+          <div class="subject-name">Ciencias</div>
+          <div class="subject-meta">2 cuadernos · Tema 6</div>
+          <div class="progress-bar-mini"><div class="fill" style="width:73%"></div></div>
+        </div>
+        <div class="subject-card">
+          <div class="subject-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/><path d="M8 10h8M8 13h5"/></svg></div>
+          <div class="subject-name">Inglés</div>
+          <div class="subject-meta">4 cuadernos · Unit 7</div>
+          <div class="progress-bar-mini"><div class="fill" style="width:91%"></div></div>
+        </div>
+        <div class="subject-card">
+          <div class="subject-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M3 9l9-5 9 5"/><path d="M3 9h18"/><path d="M5 9v9M9 9v9M15 9v9M19 9v9"/><path d="M3 21h18"/></svg></div>
+          <div class="subject-name">Historia</div>
+          <div class="subject-meta">1 cuaderno · Tema 4</div>
+          <div class="progress-bar-mini"><div class="fill" style="width:28%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 1: Cuadernos -->
+    <div class="screen" id="screen-1">
+      <div class="notebooks-header">
+        <button class="back-btn" onclick="showScreen(0)">←</button>
+        <div>
+          <div style="font-size:0.72rem;color:var(--gray);">Asignatura</div>
+          <div style="font-weight:500;display:inline-flex;align-items:center;gap:0.4rem;"><svg class="icon" viewBox="0 0 24 24" style="font-size:0.95rem;"><path d="M3 20L12 4l9 16z"/><path d="M8 17h8"/></svg> Matemáticas</div>
+        </div>
+      </div>
+      <div class="notebook-list">
+        <div class="notebook-item" onclick="showScreen(2)">
+          <div class="notebook-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2V4z"/><path d="M5 18a2 2 0 0 1 2-2h12"/><path d="M9 8h6M9 12h4"/></svg></div>
+          <div class="notebook-info">
+            <div class="notebook-title">Tema 5 — Fracciones</div>
+            <div class="notebook-detail">
+              <span>Hoy · 45 min</span>
+              <span>·</span>
+              <span>En progreso</span>
+            </div>
+            <div class="notebook-summary">"Suma de fracciones con distinto denominador — m.c.m."</div>
+          </div>
+          <div class="notebook-progress">
+            <svg viewBox="0 0 42 42"><circle cx="21" cy="21" r="18" fill="none" stroke="#e0dfd9" stroke-width="3"/><circle cx="21" cy="21" r="18" fill="none" stroke="#0a0a0a" stroke-width="3" stroke-dasharray="113" stroke-dashoffset="39" stroke-linecap="round"/></svg>
+            <div class="pct-text">65%</div>
+          </div>
+        </div>
+        <div class="notebook-item">
+          <div class="notebook-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2V4z"/><path d="M5 18a2 2 0 0 1 2-2h12"/><path d="M9 8h6M9 12h4"/></svg></div>
+          <div class="notebook-info">
+            <div class="notebook-title">Tema 4 — Decimales</div>
+            <div class="notebook-detail">
+              <span>Ayer · 32 min</span>
+              <span>·</span>
+              <span>Completado</span>
+            </div>
+            <div class="notebook-summary">"Operaciones con decimales y redondeo"</div>
+          </div>
+          <div class="notebook-progress">
+            <svg viewBox="0 0 42 42"><circle cx="21" cy="21" r="18" fill="none" stroke="#e0dfd9" stroke-width="3"/><circle cx="21" cy="21" r="18" fill="none" stroke="#2d6a4f" stroke-width="3" stroke-dasharray="113" stroke-dashoffset="0" stroke-linecap="round"/></svg>
+            <div class="pct-text">100%</div>
+          </div>
+        </div>
+        <div class="notebook-item">
+          <div class="notebook-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2V4z"/><path d="M5 18a2 2 0 0 1 2-2h12"/><path d="M9 8h6M9 12h4"/></svg></div>
+          <div class="notebook-info">
+            <div class="notebook-title">Repaso examen parcial</div>
+            <div class="notebook-detail">
+              <span>Hace 3 días · 58 min</span>
+              <span>·</span>
+              <span>Completado</span>
+            </div>
+            <div class="notebook-summary">"Repaso general de temas 1–4 con ejercicios"</div>
+          </div>
+          <div class="notebook-progress">
+            <svg viewBox="0 0 42 42"><circle cx="21" cy="21" r="18" fill="none" stroke="#e0dfd9" stroke-width="3"/><circle cx="21" cy="21" r="18" fill="none" stroke="#2d6a4f" stroke-width="3" stroke-dasharray="113" stroke-dashoffset="0" stroke-linecap="round"/></svg>
+            <div class="pct-text">100%</div>
+          </div>
+        </div>
+      </div>
+      <button class="new-notebook-btn" onclick="openModal()">+ Nuevo cuaderno</button>
+    </div>
+
+    <!-- Screen 2: Cuaderno abierto -->
+    <div class="screen" id="screen-2">
+      <div class="notebook-open-header">
+        <button class="back-btn" onclick="showScreen(1)">←</button>
+        <div style="font-weight:500;font-size:0.85rem;">Tema 5 — Fracciones</div>
+        <div class="ai-mode-badge ai-mode-strict">
+          <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="#3b82f6"/></svg>
+          IA modo estricto
+        </div>
+      </div>
+      <div class="notebook-layout notebook-layout-3">
+        <div class="pdf-panel">
+          <div class="pdf-label" style="display:inline-flex;align-items:center;gap:0.4rem;"><svg class="icon" viewBox="0 0 24 24"><path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg> Temario · Tema 5 — Fracciones</div>
+          <div class="pdf-content">
+            <h5>5.1 Concepto de fracción</h5>
+            Una fracción representa una parte de un todo. Se escribe como <strong>a/b</strong>, donde <em>a</em> es el numerador (las partes que tomamos) y <em>b</em> es el denominador (las partes iguales en que se divide el todo). El denominador nunca puede ser cero.
+
+            <h5>5.2 Fracciones equivalentes</h5>
+            Dos fracciones son equivalentes cuando representan la misma cantidad. Para comprobarlo, multiplicamos en cruz: a/b = c/d si a·d = b·c. Ejemplo: 2/4 = 3/6, ya que 2·6 = 4·3 = 12.
+
+            <h5>5.3 Suma y resta de fracciones</h5>
+            Para sumar fracciones con el mismo denominador, se suman los numeradores y se mantiene el denominador: 2/7 + 3/7 = 5/7.<br><br>
+            <span class="pdf-highlight">Para sumar fracciones con distinto denominador, primero hay que encontrar el mínimo común múltiplo (m.c.m.) de los denominadores. Una vez que ambas fracciones tienen el mismo denominador, se suman los numeradores.</span><br><br>
+            <strong>Ejemplo resuelto:</strong><br>
+            1/3 + 1/4<br>
+            m.c.m.(3, 4) = 12<br>
+            1/3 = 4/12 &nbsp;(multiplicamos numerador y denominador por 4)<br>
+            1/4 = 3/12 &nbsp;(multiplicamos numerador y denominador por 3)<br>
+            4/12 + 3/12 = <strong>7/12</strong>
+
+            <h5>5.4 Multiplicación de fracciones</h5>
+            Se multiplican los numeradores entre sí y los denominadores entre sí: (a/b) · (c/d) = (a·c)/(b·d). Después se simplifica el resultado si es posible.
+          </div>
+        </div>
+        <div class="chat-panel">
+          <div class="chat-header">
+            <div class="ai-dot"></div>
+            Asistente IA · Modo estricto
+          </div>
+          <div class="chat-messages" id="chatMessages">
+            <div class="msg ai">Hola Carlos. Veo que has seleccionado el apartado sobre suma de fracciones con distinto denominador. ¿Qué es exactamente lo que no te queda claro?</div>
+            <div class="msg user">No entiendo por qué hay que buscar el m.c.m. para sumar fracciones</div>
+            <div class="msg ai">Buena pregunta. Vamos paso a paso. Imagina que tienes una pizza cortada en 3 trozos y otra cortada en 4 trozos. Si coges un trozo de cada pizza... ¿los trozos son del mismo tamaño?</div>
+            <div class="msg user">No, uno es más grande que el otro</div>
+            <div class="msg ai">Exacto. Entonces, ¿tiene sentido decir que tienes "2 trozos" sin más? ¿Qué necesitarías para poder compararlos o sumarlos?</div>
+            <div class="msg user">Que los trozos sean iguales?</div>
+            <div class="msg ai">Perfecto. Eso es exactamente lo que hace el m.c.m.: encontrar un tamaño de trozo que funcione para ambas pizzas. Si las cortas en 12 trozos iguales cada una... ¿cuántos trozos de esos 12 equivalen a 1/3 de pizza?<span class="thinking">— Nota interna: Carlos está razonando bien — voy guiando sin dar la respuesta</span></div>
+          </div>
+          <div class="chat-input-area">
+            <input class="chat-input" placeholder="Escribe tu respuesta..." disabled />
+            <button class="chat-send">↑</button>
+          </div>
+        </div>
+        <div class="notes-panel">
+          <div class="notes-header" style="display:inline-flex;align-items:center;gap:0.4rem;"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20h16"/><path d="M14 4l4 4-9 9H5v-4z"/></svg> Mis notas</div>
+          <div class="note-item">
+            Para sumar fracciones → los trozos tienen que ser del mismo tamaño
+            <span class="note-time">Hace 8 min</span>
+          </div>
+          <div class="note-item">
+            m.c.m. = buscar un denominador común donde "encajen" los dos
+            <span class="note-time">Hace 3 min</span>
+          </div>
+          <button class="add-note-btn">+ Añadir nota</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 3: Panel profesor -->
+    <div class="screen" id="screen-3">
+      <div class="teacher-header">
+        <div>
+          <div style="font-size:0.72rem;color:var(--gray);">Panel del profesor</div>
+          <div style="font-family:'Instrument Serif',serif;font-size:1.2rem;">Matemáticas · 4ºA</div>
+        </div>
+        <div style="font-size:0.72rem;color:var(--gray);">Semana 14–20 abril</div>
+      </div>
+
+      <div class="teacher-grid">
+        <div class="stat-card">
+          <div class="stat-value">24</div>
+          <div class="stat-label">Alumnos activos</div>
+          <div class="stat-change up">↑ 2 vs semana anterior</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">87%</div>
+          <div class="stat-label">Participación semanal</div>
+          <div class="stat-change up">↑ 5% vs semana anterior</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">42<span style="font-size:0.7rem;font-family:'DM Sans'"> min</span></div>
+          <div class="stat-label">Tiempo medio de estudio</div>
+          <div class="stat-change up">↑ 8 min vs semana anterior</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">3.2</div>
+          <div class="stat-label">Sesiones / alumno</div>
+          <div class="stat-change down">↓ 0.4 vs semana anterior</div>
+        </div>
+      </div>
+
+      <div class="teacher-columns">
+        <div>
+          <div class="teacher-card" style="margin-bottom:0.8rem;">
+            <div class="teacher-card-title"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="11" y="3" width="6" height="6" rx="1" fill="currentColor" stroke="none" opacity="0.5"/><rect x="3" y="11" width="6" height="6" rx="1" fill="currentColor" stroke="none" opacity="0.85"/><rect x="11" y="11" width="6" height="6" rx="1"/></svg> Mapa de dudas — Tema 5: Fracciones</div>
+            <div class="heatmap-doc">
+              <div class="heatmap-doc-line heat-ok"><span class="heat-indicator"></span> 5.1 Concepto de fracción</div>
+              <div class="heatmap-doc-line heat-low"><span class="heat-indicator"></span> 5.2 Fracciones equivalentes</div>
+              <div class="heatmap-doc-line heat-high"><span class="heat-indicator"></span> 5.3 Suma y resta (m.c.m.)</div>
+              <div class="heatmap-doc-line heat-med"><span class="heat-indicator"></span> 5.4 Multiplicación</div>
+            </div>
+            <div class="heatmap-legend">
+              <span class="legend-item"><span class="legend-dot" style="background:#22c55e"></span> Sin problemas</span>
+              <span class="legend-item"><span class="legend-dot" style="background:#eab308"></span> Algunas dudas</span>
+              <span class="legend-item"><span class="legend-dot" style="background:#f97316"></span> Dudas frecuentes</span>
+              <span class="legend-item"><span class="legend-dot" style="background:#ef4444"></span> Punto crítico</span>
+            </div>
+          </div>
+          <div class="teacher-card">
+            <div class="teacher-card-title"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> Actividad reciente</div>
+            <div class="feed-item"><span class="feed-time">Hace 20 min</span> María García abrió un cuaderno de Fracciones</div>
+            <div class="feed-item"><span class="feed-time">Hace 45 min</span> Carlos Ruiz completó el quiz del Tema 5</div>
+            <div class="feed-item"><span class="feed-time">Hace 1h</span> Lucía Martín guardó 3 notas en su cuaderno</div>
+            <div class="feed-item"><span class="feed-time">Hace 3h</span> Pablo Sánchez pidió ayuda con el m.c.m.</div>
+            <div class="feed-item" style="color:var(--red);font-weight:500;display:flex;align-items:center;gap:0.4rem;"><span class="feed-time" style="color:var(--red);display:inline-flex;align-items:center;gap:0.25rem;"><svg class="icon" viewBox="0 0 24 24"><path d="M12 4l10 17H2z"/><path d="M12 10v5"/><circle cx="12" cy="18.2" r="0.6" fill="currentColor"/></svg> Alerta</span> 3 alumnos llevan 3+ días sin actividad</div>
+          </div>
+        </div>
+        <div>
+          <div class="teacher-card">
+            <div class="teacher-card-title"><svg class="icon" viewBox="0 0 24 24"><path d="M12 4l10 17H2z"/><path d="M12 10v5"/><circle cx="12" cy="18.2" r="0.6" fill="currentColor"/></svg> Alumnos con más dificultades esta semana</div>
+            <div class="student-risk-item">
+              <div class="student-avatar">AS</div>
+              <div class="student-risk-info">
+                <div class="student-risk-name">Ana Sánchez</div>
+                <div class="student-risk-detail">5 preguntas sobre m.c.m. · 0/3 en quiz · Última sesión: hoy</div>
+              </div>
+              <span class="student-risk-action">Ver cuaderno</span>
+            </div>
+            <div class="student-risk-item">
+              <div class="student-avatar">DL</div>
+              <div class="student-risk-info">
+                <div class="student-risk-name">Diego López</div>
+                <div class="student-risk-detail">3 sesiones sin avance · 1/3 en quiz · Última sesión: ayer</div>
+              </div>
+              <span class="student-risk-action">Ver cuaderno</span>
+            </div>
+            <div class="student-risk-item">
+              <div class="student-avatar">EM</div>
+              <div class="student-risk-info">
+                <div class="student-risk-name">Elena Moreno</div>
+                <div class="student-risk-detail">Sin actividad en 4 días · No ha hecho el quiz</div>
+              </div>
+              <span class="student-risk-action">Ver cuaderno</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 4: Quiz -->
+    <div class="screen" id="screen-4">
+      <div class="quiz-header">
+        <div>
+          <button class="back-btn" onclick="showScreen(2)" style="display:inline-flex;">←</button>
+          <span style="font-weight:500;font-size:0.85rem;margin-left:0.5rem;">Quiz — Fracciones</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.8rem;">
+          <span class="quiz-progress-text">Pregunta 2 de 3</span>
+          <div class="quiz-progress-bar"><div class="fill" style="width:66%"></div></div>
+        </div>
+      </div>
+
+      <div class="quiz-question-card">
+        <div class="quiz-q-num">Pregunta 2</div>
+        <div class="quiz-q-text">¿Cuál es el resultado de sumar 2/5 + 1/3?</div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="selectQuizOption(this, false)">
+            <span class="opt-letter">A</span> 3/8
+          </div>
+          <div class="quiz-option" onclick="selectQuizOption(this, false)">
+            <span class="opt-letter">B</span> 3/15
+          </div>
+          <div class="quiz-option" onclick="selectQuizOption(this, true)">
+            <span class="opt-letter">C</span> 11/15
+          </div>
+          <div class="quiz-option" onclick="selectQuizOption(this, false)">
+            <span class="opt-letter">D</span> 7/15
+          </div>
+        </div>
+      </div>
+
+      <div class="quiz-feedback" id="quizFeedback"></div>
+    </div>
+
+    <!-- Screen 5: Panel centro -->
+    <div class="screen" id="screen-5">
+      <div class="teacher-header">
+        <div>
+          <div style="font-size:0.72rem;color:var(--gray);">Panel del centro</div>
+          <div style="font-family:'Instrument Serif',serif;font-size:1.2rem;">Colegio San Rafael · Vista dirección</div>
+        </div>
+        <div style="font-size:0.72rem;color:var(--gray);">Curso 2025–2026 · 2º Trimestre</div>
+      </div>
+
+      <!-- KPIs del centro -->
+      <div class="teacher-grid">
+        <div class="stat-card">
+          <div class="stat-value">312</div>
+          <div class="stat-label">Alumnos activos</div>
+          <div class="stat-change up">↑ 14 este mes</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">18</div>
+          <div class="stat-label">Profesores usando la plataforma</div>
+          <div class="stat-change up">↑ 3 vs mes anterior</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">91%</div>
+          <div class="stat-label">Adopción del centro</div>
+          <div class="stat-change up">↑ 8% vs mes anterior</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">38<span style="font-size:0.7rem;font-family:'DM Sans'"> min</span></div>
+          <div class="stat-label">Tiempo medio estudio / alumno</div>
+          <div class="stat-change up">↑ 5 min vs mes anterior</div>
+        </div>
+      </div>
+
+      <div class="teacher-columns">
+        <!-- Rendimiento por departamento -->
+        <div>
+          <div class="teacher-card" style="margin-bottom:0.8rem;">
+            <div class="teacher-card-title"><svg class="icon" viewBox="0 0 24 24"><path d="M4 21V10M10 21V4M16 21V13M22 21V8"/><path d="M3 21h19"/></svg> Rendimiento por departamento</div>
+            <div style="display:flex;flex-direction:column;gap:0.4rem;">
+              <div style="display:flex;align-items:center;gap:0.6rem;padding:0.4rem 0.5rem;background:var(--white);border-radius:6px;">
+                <span style="font-size:0.75rem;width:100px;">Matemáticas</span>
+                <div style="flex:1;height:6px;background:var(--border);border-radius:100px;overflow:hidden;"><div style="width:87%;height:100%;background:var(--green);border-radius:100px;"></div></div>
+                <span style="font-size:0.7rem;color:var(--gray);width:32px;text-align:right;">87%</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:0.6rem;padding:0.4rem 0.5rem;background:var(--white);border-radius:6px;">
+                <span style="font-size:0.75rem;width:100px;">Lengua</span>
+                <div style="flex:1;height:6px;background:var(--border);border-radius:100px;overflow:hidden;"><div style="width:79%;height:100%;background:var(--green);border-radius:100px;"></div></div>
+                <span style="font-size:0.7rem;color:var(--gray);width:32px;text-align:right;">79%</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:0.6rem;padding:0.4rem 0.5rem;background:var(--white);border-radius:6px;">
+                <span style="font-size:0.75rem;width:100px;">Ciencias</span>
+                <div style="flex:1;height:6px;background:var(--border);border-radius:100px;overflow:hidden;"><div style="width:72%;height:100%;background:var(--amber);border-radius:100px;"></div></div>
+                <span style="font-size:0.7rem;color:var(--gray);width:32px;text-align:right;">72%</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:0.6rem;padding:0.4rem 0.5rem;background:var(--white);border-radius:6px;">
+                <span style="font-size:0.75rem;width:100px;">Historia</span>
+                <div style="flex:1;height:6px;background:var(--border);border-radius:100px;overflow:hidden;"><div style="width:68%;height:100%;background:var(--amber);border-radius:100px;"></div></div>
+                <span style="font-size:0.7rem;color:var(--gray);width:32px;text-align:right;">68%</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:0.6rem;padding:0.4rem 0.5rem;background:var(--white);border-radius:6px;">
+                <span style="font-size:0.75rem;width:100px;">Inglés</span>
+                <div style="flex:1;height:6px;background:var(--border);border-radius:100px;overflow:hidden;"><div style="width:91%;height:100%;background:var(--green);border-radius:100px;"></div></div>
+                <span style="font-size:0.7rem;color:var(--gray);width:32px;text-align:right;">91%</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:0.6rem;padding:0.4rem 0.5rem;background:var(--white);border-radius:6px;">
+                <span style="font-size:0.75rem;width:100px;">Geografía</span>
+                <div style="flex:1;height:6px;background:var(--border);border-radius:100px;overflow:hidden;"><div style="width:64%;height:100%;background:var(--red);border-radius:100px;"></div></div>
+                <span style="font-size:0.7rem;color:var(--gray);width:32px;text-align:right;">64%</span>
+              </div>
+            </div>
+            <div style="font-size:0.65rem;color:var(--gray);margin-top:0.5rem;">% participación semanal media del departamento</div>
+          </div>
+
+          <div class="teacher-card">
+            <div class="teacher-card-title"><svg class="icon" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg> Evolución mensual</div>
+            <div style="display:flex;gap:0.5rem;align-items:flex-end;height:80px;padding:0.5rem 0;">
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:0.2rem;">
+                <div style="width:100%;background:var(--border);border-radius:4px 4px 0 0;height:35%;"></div>
+                <span style="font-size:0.6rem;color:var(--gray);">Sep</span>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:0.2rem;">
+                <div style="width:100%;background:var(--border);border-radius:4px 4px 0 0;height:48%;"></div>
+                <span style="font-size:0.6rem;color:var(--gray);">Oct</span>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:0.2rem;">
+                <div style="width:100%;background:var(--border);border-radius:4px 4px 0 0;height:55%;"></div>
+                <span style="font-size:0.6rem;color:var(--gray);">Nov</span>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:0.2rem;">
+                <div style="width:100%;background:var(--border);border-radius:4px 4px 0 0;height:52%;"></div>
+                <span style="font-size:0.6rem;color:var(--gray);">Dic</span>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:0.2rem;">
+                <div style="width:100%;background:var(--border);border-radius:4px 4px 0 0;height:70%;"></div>
+                <span style="font-size:0.6rem;color:var(--gray);">Ene</span>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:0.2rem;">
+                <div style="width:100%;background:var(--border);border-radius:4px 4px 0 0;height:78%;"></div>
+                <span style="font-size:0.6rem;color:var(--gray);">Feb</span>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:0.2rem;">
+                <div style="width:100%;background:var(--border);border-radius:4px 4px 0 0;height:85%;"></div>
+                <span style="font-size:0.6rem;color:var(--gray);">Mar</span>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:0.2rem;">
+                <div style="width:100%;background:var(--black);border-radius:4px 4px 0 0;height:91%;"></div>
+                <span style="font-size:0.6rem;color:var(--black);font-weight:600;">Abr</span>
+              </div>
+            </div>
+            <div style="font-size:0.65rem;color:var(--gray);">Adopción del centro (% alumnos activos / matriculados)</div>
+          </div>
+        </div>
+
+        <!-- Alertas y profesores -->
+        <div>
+          <div class="teacher-card" style="margin-bottom:0.8rem;">
+            <div class="teacher-card-title"><svg class="icon" viewBox="0 0 24 24"><path d="M12 4l10 17H2z"/><path d="M12 10v5"/><circle cx="12" cy="18.2" r="0.6" fill="currentColor"/></svg> Alertas del centro</div>
+            <div class="feed-item" style="color:var(--red);font-weight:500;"><span class="feed-time" style="color:var(--red);">Crítica</span> Geografía 3ºB: 42% de alumnos sin actividad en 5+ días</div>
+            <div class="feed-item" style="color:var(--amber);font-weight:500;"><span class="feed-time" style="color:var(--amber);">Media</span> Historia 2ºA: participación cayó un 15% esta semana</div>
+            <div class="feed-item"><span class="feed-time">Info</span> Inglés 4ºA: mejor ratio de la semana — 91% participación</div>
+            <div class="feed-item"><span class="feed-time">Info</span> 3 profesores aún no han revisado sus paneles esta semana</div>
+          </div>
+
+          <div class="teacher-card">
+            <div class="teacher-card-title"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg> Profesores más activos</div>
+            <div class="student-risk-item">
+              <div class="student-avatar">ML</div>
+              <div class="student-risk-info">
+                <div class="student-risk-name">Marta López</div>
+                <div class="student-risk-detail">Matemáticas · Revisa panel 5 veces/semana · 87% particip.</div>
+              </div>
+            </div>
+            <div class="student-risk-item">
+              <div class="student-avatar">JR</div>
+              <div class="student-risk-info">
+                <div class="student-risk-name">Javier Rodríguez</div>
+                <div class="student-risk-detail">Inglés · Revisa panel 4 veces/semana · 91% particip.</div>
+              </div>
+            </div>
+            <div class="student-risk-item">
+              <div class="student-avatar">CF</div>
+              <div class="student-risk-info">
+                <div class="student-risk-name">Carmen Fernández</div>
+                <div class="student-risk-detail">Lengua · Revisa panel 3 veces/semana · 79% particip.</div>
+              </div>
+            </div>
+            <div style="text-align:center;margin-top:0.6rem;">
+              <span style="font-size:0.7rem;color:var(--gray);text-decoration:underline;cursor:pointer;">Ver todos los profesores →</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- New notebook modal -->
+    <div class="modal-overlay" id="newNotebookModal">
+      <div class="modal-box">
+        <h4>Nuevo cuaderno</h4>
+        <p>¿Sobre qué tema quieres estudiar?</p>
+        <input class="modal-input" placeholder="Ej: Tema 6 — Proporcionalidad" />
+        <div class="modal-actions">
+          <button class="modal-btn-secondary" onclick="closeModal()">Cancelar</button>
+          <button class="modal-btn-primary" onclick="closeModal()">Crear cuaderno</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section" id="features">
+  <p class="section-label reveal">Para el alumno</p>
+  <h2 class="section-title reveal">Todo lo que le falta al estudio en solitario</h2>
+  <p class="section-sub reveal">Cada funcionalidad existe porque resuelve un problema real que nos han contado profesores y alumnos.</p>
+
+  <div class="features-grid">
+    <div class="feature-card reveal">
+      <div class="feature-for">Alumno</div>
+      <div class="feature-emoji"><svg class="icon" viewBox="0 0 24 24"><path d="M9 4a3 3 0 0 0-3 3 3 3 0 0 0-2 5 3 3 0 0 0 2 5 3 3 0 0 0 3 3V4z"/><path d="M15 4a3 3 0 0 1 3 3 3 3 0 0 1 2 5 3 3 0 0 1-2 5 3 3 0 0 1-3 3V4z"/><path d="M9 9h1M14 9h1M9 15h1M14 15h1"/></svg></div>
+      <div class="feature-title">No te da la respuesta — te enseña a encontrarla</div>
+      <div class="feature-desc">La IA usa el método socrático: hace preguntas que guían al alumno hasta que entiende el concepto, no hasta que lo copia. Pensamiento crítico, no atajos.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-for">Alumno</div>
+      <div class="feature-emoji"><svg class="icon" viewBox="0 0 24 24"><path d="M12 22s7-7.5 7-13a7 7 0 1 0-14 0c0 5.5 7 13 7 13z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+      <div class="feature-title">Señala exactamente dónde te pierdes</div>
+      <div class="feature-desc">Selecciona una frase del temario y pregunta sobre ella. La IA entiende el contexto y focaliza la explicación en ese punto exacto, sin divagar.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-for">Alumno</div>
+      <div class="feature-emoji"><svg class="icon" viewBox="0 0 24 24"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v16M15 6v16"/></svg></div>
+      <div class="feature-title">Tu ruta de estudio personal</div>
+      <div class="feature-desc">La IA sabe qué entiendes y qué no. Construye un camino de aprendizaje adaptado a ti, no al alumno medio de la clase.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-for">Alumno</div>
+      <div class="feature-emoji"><svg class="icon" viewBox="0 0 24 24"><path d="M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2V4z"/><path d="M5 18a2 2 0 0 1 2-2h12"/><path d="M9 8h6M9 12h4"/></svg></div>
+      <div class="feature-title">Tus sesiones de estudio quedan guardadas</div>
+      <div class="feature-desc">Cada cuaderno conserva la conversación con la IA, tus notas y tu progreso. Cuando retomas, es como si no hubieras dejado de estudiar.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-for">Profesor</div>
+      <div class="feature-emoji"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="11" y="3" width="6" height="6" rx="1" fill="currentColor" stroke="none" opacity="0.5"/><rect x="3" y="11" width="6" height="6" rx="1" fill="currentColor" stroke="none" opacity="0.85"/><rect x="11" y="11" width="6" height="6" rx="1"/></svg></div>
+      <div class="feature-title">Ve exactamente dónde se atasca la clase</div>
+      <div class="feature-desc">Un mapa de calor sobre el temario muestra qué secciones generan más dudas. Prepara la siguiente clase sabiendo qué necesita refuerzo.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-for">Profesor</div>
+      <div class="feature-emoji"><svg class="icon" viewBox="0 0 24 24"><path d="M6 9a6 6 0 0 1 12 0v5l2 3H4l2-3z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg></div>
+      <div class="feature-title">Detecta alumnos con dificultades antes de que sea tarde</div>
+      <div class="feature-desc">Alertas automáticas cuando un alumno lleva días sin estudiar o se atasca repetidamente. Actúa antes de que se descuelgue.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROFESSOR SECTION -->
+<section class="professor-section" id="profesor">
+  <div class="prof-grid reveal">
+    <div class="prof-content">
+      <p class="section-label" style="text-align:left;">Para el profesor</p>
+      <h3>Pasa de intuir a saber lo que ocurre cuando estudian solos</h3>
+      <p>Hoy no hay forma de saber qué pasa entre que mandas ejercicios y los corriges. Con Marco, cada sesión de estudio genera datos reales sobre comprensión, dificultades y engagement.</p>
+      <div class="prof-features">
+        <div class="prof-feature">
+          <div class="prof-feature-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M4 21V10M10 21V4M16 21V13M22 21V8"/><path d="M3 21h19"/></svg></div>
+          <div class="prof-feature-text">
+            <h4>Mapa de calor por tema</h4>
+            <p>Ve qué partes del temario generan más dudas antes de la siguiente clase.</p>
+          </div>
+        </div>
+        <div class="prof-feature">
+          <div class="prof-feature-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <div class="prof-feature-text">
+            <h4>Acceso a cuadernos de cada alumno</h4>
+            <p>Lee las conversaciones con la IA para entender cómo razona cada estudiante.</p>
+          </div>
+        </div>
+        <div class="prof-feature">
+          <div class="prof-feature-icon"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2"/><path d="M9 2h6"/></svg></div>
+          <div class="prof-feature-text">
+            <h4>Métricas de engagement</h4>
+            <p>Tiempo de estudio, frecuencia de sesiones, comparativa semanal — todo sin preguntar.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="prof-visual">
+      <div style="font-size:0.72rem;color:var(--gray);margin-bottom:0.5rem;">Vista real del panel</div>
+      <div class="stat-card" style="margin-bottom:0.6rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <div class="stat-value" style="font-size:1.4rem;">87%</div>
+            <div class="stat-label">Participación esta semana</div>
+          </div>
+          <div style="font-size:0.7rem;color:var(--green);">↑ 5%</div>
+        </div>
+      </div>
+      <div class="heatmap-doc" style="margin-bottom:0.6rem;">
+        <div class="heatmap-doc-line heat-high"><span class="heat-indicator"></span> 5.3 Suma y resta (m.c.m.)</div>
+        <div class="heatmap-doc-line heat-med"><span class="heat-indicator"></span> 5.4 Multiplicación</div>
+        <div class="heatmap-doc-line heat-ok"><span class="heat-indicator"></span> 5.1 Concepto de fracción</div>
+      </div>
+      <div class="student-risk-item" style="padding:0.4rem 0;border:none;">
+        <div class="student-avatar" style="width:26px;height:26px;font-size:0.6rem;">AS</div>
+        <div class="student-risk-info">
+          <div class="student-risk-name" style="font-size:0.72rem;">Ana Sánchez</div>
+          <div class="student-risk-detail" style="font-size:0.62rem;">5 preguntas sobre m.c.m.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section class="proof-section" id="proof">
+  <p class="section-label reveal">Diseñado con profesores</p>
+  <h2 class="section-title reveal">Responde a problemas reales del aula</h2>
+  <p class="section-sub reveal">Estas son las situaciones que nos contaron profesores en más de 20 entrevistas. Marco nace para resolverlas.</p>
+
+  <div class="proof-grid">
+    <div class="proof-card reveal">
+      <div class="proof-quote">"Mando ejercicios para casa y no tengo forma de saber si los han hecho solos o con ChatGPT. Solo veo el resultado, no el proceso."</div>
+      <div class="proof-author">Profesora de Matemáticas</div>
+      <div class="proof-role">Instituto público, Madrid · 14 años de experiencia</div>
+    </div>
+    <div class="proof-card reveal">
+      <div class="proof-quote">"Hay alumnos que se pierden en el minuto 5 pero no preguntan hasta el examen. Si pudiera verlo antes, cambiaría completamente mi clase."</div>
+      <div class="proof-author">Profesor de Ciencias</div>
+      <div class="proof-role">Colegio concertado, Barcelona · 8 años de experiencia</div>
+    </div>
+    <div class="proof-card reveal">
+      <div class="proof-quote">"Mi hijo se frustra estudiando solo porque no sabe a quién preguntar. No necesita la respuesta — necesita que alguien le guíe."</div>
+      <div class="proof-author">Madre de alumno de 3º ESO</div>
+      <div class="proof-role">Valencia</div>
+    </div>
+  </div>
+
+  <div class="logos-section reveal">
+    <div class="logos-label">Investigación de campo · 2025–2026</div>
+    <div class="proof-stats">
+      <div class="proof-stat">
+        <div class="proof-stat-num">20+</div>
+        <div class="proof-stat-label">profesores entrevistados</div>
+      </div>
+      <div class="proof-stat">
+        <div class="proof-stat-num">5</div>
+        <div class="proof-stat-label">centros consultados</div>
+      </div>
+      <div class="proof-stat">
+        <div class="proof-stat-num">3</div>
+        <div class="proof-stat-label">comunidades autónomas</div>
+      </div>
+      <div class="proof-stat proof-stat-cta">
+        <div class="proof-stat-num"><a href="#feedback" style="color:inherit;text-decoration:none;border-bottom:1px solid currentColor;">+1</a></div>
+        <div class="proof-stat-label">¿añadimos tu centro?</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="form-section" id="feedback">
+  <p class="section-label reveal">Tu opinión moldea el producto</p>
+  <h2 class="section-title reveal">Ayúdanos a construirlo bien</h2>
+  <p class="section-sub reveal">Estamos en fase de desarrollo. Este formulario tarda 2 minutos y nos ayuda a tomar decisiones reales sobre qué construir primero.</p>
+
+  <div class="form-wrap reveal">
+    <div id="form-content">
+      <div class="form-progress" id="formProgress">
+        <div class="form-progress-step active"></div>
+        <div class="form-progress-step"></div>
+        <div class="form-progress-step"></div>
+      </div>
+
+      <!-- Step 1: Segmentación -->
+      <div class="form-step active" id="formStep1">
+        <div class="form-group">
+          <label class="form-label">¿Cuál es tu perfil?</label>
+          <select class="form-select" id="formRole" onchange="onRoleChange()">
+            <option value="">Selecciona una opción</option>
+            <option value="profesor">Profesor/a</option>
+            <option value="alumno">Alumno/a</option>
+            <option value="direccion">Director/a o equipo directivo</option>
+            <option value="padre">Padre / Madre</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nombre <span class="form-label-hint">(opcional)</span></label>
+          <input class="form-input" type="text" placeholder="Tu nombre" id="formName" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Centro educativo <span class="form-label-hint">(opcional)</span></label>
+          <input class="form-input" type="text" placeholder="Nombre del colegio o instituto" id="formCenter" />
+        </div>
+        <div class="form-nav">
+          <button class="form-btn-next" onclick="nextStep(2)">Siguiente →</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Preguntas según perfil -->
+      <div class="form-step" id="formStep2">
+
+        <!-- Profesor questions -->
+        <div id="qProfesor" class="hidden">
+          <div class="form-group">
+            <label class="form-label">¿Qué herramientas digitales usan tus alumnos cuando estudian solos?</label>
+            <div class="checkbox-group">
+              <label class="checkbox-item"><input type="checkbox"> Ninguna específica</label>
+              <label class="checkbox-item"><input type="checkbox"> ChatGPT u otra IA genérica</label>
+              <label class="checkbox-item"><input type="checkbox"> YouTube / vídeos</label>
+              <label class="checkbox-item"><input type="checkbox"> Google / búsquedas</label>
+              <label class="checkbox-item"><input type="checkbox"> Plataformas del centro (Moodle, Classroom...)</label>
+              <label class="checkbox-item"><input type="checkbox"> Apps educativas (Khan Academy, Photomath...)</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Cuánto tiempo dedicas a resolver dudas individuales fuera del aula?</label>
+            <div class="scale-group">
+              <button class="scale-btn" onclick="selectScale(this)">Nada</button>
+              <button class="scale-btn" onclick="selectScale(this)">Poco</button>
+              <button class="scale-btn" onclick="selectScale(this)">Algo</button>
+              <button class="scale-btn" onclick="selectScale(this)">Bastante</button>
+              <button class="scale-btn" onclick="selectScale(this)">Mucho</button>
+            </div>
+            <div class="scale-labels"><span>0 h/semana</span><span>5+ h/semana</span></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Sabes qué partes del temario generan más dudas? ¿Cómo lo sabrías hoy?</label>
+            <textarea class="form-textarea" placeholder="Cuéntanos cómo detectas hoy las dificultades de tus alumnos..."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Valora cada funcionalidad del 1 al 5</label>
+            <div style="display:flex;flex-direction:column;gap:0.8rem;">
+              <div>
+                <div style="font-size:0.78rem;color:#aaa;margin-bottom:0.3rem;">Método socrático (IA que guía sin dar la respuesta)</div>
+                <div class="rating-group"><button class="rating-btn" onclick="selectRating(this)">1</button><button class="rating-btn" onclick="selectRating(this)">2</button><button class="rating-btn" onclick="selectRating(this)">3</button><button class="rating-btn" onclick="selectRating(this)">4</button><button class="rating-btn" onclick="selectRating(this)">5</button></div>
+              </div>
+              <div>
+                <div style="font-size:0.78rem;color:#aaa;margin-bottom:0.3rem;">Mapa de calor de dudas por tema</div>
+                <div class="rating-group"><button class="rating-btn" onclick="selectRating(this)">1</button><button class="rating-btn" onclick="selectRating(this)">2</button><button class="rating-btn" onclick="selectRating(this)">3</button><button class="rating-btn" onclick="selectRating(this)">4</button><button class="rating-btn" onclick="selectRating(this)">5</button></div>
+              </div>
+              <div>
+                <div style="font-size:0.78rem;color:#aaa;margin-bottom:0.3rem;">Alertas de alumnos con dificultades</div>
+                <div class="rating-group"><button class="rating-btn" onclick="selectRating(this)">1</button><button class="rating-btn" onclick="selectRating(this)">2</button><button class="rating-btn" onclick="selectRating(this)">3</button><button class="rating-btn" onclick="selectRating(this)">4</button><button class="rating-btn" onclick="selectRating(this)">5</button></div>
+              </div>
+              <div>
+                <div style="font-size:0.78rem;color:#aaa;margin-bottom:0.3rem;">Acceso a cuadernos de cada alumno</div>
+                <div class="rating-group"><button class="rating-btn" onclick="selectRating(this)">1</button><button class="rating-btn" onclick="selectRating(this)">2</button><button class="rating-btn" onclick="selectRating(this)">3</button><button class="rating-btn" onclick="selectRating(this)">4</button><button class="rating-btn" onclick="selectRating(this)">5</button></div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Qué tendría que tener sí o sí para que lo propusieras en tu centro?</label>
+            <textarea class="form-textarea" placeholder="Lo imprescindible para que te lo plantees..."></textarea>
+          </div>
+        </div>
+
+        <!-- Alumno questions -->
+        <div id="qAlumno" class="hidden">
+          <div class="form-group">
+            <label class="form-label">¿Qué haces cuando te atascas estudiando solo/a?</label>
+            <div class="checkbox-group">
+              <label class="checkbox-item"><input type="checkbox"> Pregunto a ChatGPT o una IA</label>
+              <label class="checkbox-item"><input type="checkbox"> Busco en YouTube</label>
+              <label class="checkbox-item"><input type="checkbox"> Pregunto a un compañero/a</label>
+              <label class="checkbox-item"><input type="checkbox"> Pregunto a mis padres</label>
+              <label class="checkbox-item"><input type="checkbox"> Lo dejo y paso a otra cosa</label>
+              <label class="checkbox-item"><input type="checkbox"> Espero a preguntar al profesor en clase</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Cuántas horas estudias solo/a a la semana?</label>
+            <div class="scale-group">
+              <button class="scale-btn" onclick="selectScale(this)">0–2h</button>
+              <button class="scale-btn" onclick="selectScale(this)">2–5h</button>
+              <button class="scale-btn" onclick="selectScale(this)">5–8h</button>
+              <button class="scale-btn" onclick="selectScale(this)">8–12h</button>
+              <button class="scale-btn" onclick="selectScale(this)">12+h</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Qué es lo más frustrante de estudiar sin ayuda?</label>
+            <textarea class="form-textarea" placeholder="Cuéntanos lo que más te cuesta..."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Qué te ha parecido la demo que acabas de ver? Del 1 al 5</label>
+            <div class="rating-group">
+              <button class="rating-btn" onclick="selectRating(this)">1</button>
+              <button class="rating-btn" onclick="selectRating(this)">2</button>
+              <button class="rating-btn" onclick="selectRating(this)">3</button>
+              <button class="rating-btn" onclick="selectRating(this)">4</button>
+              <button class="rating-btn" onclick="selectRating(this)">5</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Lo usarías si tu colegio lo tuviera?</label>
+            <select class="form-select">
+              <option value="">Selecciona</option>
+              <option>Sí, seguro</option>
+              <option>Probablemente sí</option>
+              <option>No lo sé</option>
+              <option>Probablemente no</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Dirección questions -->
+        <div id="qDireccion" class="hidden">
+          <div class="form-group">
+            <label class="form-label">¿Han adoptado alguna herramienta de IA en el centro?</label>
+            <select class="form-select">
+              <option value="">Selecciona</option>
+              <option>Sí, varias</option>
+              <option>Sí, alguna puntual</option>
+              <option>No, pero estamos valorándolo</option>
+              <option>No, y no está en nuestros planes ahora</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Si han adoptado alguna, ¿cuál?</label>
+            <input class="form-input" type="text" placeholder="Nombre de la herramienta o herramientas" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Quién toma la decisión de incorporar nuevas herramientas educativas?</label>
+            <div class="checkbox-group">
+              <label class="checkbox-item"><input type="checkbox"> Dirección</label>
+              <label class="checkbox-item"><input type="checkbox"> Coordinación pedagógica</label>
+              <label class="checkbox-item"><input type="checkbox"> Los propios profesores</label>
+              <label class="checkbox-item"><input type="checkbox"> Comité o consejo escolar</label>
+              <label class="checkbox-item"><input type="checkbox"> Otro</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Cuál es el proceso habitual para evaluar una nueva herramienta?</label>
+            <textarea class="form-textarea" placeholder="Ej: piloto con un grupo, evaluación del claustro, aprobación del consejo..."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Estarían interesados en un piloto gratuito de un trimestre?</label>
+            <select class="form-select">
+              <option value="">Selecciona</option>
+              <option>Sí, nos interesa</option>
+              <option>Posiblemente, necesitamos más información</option>
+              <option>No por ahora</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Padre questions -->
+        <div id="qPadre" class="hidden">
+          <div class="form-group">
+            <label class="form-label">¿Tu hijo/a usa alguna herramienta de IA para estudiar?</label>
+            <select class="form-select">
+              <option value="">Selecciona</option>
+              <option>Sí, ChatGPT o similar</option>
+              <option>Sí, apps educativas</option>
+              <option>No, que yo sepa</option>
+              <option>No lo sé</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Te preocupa que las IAs le den las respuestas directamente?</label>
+            <div class="scale-group">
+              <button class="scale-btn" onclick="selectScale(this)">1</button>
+              <button class="scale-btn" onclick="selectScale(this)">2</button>
+              <button class="scale-btn" onclick="selectScale(this)">3</button>
+              <button class="scale-btn" onclick="selectScale(this)">4</button>
+              <button class="scale-btn" onclick="selectScale(this)">5</button>
+            </div>
+            <div class="scale-labels"><span>Nada</span><span>Mucho</span></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Qué te ha parecido la demo? Del 1 al 5</label>
+            <div class="rating-group">
+              <button class="rating-btn" onclick="selectRating(this)">1</button>
+              <button class="rating-btn" onclick="selectRating(this)">2</button>
+              <button class="rating-btn" onclick="selectRating(this)">3</button>
+              <button class="rating-btn" onclick="selectRating(this)">4</button>
+              <button class="rating-btn" onclick="selectRating(this)">5</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Sugerirías esta herramienta al colegio de tu hijo/a?</label>
+            <select class="form-select">
+              <option value="">Selecciona</option>
+              <option>Sí, sin duda</option>
+              <option>Posiblemente</option>
+              <option>Necesitaría saber más</option>
+              <option>No</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-nav">
+          <button class="form-btn-back" onclick="prevStep(1)">← Atrás</button>
+          <button class="form-btn-next" onclick="nextStep(3)">Siguiente →</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Contacto + resumen -->
+      <div class="form-step" id="formStep3">
+        <div class="form-group" id="pilotQuestion">
+          <label class="form-label">¿Te gustaría ser parte del grupo que lo prueba primero?</label>
+          <select class="form-select" id="formPilot">
+            <option value="">Selecciona</option>
+            <option value="si_mucho">Sí, me interesa mucho</option>
+            <option value="si_depende">Sí, dependiendo de cómo funcione</option>
+            <option value="no">No por ahora</option>
+            <option value="info">Necesito más información</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email de contacto <span class="form-label-hint">(para mantenerte al tanto del lanzamiento)</span></label>
+          <input class="form-input" type="email" placeholder="tu@email.com" id="formEmail" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">¿Algo más que quieras contarnos?</label>
+          <textarea class="form-textarea" placeholder="Cualquier idea, preocupación o sugerencia..."></textarea>
+        </div>
+
+        <div class="form-summary" id="formSummary"></div>
+
+        <div class="form-nav">
+          <button class="form-btn-back" onclick="prevStep(2)">← Atrás</button>
+          <button class="form-btn-next" onclick="submitForm()">Enviar mi opinión →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Thank you screens -->
+    <div class="thankyou" id="thankyouProfesor">
+      <div class="thankyou-icon"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3L17 9"/></svg></div>
+      <h3>Gracias de verdad.</h3>
+      <p>Tu feedback llega directo al equipo que está construyendo Marco. Nos importa especialmente la perspectiva del profesor — sois quienes mejor conocéis las necesidades del aula.</p>
+      <div class="email-confirm" id="emailConfirmProf" style="display:none;">
+        <svg class="icon icon-inline" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>Te hemos enviado un email de confirmación
+      </div>
+    </div>
+
+    <div class="thankyou" id="thankyouAlumno">
+      <div class="thankyou-icon"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3L17 9"/></svg></div>
+      <h3>¡Gracias!</h3>
+      <p>Tu opinión es clave para construir algo que de verdad os sea útil. Si has dejado tu email, serás de los primeros en probarlo.</p>
+      <div class="email-confirm" id="emailConfirmAlum" style="display:none;">
+        <svg class="icon icon-inline" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>Te hemos enviado un email de confirmación
+      </div>
+    </div>
+
+    <div class="thankyou" id="thankyouDireccion">
+      <div class="thankyou-icon"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3L17 9"/></svg></div>
+      <h3>Gracias por su interés.</h3>
+      <p>Nos encantaría organizar una presentación personalizada para su equipo. Si ha dejado su email, nos pondremos en contacto en menos de 48 horas.</p>
+      <div class="email-confirm" id="emailConfirmDir" style="display:none;">
+        <svg class="icon icon-inline" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>Le hemos enviado un email de confirmación
+      </div>
+    </div>
+
+    <div class="thankyou" id="thankyouPadre">
+      <div class="thankyou-icon"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3L17 9"/></svg></div>
+      <h3>¡Gracias!</h3>
+      <p>La perspectiva de las familias nos importa mucho. Si has dejado tu email, te avisaremos cuando lancemos el programa piloto.</p>
+      <div class="email-confirm" id="emailConfirmPadre" style="display:none;">
+        <svg class="icon icon-inline" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>Te hemos enviado un email de confirmación
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">
+        <svg viewBox="100 75 175 80" xmlns="http://www.w3.org/2000/svg" aria-label="Marco aprende">
+          <rect x="108" y="80" width="122" height="50" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <text x="118" y="118" class="nb-marco">Marco</text>
+          <text x="199" y="146" class="nb-aprende">aprende</text>
+        </svg>
+      </div>
+      <p class="footer-tagline">Una IA que enseña a pensar. Diseñada para el aula real.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Producto</div>
+      <ul class="footer-links">
+        <li><a href="#demo">Demo interactiva</a></li>
+        <li><a href="#features">Funcionalidades</a></li>
+        <li><a href="#proof">Investigación</a></li>
+        <li><a href="#feedback">Programa piloto</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contacto</div>
+      <ul class="footer-links">
+        <li><a href="mailto:hola@marco.study">hola@marco.study</a></li>
+        <li><a href="mailto:centros@marco.study">centros@marco.study</a></li>
+        <li><a href="#feedback">Formulario</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Legal</div>
+      <ul class="footer-links">
+        <li><a href="#privacidad">Privacidad</a></li>
+        <li><a href="#terminos">Términos</a></li>
+        <li><a href="#cookies">Cookies</a></li>
+        <li><a href="#aviso">Aviso legal</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 Marco · Hecho con cuidado para el aula real</div>
+    <div class="footer-bottom-links">
+      <a href="#privacidad">Privacidad</a>
+      <a href="#terminos">Términos</a>
+      <a href="#cookies">Cookies</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── Intro splash: skip on subsequent navs in same session, FLIP al navbar ──
+(function() {
+  const splash = document.getElementById('introSplash');
+  if (!splash) return;
+  const body = document.body;
+  const navBrandEl = document.querySelector('.nav-brand');
+  let alreadyPlayed = false;
+  try { alreadyPlayed = sessionStorage.getItem('marcoIntroPlayed') === '1'; } catch (e) {}
+  const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (alreadyPlayed || reduced) {
+    splash.remove();
+    body.classList.remove('intro-locked');
+    return;
+  }
+  // Forzar el navbar logo en estado desplegado durante la intro
+  if (navBrandEl) {
+    navBrandEl.classList.add('nb-force-open');
+    // Tras 5s del load, quitar la fuerza y dejar que el estado dependa del scroll
+    setTimeout(() => {
+      navBrandEl.classList.remove('nb-force-open');
+      if (window.__navBrandSync) window.__navBrandSync();
+    }, 5000);
+  }
+  // Tras la animación (~2.55s) + hold (~0.45s), el SVG vuela al navbar
+  setTimeout(() => {
+    const svg = splash.querySelector('svg');
+    const navFrame = document.getElementById('navBrandFrame');
+    if (!svg || !navFrame) {
+      splash.remove();
+      body.classList.remove('intro-locked');
+      return;
+    }
+    // El frame del SVG está en x=108..246, y=80..130 dentro del viewBox 400x200
+    // Calculamos las coords reales del frame en pantalla
+    const svgRect = svg.getBoundingClientRect();
+    const scaleSvg = svgRect.width / 400;
+    const frameCx = svgRect.left + (108 + 122/2) * scaleSvg;
+    const frameCy = svgRect.top + (80 + 50/2) * scaleSvg;
+    const frameW = 122 * scaleSvg;
+    const navRect = navFrame.getBoundingClientRect();
+    const targetCx = navRect.left + navRect.width/2;
+    const targetCy = navRect.top + navRect.height/2;
+    const finalScale = navRect.width / frameW;
+    const tx = targetCx - frameCx;
+    const ty = targetCy - frameCy;
+    splash.classList.add('intro-flying');
+    svg.style.transformOrigin = `${169 * scaleSvg}px ${105 * scaleSvg}px`;
+    svg.style.transform = `translate(${tx}px, ${ty}px) scale(${finalScale})`;
+    // Desbloquear scroll y revelar navbar/CTAs en paralelo al vuelo
+    body.classList.remove('intro-locked');
+    // Desvanecer SVG cuando llega
+    setTimeout(() => { svg.style.opacity = '0'; }, 600);
+    // Quitar splash del DOM
+    setTimeout(() => {
+      splash.remove();
+      try { sessionStorage.setItem('marcoIntroPlayed', '1'); } catch (e) {}
+    }, 1100);
+  }, 3000);
+})();
+
+// ── Nav brand: hover-to-expand (JS-driven para soporte cross-browser) ──
+(function() {
+  const navBrand = document.querySelector('.nav-brand');
+  if (!navBrand) return;
+
+  const lines = {
+    'nb-l-v':     { closed: { x1: 160, x2: 160 }, open: { x1: 108, x2: 108 } },
+    'nb-tl-stub': { closed: { x1: 160, x2: 170 }, open: { x1: 108, x2: 169 } },
+    'nb-bl-stub': { closed: { x1: 160, x2: 170 }, open: { x1: 108, x2: 169 } },
+    'nb-r-v':     { closed: { x1: 190, x2: 190 }, open: { x1: 230, x2: 230 } },
+    'nb-tr-stub': { closed: { x1: 190, x2: 180 }, open: { x1: 230, x2: 169 } },
+    'nb-br-stub': { closed: { x1: 190, x2: 180 }, open: { x1: 230, x2: 169 } },
+  };
+  const clips = {
+    'nb-marco-clip':   { closed: { x: 175, width: 0 }, open: { x: 108, width: 122 } },
+    'nb-aprende-clip': { closed: { width: 0 },         open: { width: 72 } },
+  };
+
+  // Animaciones activas por (elemento, atributo) — usamos WeakMap para evitar leaks
+  const running = new WeakMap();
+  function getAnimRef(el) {
+    let m = running.get(el);
+    if (!m) { m = {}; running.set(el, m); }
+    return m;
+  }
+
+  // Easing aprox. cubic-bezier(0.5, 0, 0.2, 1)
+  function ease(t) {
+    return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+  }
+
+  function animateAttr(el, attr, toVal, duration, delayMs) {
+    if (!el) return;
+    const refs = getAnimRef(el);
+    if (refs[attr]) cancelAnimationFrame(refs[attr]);
+    const fromVal = parseFloat(el.getAttribute(attr)) || 0;
+    if (fromVal === toVal) { refs[attr] = 0; return; }
+    if (duration <= 0) { el.setAttribute(attr, toVal); refs[attr] = 0; return; }
+    const startAt = performance.now() + (delayMs || 0);
+    function step(now) {
+      if (now < startAt) {
+        refs[attr] = requestAnimationFrame(step);
+        return;
+      }
+      const t = Math.min((now - startAt) / duration, 1);
+      const v = fromVal + (toVal - fromVal) * ease(t);
+      el.setAttribute(attr, v);
+      if (t < 1) {
+        refs[attr] = requestAnimationFrame(step);
+      } else {
+        refs[attr] = 0;
+      }
+    }
+    refs[attr] = requestAnimationFrame(step);
+  }
+
+  function applyState(state, durLines, durAprende, aprendeDelayOnOpen) {
+    Object.keys(lines).forEach(cls => {
+      const el = navBrand.querySelector('.' + cls);
+      const target = lines[cls][state];
+      Object.keys(target).forEach(attr => animateAttr(el, attr, target[attr], durLines, 0));
+    });
+    // Marco clip: misma duración que las líneas (revela en paralelo)
+    const marcoEl = navBrand.querySelector('.nb-marco-clip');
+    Object.keys(clips['nb-marco-clip'][state]).forEach(attr => {
+      animateAttr(marcoEl, attr, clips['nb-marco-clip'][state][attr], durLines, 0);
+    });
+    // Aprende clip: con delay solo al abrir
+    const aprendeEl = navBrand.querySelector('.nb-aprende-clip');
+    const aprDelay = state === 'open' ? aprendeDelayOnOpen : 0;
+    Object.keys(clips['nb-aprende-clip'][state]).forEach(attr => {
+      animateAttr(aprendeEl, attr, clips['nb-aprende-clip'][state][attr], durAprende, aprDelay);
+    });
+  }
+
+  const navbar = document.getElementById('navbar');
+  let isHovered = false;
+  // Estado inicial: si hay nb-force-open o navegamos al top sin scroll, abrir; si no, cerrar
+  function shouldBeOpen() {
+    if (isHovered) return true;
+    if (navBrand.classList.contains('nb-force-open')) return true;
+    if (!navbar) return true;
+    return !navbar.classList.contains('scrolled');
+  }
+
+  let isOpen = shouldBeOpen();
+  if (isOpen) {
+    applyState('open', 0, 0, 0);
+  } else {
+    navBrand.classList.add('nb-collapsed');
+  }
+
+  function syncState(durOpenLines, durOpenApr, aprDelay, durCloseLines, durCloseApr) {
+    const target = shouldBeOpen();
+    if (target && !isOpen) {
+      isOpen = true;
+      navBrand.classList.remove('nb-collapsed');
+      applyState('open', durOpenLines || 750, durOpenApr || 550, aprDelay !== undefined ? aprDelay : 380);
+    } else if (!target && isOpen) {
+      isOpen = false;
+      navBrand.classList.add('nb-collapsed');
+      applyState('closed', durCloseLines || 620, durCloseApr || 380, 0);
+    }
+  }
+
+  navBrand.addEventListener('mouseenter', () => { isHovered = true; syncState(); });
+  navBrand.addEventListener('mouseleave', () => { isHovered = false; syncState(); });
+
+  // Observar cambios en navbar (.scrolled) y navBrand (.nb-force-open)
+  if (navbar) {
+    const navbarObs = new MutationObserver(() => syncState());
+    navbarObs.observe(navbar, { attributes: true, attributeFilter: ['class'] });
+  }
+  // Para nb-force-open, exponer la sync al splash IIFE (que la llamará tras quitar la clase)
+  window.__navBrandSync = () => syncState();
+})();
+
+// ── Profile toggle ──
+const heroTitles = {
+  profesor: 'Tus alumnos estudian solos.<br><em>¿Sabes dónde se pierden?</em>',
+  alumno: 'Cuando te atascas estudiando,<br><em>¿a quién le preguntas?</em>',
+  centro: 'Adoptar IA en el aula<br><em>sin perder el control.</em>'
+};
+
+const heroSubs = {
+  profesor: 'Una IA que no da respuestas — hace las preguntas correctas para que el alumno llegue solo a la solución. Tú ves exactamente dónde se atasca cada uno.',
+  alumno: 'Una IA que no te da la respuesta — te hace las preguntas justas para que la encuentres tú. Como tener un profesor particular que te conoce.',
+  centro: 'Visibilidad total sobre cómo estudian vuestros alumnos, qué departamentos adoptan la herramienta y dónde se concentran las dificultades. Datos reales para decisiones reales.'
+};
+
+const ctaTexts = {
+  profesor: '¿Lo pruebas con tu clase?',
+  alumno: 'Quiero apuntarme a la beta',
+  centro: 'Hablemos de un piloto'
+};
+
+function setProfile(profile) {
+  document.querySelectorAll('.profile-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('heroTitle').innerHTML = heroTitles[profile];
+  document.getElementById('heroSub').textContent = heroSubs[profile];
+  const ctaEl = document.getElementById('floatingCtaText');
+  if (ctaEl) ctaEl.textContent = ctaTexts[profile];
+  // Pre-select rol en formulario
+  const roleSel = document.getElementById('formRole');
+  if (roleSel) roleSel.value = profile === 'centro' ? 'direccion' : profile;
+}
+
+// ── Navbar scroll ──
+const navbar = document.getElementById('navbar');
+const hero = document.getElementById('hero');
+const floatingCta = document.getElementById('floatingCta');
+
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY > 50;
+  navbar.classList.toggle('scrolled', scrolled);
+
+  const pastHero = window.scrollY > hero.offsetHeight * 0.8;
+  floatingCta.classList.toggle('visible', pastHero);
+});
+
+// ── Mobile hamburger menu ──
+const navToggle = document.getElementById('navToggle');
+const navLinks = document.getElementById('navLinks');
+if (navToggle && navLinks) {
+  navToggle.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+}
+
+// ── Demo tabs ──
+const tabLabels = [
+  'Inicio — Mis asignaturas',
+  'Matemáticas — Cuadernos',
+  'Tema 5 — Estudiando con IA',
+  'Panel del Profesor',
+  'Quiz — Fracciones',
+  'Panel del Centro'
+];
+
+function showScreen(i) {
+  document.querySelectorAll('.screen').forEach((s, idx) => {
+    s.classList.toggle('active', idx === i);
+  });
+  document.querySelectorAll('.demo-tab').forEach((t, idx) => {
+    t.classList.toggle('active', idx === i);
+  });
+  document.getElementById('app-tab-label').textContent = tabLabels[i];
+}
+
+// ── Modal ──
+function openModal() {
+  document.getElementById('newNotebookModal').classList.add('active');
+}
+
+function closeModal() {
+  document.getElementById('newNotebookModal').classList.remove('active');
+}
+
+// ── Quiz ──
+function selectQuizOption(el, isCorrect) {
+  const options = el.parentElement.querySelectorAll('.quiz-option');
+  const alreadyAnswered = el.parentElement.querySelector('.quiz-option.correct, .quiz-option.wrong');
+  if (alreadyAnswered) return;
+
+  options.forEach(o => {
+    if (o.dataset.correct === undefined) {
+      // Mark the correct one
+    }
+  });
+
+  if (isCorrect) {
+    el.classList.add('correct');
+    showQuizFeedback(true);
+  } else {
+    el.classList.add('wrong');
+    // Find and highlight correct
+    options.forEach(o => {
+      if (o.onclick && o.onclick.toString().includes('true')) {
+        o.classList.add('correct');
+      }
+    });
+    // Fallback: mark third option as correct
+    if (!el.parentElement.querySelector('.correct')) {
+      options[2].classList.add('correct');
+    }
+    showQuizFeedback(false);
+  }
+}
+
+function showQuizFeedback(correct) {
+  const fb = document.getElementById('quizFeedback');
+  if (correct) {
+    fb.innerHTML = '<div class="quiz-feedback-header"><svg class="icon icon-inline" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.8 2.8L16 9.5"/></svg> ¡Correcto!</div>Exacto. Para sumar 2/5 + 1/3, buscamos el m.c.m. de 5 y 3, que es 15. Convertimos: 2/5 = 6/15 y 1/3 = 5/15. Entonces 6/15 + 5/15 = 11/15. ¿Podrías explicar con tus palabras por qué necesitamos el m.c.m.?';
+  } else {
+    fb.innerHTML = '<div class="quiz-feedback-header"><svg class="icon icon-inline" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></svg> No exactamente</div>Piensa en lo que hemos trabajado en el cuaderno. Si tienes una pizza cortada en 5 trozos y otra en 3 trozos, ¿puedes sumar trozos directamente? ¿Qué tamaño de trozo necesitas para que funcione con las dos pizzas? Recuerda: el m.c.m. de 5 y 3 es 15. Prueba a convertir cada fracción a quinceavo.';
+  }
+  fb.classList.add('visible');
+}
+
+// ── Rating ──
+function selectRating(btn) {
+  const group = btn.parentElement;
+  group.querySelectorAll('.rating-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+// ── Scale ──
+function selectScale(btn) {
+  const group = btn.parentElement;
+  group.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+// ── Form logic ──
+let currentStep = 1;
+
+function onRoleChange() {
+  const role = document.getElementById('formRole').value;
+  document.querySelectorAll('#qProfesor, #qAlumno, #qDireccion, #qPadre').forEach(el => el.classList.add('hidden'));
+  const map = { profesor: 'qProfesor', alumno: 'qAlumno', direccion: 'qDireccion', padre: 'qPadre' };
+  if (map[role]) document.getElementById(map[role]).classList.remove('hidden');
+}
+
+function nextStep(step) {
+  if (step === 2) {
+    const role = document.getElementById('formRole').value;
+    if (!role) { alert('Por favor, selecciona tu perfil'); return; }
+  }
+  currentStep = step;
+  updateFormStep();
+  if (step === 3) buildSummary();
+}
+
+function prevStep(step) {
+  currentStep = step;
+  updateFormStep();
+}
+
+function updateFormStep() {
+  document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+  document.getElementById('formStep' + currentStep).classList.add('active');
+  document.querySelectorAll('.form-progress-step').forEach((s, i) => {
+    s.classList.toggle('active', i < currentStep);
+  });
+}
+
+function buildSummary() {
+  const role = document.getElementById('formRole').value;
+  const name = document.getElementById('formName').value;
+  const center = document.getElementById('formCenter').value;
+  const roleLabels = { profesor: 'Profesor/a', alumno: 'Alumno/a', direccion: 'Dirección', padre: 'Padre/Madre' };
+
+  let html = '';
+  html += '<div class="summary-item"><span class="summary-label">Perfil</span><span class="summary-value">' + (roleLabels[role] || '—') + '</span></div>';
+  if (name) html += '<div class="summary-item"><span class="summary-label">Nombre</span><span class="summary-value">' + name + '</span></div>';
+  if (center) html += '<div class="summary-item"><span class="summary-label">Centro</span><span class="summary-value">' + center + '</span></div>';
+  html += '<div class="summary-item"><span class="summary-label">Preguntas respondidas</span><span class="summary-value">Sección completada</span></div>';
+
+  document.getElementById('formSummary').innerHTML = html;
+}
+
+// ── Configuración del endpoint del formulario ──
+// Sustituye por tu endpoint real (Formspree, Web3Forms, Getform, etc.)
+// Ej: 'https://formspree.io/f/xxxxxxxx'
+// Si lo dejas vacío, el formulario abrirá un mailto: con los datos.
+const MARCO_FORM_ENDPOINT = '';
+const MARCO_CONTACT_EMAIL = 'hola@marco.study';
+
+function collectFormData() {
+  const data = {
+    rol: document.getElementById('formRole').value,
+    nombre: document.getElementById('formName')?.value || '',
+    centro: document.getElementById('formCenter')?.value || '',
+    email: document.getElementById('formEmail')?.value || '',
+    enviado_en: new Date().toISOString(),
+    pagina: window.location.href
+  };
+  // Recoge respuestas del paso 2 (visibles)
+  const activeBlock = document.querySelector('#formStep2 > div:not(.hidden)');
+  if (activeBlock) {
+    const checks = [...activeBlock.querySelectorAll('input[type=checkbox]:checked')]
+      .map(c => c.parentElement.textContent.trim());
+    if (checks.length) data.opciones = checks.join(' | ');
+    const scaleSel = activeBlock.querySelector('.scale-btn.selected');
+    if (scaleSel) data.escala = scaleSel.textContent.trim();
+    const ratings = [...activeBlock.querySelectorAll('.rating-group')].map(g => {
+      const sel = g.querySelector('.rating-btn.selected');
+      const label = g.previousElementSibling?.textContent.trim() || '';
+      return sel ? `${label}: ${sel.textContent.trim()}` : null;
+    }).filter(Boolean);
+    if (ratings.length) data.valoraciones = ratings.join(' | ');
+    const textareas = [...activeBlock.querySelectorAll('textarea')]
+      .map(t => t.value.trim()).filter(Boolean);
+    if (textareas.length) data.respuestas_abiertas = textareas.join(' || ');
+  }
+  return data;
+}
+
+function showThankYou(role, hasEmail) {
+  document.getElementById('form-content').style.display = 'none';
+  const thankyouMap = {
+    profesor: 'thankyouProfesor',
+    alumno: 'thankyouAlumno',
+    direccion: 'thankyouDireccion',
+    padre: 'thankyouPadre'
+  };
+  const confirmMap = {
+    profesor: 'emailConfirmProf',
+    alumno: 'emailConfirmAlum',
+    direccion: 'emailConfirmDir',
+    padre: 'emailConfirmPadre'
+  };
+  const targetId = thankyouMap[role] || 'thankyouProfesor';
+  document.getElementById(targetId).style.display = 'block';
+  if (hasEmail && confirmMap[role]) {
+    document.getElementById(confirmMap[role]).style.display = 'inline-flex';
+  }
+  // Scroll suave al thank-you
+  document.getElementById(targetId).scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+async function submitForm() {
+  const data = collectFormData();
+  const btn = document.querySelector('.form-btn-next[onclick="submitForm()"]');
+  if (btn) { btn.disabled = true; btn.textContent = 'Enviando…'; }
+
+  // Caso 1: hay endpoint configurado → POST
+  if (MARCO_FORM_ENDPOINT) {
+    try {
+      const res = await fetch(MARCO_FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      if (!res.ok) throw new Error('Bad response');
+      showThankYou(data.rol, !!data.email);
+      return;
+    } catch (e) {
+      console.warn('Form POST falló, abriendo mailto fallback', e);
+    }
+  }
+
+  // Caso 2: sin endpoint o error → fallback mailto
+  const subject = encodeURIComponent(`[Marco] Feedback de ${data.rol || 'visitante'}${data.nombre ? ' — ' + data.nombre : ''}`);
+  const lines = Object.entries(data).map(([k, v]) => `${k}: ${v}`).join('\n');
+  const body = encodeURIComponent(lines);
+  window.location.href = `mailto:${MARCO_CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+
+  showThankYou(data.rol, !!data.email);
+}
+
+// ── Intersection observer ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
