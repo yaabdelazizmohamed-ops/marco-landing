@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel de Dirección — Colegio San Rafael · Marco</title>
+<meta name="description" content="Vista de dirección del centro: adopción, alertas, rendimiento por departamento.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0a0a'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='38' font-style='italic' fill='%23fafaf8' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles/tokens.css">
+<style>
+html, body { height: 100%; }
+body { background: var(--product-soft-2); overflow-x: hidden; }
+
+/* ─── Top nav ─── */
+.dash-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--space-3) var(--space-6);
+  background: var(--white);
+  border-bottom: 1px solid var(--border-soft);
+}
+.dash-nav-left { display: flex; align-items: center; gap: var(--space-6); }
+.dash-brand { display: inline-block; line-height: 0; color: var(--black); text-decoration: none; }
+.dash-brand svg { display: block; width: 110px; height: auto; overflow: visible; }
+.dash-brand .nb-marco {
+  font-family: var(--font-serif); font-style: italic; font-size: 38px;
+  letter-spacing: -0.02em; fill: var(--black);
+}
+.dash-brand .nb-aprende {
+  font-family: var(--font-sans); font-style: italic; font-weight: 400;
+  font-size: 13px; letter-spacing: -0.01em; fill: var(--accent);
+}
+.dash-tabs { display: flex; gap: var(--space-2); }
+.dash-tab {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm); color: var(--gray);
+  background: transparent; border: none; cursor: pointer;
+  font-family: var(--font-sans); font-weight: var(--weight-medium);
+  border-radius: var(--radius-pill); transition: all var(--duration-fast) var(--ease-soft);
+}
+.dash-tab:hover { color: var(--black); background: var(--note-bg); }
+.dash-tab.active { color: var(--black); background: var(--note-bg); }
+
+.dash-nav-right { display: flex; align-items: center; gap: var(--space-3); }
+.dash-period {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  padding: var(--space-1) var(--space-3); font-size: var(--text-xs);
+  background: var(--note-bg); color: var(--gray);
+  border-radius: var(--radius-pill); border: 1px solid var(--border-soft);
+}
+.dash-period svg { width: 12px; height: 12px; }
+.dash-icon-btn {
+  width: 32px; height: 32px; border-radius: var(--radius-pill);
+  background: transparent; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gray); position: relative;
+}
+.dash-icon-btn:hover { background: var(--note-bg); color: var(--black); }
+.dash-icon-btn svg { width: 16px; height: 16px; }
+.dash-dot {
+  position: absolute; top: 6px; right: 6px;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--danger); border: 2px solid var(--white);
+}
+.dash-avatar {
+  width: 32px; height: 32px; border-radius: var(--radius-pill);
+  background: var(--accent); color: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem; font-weight: var(--weight-medium);
+  font-family: var(--font-serif); font-style: italic;
+}
+
+/* ─── Main ─── */
+.dash-main {
+  padding: var(--space-6) var(--space-8) var(--space-12);
+  max-width: 1280px; margin: 0 auto;
+}
+
+.dash-header { margin-bottom: var(--space-6); display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-4); }
+.dash-header h1 {
+  font-family: var(--font-serif); font-style: italic;
+  font-size: 2rem; letter-spacing: -0.02em;
+  color: var(--black); line-height: var(--leading-tight);
+  margin-bottom: var(--space-1);
+}
+.dash-header .dash-sub {
+  font-size: var(--text-base); color: var(--gray);
+}
+.dash-curso-badge {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-pill);
+  background: var(--white); border: 1px solid var(--border);
+  font-size: var(--text-sm); color: var(--gray); font-weight: var(--weight-medium);
+}
+.dash-curso-badge svg { width: 14px; height: 14px; }
+
+/* ─── KPIs ─── */
+.kpi-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-3); margin-bottom: var(--space-5);
+}
+.kpi-card {
+  background: var(--white);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  position: relative;
+  overflow: hidden;
+}
+.kpi-card::before {
+  content: ''; position: absolute; top: 0; right: 0;
+  width: 80px; height: 80px;
+  background: var(--product-soft); opacity: 0.4;
+  border-radius: 50%;
+  transform: translate(40%, -40%);
+}
+.kpi-label {
+  font-size: var(--text-xs); color: var(--gray);
+  letter-spacing: 0.04em; font-weight: var(--weight-medium);
+  margin-bottom: var(--space-2); position: relative;
+}
+.kpi-value {
+  font-family: var(--font-serif); font-style: italic;
+  font-size: 2.4rem; line-height: 1;
+  letter-spacing: -0.025em; color: var(--black);
+  margin-bottom: var(--space-2); position: relative;
+}
+.kpi-value .unit {
+  font-family: var(--font-sans); font-style: normal;
+  font-size: 0.7rem; font-weight: var(--weight-medium);
+  color: var(--gray); margin-left: 2px;
+  letter-spacing: 0.02em;
+}
+.kpi-trend {
+  display: inline-flex; align-items: center; gap: var(--space-1);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-pill);
+  font-size: 11px; font-weight: var(--weight-medium);
+  background: var(--success-soft); color: var(--success);
+  position: relative;
+}
+.kpi-trend.down { background: var(--danger-soft); color: var(--danger); }
+.kpi-trend svg { width: 10px; height: 10px; }
+
+/* ─── 2-column grid ─── */
+.dash-grid {
+  display: grid; grid-template-columns: 1.4fr 1fr;
+  gap: var(--space-4);
+}
+.dash-col { display: flex; flex-direction: column; gap: var(--space-4); }
+
+/* ─── Cards ─── */
+.dash-card {
+  background: var(--white);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+.dash-card-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+.dash-card-title {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  font-size: var(--text-base); font-weight: var(--weight-medium);
+  color: var(--black);
+}
+.dash-card-title svg { width: 16px; height: 16px; color: var(--product-accent); }
+.dash-card-meta {
+  font-size: var(--text-xs); color: var(--gray);
+}
+.dash-card-actions {
+  display: flex; gap: var(--space-1);
+}
+.dash-card-tab {
+  padding: 4px 10px; font-size: 11px; font-weight: var(--weight-medium);
+  color: var(--gray); background: var(--note-bg);
+  border: none; border-radius: var(--radius-pill);
+  cursor: pointer; letter-spacing: 0.02em;
+}
+.dash-card-tab.active { background: var(--black); color: var(--white); }
+
+/* ─── Departamentos ─── */
+.dept-row {
+  display: flex; align-items: center; gap: var(--space-3);
+  padding: var(--space-2) 0;
+}
+.dept-name {
+  width: 110px; font-size: var(--text-sm); font-weight: var(--weight-medium);
+  display: flex; align-items: center; gap: var(--space-2);
+}
+.dept-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--product-accent); }
+.dept-bar-track {
+  flex: 1; height: 6px; background: var(--border-soft);
+  border-radius: var(--radius-pill); overflow: hidden;
+}
+.dept-bar-fill {
+  height: 100%; border-radius: inherit;
+  background: var(--product-accent);
+}
+.dept-bar-fill.deep { background: var(--product-deep); }
+.dept-pct {
+  width: 40px; text-align: right; font-size: var(--text-sm);
+  color: var(--gray); font-variant-numeric: tabular-nums;
+}
+
+/* ─── Evolución (bar chart simple) ─── */
+.evo-chart {
+  display: flex; gap: 6px; align-items: flex-end;
+  height: 140px; padding: var(--space-2) 0;
+}
+.evo-bar { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.evo-bar-fill {
+  width: 100%; max-width: 24px;
+  background: var(--border); border-radius: 4px 4px 0 0;
+  transition: background var(--duration-fast) var(--ease-soft);
+}
+.evo-bar.is-recent .evo-bar-fill { background: var(--product-accent); }
+.evo-bar.is-current .evo-bar-fill { background: var(--product-deep); }
+.evo-bar-label { font-size: 10px; color: var(--gray); letter-spacing: 0.02em; }
+
+/* ─── Alertas ─── */
+.alert {
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  display: flex; gap: var(--space-3); align-items: flex-start;
+  margin-bottom: var(--space-2);
+}
+.alert:last-child { margin-bottom: 0; }
+.alert-icon {
+  width: 28px; height: 28px; border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.alert-icon svg { width: 14px; height: 14px; }
+.alert-body { flex: 1; }
+.alert-title {
+  font-size: var(--text-sm); font-weight: var(--weight-medium);
+  margin-bottom: 2px;
+}
+.alert-detail {
+  font-size: var(--text-xs); line-height: var(--leading-snug);
+}
+.alert--critical {
+  background: var(--danger-soft);
+  border: 1px solid color-mix(in srgb, var(--danger) 20%, transparent);
+}
+.alert--critical .alert-icon { background: var(--danger); color: var(--white); }
+.alert--critical .alert-title { color: var(--danger); }
+.alert--critical .alert-detail { color: color-mix(in srgb, var(--danger) 85%, var(--black)); }
+.alert--info {
+  background: var(--note-bg);
+  border: 1px solid var(--border-soft);
+}
+.alert--info .alert-icon { background: var(--white); color: var(--gray); border: 1px solid var(--border-soft); }
+.alert--info .alert-title { color: var(--black); }
+.alert--info .alert-detail { color: var(--gray); }
+.alert--positive {
+  background: var(--product-soft);
+  border: 1px solid color-mix(in srgb, var(--product-accent) 25%, transparent);
+}
+.alert--positive .alert-icon { background: var(--product-accent); color: var(--white); }
+.alert--positive .alert-title { color: var(--product-deep); }
+.alert--positive .alert-detail { color: color-mix(in srgb, var(--product-deep) 85%, var(--black)); }
+
+/* ─── Profesores activos ─── */
+.teacher-row {
+  display: flex; align-items: center; gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--border-soft);
+}
+.teacher-row:last-child { border-bottom: 0; }
+.teacher-avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--note-bg); color: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  font-size: var(--text-sm); font-weight: var(--weight-medium);
+  flex-shrink: 0;
+  font-family: var(--font-serif); font-style: italic;
+}
+.teacher-info { flex: 1; }
+.teacher-name { font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--black); }
+.teacher-subject { font-size: var(--text-xs); color: var(--gray); margin-top: 1px; }
+.teacher-pct {
+  padding: 3px var(--space-2);
+  background: var(--product-soft); color: var(--product-deep);
+  border-radius: var(--radius-pill);
+  font-size: 11px; font-weight: var(--weight-medium);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 860px) {
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .dash-grid { grid-template-columns: 1fr; }
+  .dash-tabs { display: none; }
+  .dash-main { padding: var(--space-5) var(--space-4) var(--space-10); }
+  .dash-header { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<header class="dash-nav">
+  <div class="dash-nav-left">
+    <a href="/" class="dash-brand" aria-label="Marco aprende — inicio">
+      <svg viewBox="100 75 175 80" xmlns="http://www.w3.org/2000/svg">
+        <rect x="108" y="80" width="122" height="50" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <text x="118" y="118" class="nb-marco">Marco</text>
+        <text x="199" y="146" class="nb-aprende">aprende</text>
+      </svg>
+    </a>
+    <nav class="dash-tabs">
+      <button class="dash-tab active">Resumen</button>
+      <button class="dash-tab">Académico</button>
+      <button class="dash-tab">Profesores</button>
+      <button class="dash-tab">Adopción</button>
+    </nav>
+  </div>
+  <div class="dash-nav-right">
+    <span class="dash-period">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+      Curso 2025–2026 · 2º Trimestre
+    </span>
+    <button class="dash-icon-btn" aria-label="Notificaciones">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9z"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
+      <span class="dash-dot"></span>
+    </button>
+    <div class="dash-avatar">M</div>
+  </div>
+</header>
+
+<!-- ═══ MAIN ═══ -->
+<main class="dash-main">
+
+  <div class="dash-header">
+    <div>
+      <h1>Panel de Dirección</h1>
+      <p class="dash-sub">Colegio San Rafael · Vista resumida del centro</p>
+    </div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">Alumnos activos</div>
+      <div class="kpi-value">312</div>
+      <span class="kpi-trend">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 15l7-7 7 7"/></svg>
+        14 este mes
+      </span>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Profesores en plataforma</div>
+      <div class="kpi-value">18</div>
+      <span class="kpi-trend">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 15l7-7 7 7"/></svg>
+        +3 vs mes anterior
+      </span>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Adopción del centro</div>
+      <div class="kpi-value">91<span class="unit">%</span></div>
+      <span class="kpi-trend">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 15l7-7 7 7"/></svg>
+        +8% vs mes anterior
+      </span>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Tiempo medio / alumno</div>
+      <div class="kpi-value">38<span class="unit">min</span></div>
+      <span class="kpi-trend">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 15l7-7 7 7"/></svg>
+        +5 min vs mes anterior
+      </span>
+    </div>
+  </div>
+
+  <!-- Two-column grid -->
+  <div class="dash-grid">
+    <div class="dash-col">
+
+      <!-- Rendimiento por departamento -->
+      <div class="dash-card">
+        <div class="dash-card-header">
+          <div class="dash-card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 21V10M10 21V4M16 21V13M22 21V8"/><path d="M3 21h19"/></svg>
+            Rendimiento por departamento
+          </div>
+          <span class="dash-card-meta">Última semana</span>
+        </div>
+        <div>
+          <div class="dept-row">
+            <div class="dept-name"><span class="dept-dot"></span>Matemáticas</div>
+            <div class="dept-bar-track"><div class="dept-bar-fill deep" style="width:87%"></div></div>
+            <div class="dept-pct">87%</div>
+          </div>
+          <div class="dept-row">
+            <div class="dept-name"><span class="dept-dot"></span>Inglés</div>
+            <div class="dept-bar-track"><div class="dept-bar-fill deep" style="width:91%"></div></div>
+            <div class="dept-pct">91%</div>
+          </div>
+          <div class="dept-row">
+            <div class="dept-name"><span class="dept-dot"></span>Lengua</div>
+            <div class="dept-bar-track"><div class="dept-bar-fill" style="width:79%"></div></div>
+            <div class="dept-pct">79%</div>
+          </div>
+          <div class="dept-row">
+            <div class="dept-name"><span class="dept-dot"></span>Ciencias</div>
+            <div class="dept-bar-track"><div class="dept-bar-fill" style="width:72%"></div></div>
+            <div class="dept-pct">72%</div>
+          </div>
+          <div class="dept-row">
+            <div class="dept-name"><span class="dept-dot"></span>Historia</div>
+            <div class="dept-bar-track"><div class="dept-bar-fill" style="width:68%"></div></div>
+            <div class="dept-pct">68%</div>
+          </div>
+          <div class="dept-row">
+            <div class="dept-name"><span class="dept-dot"></span>Geografía</div>
+            <div class="dept-bar-track"><div class="dept-bar-fill" style="width:64%"></div></div>
+            <div class="dept-pct">64%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Evolución mensual -->
+      <div class="dash-card">
+        <div class="dash-card-header">
+          <div class="dash-card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
+            Evolución mensual de adopción
+          </div>
+          <div class="dash-card-actions">
+            <button class="dash-card-tab active">Sept–Abr</button>
+            <button class="dash-card-tab">Anual</button>
+          </div>
+        </div>
+        <div class="evo-chart">
+          <div class="evo-bar"><div class="evo-bar-fill" style="height:35%"></div><span class="evo-bar-label">Sep</span></div>
+          <div class="evo-bar"><div class="evo-bar-fill" style="height:48%"></div><span class="evo-bar-label">Oct</span></div>
+          <div class="evo-bar"><div class="evo-bar-fill" style="height:62%"></div><span class="evo-bar-label">Nov</span></div>
+          <div class="evo-bar"><div class="evo-bar-fill" style="height:58%"></div><span class="evo-bar-label">Dic</span></div>
+          <div class="evo-bar is-recent"><div class="evo-bar-fill" style="height:73%"></div><span class="evo-bar-label">Ene</span></div>
+          <div class="evo-bar is-recent"><div class="evo-bar-fill" style="height:80%"></div><span class="evo-bar-label">Feb</span></div>
+          <div class="evo-bar is-recent"><div class="evo-bar-fill" style="height:75%"></div><span class="evo-bar-label">Mar</span></div>
+          <div class="evo-bar is-current"><div class="evo-bar-fill" style="height:91%"></div><span class="evo-bar-label">Abr</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="dash-col">
+
+      <!-- Alertas -->
+      <div class="dash-card">
+        <div class="dash-card-header">
+          <div class="dash-card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 4l10 17H2z"/><path d="M12 10v5"/><circle cx="12" cy="18.2" r="0.6" fill="currentColor"/></svg>
+            Alertas del centro
+          </div>
+          <span class="dash-card-meta">3 nuevas</span>
+        </div>
+
+        <div class="alert alert--critical">
+          <div class="alert-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><circle cx="12" cy="16" r="0.5" fill="currentColor"/></svg>
+          </div>
+          <div class="alert-body">
+            <div class="alert-title">Geografía 3ºB</div>
+            <div class="alert-detail">42% de alumnos sin actividad en 5+ días. Requiere revisión inmediata.</div>
+          </div>
+        </div>
+
+        <div class="alert alert--info">
+          <div class="alert-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16v.5"/></svg>
+          </div>
+          <div class="alert-body">
+            <div class="alert-title">Mantenimiento programado</div>
+            <div class="alert-detail">Actualización de plataforma viernes 23:00h. Sin interrupciones esperadas.</div>
+          </div>
+        </div>
+
+        <div class="alert alert--positive">
+          <div class="alert-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11.5l2.5 2.5L16 9.5"/><circle cx="12" cy="12" r="9"/></svg>
+          </div>
+          <div class="alert-body">
+            <div class="alert-title">Nuevo módulo disponible</div>
+            <div class="alert-detail">Ciencias naturales 4ºESO añadido al repositorio compartido.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Profesores más activos -->
+      <div class="dash-card">
+        <div class="dash-card-header">
+          <div class="dash-card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l2.5 5 5.5.5-4 4 1 5.5L12 15.5 6.5 18l1-5.5-4-4 5.5-.5z"/></svg>
+            Profesores más activos
+          </div>
+          <span class="dash-card-meta">Esta semana</span>
+        </div>
+        <div class="teacher-row">
+          <div class="teacher-avatar">M</div>
+          <div class="teacher-info">
+            <div class="teacher-name">Marta López</div>
+            <div class="teacher-subject">Matemáticas · 4ºA, 4ºB</div>
+          </div>
+          <div class="teacher-pct">87% particip.</div>
+        </div>
+        <div class="teacher-row">
+          <div class="teacher-avatar">C</div>
+          <div class="teacher-info">
+            <div class="teacher-name">Carlos Ruiz</div>
+            <div class="teacher-subject">Historia · 3ºA, 3ºB</div>
+          </div>
+          <div class="teacher-pct">82% particip.</div>
+        </div>
+        <div class="teacher-row">
+          <div class="teacher-avatar">A</div>
+          <div class="teacher-info">
+            <div class="teacher-name">Ana Jiménez</div>
+            <div class="teacher-subject">Lengua y Literatura</div>
+          </div>
+          <div class="teacher-pct">78% particip.</div>
+        </div>
+        <div class="teacher-row">
+          <div class="teacher-avatar">L</div>
+          <div class="teacher-info">
+            <div class="teacher-name">Luis Romero</div>
+            <div class="teacher-subject">Ciencias · 2º ESO</div>
+          </div>
+          <div class="teacher-pct">71% particip.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+</body>
+</html>

@@ -88,18 +88,18 @@ body { display: flex; flex-direction: column; }
 
 /* ─── Main split layout ─── */
 .cuaderno-main {
-  display: grid; grid-template-columns: 1fr 420px;
+  display: grid; grid-template-columns: 1fr 360px;
   flex: 1; min-height: 0;
 }
 
 /* ─── Notebook (left) ─── */
 .notebook {
   overflow-y: auto;
-  padding: var(--space-12) var(--space-16);
+  padding: var(--space-6) var(--space-8);
   background: var(--white);
   border-right: 1px solid var(--border-soft);
 }
-.notebook-inner { max-width: 680px; margin: 0 auto; }
+.notebook-inner { max-width: 580px; margin: 0 auto; }
 
 .unit-tag {
   display: inline-block;
@@ -117,21 +117,21 @@ body { display: flex; flex-direction: column; }
   font-family: var(--font-serif);
   font-style: italic;
   font-weight: var(--weight-regular);
-  font-size: var(--text-5xl);
+  font-size: var(--text-3xl);
   letter-spacing: -0.025em;
   line-height: var(--leading-tight);
   color: var(--black);
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-3);
 }
 .notebook .lead {
-  font-size: var(--text-lg);
+  font-size: var(--text-base);
   color: var(--gray);
-  margin-bottom: var(--space-12);
+  margin-bottom: var(--space-8);
   max-width: 56ch;
   line-height: var(--leading-snug);
 }
 
-.notebook section { margin-bottom: var(--space-10); }
+.notebook section { margin-bottom: var(--space-6); }
 .notebook h2 {
   font-size: var(--text-xl);
   font-weight: var(--weight-medium);
@@ -303,14 +303,17 @@ body { display: flex; flex-direction: column; }
   stroke: currentColor; fill: none; stroke-width: 1.6;
   stroke-linecap: round; stroke-linejoin: round; }
 
-/* Responsive — colapsa a una columna en mobile */
-@media (max-width: 980px) {
+/* Responsive — colapsa a una columna solo en mobile real */
+@media (max-width: 720px) {
   .cuaderno-main { grid-template-columns: 1fr; }
   .marco-panel {
-    position: fixed; bottom: 0; left: 0; right: 0; height: 60vh;
-    box-shadow: var(--shadow-lg); z-index: 50;
+    border-left: 0;
+    border-top: 1px solid var(--border-soft);
   }
   .nav-progress { display: none; }
+}
+@media (max-width: 860px) {
+  .nav-context { display: none; }
 }
 </style>
 </head>
