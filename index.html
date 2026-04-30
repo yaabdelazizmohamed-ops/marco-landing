@@ -39,6 +39,11 @@
   --border: #e0dfd9;
   --highlight: #fff3cd;
   --note-bg: #f7f6f2;
+  /* Tokens de producto — superficies internas (cuadernos, IA, dashboards) */
+  --product-deep: #2c2e7a;
+  --product-accent: #6366cc;
+  --product-soft: #eeeefa;
+  --product-soft-2: #f5f5fc;
 }
 
 html { scroll-behavior: smooth; }
@@ -503,6 +508,35 @@ body.intro-locked .floating-cta { opacity: 0; pointer-events: none; }
 .app-dots span:nth-child(2) { background: #ffbd2e; }
 .app-dots span:nth-child(3) { background: #28ca41; }
 
+/* Wordmark mini — marca dentro del frame del prototipo */
+.app-brand {
+  display: inline-block;
+  line-height: 0;
+  color: var(--black);
+  margin-left: 0.4rem;
+}
+.app-brand svg {
+  display: block;
+  width: 86px;
+  height: auto;
+  overflow: visible;
+}
+.app-brand .nb-marco {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-style: italic;
+  font-size: 38px;
+  letter-spacing: -0.02em;
+  fill: var(--black);
+}
+.app-brand .nb-aprende {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: -0.01em;
+  fill: var(--accent);
+}
+
 .app-tab {
   font-size: 0.78rem;
   color: var(--gray);
@@ -536,8 +570,8 @@ body.intro-locked .floating-cta { opacity: 0; pointer-events: none; }
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  background: var(--black);
-  color: var(--white);
+  background: var(--product-soft);
+  color: var(--product-deep);
   font-size: 0.72rem;
   font-weight: 500;
   padding: 0.3rem 0.8rem;
@@ -793,9 +827,9 @@ body.intro-locked .floating-cta { opacity: 0; pointer-events: none; }
 }
 
 .ai-mode-strict {
-  background: #eff6ff;
-  color: #1e40af;
-  border: 1px solid #bfdbfe;
+  background: var(--product-soft);
+  color: var(--product-deep);
+  border: 1px solid color-mix(in srgb, var(--product-accent) 25%, transparent);
 }
 
 .notebook-layout {
@@ -894,14 +928,73 @@ body.intro-locked .floating-cta { opacity: 0; pointer-events: none; }
 }
 
 .chat-header {
-  padding: 0.6rem 0.8rem;
+  padding: 0.55rem 0.75rem;
   border-bottom: 1px solid var(--border);
   font-size: 0.78rem;
   font-weight: 500;
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.55rem;
 }
+
+/* Avatar de Marco — "M" italic entre corchetes en círculo */
+.marco-mark {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--black);
+  color: var(--white);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+.marco-mark svg { width: 70%; height: 70%; }
+.marco-mark--online::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  border: 2px solid var(--white);
+}
+.marco-mark--soft {
+  background: var(--white);
+  color: var(--black);
+  border: 1px solid var(--border);
+}
+.marco-mark--xs { width: 22px; height: 22px; }
+
+.chat-header-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+.chat-header-name { font-weight: 500; color: var(--black); }
+.chat-header-mode {
+  font-size: 0.65rem;
+  color: var(--gray);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+.chat-header-badge {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.15rem 0.55rem;
+  background: var(--product-soft);
+  color: var(--product-deep);
+  border-radius: 100px;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.chat-header-badge .ai-dot { width: 6px; height: 6px; background: var(--product-deep); }
 
 .ai-dot {
   width: 7px; height: 7px;
@@ -929,15 +1022,16 @@ body.intro-locked .floating-cta { opacity: 0; pointer-events: none; }
 
 .msg.user {
   align-self: flex-end;
-  background: var(--black);
+  background: var(--product-deep);
   color: var(--white);
   border-bottom-right-radius: 4px;
 }
 
 .msg.ai {
   align-self: flex-start;
-  background: var(--light);
-  color: var(--black);
+  background: var(--white);
+  color: var(--accent);
+  border: 1px solid var(--border);
   border-bottom-left-radius: 4px;
 }
 
@@ -971,7 +1065,7 @@ body.intro-locked .floating-cta { opacity: 0; pointer-events: none; }
   width: 32px; height: 32px;
   border-radius: 8px;
   border: none;
-  background: var(--black);
+  background: var(--product-deep);
   color: var(--white);
   cursor: pointer;
   font-size: 0.85rem;
@@ -2102,6 +2196,13 @@ body.intro-locked { overflow: hidden; }
   <div class="app-frame reveal" style="position:relative;">
     <div class="app-topbar">
       <div class="app-dots"><span></span><span></span><span></span></div>
+      <a class="app-brand" aria-label="Marco aprende">
+        <svg viewBox="100 75 175 80" xmlns="http://www.w3.org/2000/svg">
+          <rect x="108" y="80" width="122" height="50" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <text x="118" y="118" class="nb-marco">Marco</text>
+          <text x="199" y="146" class="nb-aprende">aprende</text>
+        </svg>
+      </a>
       <span class="app-tab" id="app-tab-label">Inicio — Mis asignaturas</span>
     </div>
 
@@ -2230,7 +2331,7 @@ body.intro-locked { overflow: hidden; }
         <button class="back-btn" onclick="showScreen(1)">←</button>
         <div style="font-weight:500;font-size:0.85rem;">Tema 5 — Fracciones</div>
         <div class="ai-mode-badge ai-mode-strict">
-          <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="#3b82f6"/></svg>
+          <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="currentColor"/></svg>
           IA modo estricto
         </div>
       </div>
@@ -2260,8 +2361,22 @@ body.intro-locked { overflow: hidden; }
         </div>
         <div class="chat-panel">
           <div class="chat-header">
-            <div class="ai-dot"></div>
-            Asistente IA · Modo estricto
+            <div class="marco-mark marco-mark--online">
+              <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <line x1="10" y1="14" x2="10" y2="46" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+                <line x1="10" y1="14" x2="14" y2="14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+                <line x1="10" y1="46" x2="14" y2="46" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+                <line x1="50" y1="14" x2="50" y2="46" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+                <line x1="50" y1="14" x2="46" y2="14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+                <line x1="50" y1="46" x2="46" y2="46" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+                <text x="30" y="40" text-anchor="middle" font-family="'Instrument Serif', Georgia, serif" font-style="italic" font-size="32" fill="currentColor">M</text>
+              </svg>
+            </div>
+            <div class="chat-header-text">
+              <span class="chat-header-name">Marco</span>
+              <span class="chat-header-mode">Tu asistente de estudio</span>
+            </div>
+            <div class="chat-header-badge"><div class="ai-dot"></div>Modo estricto</div>
           </div>
           <div class="chat-messages" id="chatMessages">
             <div class="msg ai">Hola Carlos. Veo que has seleccionado el apartado sobre suma de fracciones con distinto denominador. ¿Qué es exactamente lo que no te queda claro?</div>
