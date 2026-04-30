@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pantalla en construcción — Marco</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles/tokens.css">
+<style>
+html, body { height: 100%; }
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-12);
+  background: var(--white);
+}
+.cs-content {
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+}
+.cs-mark {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--product-soft);
+  color: var(--product-deep);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.cs-mark svg { width: 70%; height: 70%; }
+.cs-label {
+  font-size: var(--text-xs);
+  color: var(--gray);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: var(--weight-medium);
+}
+.cs-title {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 2.1rem;
+  letter-spacing: -0.02em;
+  color: var(--black);
+  line-height: 1.15;
+}
+.cs-name {
+  display: inline-block;
+  background: var(--product-soft);
+  color: var(--product-deep);
+  padding: 0.2rem 0.7rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-size: 0.85rem;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0;
+  margin-top: var(--space-3);
+}
+.cs-sub {
+  font-size: var(--text-base);
+  color: var(--gray);
+  line-height: var(--leading-relaxed);
+  max-width: 38ch;
+}
+.cs-footer {
+  margin-top: var(--space-6);
+  font-size: var(--text-xs);
+  color: var(--gray-soft);
+  letter-spacing: 0.04em;
+}
+</style>
+</head>
+<body>
+
+<div class="cs-content">
+  <div class="cs-mark" aria-hidden="true">
+    <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+      <line x1="10" y1="14" x2="10" y2="46" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <line x1="10" y1="14" x2="14" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <line x1="10" y1="46" x2="14" y2="46" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <line x1="50" y1="14" x2="50" y2="46" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <line x1="50" y1="14" x2="46" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <line x1="50" y1="46" x2="46" y2="46" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <text x="30" y="40" text-anchor="middle" font-family="'Instrument Serif', Georgia, serif" font-style="italic" font-size="32" fill="currentColor">M</text>
+    </svg>
+  </div>
+  <div class="cs-label">En construcción</div>
+  <h1 class="cs-title">Esta pantalla todavía no — pero <em>casi</em>.</h1>
+  <span class="cs-name" id="screen-name">Pantalla del producto</span>
+  <p class="cs-sub">Estamos puliendo cada vista del producto antes de mostrártela. Mientras tanto, prueba la pestaña <strong>Estudiar con IA</strong> para ver cómo Marco enseña sin dar la respuesta.</p>
+  <div class="cs-footer">marcoaprende.com — vista previa del producto</div>
+</div>
+
+<script>
+  // Lee el nombre de la pantalla desde la query string
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get('screen');
+    if (name) {
+      document.getElementById('screen-name').textContent = name;
+    }
+  } catch (e) { /* noop */ }
+</script>
+
+</body>
+</html>

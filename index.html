@@ -546,7 +546,27 @@ body.intro-locked .floating-cta { opacity: 0; pointer-events: none; }
   margin-left: auto;
 }
 
-/* Screens */
+/* Screens — wrap del iframe que carga las pantallas reales del producto */
+.app-iframe-wrap {
+  width: 100%;
+  height: 640px;
+  background: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+.app-iframe-wrap iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  background: var(--white);
+}
+@media (max-width: 760px) {
+  .app-iframe-wrap { height: 560px; }
+}
+
+/* Legacy — pantallas inline antiguas, mantenidas ocultas para no romper estilos previos.
+   No se renderizan. Pueden eliminarse por completo más adelante. */
 .screen { display: none; padding: 1.5rem; min-height: 460px; }
 .screen.active { display: block; animation: screenFadeIn 0.3s ease; }
 
@@ -2185,9 +2205,9 @@ body.intro-locked { overflow: hidden; }
   <p class="section-sub reveal">Navega por la plataforma como si fueras un alumno de 4º de la ESO repasando fracciones. Después, mira lo que ve su profesor.</p>
 
   <div class="demo-tabs reveal">
-    <button class="demo-tab active" onclick="showScreen(0)"><svg class="icon icon-inline" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h7v18H6a2 2 0 0 1-2-2V5z"/><path d="M13 3h5a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-5"/><path d="M8 7h2M8 11h2"/></svg>Asignaturas</button>
+    <button class="demo-tab" onclick="showScreen(0)"><svg class="icon icon-inline" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h7v18H6a2 2 0 0 1-2-2V5z"/><path d="M13 3h5a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-5"/><path d="M8 7h2M8 11h2"/></svg>Asignaturas</button>
     <button class="demo-tab" onclick="showScreen(1)"><svg class="icon icon-inline" viewBox="0 0 24 24"><path d="M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2V4z"/><path d="M5 18a2 2 0 0 1 2-2h12"/><path d="M9 8h6M9 12h4"/></svg>Cuadernos</button>
-    <button class="demo-tab" onclick="showScreen(2)"><svg class="icon icon-inline" viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><path d="M12 7l1.5 3.5L17 12l-3.5 1.5L12 17l-1.5-3.5L7 12l3.5-1.5z"/></svg>Estudiar con IA</button>
+    <button class="demo-tab active" onclick="showScreen(2)"><svg class="icon icon-inline" viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><path d="M12 7l1.5 3.5L17 12l-3.5 1.5L12 17l-1.5-3.5L7 12l3.5-1.5z"/></svg>Estudiar con IA</button>
     <button class="demo-tab" onclick="showScreen(3)"><svg class="icon icon-inline" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>Panel profesor</button>
     <button class="demo-tab" onclick="showScreen(4)"><svg class="icon icon-inline" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.8 2.8L16 9.5"/></svg>Quiz</button>
     <button class="demo-tab" onclick="showScreen(5)"><svg class="icon icon-inline" viewBox="0 0 24 24"><path d="M3 21V10l9-6 9 6v11"/><path d="M9 21v-6h6v6"/><path d="M3 21h18"/></svg>Panel centro</button>
@@ -2203,11 +2223,23 @@ body.intro-locked { overflow: hidden; }
           <text x="199" y="146" class="nb-aprende">aprende</text>
         </svg>
       </a>
-      <span class="app-tab" id="app-tab-label">Inicio — Mis asignaturas</span>
+      <span class="app-tab" id="app-tab-label">Tema 5 — Estudiando con Marco</span>
     </div>
 
-    <!-- Screen 0: Asignaturas -->
-    <div class="screen active" id="screen-0">
+    <!-- ════════════════════════════════════════════════════════════
+         Iframe del prototipo. Cada tab carga un archivo de /brand-examples/.
+         Las pantallas inline anteriores se han movido a archivos separados.
+         ════════════════════════════════════════════════════════════ -->
+    <div class="app-iframe-wrap">
+      <iframe id="prototype-iframe"
+              src="/brand-examples/cuaderno-mate.html"
+              title="Vista previa del producto Marco"
+              loading="lazy"></iframe>
+    </div>
+
+    <!-- INICIO LEGACY (oculto, no se renderiza) — pantallas inline preservadas para referencia -->
+    <div class="screens-legacy-hidden" style="display:none !important;visibility:hidden;" aria-hidden="true">
+    <div class="screen" id="screen-0">
       <div class="welcome-bar">
         <div class="welcome-info">
           <div class="welcome-sub">Buenos días,</div>
@@ -2700,6 +2732,7 @@ body.intro-locked { overflow: hidden; }
         </div>
       </div>
     </div>
+    </div><!-- /.screens-legacy-hidden -->
   </div>
 </section>
 
@@ -3454,23 +3487,34 @@ if (navToggle && navLinks) {
 }
 
 // ── Demo tabs ──
+// Cada tab carga un archivo de /brand-examples/ en el iframe del prototipo.
+// Cuando una pantalla todavía no existe, apuntamos a coming-soon.html con el nombre como query param.
 const tabLabels = [
   'Inicio — Mis asignaturas',
   'Matemáticas — Cuadernos',
-  'Tema 5 — Estudiando con IA',
+  'Tema 5 — Estudiando con Marco',
   'Panel del Profesor',
   'Quiz — Fracciones',
   'Panel del Centro'
 ];
 
+const tabFiles = [
+  '/brand-examples/coming-soon.html?screen=Inicio%20del%20alumno',
+  '/brand-examples/coming-soon.html?screen=Lista%20de%20cuadernos',
+  '/brand-examples/cuaderno-mate.html',
+  '/brand-examples/coming-soon.html?screen=Panel%20del%20profesor',
+  '/brand-examples/coming-soon.html?screen=Quiz%20de%20fracciones',
+  '/brand-examples/coming-soon.html?screen=Panel%20del%20centro'
+];
+
 function showScreen(i) {
-  document.querySelectorAll('.screen').forEach((s, idx) => {
-    s.classList.toggle('active', idx === i);
-  });
   document.querySelectorAll('.demo-tab').forEach((t, idx) => {
     t.classList.toggle('active', idx === i);
   });
-  document.getElementById('app-tab-label').textContent = tabLabels[i];
+  const iframe = document.getElementById('prototype-iframe');
+  if (iframe) iframe.src = tabFiles[i];
+  const label = document.getElementById('app-tab-label');
+  if (label) label.textContent = tabLabels[i];
 }
 
 // ── Modal ──
