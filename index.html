@@ -2995,7 +2995,11 @@ body.intro-locked { overflow: hidden; }
         </div>
         <div class="form-group">
           <label class="form-label">¿Algo más que quieras contarnos?</label>
-          <textarea class="form-textarea" placeholder="Cualquier idea, preocupación o sugerencia..."></textarea>
+          <textarea class="form-textarea" id="formMessage" placeholder="Cualquier idea, preocupación o sugerencia..."></textarea>
+        </div>
+        <!-- Honeypot anti-bot: campo invisible que solo los bots rellenan -->
+        <div style="position:absolute;left:-9999px;height:0;overflow:hidden;" aria-hidden="true">
+          <label>No rellenar este campo: <input type="text" id="formWebsite" tabindex="-1" autocomplete="off"></label>
         </div>
 
         <div class="form-summary" id="formSummary"></div>
@@ -3467,39 +3471,59 @@ function buildSummary() {
 }
 
 // ── Configuración del endpoint del formulario ──
-// Sustituye por tu endpoint real (Formspree, Web3Forms, Getform, etc.)
-// Ej: 'https://formspree.io/f/xxxxxxxx'
-// Si lo dejas vacío, el formulario abrirá un mailto: con los datos.
-const MARCO_FORM_ENDPOINT = '';
-const MARCO_CONTACT_EMAIL = 'hola@marco.study';
+// Cloudflare Worker que recibe el form y lo escribe en Airtable
+const MARCO_FORM_ENDPOINT = 'https://marcoaprende-landing-form.yaabdelaziz-mohamed.workers.dev/';
+const MARCO_CONTACT_EMAIL = 'hola@marcoaprende.com';
 
 function collectFormData() {
+  // Datos estructurados que van a columnas dedicadas en Airtable
   const data = {
+    email: document.getElementById('formEmail')?.value?.trim() || '',
+    nombre: document.getElementById('formName')?.value?.trim() || '',
     rol: document.getElementById('formRole').value,
-    nombre: document.getElementById('formName')?.value || '',
-    centro: document.getElementById('formCenter')?.value || '',
-    email: document.getElementById('formEmail')?.value || '',
-    enviado_en: new Date().toISOString(),
-    pagina: window.location.href
+    centro: document.getElementById('formCenter')?.value?.trim() || '',
+    interesPiloto: document.getElementById('formPilot')?.value || '',
+    mensaje: document.getElementById('formMessage')?.value?.trim() || '',
+    website: document.getElementById('formWebsite')?.value || '', // honeypot
   };
-  // Recoge respuestas del paso 2 (visibles)
+
+  // Datos completos: todas las respuestas estructuradas del paso 2 + 3
+  const datosCompletos = {
+    rol: data.rol,
+    enviado_en: new Date().toISOString(),
+    pagina: window.location.href,
+  };
+
   const activeBlock = document.querySelector('#formStep2 > div:not(.hidden)');
   if (activeBlock) {
     const checks = [...activeBlock.querySelectorAll('input[type=checkbox]:checked')]
       .map(c => c.parentElement.textContent.trim());
-    if (checks.length) data.opciones = checks.join(' | ');
+    if (checks.length) datosCompletos.opciones = checks;
+
     const scaleSel = activeBlock.querySelector('.scale-btn.selected');
-    if (scaleSel) data.escala = scaleSel.textContent.trim();
+    if (scaleSel) datosCompletos.escala = scaleSel.textContent.trim();
+
     const ratings = [...activeBlock.querySelectorAll('.rating-group')].map(g => {
       const sel = g.querySelector('.rating-btn.selected');
       const label = g.previousElementSibling?.textContent.trim() || '';
-      return sel ? `${label}: ${sel.textContent.trim()}` : null;
+      return sel ? { pregunta: label, valor: parseInt(sel.textContent.trim(), 10) } : null;
     }).filter(Boolean);
-    if (ratings.length) data.valoraciones = ratings.join(' | ');
+    if (ratings.length) datosCompletos.valoraciones = ratings;
+
     const textareas = [...activeBlock.querySelectorAll('textarea')]
       .map(t => t.value.trim()).filter(Boolean);
-    if (textareas.length) data.respuestas_abiertas = textareas.join(' || ');
+    if (textareas.length) datosCompletos.respuestas_abiertas = textareas;
+
+    const selects = [...activeBlock.querySelectorAll('.form-select')]
+      .map(s => s.value).filter(Boolean);
+    if (selects.length) datosCompletos.selects = selects;
+
+    const inputs = [...activeBlock.querySelectorAll('input[type=text]')]
+      .map(i => i.value.trim()).filter(Boolean);
+    if (inputs.length) datosCompletos.inputs_texto = inputs;
   }
+
+  data.datosCompletos = datosCompletos;
   return data;
 }
 
@@ -3529,30 +3553,42 @@ function showThankYou(role, hasEmail) {
 async function submitForm() {
   const data = collectFormData();
   const btn = document.querySelector('.form-btn-next[onclick="submitForm()"]');
+  const originalBtnText = btn ? btn.textContent : 'Enviar mi opinión →';
+
+  // Validación local: email obligatorio y bien formado
+  if (!data.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+    alert('Por favor, introduce un email válido para que podamos contactarte.');
+    document.getElementById('formEmail')?.focus();
+    return;
+  }
+
   if (btn) { btn.disabled = true; btn.textContent = 'Enviando…'; }
 
-  // Caso 1: hay endpoint configurado → POST
   if (MARCO_FORM_ENDPOINT) {
     try {
       const res = await fetch(MARCO_FORM_ENDPOINT, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       });
-      if (!res.ok) throw new Error('Bad response');
+      const result = await res.json().catch(() => ({}));
+      if (!res.ok || !result.success) {
+        throw new Error(result.error || 'Bad response');
+      }
       showThankYou(data.rol, !!data.email);
       return;
     } catch (e) {
-      console.warn('Form POST falló, abriendo mailto fallback', e);
+      console.error('Form POST falló:', e);
+      if (btn) { btn.disabled = false; btn.textContent = originalBtnText; }
+      alert('No hemos podido enviar el formulario. Inténtalo de nuevo en unos segundos o escríbenos directamente a ' + MARCO_CONTACT_EMAIL + '.');
+      return;
     }
   }
 
-  // Caso 2: sin endpoint o error → fallback mailto
+  // Fallback (sin endpoint): mailto
   const subject = encodeURIComponent(`[Marco] Feedback de ${data.rol || 'visitante'}${data.nombre ? ' — ' + data.nombre : ''}`);
-  const lines = Object.entries(data).map(([k, v]) => `${k}: ${v}`).join('\n');
-  const body = encodeURIComponent(lines);
-  window.location.href = `mailto:${MARCO_CONTACT_EMAIL}?subject=${subject}&body=${body}`;
-
+  const summary = `Email: ${data.email}\nNombre: ${data.nombre}\nRol: ${data.rol}\nCentro: ${data.centro}\nInterés piloto: ${data.interesPiloto}\nMensaje: ${data.mensaje}\n\n--- Detalle ---\n${JSON.stringify(data.datosCompletos, null, 2)}`;
+  window.location.href = `mailto:${MARCO_CONTACT_EMAIL}?subject=${subject}&body=${encodeURIComponent(summary)}`;
   showThankYou(data.rol, !!data.email);
 }
 
