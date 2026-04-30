@@ -1,0 +1,271 @@
+/* ════════════════════════════════════════════════════════════════════
+   MARCO — Design Tokens
+   Sistema dual: editorial (marca) + producto (interno).
+   Una sola fuente de verdad. Importar en cada superficie.
+   ════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ─── EDITORIAL (marca, landing, marketing, header/footer producto) ─── */
+  --black: #0a0a0a;
+  --white: #fafaf8;            /* warm cream — canvas principal */
+  --gray: #6b6b6b;
+  --gray-soft: #9a9a96;        /* gris más suave para hints */
+  --light: #f0efeb;
+  --accent: #1a1a1a;            /* slightly off-black para texto/acentos */
+  --border: #e0dfd9;
+  --border-soft: #ebebe6;       /* bordes muy sutiles */
+  --note-bg: #f7f6f2;
+  --highlight: #fff3cd;         /* paper yellow para destacar pasajes */
+
+  /* ─── PRODUCTO (cuadernos, dashboards, IA, progreso) ─── */
+  --product-deep: #2c2e7a;      /* deep ink-violet — CTAs primarios en producto */
+  --product-accent: #6366cc;    /* muted lavender — acentos, progress, badges */
+  --product-soft: #eeeefa;      /* pale lavender bg — chip/hover/highlight bg */
+  --product-soft-2: #f5f5fc;    /* aún más sutil, para cards/canvas tenuemente teñido */
+
+  /* ─── ESTADOS FUNCIONALES (universales) ─── */
+  --success: #2d6a4f;
+  --success-soft: #e7f1ec;
+  --warning: #e67e22;
+  --warning-soft: #fdf1e6;
+  --danger: #c0392b;
+  --danger-soft: #f9e6e3;
+  --info: var(--product-accent);
+  --info-soft: var(--product-soft);
+
+  /* ─── TIPOGRAFÍA ─── */
+  --font-serif: 'Instrument Serif', Georgia, serif;  /* italic only — display */
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+
+  /* Tamaños — escala modular */
+  --text-xs: 0.75rem;     /* 12px — meta, captions */
+  --text-sm: 0.85rem;     /* 13.6px — labels, secondary */
+  --text-base: 0.95rem;   /* 15.2px — body */
+  --text-lg: 1.1rem;      /* 17.6px — emphasized body */
+  --text-xl: 1.35rem;     /* 21.6px — h3, card titles */
+  --text-2xl: 1.7rem;     /* 27.2px — h2, section titles */
+  --text-3xl: 2.2rem;     /* 35.2px — h1 desktop */
+  --text-4xl: 2.8rem;     /* 44.8px — hero subtitle */
+  --text-5xl: 3.6rem;     /* 57.6px — hero */
+
+  /* Pesos */
+  --weight-light: 300;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+
+  /* Line height */
+  --leading-tight: 1.1;
+  --leading-snug: 1.3;
+  --leading-normal: 1.55;
+  --leading-relaxed: 1.7;
+
+  /* ─── RADII ─── */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-pill: 9999px;
+
+  /* ─── SPACING (8px grid) ─── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+
+  /* ─── ELEVATIONS (sutiles, casi imperceptibles) ─── */
+  --shadow-sm: 0 1px 2px rgba(10, 10, 10, 0.04);
+  --shadow-md: 0 4px 14px rgba(10, 10, 10, 0.06);
+  --shadow-lg: 0 18px 38px rgba(10, 10, 10, 0.08);
+
+  /* ─── ANIMATIONS ─── */
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-quick: cubic-bezier(0.5, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 450ms;
+  --duration-reveal: 750ms;
+
+  /* ─── LAYOUT ─── */
+  --container-max: 1280px;
+  --content-max: 720px;
+  --reading-max: 640px;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   UTILITIES — clases reutilizables que mapean a tokens.
+   Aplicables en cualquier superficie (editorial o producto).
+   ════════════════════════════════════════════════════════════════════ */
+
+/* Reset suave compartido */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-sans);
+  font-weight: var(--weight-regular);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--accent);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── BUTTONS ─── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background var(--duration-base) var(--ease-soft),
+              color var(--duration-base) var(--ease-soft),
+              transform var(--duration-base) var(--ease-soft);
+}
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Primario editorial — para landing, marketing, CTAs principales de marca */
+.btn-primary {
+  background: var(--black);
+  color: var(--white);
+}
+.btn-primary:hover { background: var(--accent); transform: translateY(-1px); }
+
+/* Primario producto — para CTAs dentro del producto */
+.btn-product {
+  background: var(--product-deep);
+  color: var(--white);
+}
+.btn-product:hover { background: var(--product-accent); }
+
+/* Secundario — funciona en ambas superficies */
+.btn-secondary {
+  background: var(--product-soft);
+  color: var(--product-deep);
+}
+.btn-secondary:hover { background: var(--product-soft-2); }
+
+/* Ghost — auxiliares, "cancelar", "ver más" */
+.btn-ghost {
+  background: transparent;
+  color: var(--gray);
+}
+.btn-ghost:hover { color: var(--black); background: var(--note-bg); }
+
+/* Danger */
+.btn-danger {
+  background: var(--danger);
+  color: var(--white);
+}
+.btn-danger:hover { background: color-mix(in srgb, var(--danger) 85%, black); }
+
+/* Tamaños */
+.btn-sm { padding: var(--space-2) var(--space-4); font-size: var(--text-sm); }
+.btn-lg { padding: var(--space-4) var(--space-8); font-size: var(--text-lg); }
+
+/* ─── CARDS ─── */
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+}
+.card-soft {
+  background: var(--note-bg);
+  border-color: var(--border-soft);
+}
+.card-product {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+}
+.card-elevated {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-soft);
+}
+
+/* ─── BADGES / CHIPS ─── */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.01em;
+}
+.chip-soft   { background: var(--note-bg);       color: var(--gray); }
+.chip-info   { background: var(--product-soft);  color: var(--product-deep); }
+.chip-success{ background: var(--success-soft);  color: var(--success); }
+.chip-warning{ background: var(--warning-soft);  color: var(--warning); }
+.chip-danger { background: var(--danger-soft);   color: var(--danger); }
+
+/* ─── PROGRESS ─── */
+.progress {
+  width: 100%;
+  height: 6px;
+  background: var(--border-soft);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+.progress-bar {
+  height: 100%;
+  background: var(--product-accent);
+  border-radius: inherit;
+  transition: width var(--duration-slow) var(--ease-soft);
+}
+.progress-bar-deep { background: var(--product-deep); }
+
+/* ─── TYPOGRAPHY HELPERS ─── */
+.t-display {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: var(--weight-regular);
+  letter-spacing: -0.02em;
+  line-height: var(--leading-tight);
+}
+.t-meta {
+  font-size: var(--text-xs);
+  color: var(--gray);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: var(--weight-medium);
+}
+.t-mute { color: var(--gray); }
+.t-em { font-style: italic; font-family: var(--font-serif); font-size: 1.04em; }
+
+/* ─── DIVIDERS ─── */
+.divider { height: 1px; background: var(--border); margin: var(--space-6) 0; }
+
+/* ─── LINKS ─── */
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--border);
+  text-underline-offset: 3px;
+  transition: text-decoration-color var(--duration-fast) var(--ease-soft);
+}
+a:hover { text-decoration-color: currentColor; }
+a.no-underline { text-decoration: none; }

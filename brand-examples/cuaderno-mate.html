@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cuaderno: Matemáticas — Unidad 2 · Marco</title>
+<meta name="description" content="Vista del cuaderno con Marco AI — método socrático.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0a0a'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='38' font-style='italic' fill='%23fafaf8' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles/tokens.css">
+<style>
+/* Layout de página — full height sin scroll exterior */
+html, body { height: 100%; overflow: hidden; }
+body { display: flex; flex-direction: column; }
+
+/* ─── Header ─── */
+.cuaderno-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--space-4) var(--space-6);
+  background: var(--white);
+  border-bottom: 1px solid var(--border-soft);
+  flex-shrink: 0;
+}
+.nav-left { display: flex; align-items: center; gap: var(--space-5); }
+.nav-burger {
+  background: none; border: none; padding: var(--space-2); cursor: pointer;
+  color: var(--gray); border-radius: var(--radius-sm);
+}
+.nav-burger:hover { color: var(--black); background: var(--note-bg); }
+.nav-burger svg { display: block; width: 22px; height: 22px; }
+
+.brand-mini {
+  display: inline-block; line-height: 0; color: var(--black); text-decoration: none;
+}
+.brand-mini svg { display: block; width: 110px; height: auto; overflow: visible; }
+.brand-mini .nb-marco {
+  font-family: var(--font-serif); font-style: italic; font-size: 38px;
+  letter-spacing: -0.02em; fill: var(--black);
+}
+.brand-mini .nb-aprende {
+  font-family: var(--font-sans); font-style: italic; font-weight: 400;
+  font-size: 13px; letter-spacing: -0.01em; fill: var(--accent);
+}
+
+.nav-context {
+  display: flex; flex-direction: column; gap: 2px;
+}
+.nav-context-label {
+  font-size: var(--text-xs); color: var(--gray);
+  letter-spacing: 0.05em; text-transform: uppercase; font-weight: var(--weight-medium);
+}
+.nav-context-title {
+  font-size: var(--text-sm); color: var(--black); font-weight: var(--weight-medium);
+}
+
+.nav-progress {
+  flex: 1; max-width: 320px; margin: 0 var(--space-8);
+  display: flex; align-items: center; gap: var(--space-3);
+}
+.nav-progress .progress { flex: 1; }
+.nav-progress-pct {
+  font-size: var(--text-sm); color: var(--gray); font-variant-numeric: tabular-nums;
+  min-width: 32px; text-align: right;
+}
+
+.nav-right { display: flex; align-items: center; gap: var(--space-3); }
+.nav-icon-btn {
+  width: 36px; height: 36px; border-radius: var(--radius-pill);
+  background: transparent; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gray); transition: all var(--duration-fast) var(--ease-soft);
+  position: relative;
+}
+.nav-icon-btn:hover { background: var(--note-bg); color: var(--black); }
+.nav-icon-btn svg { width: 18px; height: 18px; }
+.nav-icon-dot {
+  position: absolute; top: 8px; right: 8px;
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--danger); border: 2px solid var(--white);
+}
+.nav-avatar {
+  width: 32px; height: 32px; border-radius: var(--radius-pill);
+  background: var(--accent); color: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  font-size: var(--text-sm); font-weight: var(--weight-medium);
+  font-family: var(--font-serif); font-style: italic;
+}
+
+/* ─── Main split layout ─── */
+.cuaderno-main {
+  display: grid; grid-template-columns: 1fr 420px;
+  flex: 1; min-height: 0;
+}
+
+/* ─── Notebook (left) ─── */
+.notebook {
+  overflow-y: auto;
+  padding: var(--space-12) var(--space-16);
+  background: var(--white);
+  border-right: 1px solid var(--border-soft);
+}
+.notebook-inner { max-width: 680px; margin: 0 auto; }
+
+.unit-tag {
+  display: inline-block;
+  background: var(--product-soft);
+  color: var(--product-deep);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.04em;
+  margin-bottom: var(--space-5);
+}
+
+.notebook h1 {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: var(--weight-regular);
+  font-size: var(--text-5xl);
+  letter-spacing: -0.025em;
+  line-height: var(--leading-tight);
+  color: var(--black);
+  margin-bottom: var(--space-4);
+}
+.notebook .lead {
+  font-size: var(--text-lg);
+  color: var(--gray);
+  margin-bottom: var(--space-12);
+  max-width: 56ch;
+  line-height: var(--leading-snug);
+}
+
+.notebook section { margin-bottom: var(--space-10); }
+.notebook h2 {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-medium);
+  letter-spacing: -0.01em;
+  margin-bottom: var(--space-3);
+  color: var(--black);
+}
+.notebook p, .notebook li {
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--accent);
+  margin-bottom: var(--space-3);
+}
+
+/* Sección actualmente seleccionada / siendo estudiada */
+.notebook section.is-active {
+  position: relative;
+  padding: var(--space-6) var(--space-6) var(--space-4);
+  border-radius: var(--radius-lg);
+  background: var(--product-soft-2);
+  border: 1px dashed var(--product-accent);
+  margin-bottom: var(--space-10);
+}
+.notebook section.is-active::before {
+  content: 'EN ESTUDIO';
+  position: absolute; top: -10px; left: var(--space-6);
+  background: var(--white); padding: 0 var(--space-2);
+  font-size: 10px; letter-spacing: 0.08em; font-weight: var(--weight-semibold);
+  color: var(--product-accent);
+}
+
+/* ─── Marco panel (right) ─── */
+.marco-panel {
+  display: flex; flex-direction: column;
+  background: var(--note-bg);
+  min-height: 0;
+}
+.marco-header {
+  display: flex; align-items: center; gap: var(--space-3);
+  padding: var(--space-5) var(--space-6);
+  border-bottom: 1px solid var(--border-soft);
+  background: var(--white);
+}
+.marco-avatar {
+  width: 40px; height: 40px; border-radius: var(--radius-pill);
+  background: var(--black); color: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-serif); font-style: italic; font-size: 22px;
+  position: relative; flex-shrink: 0;
+}
+.marco-avatar::after {
+  content: ''; position: absolute; bottom: 0; right: 0;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--success); border: 2px solid var(--white);
+}
+.marco-header-text { display: flex; flex-direction: column; }
+.marco-name {
+  font-size: var(--text-base); font-weight: var(--weight-medium); color: var(--black);
+}
+.marco-role {
+  font-size: var(--text-xs); color: var(--gray); letter-spacing: 0.02em;
+}
+.marco-header-actions { margin-left: auto; display: flex; gap: var(--space-1); }
+
+.marco-chat {
+  flex: 1; overflow-y: auto;
+  padding: var(--space-6);
+  display: flex; flex-direction: column; gap: var(--space-4);
+}
+
+.chat-divider {
+  text-align: center;
+  color: var(--gray);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  font-weight: var(--weight-medium);
+  margin: var(--space-3) 0;
+  position: relative;
+}
+.chat-divider::before, .chat-divider::after {
+  content: ''; position: absolute; top: 50%;
+  width: calc(50% - 30px); height: 1px; background: var(--border-soft);
+}
+.chat-divider::before { left: 0; }
+.chat-divider::after { right: 0; }
+
+.bubble {
+  max-width: 85%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-base);
+  line-height: var(--leading-snug);
+  word-wrap: break-word;
+}
+.bubble.from-marco {
+  background: var(--white);
+  color: var(--accent);
+  align-self: flex-start;
+  border-bottom-left-radius: var(--space-2);
+  border: 1px solid var(--border-soft);
+}
+.bubble.from-user {
+  background: var(--product-deep);
+  color: var(--white);
+  align-self: flex-end;
+  border-bottom-right-radius: var(--space-2);
+}
+.bubble + .bubble.from-same { margin-top: calc(var(--space-3) * -1 + var(--space-1)); }
+
+.bubble-cite {
+  background: var(--note-bg);
+  border-left: 3px solid var(--product-accent);
+  padding: var(--space-2) var(--space-3);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: var(--text-sm);
+  color: var(--gray);
+  margin-top: var(--space-2);
+  font-style: italic;
+}
+.bubble-cite-label {
+  display: block; font-style: normal; text-transform: uppercase;
+  font-size: 10px; letter-spacing: 0.08em; font-weight: var(--weight-semibold);
+  color: var(--product-accent); margin-bottom: 2px;
+}
+
+/* Composer */
+.marco-composer {
+  border-top: 1px solid var(--border-soft);
+  padding: var(--space-4) var(--space-5);
+  background: var(--white);
+  display: flex; flex-direction: column; gap: var(--space-2);
+}
+.composer-input-wrap {
+  display: flex; align-items: center; gap: var(--space-2);
+  background: var(--note-bg);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-pill);
+  padding: 6px 6px 6px var(--space-4);
+  transition: border-color var(--duration-fast) var(--ease-soft);
+}
+.composer-input-wrap:focus-within { border-color: var(--product-accent); }
+.composer-input {
+  flex: 1; border: none; background: transparent; outline: none;
+  font-family: var(--font-sans); font-size: var(--text-base);
+  color: var(--accent); padding: var(--space-2) 0;
+}
+.composer-input::placeholder { color: var(--gray-soft); }
+.composer-icon-btn {
+  width: 36px; height: 36px; border-radius: var(--radius-pill);
+  background: transparent; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gray); transition: all var(--duration-fast) var(--ease-soft);
+}
+.composer-icon-btn:hover { color: var(--black); background: var(--white); }
+.composer-icon-btn.send {
+  background: var(--product-deep); color: var(--white);
+}
+.composer-icon-btn.send:hover { background: var(--product-accent); }
+.composer-icon-btn svg { width: 18px; height: 18px; }
+.composer-disclaimer {
+  font-size: 11px;
+  color: var(--gray-soft);
+  text-align: center;
+  letter-spacing: 0.01em;
+}
+
+/* Iconos genéricos */
+.icon { width: 1em; height: 1em; display: inline-block; vertical-align: -0.18em;
+  stroke: currentColor; fill: none; stroke-width: 1.6;
+  stroke-linecap: round; stroke-linejoin: round; }
+
+/* Responsive — colapsa a una columna en mobile */
+@media (max-width: 980px) {
+  .cuaderno-main { grid-template-columns: 1fr; }
+  .marco-panel {
+    position: fixed; bottom: 0; left: 0; right: 0; height: 60vh;
+    box-shadow: var(--shadow-lg); z-index: 50;
+  }
+  .nav-progress { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header class="cuaderno-nav">
+  <div class="nav-left">
+    <button class="nav-burger" aria-label="Menú">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <a href="/" class="brand-mini" aria-label="Marco aprende — inicio">
+      <svg viewBox="100 75 175 80" xmlns="http://www.w3.org/2000/svg">
+        <rect x="108" y="80" width="122" height="50" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <text x="118" y="118" class="nb-marco">Marco</text>
+        <text x="199" y="146" class="nb-aprende">aprende</text>
+      </svg>
+    </a>
+    <div class="nav-context">
+      <span class="nav-context-label">Cuaderno</span>
+      <span class="nav-context-title">Matemáticas · Unidad 2</span>
+    </div>
+  </div>
+
+  <div class="nav-progress" aria-label="Progreso de la unidad">
+    <div class="progress"><div class="progress-bar" style="width:50%"></div></div>
+    <span class="nav-progress-pct">50%</span>
+  </div>
+
+  <div class="nav-right">
+    <button class="nav-icon-btn" aria-label="Notificaciones">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9z"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
+      <span class="nav-icon-dot"></span>
+    </button>
+    <div class="nav-avatar" aria-label="Perfil del alumno">A</div>
+  </div>
+</header>
+
+<!-- ═══ MAIN ═══ -->
+<main class="cuaderno-main">
+
+  <!-- Notebook -->
+  <article class="notebook">
+    <div class="notebook-inner">
+      <span class="unit-tag">Unidad 2</span>
+      <h1>Fracciones</h1>
+      <p class="lead">Conceptos y operaciones básicas con fracciones.</p>
+
+      <section>
+        <h2>5.1 Concepto de fracción</h2>
+        <p>Una fracción representa una parte de un todo. Se escribe como <em>a/b</em>, donde <em>a</em> es el numerador (las partes que tomamos) y <em>b</em> es el denominador (las partes iguales en que se divide el todo). El denominador nunca puede ser cero.</p>
+      </section>
+
+      <section>
+        <h2>5.2 Fracciones equivalentes</h2>
+        <p>Dos fracciones son equivalentes cuando representan la misma cantidad. Para comprobarlo, multiplicamos en cruz: <em>a/b = c/d</em> si <em>a·d = b·c</em>. Ejemplo: 2/4 = 3/6, ya que 2·6 = 4·3 = 12.</p>
+      </section>
+
+      <section class="is-active">
+        <h2>5.3 Suma y resta de fracciones</h2>
+        <p>Para sumar fracciones con el mismo denominador, se suman los numeradores y se mantiene el denominador: <em>2/7 + 3/7 = 5/7</em>.</p>
+        <p>Para sumar fracciones con distinto denominador, primero hay que encontrar el mínimo común múltiplo (m.c.m.) de los denominadores. Una vez ambas fracciones tienen el mismo denominador, se suman los numeradores.</p>
+        <p><strong>Ejemplo resuelto:</strong> 1/3 + 1/4 → m.c.m.(3, 4) = 12. Entonces 1/3 = 4/12; 1/4 = 3/12. Resultado: 4/12 + 3/12 = <em>7/12</em>.</p>
+      </section>
+
+      <section>
+        <h2>5.4 Multiplicación de fracciones</h2>
+        <p>Para multiplicar dos fracciones, se multiplican los numeradores entre sí y los denominadores entre sí: <em>(a/b) · (c/d) = (a·c) / (b·d)</em>. No es necesario buscar denominador común.</p>
+      </section>
+    </div>
+  </article>
+
+  <!-- Marco AI panel -->
+  <aside class="marco-panel" aria-label="Asistente Marco">
+    <div class="marco-header">
+      <div class="marco-avatar">M</div>
+      <div class="marco-header-text">
+        <span class="marco-name">Marco</span>
+        <span class="marco-role">Tu asistente de estudio</span>
+      </div>
+      <div class="marco-header-actions">
+        <button class="nav-icon-btn" aria-label="Más opciones">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="marco-chat">
+      <div class="chat-divider">HOY</div>
+
+      <div class="bubble from-marco">Hola Carlos. Veo que has seleccionado el apartado sobre suma de fracciones con distinto denominador. ¿Qué es exactamente lo que no te queda claro?</div>
+
+      <div class="bubble from-user">No entiendo por qué hay que buscar el m.c.m. para sumar fracciones</div>
+
+      <div class="bubble from-marco">Buena pregunta. Vamos paso a paso. Imagina que tienes una pizza cortada en 3 trozos y otra cortada en 4 trozos. Si coges un trozo de cada pizza… ¿los trozos son del mismo tamaño?</div>
+
+      <div class="bubble from-user">No, uno es más grande que el otro</div>
+
+      <div class="bubble from-marco">Exacto. Entonces, ¿tiene sentido decir que tienes "2 trozos" sin más? ¿Qué necesitarías para poder compararlos o sumarlos?</div>
+
+      <div class="bubble from-user">Que los trozos sean iguales</div>
+
+      <div class="bubble from-marco">
+        Justo eso. El m.c.m. es la herramienta que nos permite "cortar" las dos pizzas en trozos del mismo tamaño para poder sumarlos. Mira la sección 5.3 que tienes abierta:
+        <div class="bubble-cite">
+          <span class="bubble-cite-label">Referencia · 5.3</span>
+          "Una vez ambas fracciones tienen el mismo denominador, se suman los numeradores."
+        </div>
+      </div>
+    </div>
+
+    <div class="marco-composer">
+      <div class="composer-input-wrap">
+        <input class="composer-input" placeholder="Escribe tu pregunta a Marco…" aria-label="Pregunta a Marco">
+        <button class="composer-icon-btn" aria-label="Adjuntar">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M21 12.5l-8.5 8.5a5.5 5.5 0 0 1-7.8-7.8l9-9a3.5 3.5 0 0 1 4.95 4.95l-9 9a1.5 1.5 0 0 1-2.12-2.12l8.5-8.5"/></svg>
+        </button>
+        <button class="composer-icon-btn" aria-label="Voz">
+          <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+        </button>
+        <button class="composer-icon-btn send" aria-label="Enviar">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+      <p class="composer-disclaimer">Marco puede cometer errores. Considera verificar la información importante.</p>
+    </div>
+  </aside>
+
+</main>
+
+</body>
+</html>
