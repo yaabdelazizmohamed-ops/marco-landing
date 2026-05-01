@@ -16,12 +16,15 @@ body { background: var(--product-soft-2); overflow-x: hidden; }
 .dash-nav {
   display: flex; align-items: center; justify-content: space-between;
   padding: var(--space-3) var(--space-6);
-  background: var(--white);
+  background: rgba(250, 250, 248, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border-soft);
+  position: sticky; top: 0; z-index: 50;
 }
-.dash-nav-left { display: flex; align-items: center; gap: var(--space-6); }
+.dash-nav-left { display: flex; align-items: center; gap: var(--space-5); }
 .dash-brand { display: inline-block; line-height: 0; color: var(--black); text-decoration: none; }
-.dash-brand svg { display: block; width: 110px; height: auto; overflow: visible; }
+.dash-brand svg { display: block; width: 106px; height: auto; overflow: visible; }
 .dash-brand .nb-marco {
   font-family: var(--font-serif); font-style: italic; font-size: 38px;
   letter-spacing: -0.02em; fill: var(--black);
@@ -30,13 +33,18 @@ body { background: var(--product-soft-2); overflow-x: hidden; }
   font-family: var(--font-sans); font-style: italic; font-weight: 400;
   font-size: 13px; letter-spacing: -0.01em; fill: var(--accent);
 }
-.dash-tabs { display: flex; gap: var(--space-2); }
+
+.nav-divider { width: 1px; height: 20px; background: var(--border); }
+
+.dash-tabs { display: flex; gap: var(--space-1); }
 .dash-tab {
   padding: var(--space-2) var(--space-4);
   font-size: var(--text-sm); color: var(--gray);
   background: transparent; border: none; cursor: pointer;
   font-family: var(--font-sans); font-weight: var(--weight-medium);
-  border-radius: var(--radius-pill); transition: all var(--duration-fast) var(--ease-soft);
+  border-radius: var(--radius-pill);
+  transition: color var(--duration-fast) var(--ease-soft),
+              background var(--duration-fast) var(--ease-soft);
 }
 .dash-tab:hover { color: var(--black); background: var(--note-bg); }
 .dash-tab.active { color: var(--black); background: var(--note-bg); }
@@ -47,6 +55,7 @@ body { background: var(--product-soft-2); overflow-x: hidden; }
   padding: var(--space-1) var(--space-3); font-size: var(--text-xs);
   background: var(--note-bg); color: var(--gray);
   border-radius: var(--radius-pill); border: 1px solid var(--border-soft);
+  font-weight: var(--weight-medium);
 }
 .dash-period svg { width: 12px; height: 12px; }
 .dash-icon-btn {
@@ -54,6 +63,8 @@ body { background: var(--product-soft-2); overflow-x: hidden; }
   background: transparent; border: none; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   color: var(--gray); position: relative;
+  transition: color var(--duration-fast) var(--ease-soft),
+              background var(--duration-fast) var(--ease-soft);
 }
 .dash-icon-btn:hover { background: var(--note-bg); color: var(--black); }
 .dash-icon-btn svg { width: 16px; height: 16px; }
@@ -63,7 +74,7 @@ body { background: var(--product-soft-2); overflow-x: hidden; }
   background: var(--danger); border: 2px solid var(--white);
 }
 .dash-avatar {
-  width: 32px; height: 32px; border-radius: var(--radius-pill);
+  width: 30px; height: 30px; border-radius: var(--radius-pill);
   background: var(--accent); color: var(--white);
   display: flex; align-items: center; justify-content: center;
   font-size: 0.8rem; font-weight: var(--weight-medium);
@@ -72,14 +83,18 @@ body { background: var(--product-soft-2); overflow-x: hidden; }
 
 /* ─── Main ─── */
 .dash-main {
-  padding: var(--space-6) var(--space-8) var(--space-12);
+  padding: var(--space-8) var(--space-8) var(--space-16);
   max-width: 1280px; margin: 0 auto;
 }
 
-.dash-header { margin-bottom: var(--space-6); display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-4); }
+/* ─── Page header ─── */
+.dash-header {
+  margin-bottom: var(--space-6);
+  display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-4);
+}
 .dash-header h1 {
   font-family: var(--font-serif); font-style: italic;
-  font-size: 2rem; letter-spacing: -0.02em;
+  font-size: 2.2rem; letter-spacing: -0.025em;
   color: var(--black); line-height: var(--leading-tight);
   margin-bottom: var(--space-1);
 }
@@ -92,49 +107,62 @@ body { background: var(--product-soft-2); overflow-x: hidden; }
   border-radius: var(--radius-pill);
   background: var(--white); border: 1px solid var(--border);
   font-size: var(--text-sm); color: var(--gray); font-weight: var(--weight-medium);
+  white-space: nowrap;
 }
 .dash-curso-badge svg { width: 14px; height: 14px; }
 
 /* ─── KPIs ─── */
 .kpi-grid {
   display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-3); margin-bottom: var(--space-5);
+  gap: var(--space-4); margin-bottom: var(--space-5);
 }
 .kpi-card {
   background: var(--white);
   border: 1px solid var(--border-soft);
   border-radius: var(--radius-lg);
-  padding: var(--space-4);
+  padding: var(--space-5);
   position: relative;
   overflow: hidden;
+  cursor: default;
+  transition: transform var(--duration-base) var(--ease-soft),
+              box-shadow var(--duration-base) var(--ease-soft);
+}
+.kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 .kpi-card::before {
   content: ''; position: absolute; top: 0; right: 0;
-  width: 80px; height: 80px;
-  background: var(--product-soft); opacity: 0.4;
+  width: 88px; height: 88px;
+  background: var(--product-soft);
   border-radius: 50%;
   transform: translate(40%, -40%);
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+.kpi-card:hover::before {
+  transform: translate(32%, -32%) scale(1.12);
 }
 .kpi-label {
   font-size: var(--text-xs); color: var(--gray);
   letter-spacing: 0.04em; font-weight: var(--weight-medium);
-  margin-bottom: var(--space-2); position: relative;
+  text-transform: uppercase;
+  margin-bottom: var(--space-3); position: relative;
 }
 .kpi-value {
   font-family: var(--font-serif); font-style: italic;
-  font-size: 2.4rem; line-height: 1;
+  font-size: 2.6rem; line-height: 1;
   letter-spacing: -0.025em; color: var(--black);
-  margin-bottom: var(--space-2); position: relative;
+  margin-bottom: var(--space-3); position: relative;
 }
 .kpi-value .unit {
   font-family: var(--font-sans); font-style: normal;
-  font-size: 0.7rem; font-weight: var(--weight-medium);
-  color: var(--gray); margin-left: 2px;
+  font-size: 0.75rem; font-weight: var(--weight-medium);
+  color: var(--gray); margin-left: 3px;
   letter-spacing: 0.02em;
 }
 .kpi-trend {
   display: inline-flex; align-items: center; gap: var(--space-1);
-  padding: 2px var(--space-2);
+  padding: 3px var(--space-2);
   border-radius: var(--radius-pill);
   font-size: 11px; font-weight: var(--weight-medium);
   background: var(--success-soft); color: var(--success);
@@ -155,30 +183,32 @@ body { background: var(--product-soft-2); overflow-x: hidden; }
   background: var(--white);
   border: 1px solid var(--border-soft);
   border-radius: var(--radius-lg);
-  padding: var(--space-5);
+  padding: var(--space-6);
 }
 .dash-card-header {
   display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-5);
 }
 .dash-card-title {
   display: inline-flex; align-items: center; gap: var(--space-2);
-  font-size: var(--text-base); font-weight: var(--weight-medium);
+  font-size: var(--text-base); font-weight: var(--weight-semibold);
   color: var(--black);
 }
-.dash-card-title svg { width: 16px; height: 16px; color: var(--product-accent); }
+.dash-card-title svg { width: 15px; height: 15px; color: var(--product-accent); flex-shrink: 0; }
 .dash-card-meta {
-  font-size: var(--text-xs); color: var(--gray);
+  font-size: var(--text-xs); color: var(--gray-soft);
+  font-weight: var(--weight-medium); letter-spacing: 0.02em;
 }
-.dash-card-actions {
-  display: flex; gap: var(--space-1);
-}
+.dash-card-actions { display: flex; gap: var(--space-1); }
 .dash-card-tab {
   padding: 4px 10px; font-size: 11px; font-weight: var(--weight-medium);
   color: var(--gray); background: var(--note-bg);
   border: none; border-radius: var(--radius-pill);
   cursor: pointer; letter-spacing: 0.02em;
+  transition: background var(--duration-fast) var(--ease-soft),
+              color var(--duration-fast) var(--ease-soft);
 }
+.dash-card-tab:hover { color: var(--black); }
 .dash-card-tab.active { background: var(--black); color: var(--white); }
 
 /* ─── Departamentos ─── */
@@ -187,38 +217,72 @@ body { background: var(--product-soft-2); overflow-x: hidden; }
   padding: var(--space-2) 0;
 }
 .dept-name {
-  width: 110px; font-size: var(--text-sm); font-weight: var(--weight-medium);
+  width: 106px; font-size: var(--text-sm); font-weight: var(--weight-medium);
+  color: var(--black);
   display: flex; align-items: center; gap: var(--space-2);
 }
-.dept-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--product-accent); }
+.dept-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  flex-shrink: 0;
+}
+.dept-dot.c1 { background: var(--product-deep); }
+.dept-dot.c2 { background: #6366cc; }
+.dept-dot.c3 { background: #857bcc; }
+.dept-dot.c4 { background: #a69edb; }
+.dept-dot.c5 { background: #bfb8e8; }
+.dept-dot.c6 { background: var(--gray-soft); }
+
 .dept-bar-track {
-  flex: 1; height: 6px; background: var(--border-soft);
+  flex: 1; height: 7px; background: var(--border-soft);
   border-radius: var(--radius-pill); overflow: hidden;
 }
 .dept-bar-fill {
   height: 100%; border-radius: inherit;
-  background: var(--product-accent);
+  transition: width var(--duration-slow) var(--ease-out);
 }
-.dept-bar-fill.deep { background: var(--product-deep); }
+.dept-bar-fill.c1 { background: var(--product-deep); }
+.dept-bar-fill.c2 { background: #6366cc; }
+.dept-bar-fill.c3 { background: #857bcc; }
+.dept-bar-fill.c4 { background: #a69edb; }
+.dept-bar-fill.c5 { background: #bfb8e8; }
+.dept-bar-fill.c6 { background: var(--gray-soft); }
+
 .dept-pct {
-  width: 40px; text-align: right; font-size: var(--text-sm);
+  width: 36px; text-align: right; font-size: var(--text-sm);
   color: var(--gray); font-variant-numeric: tabular-nums;
+  font-weight: var(--weight-medium);
 }
 
-/* ─── Evolución (bar chart simple) ─── */
+/* ─── Evolución (bar chart) ─── */
+.evo-chart-wrap { position: relative; }
+.evo-grid-lines {
+  position: absolute; inset: 0 0 24px 0;
+  display: flex; flex-direction: column; justify-content: space-between;
+  pointer-events: none;
+}
+.evo-grid-line {
+  width: 100%; border-top: 1px dashed var(--border-soft);
+}
 .evo-chart {
   display: flex; gap: 6px; align-items: flex-end;
-  height: 140px; padding: var(--space-2) 0;
+  height: 160px; padding-bottom: 24px; position: relative;
 }
-.evo-bar { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.evo-bar {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: flex-end; gap: 5px;
+  position: relative;
+}
 .evo-bar-fill {
-  width: 100%; max-width: 24px;
-  background: var(--border); border-radius: 4px 4px 0 0;
-  transition: background var(--duration-fast) var(--ease-soft);
+  width: 100%; max-width: 28px;
+  background: var(--border-soft); border-radius: 4px 4px 0 0;
+  transition: background var(--duration-base) var(--ease-soft),
+              opacity var(--duration-fast) var(--ease-soft);
 }
-.evo-bar.is-recent .evo-bar-fill { background: var(--product-accent); }
-.evo-bar.is-current .evo-bar-fill { background: var(--product-deep); }
-.evo-bar-label { font-size: 10px; color: var(--gray); letter-spacing: 0.02em; }
+.evo-bar:hover .evo-bar-fill { opacity: 0.8; }
+.evo-bar.is-recent .evo-bar-fill { background: var(--product-soft); border: 1px solid var(--product-accent); border-bottom: none; }
+.evo-bar.is-current .evo-bar-fill { background: var(--product-deep); border: none; }
+.evo-bar-label { font-size: 10px; color: var(--gray); letter-spacing: 0.02em; font-weight: var(--weight-medium); }
+.evo-bar.is-current .evo-bar-label { color: var(--product-deep); font-weight: var(--weight-semibold); }
 
 /* ─── Alertas ─── */
 .alert {
@@ -236,66 +300,85 @@ body { background: var(--product-soft-2); overflow-x: hidden; }
 .alert-icon svg { width: 14px; height: 14px; }
 .alert-body { flex: 1; }
 .alert-title {
-  font-size: var(--text-sm); font-weight: var(--weight-medium);
+  font-size: var(--text-sm); font-weight: var(--weight-semibold);
   margin-bottom: 2px;
 }
 .alert-detail {
-  font-size: var(--text-xs); line-height: var(--leading-snug);
+  font-size: var(--text-xs); line-height: var(--leading-snug); color: inherit; opacity: 0.8;
 }
 .alert--critical {
   background: var(--danger-soft);
-  border: 1px solid color-mix(in srgb, var(--danger) 20%, transparent);
+  border: 1px solid color-mix(in srgb, var(--danger) 18%, transparent);
 }
 .alert--critical .alert-icon { background: var(--danger); color: var(--white); }
 .alert--critical .alert-title { color: var(--danger); }
-.alert--critical .alert-detail { color: color-mix(in srgb, var(--danger) 85%, var(--black)); }
+.alert--critical .alert-detail { color: color-mix(in srgb, var(--danger) 80%, var(--black)); opacity: 1; }
 .alert--info {
   background: var(--note-bg);
   border: 1px solid var(--border-soft);
 }
 .alert--info .alert-icon { background: var(--white); color: var(--gray); border: 1px solid var(--border-soft); }
 .alert--info .alert-title { color: var(--black); }
-.alert--info .alert-detail { color: var(--gray); }
+.alert--info .alert-detail { color: var(--gray); opacity: 1; }
 .alert--positive {
   background: var(--product-soft);
-  border: 1px solid color-mix(in srgb, var(--product-accent) 25%, transparent);
+  border: 1px solid color-mix(in srgb, var(--product-accent) 22%, transparent);
 }
 .alert--positive .alert-icon { background: var(--product-accent); color: var(--white); }
 .alert--positive .alert-title { color: var(--product-deep); }
-.alert--positive .alert-detail { color: color-mix(in srgb, var(--product-deep) 85%, var(--black)); }
+.alert--positive .alert-detail { color: color-mix(in srgb, var(--product-deep) 80%, var(--black)); opacity: 1; }
 
 /* ─── Profesores activos ─── */
 .teacher-row {
   display: flex; align-items: center; gap: var(--space-3);
-  padding: var(--space-3) 0;
+  padding: var(--space-3) var(--space-2);
   border-bottom: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-soft);
+  margin: 0 calc(var(--space-2) * -1);
 }
 .teacher-row:last-child { border-bottom: 0; }
+.teacher-row:hover { background: var(--product-soft-2); }
+
+.teacher-avatar-wrap { position: relative; flex-shrink: 0; }
 .teacher-avatar {
-  width: 34px; height: 34px; border-radius: 50%;
+  width: 36px; height: 36px; border-radius: 50%;
   background: var(--note-bg); color: var(--accent);
   display: flex; align-items: center; justify-content: center;
-  font-size: var(--text-sm); font-weight: var(--weight-medium);
-  flex-shrink: 0;
+  font-size: var(--text-sm); font-weight: var(--weight-semibold);
   font-family: var(--font-serif); font-style: italic;
 }
-.teacher-info { flex: 1; }
-.teacher-name { font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--black); }
+.teacher-status {
+  position: absolute; bottom: 0; right: 0;
+  width: 10px; height: 10px; border-radius: 50%;
+  border: 2px solid var(--white);
+}
+.teacher-status.online { background: var(--success); }
+.teacher-status.away { background: var(--warning); }
+
+.teacher-info { flex: 1; min-width: 0; }
+.teacher-name {
+  font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--black);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
 .teacher-subject { font-size: var(--text-xs); color: var(--gray); margin-top: 1px; }
 .teacher-pct {
   padding: 3px var(--space-2);
   background: var(--product-soft); color: var(--product-deep);
   border-radius: var(--radius-pill);
-  font-size: 11px; font-weight: var(--weight-medium);
+  font-size: 11px; font-weight: var(--weight-semibold);
   font-variant-numeric: tabular-nums;
+  white-space: nowrap; flex-shrink: 0;
 }
 
 @media (max-width: 860px) {
   .kpi-grid { grid-template-columns: repeat(2, 1fr); }
   .dash-grid { grid-template-columns: 1fr; }
   .dash-tabs { display: none; }
+  .nav-divider { display: none; }
   .dash-main { padding: var(--space-5) var(--space-4) var(--space-10); }
-  .dash-header { flex-direction: column; align-items: flex-start; }
+  .dash-header { flex-direction: column; align-items: flex-start; gap: var(--space-3); }
 }
 </style>
 </head>
@@ -311,6 +394,7 @@ body { background: var(--product-soft-2); overflow-x: hidden; }
         <text x="199" y="146" class="nb-aprende">aprende</text>
       </svg>
     </a>
+    <div class="nav-divider"></div>
     <nav class="dash-tabs">
       <button class="dash-tab active">Resumen</button>
       <button class="dash-tab">Académico</button>
@@ -321,24 +405,29 @@ body { background: var(--product-soft-2); overflow-x: hidden; }
   <div class="dash-nav-right">
     <span class="dash-period">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-      Curso 2025–2026 · 2º Trimestre
+      Curso 2025–2026
     </span>
     <button class="dash-icon-btn" aria-label="Notificaciones">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9z"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
       <span class="dash-dot"></span>
     </button>
-    <div class="dash-avatar">M</div>
+    <div class="dash-avatar">YA</div>
   </div>
 </header>
 
 <!-- ═══ MAIN ═══ -->
 <main class="dash-main">
 
+  <!-- Page header -->
   <div class="dash-header">
     <div>
       <h1>Panel de Dirección</h1>
       <p class="dash-sub">Colegio San Rafael · Vista resumida del centro</p>
     </div>
+    <span class="dash-curso-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      2º Trimestre · Abr 2026
+    </span>
   </div>
 
   <!-- KPIs -->
@@ -347,7 +436,7 @@ body { background: var(--product-soft-2); overflow-x: hidden; }
       <div class="kpi-label">Alumnos activos</div>
       <div class="kpi-value">312</div>
       <span class="kpi-trend">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 15l7-7 7 7"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 15l7-7 7 7"/></svg>
         14 este mes
       </span>
     </div>
@@ -355,7 +444,7 @@ body { background: var(--product-soft-2); overflow-x: hidden; }
       <div class="kpi-label">Profesores en plataforma</div>
       <div class="kpi-value">18</div>
       <span class="kpi-trend">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 15l7-7 7 7"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 15l7-7 7 7"/></svg>
         +3 vs mes anterior
       </span>
     </div>
@@ -363,7 +452,7 @@ body { background: var(--product-soft-2); overflow-x: hidden; }
       <div class="kpi-label">Adopción del centro</div>
       <div class="kpi-value">91<span class="unit">%</span></div>
       <span class="kpi-trend">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 15l7-7 7 7"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 15l7-7 7 7"/></svg>
         +8% vs mes anterior
       </span>
     </div>
@@ -371,7 +460,7 @@ body { background: var(--product-soft-2); overflow-x: hidden; }
       <div class="kpi-label">Tiempo medio / alumno</div>
       <div class="kpi-value">38<span class="unit">min</span></div>
       <span class="kpi-trend">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 15l7-7 7 7"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 15l7-7 7 7"/></svg>
         +5 min vs mes anterior
       </span>
     </div>
@@ -392,33 +481,33 @@ body { background: var(--product-soft-2); overflow-x: hidden; }
         </div>
         <div>
           <div class="dept-row">
-            <div class="dept-name"><span class="dept-dot"></span>Matemáticas</div>
-            <div class="dept-bar-track"><div class="dept-bar-fill deep" style="width:87%"></div></div>
-            <div class="dept-pct">87%</div>
-          </div>
-          <div class="dept-row">
-            <div class="dept-name"><span class="dept-dot"></span>Inglés</div>
-            <div class="dept-bar-track"><div class="dept-bar-fill deep" style="width:91%"></div></div>
+            <div class="dept-name"><span class="dept-dot c2"></span>Inglés</div>
+            <div class="dept-bar-track"><div class="dept-bar-fill c2" style="width:91%"></div></div>
             <div class="dept-pct">91%</div>
           </div>
           <div class="dept-row">
-            <div class="dept-name"><span class="dept-dot"></span>Lengua</div>
-            <div class="dept-bar-track"><div class="dept-bar-fill" style="width:79%"></div></div>
+            <div class="dept-name"><span class="dept-dot c1"></span>Matemáticas</div>
+            <div class="dept-bar-track"><div class="dept-bar-fill c1" style="width:87%"></div></div>
+            <div class="dept-pct">87%</div>
+          </div>
+          <div class="dept-row">
+            <div class="dept-name"><span class="dept-dot c3"></span>Lengua</div>
+            <div class="dept-bar-track"><div class="dept-bar-fill c3" style="width:79%"></div></div>
             <div class="dept-pct">79%</div>
           </div>
           <div class="dept-row">
-            <div class="dept-name"><span class="dept-dot"></span>Ciencias</div>
-            <div class="dept-bar-track"><div class="dept-bar-fill" style="width:72%"></div></div>
+            <div class="dept-name"><span class="dept-dot c4"></span>Ciencias</div>
+            <div class="dept-bar-track"><div class="dept-bar-fill c4" style="width:72%"></div></div>
             <div class="dept-pct">72%</div>
           </div>
           <div class="dept-row">
-            <div class="dept-name"><span class="dept-dot"></span>Historia</div>
-            <div class="dept-bar-track"><div class="dept-bar-fill" style="width:68%"></div></div>
+            <div class="dept-name"><span class="dept-dot c5"></span>Historia</div>
+            <div class="dept-bar-track"><div class="dept-bar-fill c5" style="width:68%"></div></div>
             <div class="dept-pct">68%</div>
           </div>
           <div class="dept-row">
-            <div class="dept-name"><span class="dept-dot"></span>Geografía</div>
-            <div class="dept-bar-track"><div class="dept-bar-fill" style="width:64%"></div></div>
+            <div class="dept-name"><span class="dept-dot c6"></span>Geografía</div>
+            <div class="dept-bar-track"><div class="dept-bar-fill c6" style="width:64%"></div></div>
             <div class="dept-pct">64%</div>
           </div>
         </div>
@@ -436,15 +525,23 @@ body { background: var(--product-soft-2); overflow-x: hidden; }
             <button class="dash-card-tab">Anual</button>
           </div>
         </div>
-        <div class="evo-chart">
-          <div class="evo-bar"><div class="evo-bar-fill" style="height:35%"></div><span class="evo-bar-label">Sep</span></div>
-          <div class="evo-bar"><div class="evo-bar-fill" style="height:48%"></div><span class="evo-bar-label">Oct</span></div>
-          <div class="evo-bar"><div class="evo-bar-fill" style="height:62%"></div><span class="evo-bar-label">Nov</span></div>
-          <div class="evo-bar"><div class="evo-bar-fill" style="height:58%"></div><span class="evo-bar-label">Dic</span></div>
-          <div class="evo-bar is-recent"><div class="evo-bar-fill" style="height:73%"></div><span class="evo-bar-label">Ene</span></div>
-          <div class="evo-bar is-recent"><div class="evo-bar-fill" style="height:80%"></div><span class="evo-bar-label">Feb</span></div>
-          <div class="evo-bar is-recent"><div class="evo-bar-fill" style="height:75%"></div><span class="evo-bar-label">Mar</span></div>
-          <div class="evo-bar is-current"><div class="evo-bar-fill" style="height:91%"></div><span class="evo-bar-label">Abr</span></div>
+        <div class="evo-chart-wrap">
+          <div class="evo-grid-lines" aria-hidden="true">
+            <div class="evo-grid-line"></div>
+            <div class="evo-grid-line"></div>
+            <div class="evo-grid-line"></div>
+            <div class="evo-grid-line"></div>
+          </div>
+          <div class="evo-chart">
+            <div class="evo-bar"><div class="evo-bar-fill" style="height:35%"></div><span class="evo-bar-label">Sep</span></div>
+            <div class="evo-bar"><div class="evo-bar-fill" style="height:48%"></div><span class="evo-bar-label">Oct</span></div>
+            <div class="evo-bar"><div class="evo-bar-fill" style="height:62%"></div><span class="evo-bar-label">Nov</span></div>
+            <div class="evo-bar"><div class="evo-bar-fill" style="height:58%"></div><span class="evo-bar-label">Dic</span></div>
+            <div class="evo-bar is-recent"><div class="evo-bar-fill" style="height:73%"></div><span class="evo-bar-label">Ene</span></div>
+            <div class="evo-bar is-recent"><div class="evo-bar-fill" style="height:80%"></div><span class="evo-bar-label">Feb</span></div>
+            <div class="evo-bar is-recent"><div class="evo-bar-fill" style="height:75%"></div><span class="evo-bar-label">Mar</span></div>
+            <div class="evo-bar is-current"><div class="evo-bar-fill" style="height:91%"></div><span class="evo-bar-label">Abr</span></div>
+          </div>
         </div>
       </div>
 
@@ -456,15 +553,15 @@ body { background: var(--product-soft-2); overflow-x: hidden; }
       <div class="dash-card">
         <div class="dash-card-header">
           <div class="dash-card-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 4l10 17H2z"/><path d="M12 10v5"/><circle cx="12" cy="18.2" r="0.6" fill="currentColor"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 4l10 17H2z"/><path d="M12 10v4"/><circle cx="12" cy="17.5" r="0.6" fill="currentColor"/></svg>
             Alertas del centro
           </div>
-          <span class="dash-card-meta">3 nuevas</span>
+          <span class="chip chip-danger" style="font-size:10px;padding:2px 8px;">3 nuevas</span>
         </div>
 
         <div class="alert alert--critical">
           <div class="alert-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><circle cx="12" cy="16" r="0.5" fill="currentColor"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4"/><circle cx="12" cy="16" r="0.5" fill="currentColor"/></svg>
           </div>
           <div class="alert-body">
             <div class="alert-title">Geografía 3ºB</div>
@@ -474,7 +571,7 @@ body { background: var(--product-soft-2); overflow-x: hidden; }
 
         <div class="alert alert--info">
           <div class="alert-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16v.5"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16v.5"/></svg>
           </div>
           <div class="alert-body">
             <div class="alert-title">Mantenimiento programado</div>
@@ -502,38 +599,55 @@ body { background: var(--product-soft-2); overflow-x: hidden; }
           </div>
           <span class="dash-card-meta">Esta semana</span>
         </div>
+
         <div class="teacher-row">
-          <div class="teacher-avatar">M</div>
+          <div class="teacher-avatar-wrap">
+            <div class="teacher-avatar" style="background:var(--product-soft);color:var(--product-deep);">M</div>
+            <span class="teacher-status online"></span>
+          </div>
           <div class="teacher-info">
             <div class="teacher-name">Marta López</div>
             <div class="teacher-subject">Matemáticas · 4ºA, 4ºB</div>
           </div>
           <div class="teacher-pct">87% particip.</div>
         </div>
+
         <div class="teacher-row">
-          <div class="teacher-avatar">C</div>
+          <div class="teacher-avatar-wrap">
+            <div class="teacher-avatar" style="background:#eeeefa;color:#2c2e7a;">C</div>
+            <span class="teacher-status online"></span>
+          </div>
           <div class="teacher-info">
             <div class="teacher-name">Carlos Ruiz</div>
             <div class="teacher-subject">Historia · 3ºA, 3ºB</div>
           </div>
           <div class="teacher-pct">82% particip.</div>
         </div>
+
         <div class="teacher-row">
-          <div class="teacher-avatar">A</div>
+          <div class="teacher-avatar-wrap">
+            <div class="teacher-avatar" style="background:var(--note-bg);color:var(--accent);">A</div>
+            <span class="teacher-status away"></span>
+          </div>
           <div class="teacher-info">
             <div class="teacher-name">Ana Jiménez</div>
             <div class="teacher-subject">Lengua y Literatura</div>
           </div>
           <div class="teacher-pct">78% particip.</div>
         </div>
+
         <div class="teacher-row">
-          <div class="teacher-avatar">L</div>
+          <div class="teacher-avatar-wrap">
+            <div class="teacher-avatar" style="background:var(--note-bg);color:var(--accent);">L</div>
+            <span class="teacher-status away"></span>
+          </div>
           <div class="teacher-info">
             <div class="teacher-name">Luis Romero</div>
             <div class="teacher-subject">Ciencias · 2º ESO</div>
           </div>
           <div class="teacher-pct">71% particip.</div>
         </div>
+
       </div>
 
     </div>

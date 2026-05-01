@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mis asignaturas — Alex · Marco</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0a0a'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='38' font-style='italic' fill='%23fafaf8' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles/tokens.css">
+<style>
+html, body { height: 100%; }
+body { background: var(--white); overflow-x: hidden; }
+
+/* ─── Nav ─── */
+.top-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--space-3) var(--space-6);
+  background: rgba(250,250,248,0.9); backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-soft);
+  position: sticky; top: 0; z-index: 50;
+}
+.top-nav-left { display: flex; align-items: center; gap: var(--space-4); }
+.brand-mini { display: inline-block; line-height: 0; color: var(--black); text-decoration: none; }
+.brand-mini svg { display: block; width: 106px; height: auto; overflow: visible; }
+.brand-mini .nb-marco { font-family: var(--font-serif); font-style: italic; font-size: 38px; letter-spacing: -0.02em; fill: var(--black); }
+.brand-mini .nb-aprende { font-family: var(--font-sans); font-style: italic; font-weight: 400; font-size: 13px; letter-spacing: -0.01em; fill: var(--accent); }
+.top-nav-right { display: flex; align-items: center; gap: var(--space-2); }
+.nav-btn {
+  width: 34px; height: 34px; border-radius: var(--radius-pill);
+  background: none; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gray); position: relative;
+  transition: background var(--duration-fast) var(--ease-soft), color var(--duration-fast) var(--ease-soft);
+}
+.nav-btn:hover { background: var(--note-bg); color: var(--black); }
+.nav-btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.notif-dot { position: absolute; top: 7px; right: 7px; width: 7px; height: 7px; border-radius: 50%; background: var(--danger); border: 2px solid var(--white); }
+.user-avatar { width: 30px; height: 30px; border-radius: var(--radius-pill); background: var(--product-deep); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: var(--weight-semibold); font-family: var(--font-serif); font-style: italic; cursor: pointer; }
+
+/* ─── Main ─── */
+.main { max-width: 960px; margin: 0 auto; padding: var(--space-8) var(--space-6) var(--space-16); }
+
+/* ─── Welcome ─── */
+.welcome { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-4); margin-bottom: var(--space-8); }
+.welcome-text h1 { font-family: var(--font-serif); font-style: italic; font-size: 2.2rem; letter-spacing: -0.025em; color: var(--black); line-height: var(--leading-tight); margin-bottom: var(--space-1); }
+.welcome-text p { font-size: var(--text-sm); color: var(--gray); }
+.streak-badge {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: var(--product-soft); color: var(--product-deep);
+  border-radius: var(--radius-pill); border: 1px solid color-mix(in srgb, var(--product-accent) 25%, transparent);
+  font-size: var(--text-xs); font-weight: var(--weight-semibold);
+  letter-spacing: 0.04em; white-space: nowrap;
+}
+.streak-badge svg { width: 14px; height: 14px; }
+
+/* ─── Section label ─── */
+.section-label { font-size: 11px; color: var(--gray); letter-spacing: 0.07em; text-transform: uppercase; font-weight: var(--weight-semibold); margin-bottom: var(--space-4); }
+
+/* ─── Subject cards grid ─── */
+.subjects-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); margin-bottom: var(--space-10); }
+
+.subject-card {
+  background: var(--white);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  display: flex; flex-direction: column; gap: var(--space-4);
+  cursor: pointer; position: relative; overflow: hidden;
+  transition: transform var(--duration-base) var(--ease-soft),
+              box-shadow var(--duration-base) var(--ease-soft),
+              border-color var(--duration-base) var(--ease-soft);
+}
+.subject-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--product-soft);
+}
+.subject-card.has-pending { border-color: color-mix(in srgb, var(--product-accent) 30%, transparent); }
+
+.pending-badge {
+  position: absolute; top: var(--space-3); right: var(--space-3);
+  background: var(--danger); color: var(--white);
+  font-size: 10px; font-weight: var(--weight-semibold);
+  padding: 2px 7px; border-radius: var(--radius-pill);
+  letter-spacing: 0.05em;
+}
+
+/* Circular progress ring */
+.ring-wrap {
+  position: relative;
+  width: 56px; height: 56px; flex-shrink: 0;
+}
+.ring-bg { fill: none; stroke: var(--border-soft); stroke-width: 3.5; }
+.ring-fill {
+  fill: none; stroke-width: 3.5;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  transition: stroke-dashoffset 900ms var(--ease-out);
+}
+.ring-wrap .ring-icon {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.ring-wrap .ring-icon svg { width: 20px; height: 20px; stroke: var(--product-accent); fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+
+.subject-info h2 { font-size: var(--text-base); font-weight: var(--weight-semibold); color: var(--black); margin-bottom: 2px; }
+.subject-info .topic { font-size: var(--text-xs); color: var(--gray); }
+
+.subject-footer { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+.subject-pct { font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--product-accent); font-variant-numeric: tabular-nums; }
+.subject-cta {
+  font-size: 11px; font-weight: var(--weight-semibold); color: var(--product-deep);
+  background: var(--product-soft); border: none; cursor: pointer;
+  padding: 4px var(--space-3); border-radius: var(--radius-pill);
+  transition: background var(--duration-fast) var(--ease-soft);
+  letter-spacing: 0.02em;
+}
+.subject-cta:hover { background: color-mix(in srgb, var(--product-soft) 70%, var(--product-accent)); }
+
+/* ─── Assigned notebooks ─── */
+.notebook-list { display: flex; flex-direction: column; gap: var(--space-2); }
+.notebook-row {
+  display: flex; align-items: center; gap: var(--space-4);
+  background: var(--white); border: 1px solid var(--border-soft);
+  border-radius: var(--radius-md); padding: var(--space-4) var(--space-5);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-soft),
+              box-shadow var(--duration-fast) var(--ease-soft);
+}
+.notebook-row:hover { background: var(--product-soft-2); box-shadow: var(--shadow-sm); }
+.notebook-row.is-done { opacity: 0.6; }
+.notebook-row.is-done .notebook-title { text-decoration: line-through; }
+
+.notebook-icon {
+  width: 38px; height: 38px; border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.notebook-icon svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.notebook-icon.new { background: var(--product-soft); color: var(--product-deep); }
+.notebook-icon.pending { background: var(--warning-soft); color: var(--warning); }
+.notebook-icon.done { background: var(--success-soft); color: var(--success); }
+
+.notebook-meta { flex: 1; }
+.notebook-title { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--black); margin-bottom: 2px; }
+.notebook-detail { font-size: var(--text-xs); color: var(--gray); }
+
+.notebook-badge { font-size: 10px; font-weight: var(--weight-semibold); letter-spacing: 0.05em; padding: 3px 8px; border-radius: var(--radius-pill); white-space: nowrap; }
+.badge-new { background: var(--danger-soft); color: var(--danger); }
+.badge-due { background: var(--warning-soft); color: var(--warning); }
+.badge-done { background: var(--success-soft); color: var(--success); }
+
+.notebook-action {
+  font-size: var(--text-sm); font-weight: var(--weight-medium);
+  padding: var(--space-2) var(--space-4); border-radius: var(--radius-pill);
+  border: none; cursor: pointer; white-space: nowrap;
+  transition: background var(--duration-fast) var(--ease-soft);
+}
+.action-primary { background: var(--product-deep); color: var(--white); }
+.action-primary:hover { background: var(--product-accent); }
+.action-secondary { background: var(--note-bg); color: var(--accent); border: 1px solid var(--border); }
+.action-secondary:hover { background: var(--border-soft); }
+.action-ghost { background: transparent; color: var(--gray); }
+.action-ghost:hover { color: var(--black); background: var(--note-bg); }
+
+@media (max-width: 720px) {
+  .subjects-grid { grid-template-columns: repeat(2, 1fr); }
+  .welcome { flex-direction: column; align-items: flex-start; }
+  .notebook-action { display: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="top-nav">
+  <div class="top-nav-left">
+    <a href="/" class="brand-mini" aria-label="Marco aprende">
+      <svg viewBox="100 75 175 80" xmlns="http://www.w3.org/2000/svg">
+        <rect x="108" y="80" width="122" height="50" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <text x="118" y="118" class="nb-marco">Marco</text>
+        <text x="199" y="146" class="nb-aprende">aprende</text>
+      </svg>
+    </a>
+  </div>
+  <div class="top-nav-right">
+    <button class="nav-btn" aria-label="Notificaciones">
+      <svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9z"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
+      <span class="notif-dot"></span>
+    </button>
+    <button class="nav-btn" aria-label="Logros">
+      <svg viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M17 7A5 5 0 1 1 7 7v5a5 5 0 0 0 10 0V7z"/><path d="M5 11H3a2 2 0 0 0 2 2m14-2h2a2 2 0 0 1-2 2"/></svg>
+    </button>
+    <div class="user-avatar" aria-label="Alex">A</div>
+  </div>
+</header>
+
+<main class="main">
+
+  <div class="welcome">
+    <div class="welcome-text">
+      <h1>Hola, Alex</h1>
+      <p>Tienes 3 cuadernos pendientes para esta semana</p>
+    </div>
+    <span class="streak-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3c1 3 3 4 3 7a3 3 0 0 1-6 0c0-1.3.5-2 1-3"/><path d="M7 14c0-1 .5-2 1-2.5C8 13 9 14 9 15a3 3 0 1 0 6 0c0-2.5-2-3-2-5 2 1.5 4 3.5 4 6.5a5 5 0 1 1-10 0z"/></svg>
+      5 días seguidos estudiando
+    </span>
+  </div>
+
+  <p class="section-label">Mis asignaturas</p>
+
+  <div class="subjects-grid">
+
+    <!-- Matemáticas -->
+    <div class="subject-card has-pending" onclick="this.closest('.subject-card').style.transform='scale(0.98)';setTimeout(()=>this.closest('.subject-card').style.transform='',150)">
+      <span class="pending-badge">NUEVO</span>
+      <div class="ring-wrap">
+        <svg width="56" height="56" viewBox="0 0 56 56">
+          <circle class="ring-bg" cx="28" cy="28" r="22"/>
+          <circle class="ring-fill" cx="28" cy="28" r="22" stroke="var(--product-deep)"
+            style="stroke-dasharray: 138.2; stroke-dashoffset: 20.7" data-pct="85"/>
+        </svg>
+        <div class="ring-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 20L12 4l9 16z"/><path d="M8 17h8"/></svg>
+        </div>
+      </div>
+      <div class="subject-info">
+        <h2>Matemáticas</h2>
+        <p class="topic">Fracciones y decimales</p>
+      </div>
+      <div class="subject-footer">
+        <span class="subject-pct">85%</span>
+        <button class="subject-cta">Continuar</button>
+      </div>
+    </div>
+
+    <!-- Historia -->
+    <div class="subject-card">
+      <div class="ring-wrap">
+        <svg width="56" height="56" viewBox="0 0 56 56">
+          <circle class="ring-bg" cx="28" cy="28" r="22"/>
+          <circle class="ring-fill" cx="28" cy="28" r="22" stroke="var(--product-accent)"
+            style="stroke-dasharray: 138.2; stroke-dashoffset: 82.9" data-pct="40"/>
+        </svg>
+        <div class="ring-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 5c3-1 6-1 9 1v15c-3-2-6-2-9-1z"/><path d="M21 5c-3-1-6-1-9 1v15c3-2 6-2 9-1z"/></svg>
+        </div>
+      </div>
+      <div class="subject-info">
+        <h2>Historia</h2>
+        <p class="topic">Civilizaciones antiguas</p>
+      </div>
+      <div class="subject-footer">
+        <span class="subject-pct">40%</span>
+        <button class="subject-cta">Continuar</button>
+      </div>
+    </div>
+
+    <!-- Lengua -->
+    <div class="subject-card">
+      <div class="ring-wrap">
+        <svg width="56" height="56" viewBox="0 0 56 56">
+          <circle class="ring-bg" cx="28" cy="28" r="22"/>
+          <circle class="ring-fill" cx="28" cy="28" r="22" stroke="var(--product-accent)"
+            style="stroke-dasharray: 138.2; stroke-dashoffset: 55.3" data-pct="60"/>
+        </svg>
+        <div class="ring-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/></svg>
+        </div>
+      </div>
+      <div class="subject-info">
+        <h2>Lengua</h2>
+        <p class="topic">Comprensión lectora</p>
+      </div>
+      <div class="subject-footer">
+        <span class="subject-pct">60%</span>
+        <button class="subject-cta">Continuar</button>
+      </div>
+    </div>
+
+    <!-- Ciencias -->
+    <div class="subject-card">
+      <div class="ring-wrap">
+        <svg width="56" height="56" viewBox="0 0 56 56">
+          <circle class="ring-bg" cx="28" cy="28" r="22"/>
+          <circle class="ring-fill" cx="28" cy="28" r="22" stroke="#bfb8e8"
+            style="stroke-dasharray: 138.2; stroke-dashoffset: 117.5" data-pct="15"/>
+        </svg>
+        <div class="ring-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><ellipse cx="12" cy="12" rx="4" ry="9"/></svg>
+        </div>
+      </div>
+      <div class="subject-info">
+        <h2>Ciencias</h2>
+        <p class="topic">El sistema solar</p>
+      </div>
+      <div class="subject-footer">
+        <span class="subject-pct">15%</span>
+        <button class="subject-cta">Empezar</button>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="section-label">Cuadernos asignados por tus profesores</p>
+
+  <div class="notebook-list">
+
+    <div class="notebook-row">
+      <div class="notebook-icon new">
+        <svg viewBox="0 0 24 24"><path d="M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2V4z"/><path d="M5 18a2 2 0 0 1 2-2h12"/><path d="M9 8h6M9 12h4"/></svg>
+      </div>
+      <div class="notebook-meta">
+        <div class="notebook-title">Reto de Geometría — Unidad 2</div>
+        <div class="notebook-detail">Prof. Marcos · Matemáticas</div>
+      </div>
+      <span class="notebook-badge badge-new">NUEVO</span>
+      <button class="notebook-action action-primary">Empezar</button>
+    </div>
+
+    <div class="notebook-row">
+      <div class="notebook-icon pending">
+        <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      </div>
+      <div class="notebook-meta">
+        <div class="notebook-title">Redacción: Mi lugar favorito</div>
+        <div class="notebook-detail">Profa. Laura · Lengua · Vence mañana</div>
+      </div>
+      <span class="notebook-badge badge-due">VENCE HOY</span>
+      <button class="notebook-action action-secondary">Continuar</button>
+    </div>
+
+    <div class="notebook-row is-done">
+      <div class="notebook-icon done">
+        <svg viewBox="0 0 24 24"><path d="M9 11.5l2.5 2.5L16 9.5"/><circle cx="12" cy="12" r="9"/></svg>
+      </div>
+      <div class="notebook-meta">
+        <div class="notebook-title">Cuestionario: Ecosistemas</div>
+        <div class="notebook-detail">Prof. Carlos · Ciencias · Completado</div>
+      </div>
+      <span class="notebook-badge badge-done">COMPLETADO</span>
+      <button class="notebook-action action-ghost">Revisar</button>
+    </div>
+
+  </div>
+
+</main>
+
+<script>
+/* Animate rings on load — stroke-dashoffset starts at full circumference and draws to target */
+document.addEventListener('DOMContentLoaded', () => {
+  const rings = document.querySelectorAll('.ring-fill');
+  const circumference = 2 * Math.PI * 22; // r=22 → ~138.2
+
+  rings.forEach(ring => {
+    const pct = parseFloat(ring.dataset.pct) / 100;
+    const target = circumference * (1 - pct);
+    // Start fully hidden, then animate to target
+    ring.style.strokeDashoffset = circumference;
+    ring.style.transition = 'none';
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        ring.style.transition = 'stroke-dashoffset 900ms cubic-bezier(0.16,1,0.3,1)';
+        ring.style.strokeDashoffset = target;
+      });
+    });
+  });
+});
+</script>
+
+</body>
+</html>

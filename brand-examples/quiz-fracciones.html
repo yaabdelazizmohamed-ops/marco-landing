@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz — Fracciones · Marco</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0a0a'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='38' font-style='italic' fill='%23fafaf8' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles/tokens.css">
+<style>
+html, body { height: 100%; }
+body { background: var(--white); display: flex; flex-direction: column; overflow: hidden; }
+
+/* ─── Header ─── */
+.quiz-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--space-3) var(--space-6);
+  background: var(--white); border-bottom: 1px solid var(--border-soft);
+  flex-shrink: 0;
+}
+.brand-mini { display: inline-block; line-height: 0; color: var(--black); text-decoration: none; }
+.brand-mini svg { display: block; width: 106px; height: auto; overflow: visible; }
+.brand-mini .nb-marco { font-family: var(--font-serif); font-style: italic; font-size: 38px; letter-spacing: -0.02em; fill: var(--black); }
+.brand-mini .nb-aprende { font-family: var(--font-sans); font-style: italic; font-weight: 400; font-size: 13px; letter-spacing: -0.01em; fill: var(--accent); }
+.quiz-context { display: flex; flex-direction: column; gap: 1px; }
+.quiz-context-label { font-size: 10px; color: var(--gray-soft); letter-spacing: 0.07em; text-transform: uppercase; font-weight: var(--weight-semibold); }
+.quiz-context-title { font-size: var(--text-sm); color: var(--black); font-weight: var(--weight-medium); }
+.nav-btn { width: 34px; height: 34px; border-radius: var(--radius-pill); background: none; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--gray); transition: background var(--duration-fast) var(--ease-soft), color var(--duration-fast) var(--ease-soft); }
+.nav-btn:hover { background: var(--note-bg); color: var(--black); }
+.nav-btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ─── Progress bar ─── */
+.quiz-progress-wrap { padding: 0 var(--space-6) var(--space-3); background: var(--white); flex-shrink: 0; }
+.quiz-progress-meta { display: flex; justify-content: space-between; align-items: center; padding: var(--space-3) 0 var(--space-2); }
+.quiz-step-label { font-size: var(--text-xs); color: var(--gray); font-weight: var(--weight-medium); }
+.quiz-step-num { font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--product-deep); font-variant-numeric: tabular-nums; }
+.quiz-bar { height: 5px; background: var(--border-soft); border-radius: var(--radius-pill); overflow: hidden; }
+.quiz-bar-fill {
+  height: 100%; background: linear-gradient(90deg, var(--product-deep), var(--product-accent));
+  border-radius: inherit;
+  transition: width 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ─── Quiz body ─── */
+.quiz-body { flex: 1; overflow-y: auto; display: flex; align-items: flex-start; justify-content: center; padding: var(--space-8) var(--space-6) var(--space-6); }
+.quiz-card { width: 100%; max-width: 580px; }
+
+/* Question */
+.question-area { margin-bottom: var(--space-8); }
+.question-tag { display: inline-flex; align-items: center; gap: var(--space-2); padding: 3px var(--space-3); background: var(--product-soft); color: var(--product-deep); border-radius: var(--radius-pill); font-size: 11px; font-weight: var(--weight-semibold); letter-spacing: 0.04em; margin-bottom: var(--space-4); }
+.question-tag svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.question-text { font-family: var(--font-serif); font-style: italic; font-size: 1.55rem; letter-spacing: -0.02em; line-height: var(--leading-snug); color: var(--black); }
+
+/* Options */
+.options-list { display: flex; flex-direction: column; gap: var(--space-3); margin-bottom: var(--space-6); }
+
+.option {
+  display: flex; align-items: center; gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  cursor: pointer; user-select: none;
+  transition: border-color 200ms ease, background 200ms ease, transform 100ms ease;
+  position: relative; overflow: hidden;
+}
+.option:hover:not(.locked) { border-color: var(--product-accent); background: var(--product-soft); }
+.option:active:not(.locked) { transform: scale(0.985); }
+
+.option.locked { cursor: default; }
+.option.correct { border-color: var(--success); background: var(--success-soft); }
+.option.wrong { border-color: var(--danger); background: var(--danger-soft); }
+.option.dimmed { opacity: 0.45; }
+
+/* Option letter bubble */
+.option-letter {
+  width: 32px; height: 32px; border-radius: var(--radius-pill);
+  background: var(--note-bg); color: var(--gray);
+  display: flex; align-items: center; justify-content: center;
+  font-size: var(--text-sm); font-weight: var(--weight-semibold);
+  flex-shrink: 0;
+  transition: background 200ms ease, color 200ms ease;
+}
+.option.correct .option-letter { background: var(--success); color: var(--white); }
+.option.wrong .option-letter { background: var(--danger); color: var(--white); }
+.option:hover:not(.locked) .option-letter { background: var(--product-soft); color: var(--product-deep); }
+
+.option-text { font-size: var(--text-base); color: var(--accent); flex: 1; line-height: var(--leading-snug); }
+.option.correct .option-text { color: color-mix(in srgb, var(--success) 90%, black); font-weight: var(--weight-medium); }
+.option.wrong .option-text { color: color-mix(in srgb, var(--danger) 80%, black); }
+
+/* State icon (check/x) */
+.option-state { width: 20px; height: 20px; flex-shrink: 0; opacity: 0; transform: scale(0.5); transition: opacity 200ms ease, transform 200ms cubic-bezier(0.34,1.56,0.64,1); }
+.option-state svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.option.correct .option-state, .option.wrong .option-state { opacity: 1; transform: scale(1); }
+.option.correct .option-state { color: var(--success); }
+.option.wrong .option-state { color: var(--danger); }
+
+/* Explanation box */
+.explanation {
+  background: var(--product-soft); border: 1px solid color-mix(in srgb, var(--product-accent) 25%, transparent);
+  border-left: 3px solid var(--product-accent);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: var(--space-4) var(--space-5);
+  margin-bottom: var(--space-6);
+  opacity: 0; transform: translateY(8px);
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+.explanation.visible { opacity: 1; transform: translateY(0); }
+.explanation-label { font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: var(--weight-semibold); color: var(--product-accent); margin-bottom: var(--space-2); display: flex; align-items: center; gap: var(--space-2); }
+.explanation-label svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.explanation p { font-size: var(--text-sm); color: var(--product-deep); line-height: var(--leading-normal); margin: 0; }
+
+/* Action row */
+.quiz-actions { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); }
+.quiz-skip { font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--gray); background: none; border: none; cursor: pointer; padding: var(--space-2) var(--space-3); border-radius: var(--radius-sm); transition: color var(--duration-fast) var(--ease-soft), background var(--duration-fast) var(--ease-soft); }
+.quiz-skip:hover { color: var(--black); background: var(--note-bg); }
+.quiz-next {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  padding: var(--space-3) var(--space-6); background: var(--product-deep);
+  color: var(--white); border: none; border-radius: var(--radius-pill);
+  font-size: var(--text-sm); font-weight: var(--weight-semibold);
+  cursor: pointer; white-space: nowrap; opacity: 0; pointer-events: none;
+  transition: opacity 250ms ease, background var(--duration-fast) var(--ease-soft), transform var(--duration-fast) var(--ease-soft);
+}
+.quiz-next.visible { opacity: 1; pointer-events: auto; }
+.quiz-next:hover { background: var(--product-accent); transform: translateX(2px); }
+.quiz-next svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ─── Completion screen ─── */
+.completion {
+  display: none; flex-direction: column; align-items: center;
+  justify-content: center; text-align: center;
+  padding: var(--space-10) var(--space-6); max-width: 480px; margin: 0 auto;
+}
+.completion.visible { display: flex; }
+.quiz-card.hidden, .quiz-bar-fill { }
+
+.completion-ring { position: relative; width: 100px; height: 100px; margin-bottom: var(--space-6); }
+.completion-ring svg { width: 100px; height: 100px; }
+.completion-ring .c-bg { fill: none; stroke: var(--border-soft); stroke-width: 5; }
+.completion-ring .c-fill { fill: none; stroke: var(--success); stroke-width: 5; stroke-linecap: round; transform: rotate(-90deg); transform-origin: 50% 50%; transition: stroke-dashoffset 1s cubic-bezier(0.16,1,0.3,1) 200ms; }
+.completion-score { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.completion-score-num { font-family: var(--font-serif); font-style: italic; font-size: 1.8rem; letter-spacing: -0.03em; color: var(--black); line-height: 1; }
+.completion-score-den { font-size: var(--text-xs); color: var(--gray); font-weight: var(--weight-medium); }
+
+.completion h2 { font-family: var(--font-serif); font-style: italic; font-size: 1.8rem; letter-spacing: -0.025em; color: var(--black); margin-bottom: var(--space-2); }
+.completion p { font-size: var(--text-base); color: var(--gray); line-height: var(--leading-normal); margin-bottom: var(--space-8); max-width: 36ch; }
+
+.completion-actions { display: flex; gap: var(--space-3); flex-wrap: wrap; justify-content: center; }
+.btn-retry {
+  padding: var(--space-3) var(--space-6); background: var(--product-deep);
+  color: var(--white); border: none; border-radius: var(--radius-pill);
+  font-size: var(--text-sm); font-weight: var(--weight-semibold); cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-soft);
+}
+.btn-retry:hover { background: var(--product-accent); }
+.btn-continue {
+  padding: var(--space-3) var(--space-6); background: var(--note-bg);
+  color: var(--accent); border: 1px solid var(--border); border-radius: var(--radius-pill);
+  font-size: var(--text-sm); font-weight: var(--weight-medium); cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-soft);
+}
+.btn-continue:hover { background: var(--product-soft); color: var(--product-deep); border-color: var(--product-soft); }
+
+/* confetti dots */
+.confetti-field { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 100; }
+.cdot { position: absolute; border-radius: 50%; opacity: 0; animation: confetti-fall 1.2s ease-out forwards; }
+@keyframes confetti-fall {
+  0%   { opacity: 1; transform: translateY(-20px) rotate(0deg); }
+  100% { opacity: 0; transform: translateY(100vh) rotate(720deg); }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="quiz-nav">
+  <a href="/" class="brand-mini" aria-label="Marco aprende">
+    <svg viewBox="100 75 175 80" xmlns="http://www.w3.org/2000/svg">
+      <rect x="108" y="80" width="122" height="50" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <text x="118" y="118" class="nb-marco">Marco</text>
+      <text x="199" y="146" class="nb-aprende">aprende</text>
+    </svg>
+  </a>
+  <div class="quiz-context">
+    <span class="quiz-context-label">Quiz</span>
+    <span class="quiz-context-title">Fracciones — Unidad 2</span>
+  </div>
+  <button class="nav-btn" aria-label="Cerrar quiz">
+    <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+  </button>
+</header>
+
+<!-- Progress -->
+<div class="quiz-progress-wrap">
+  <div class="quiz-progress-meta">
+    <span class="quiz-step-label" id="stepLabel">Pregunta 1 de 5</span>
+    <span class="quiz-step-num" id="stepNum">0 correctas</span>
+  </div>
+  <div class="quiz-bar"><div class="quiz-bar-fill" id="progressBar" style="width:0%"></div></div>
+</div>
+
+<!-- Body -->
+<div class="quiz-body">
+
+  <!-- Quiz card -->
+  <div class="quiz-card" id="quizCard">
+    <div class="question-area">
+      <span class="question-tag" id="qTag">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r="0.5" fill="currentColor"/></svg>
+        <span id="tagText">Pregunta</span>
+      </span>
+      <p class="question-text" id="questionText">Cargando…</p>
+    </div>
+
+    <div class="options-list" id="optionsList"></div>
+
+    <div class="explanation" id="explanation">
+      <div class="explanation-label">
+        <svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><path d="M12 7l1.5 3.5L17 12l-3.5 1.5L12 17l-1.5-3.5L7 12l3.5-1.5z"/></svg>
+        Marco explica
+      </div>
+      <p id="explanationText"></p>
+    </div>
+
+    <div class="quiz-actions">
+      <button class="quiz-skip" id="skipBtn" onclick="skipQuestion()">Saltar →</button>
+      <button class="quiz-next visible" id="nextBtn" style="opacity:0;pointer-events:none;" onclick="nextQuestion()">
+        Siguiente pregunta
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Completion screen -->
+  <div class="completion" id="completionScreen">
+    <div class="completion-ring">
+      <svg viewBox="0 0 100 100">
+        <circle class="c-bg" cx="50" cy="50" r="42"/>
+        <circle class="c-fill" id="completionRing" cx="50" cy="50" r="42"
+          style="stroke-dasharray: 263.9; stroke-dashoffset: 263.9"/>
+      </svg>
+      <div class="completion-score">
+        <span class="completion-score-num" id="finalScore">0</span>
+        <span class="completion-score-den">de 5</span>
+      </div>
+    </div>
+    <h2 id="completionTitle">¡Bien hecho!</h2>
+    <p id="completionMsg">Has completado el quiz de Fracciones. Repasa las preguntas que fallaste con Marco.</p>
+    <div class="completion-actions">
+      <button class="btn-retry" onclick="restartQuiz()">Repetir quiz</button>
+      <button class="btn-continue">Volver al cuaderno</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Confetti container -->
+<div class="confetti-field" id="confettiField"></div>
+
+<script>
+const questions = [
+  {
+    tag: 'Concepto',
+    text: '¿Qué representa el denominador en una fracción?',
+    options: [
+      'Las partes que tomamos del todo',
+      'En cuántas partes iguales se divide el todo',
+      'El resultado de dividir el numerador',
+      'El número mayor de la fracción'
+    ],
+    correct: 1,
+    explanation: 'El denominador (parte inferior) indica en cuántas partes iguales se divide el todo. El numerador (parte superior) indica cuántas de esas partes tomamos.'
+  },
+  {
+    tag: 'Equivalencia',
+    text: '¿Cuál de estas fracciones es equivalente a 2/4?',
+    options: ['1/3', '3/6', '4/10', '2/6'],
+    correct: 1,
+    explanation: '3/6 es equivalente a 2/4 porque al simplificar ambas obtenemos 1/2. Comprobación en cruz: 2×6 = 4×3 = 12. ✓'
+  },
+  {
+    tag: 'Operación',
+    text: 'Calcula: 1/3 + 1/4',
+    options: ['2/7', '5/12', '7/12', '1/6'],
+    correct: 2,
+    explanation: 'El m.c.m. de 3 y 4 es 12. Convertimos: 1/3 = 4/12 y 1/4 = 3/12. Sumamos los numeradores: 4/12 + 3/12 = 7/12.'
+  },
+  {
+    tag: 'Operación',
+    text: 'Resuelve: (2/3) × (3/5)',
+    options: ['5/8', '6/15', '2/5', '6/8'],
+    correct: 2,
+    explanation: 'Para multiplicar fracciones, multiplicamos numeradores entre sí y denominadores entre sí: (2×3)/(3×5) = 6/15. Simplificando: 6/15 = 2/5.'
+  },
+  {
+    tag: 'Aplicación',
+    text: 'En una clase de 24 alumnos, 3/8 han terminado el ejercicio. ¿Cuántos alumnos han terminado?',
+    options: ['6 alumnos', '8 alumnos', '9 alumnos', '12 alumnos'],
+    correct: 2,
+    explanation: '3/8 de 24 = (3 × 24) / 8 = 72 / 8 = 9 alumnos. Recuerda: "de" en fracciones significa multiplicación.'
+  }
+];
+
+let current = 0;
+let score = 0;
+let answered = false;
+
+function renderQuestion() {
+  const q = questions[current];
+  answered = false;
+
+  // Update progress
+  const pct = (current / questions.length) * 100;
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('stepLabel').textContent = `Pregunta ${current + 1} de ${questions.length}`;
+  document.getElementById('stepNum').textContent = `${score} correcta${score !== 1 ? 's' : ''}`;
+
+  // Question
+  document.getElementById('tagText').textContent = q.tag;
+  document.getElementById('questionText').textContent = q.text;
+
+  // Options
+  const list = document.getElementById('optionsList');
+  list.innerHTML = '';
+  const letters = ['A', 'B', 'C', 'D'];
+  q.options.forEach((opt, i) => {
+    const div = document.createElement('div');
+    div.className = 'option';
+    div.setAttribute('role', 'button');
+    div.setAttribute('tabindex', '0');
+    div.innerHTML = `
+      <span class="option-letter">${letters[i]}</span>
+      <span class="option-text">${opt}</span>
+      <span class="option-state">
+        ${i === q.correct
+          ? `<svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>`
+          : `<svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>`
+        }
+      </span>`;
+    div.addEventListener('click', () => selectOption(i, q.correct, q.explanation));
+    div.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') selectOption(i, q.correct, q.explanation); });
+    list.appendChild(div);
+  });
+
+  // Hide explanation & next btn
+  const expl = document.getElementById('explanation');
+  expl.classList.remove('visible');
+  const nextBtn = document.getElementById('nextBtn');
+  nextBtn.style.opacity = '0';
+  nextBtn.style.pointerEvents = 'none';
+  document.getElementById('skipBtn').style.display = '';
+}
+
+function selectOption(selected, correct, explanation) {
+  if (answered) return;
+  answered = true;
+
+  const options = document.querySelectorAll('.option');
+  options.forEach((opt, i) => {
+    opt.classList.add('locked');
+    if (i === correct) { opt.classList.add('correct'); }
+    else if (i === selected && selected !== correct) { opt.classList.add('wrong'); }
+    else { opt.classList.add('dimmed'); }
+  });
+
+  if (selected === correct) score++;
+
+  // Show explanation
+  document.getElementById('explanationText').textContent = explanation;
+  const expl = document.getElementById('explanation');
+  requestAnimationFrame(() => expl.classList.add('visible'));
+
+  // Show next / finish btn
+  const nextBtn = document.getElementById('nextBtn');
+  const isLast = current === questions.length - 1;
+  nextBtn.innerHTML = isLast
+    ? `Ver resultado <svg viewBox="0 0 24 24"><path d="M9 11.5l2.5 2.5L16 9.5"/></svg>`
+    : `Siguiente pregunta <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>`;
+  nextBtn.style.opacity = '1';
+  nextBtn.style.pointerEvents = 'auto';
+  document.getElementById('skipBtn').style.display = 'none';
+
+  // Update score counter
+  document.getElementById('stepNum').textContent = `${score} correcta${score !== 1 ? 's' : ''}`;
+}
+
+function skipQuestion() {
+  if (answered) return;
+  answered = true;
+  // Show the correct answer dimly
+  const q = questions[current];
+  const options = document.querySelectorAll('.option');
+  options.forEach((opt, i) => {
+    opt.classList.add('locked');
+    if (i === q.correct) opt.classList.add('correct');
+    else opt.classList.add('dimmed');
+  });
+  document.getElementById('explanationText').textContent = q.explanation;
+  const expl = document.getElementById('explanation');
+  requestAnimationFrame(() => expl.classList.add('visible'));
+  const nextBtn = document.getElementById('nextBtn');
+  const isLast = current === questions.length - 1;
+  nextBtn.innerHTML = isLast
+    ? `Ver resultado <svg viewBox="0 0 24 24"><path d="M9 11.5l2.5 2.5L16 9.5"/></svg>`
+    : `Siguiente pregunta <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>`;
+  nextBtn.style.opacity = '1';
+  nextBtn.style.pointerEvents = 'auto';
+  document.getElementById('skipBtn').style.display = 'none';
+}
+
+function nextQuestion() {
+  current++;
+  if (current >= questions.length) {
+    showCompletion();
+  } else {
+    renderQuestion();
+  }
+}
+
+function showCompletion() {
+  document.getElementById('progressBar').style.width = '100%';
+  document.getElementById('quizCard').style.display = 'none';
+  const screen = document.getElementById('completionScreen');
+  screen.classList.add('visible');
+
+  document.getElementById('finalScore').textContent = score;
+
+  // Animate ring
+  const circumference = 2 * Math.PI * 42; // ~263.9
+  const offset = circumference * (1 - score / questions.length);
+  const ring = document.getElementById('completionRing');
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    ring.style.strokeDashoffset = offset;
+    if (score / questions.length < 0.5) {
+      ring.style.stroke = 'var(--danger)';
+    } else if (score / questions.length < 0.8) {
+      ring.style.stroke = 'var(--warning)';
+    }
+  }));
+
+  // Titles & messages
+  const titles = ['Sigue practicando', 'Buen intento', '¡Bien hecho!', '¡Excelente trabajo!', '¡Perfecto!'];
+  const msgs = [
+    'No te rindas. Repasa las secciones que fallaste y pide ayuda a Marco.',
+    'Vas por buen camino. Repasa los conceptos que fallaste con Marco.',
+    'Has completado el quiz. Repasa las preguntas que fallaste con Marco.',
+    'Dominas el tema. Puedes pasar a la siguiente unidad.',
+    '¡Dominio total! Eres un experto en fracciones.'
+  ];
+  document.getElementById('completionTitle').textContent = titles[score] || titles[4];
+  document.getElementById('completionMsg').textContent = msgs[score] || msgs[4];
+
+  // Confetti if score >= 4
+  if (score >= 4) launchConfetti();
+}
+
+function launchConfetti() {
+  const field = document.getElementById('confettiField');
+  const colors = ['var(--product-deep)', 'var(--product-accent)', 'var(--success)', '#f7c948', '#f28b4a'];
+  for (let i = 0; i < 36; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'cdot';
+    const size = 6 + Math.random() * 8;
+    dot.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${Math.random() * 100}%;
+      background:${colors[Math.floor(Math.random() * colors.length)]};
+      animation-delay:${Math.random() * 600}ms;
+      animation-duration:${900 + Math.random() * 600}ms;
+    `;
+    field.appendChild(dot);
+    dot.addEventListener('animationend', () => dot.remove());
+  }
+}
+
+function restartQuiz() {
+  current = 0; score = 0;
+  document.getElementById('completionScreen').classList.remove('visible');
+  document.getElementById('quizCard').style.display = '';
+  renderQuestion();
+}
+
+// Init
+renderQuestion();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matemáticas — Cuadernos · Marco</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0a0a'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='38' font-style='italic' fill='%23fafaf8' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles/tokens.css">
+<style>
+html, body { height: 100%; }
+body { background: var(--white); overflow-x: hidden; }
+
+/* ─── Nav ─── */
+.top-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--space-3) var(--space-6);
+  background: rgba(250,250,248,0.9); backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-soft);
+  position: sticky; top: 0; z-index: 50;
+}
+.nav-left { display: flex; align-items: center; gap: var(--space-4); }
+.brand-mini { display: inline-block; line-height: 0; color: var(--black); text-decoration: none; }
+.brand-mini svg { display: block; width: 106px; height: auto; overflow: visible; }
+.brand-mini .nb-marco { font-family: var(--font-serif); font-style: italic; font-size: 38px; letter-spacing: -0.02em; fill: var(--black); }
+.brand-mini .nb-aprende { font-family: var(--font-sans); font-style: italic; font-weight: 400; font-size: 13px; letter-spacing: -0.01em; fill: var(--accent); }
+.nav-back {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  font-size: var(--text-sm); color: var(--gray); font-weight: var(--weight-medium);
+  background: none; border: none; cursor: pointer; padding: var(--space-1) 0;
+  transition: color var(--duration-fast) var(--ease-soft);
+  text-decoration: none;
+}
+.nav-back:hover { color: var(--black); }
+.nav-back svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform var(--duration-fast) var(--ease-soft); }
+.nav-back:hover svg { transform: translateX(-2px); }
+.nav-right { display: flex; align-items: center; gap: var(--space-2); }
+.nav-btn { width: 34px; height: 34px; border-radius: var(--radius-pill); background: none; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--gray); position: relative; transition: background var(--duration-fast) var(--ease-soft), color var(--duration-fast) var(--ease-soft); }
+.nav-btn:hover { background: var(--note-bg); color: var(--black); }
+.nav-btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.notif-dot { position: absolute; top: 7px; right: 7px; width: 7px; height: 7px; border-radius: 50%; background: var(--danger); border: 2px solid var(--white); }
+.user-avatar { width: 30px; height: 30px; border-radius: var(--radius-pill); background: var(--product-deep); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: var(--weight-semibold); font-family: var(--font-serif); font-style: italic; }
+
+/* ─── Main ─── */
+.main { max-width: 800px; margin: 0 auto; padding: var(--space-8) var(--space-6) var(--space-16); }
+
+/* ─── Page header ─── */
+.page-header { margin-bottom: var(--space-8); }
+.page-meta { font-size: 11px; color: var(--gray-soft); letter-spacing: 0.07em; text-transform: uppercase; font-weight: var(--weight-semibold); margin-bottom: var(--space-3); display: flex; align-items: center; gap: var(--space-2); }
+.page-meta-sep { color: var(--border); }
+.page-header h1 { font-family: var(--font-serif); font-style: italic; font-size: 2.6rem; letter-spacing: -0.03em; color: var(--black); line-height: var(--leading-tight); margin-bottom: var(--space-5); }
+
+/* ─── Overall progress widget ─── */
+.overall-progress {
+  background: var(--product-soft-2);
+  border: 1px solid color-mix(in srgb, var(--product-accent) 20%, transparent);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-6);
+  max-width: 520px;
+}
+.op-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-3); }
+.op-label { font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--black); }
+.op-pct { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--product-deep); font-variant-numeric: tabular-nums; }
+.op-bar { height: 8px; background: var(--border-soft); border-radius: var(--radius-pill); overflow: hidden; }
+.op-bar-fill { height: 100%; background: linear-gradient(90deg, var(--product-deep), var(--product-accent)); border-radius: inherit; transition: width 900ms cubic-bezier(0.16,1,0.3,1); }
+.op-sub { font-size: var(--text-xs); color: var(--gray); margin-top: var(--space-2); }
+
+/* ─── Section label ─── */
+.section-label { font-size: 11px; color: var(--gray); letter-spacing: 0.07em; text-transform: uppercase; font-weight: var(--weight-semibold); margin-bottom: var(--space-4); margin-top: var(--space-8); }
+
+/* ─── Pending notebook cards ─── */
+.pending-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+
+.nb-card {
+  background: var(--white); border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg); padding: var(--space-6);
+  display: flex; flex-direction: column; min-height: 260px;
+  cursor: pointer;
+  transition: transform var(--duration-base) var(--ease-soft),
+              box-shadow var(--duration-base) var(--ease-soft),
+              border-color var(--duration-base) var(--ease-soft);
+}
+.nb-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--product-soft); }
+
+.nb-card-icon {
+  width: 48px; height: 48px; border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: var(--space-4); flex-shrink: 0;
+}
+.nb-card-icon svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.icon-blue { background: var(--product-soft); color: var(--product-deep); }
+.icon-purple { background: #f0eefb; color: #6c5680; }
+
+.nb-card h3 { font-size: var(--text-lg); font-weight: var(--weight-semibold); color: var(--black); margin-bottom: var(--space-3); letter-spacing: -0.01em; }
+
+.nb-chips { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-4); }
+.nb-chip { font-size: 11px; font-weight: var(--weight-medium); padding: 3px var(--space-3); border-radius: var(--radius-pill); background: var(--note-bg); color: var(--gray); letter-spacing: 0.02em; }
+
+.nb-card-spacer { flex: 1; }
+
+.nb-due { display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-xs); color: var(--warning); font-weight: var(--weight-medium); margin-bottom: var(--space-4); }
+.nb-due svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.nb-due.ok { color: var(--gray); }
+
+.nb-card-cta {
+  width: 100%; padding: var(--space-3) var(--space-5);
+  background: var(--product-soft); color: var(--product-deep);
+  border: none; border-radius: var(--radius-pill);
+  font-size: var(--text-sm); font-weight: var(--weight-semibold);
+  cursor: pointer; letter-spacing: 0.01em;
+  transition: background var(--duration-fast) var(--ease-soft),
+              color var(--duration-fast) var(--ease-soft);
+}
+.nb-card-cta:hover { background: var(--product-deep); color: var(--white); }
+
+/* ─── Completed rows ─── */
+.completed-list { display: flex; flex-direction: column; gap: 2px; }
+.completed-row {
+  display: flex; align-items: center; gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-soft);
+}
+.completed-row:hover { background: var(--note-bg); }
+
+.check-icon { width: 20px; height: 20px; flex-shrink: 0; }
+.check-icon svg { width: 20px; height: 20px; stroke: var(--success); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+.completed-name { flex: 1; font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--black); }
+
+.completed-score {
+  display: flex; align-items: center; gap: var(--space-1);
+  padding: 3px var(--space-3); background: var(--note-bg);
+  border-radius: var(--radius-pill); font-size: 11px;
+  font-weight: var(--weight-semibold); color: var(--gray);
+}
+.completed-score svg { width: 11px; height: 11px; stroke: var(--warning); fill: var(--warning); stroke-width: 0; }
+
+.completed-review {
+  font-size: var(--text-xs); font-weight: var(--weight-medium);
+  color: var(--product-accent); background: none; border: none;
+  cursor: pointer; padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  transition: background var(--duration-fast) var(--ease-soft);
+  text-decoration: underline; text-underline-offset: 2px;
+}
+.completed-review:hover { background: var(--product-soft); text-decoration: none; }
+
+@media (max-width: 600px) {
+  .pending-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header class="top-nav">
+  <div class="nav-left">
+    <a href="/" class="brand-mini" aria-label="Marco aprende">
+      <svg viewBox="100 75 175 80" xmlns="http://www.w3.org/2000/svg">
+        <rect x="108" y="80" width="122" height="50" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <text x="118" y="118" class="nb-marco">Marco</text>
+        <text x="199" y="146" class="nb-aprende">aprende</text>
+      </svg>
+    </a>
+    <button class="nav-back" aria-label="Volver">
+      <svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Mis asignaturas
+    </button>
+  </div>
+  <div class="nav-right">
+    <button class="nav-btn" aria-label="Notificaciones">
+      <svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9z"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
+      <span class="notif-dot"></span>
+    </button>
+    <div class="user-avatar">A</div>
+  </div>
+</header>
+
+<main class="main">
+
+  <div class="page-header">
+    <div class="page-meta">
+      <span>Alex García</span>
+      <span class="page-meta-sep">·</span>
+      <span>4º ESO · Grupo A</span>
+    </div>
+    <h1>Matemáticas</h1>
+    <div class="overall-progress">
+      <div class="op-row">
+        <span class="op-label">Has completado 12 de 15 cuadernos</span>
+        <span class="op-pct">80%</span>
+      </div>
+      <div class="op-bar"><div class="op-bar-fill" id="opBar" style="width:0%"></div></div>
+      <p class="op-sub">3 cuadernos pendientes · Siguiente: Fracciones y Decimales</p>
+    </div>
+  </div>
+
+  <p class="section-label">Pendientes</p>
+
+  <div class="pending-grid">
+
+    <div class="nb-card">
+      <div class="nb-card-icon icon-blue">
+        <svg viewBox="0 0 24 24"><path d="M3 20L12 4l9 16z"/><path d="M8 17h8"/></svg>
+      </div>
+      <h3>Fracciones y Decimales</h3>
+      <div class="nb-chips">
+        <span class="nb-chip">IA socrática</span>
+        <span class="nb-chip">2 PDF</span>
+        <span class="nb-chip">1 Cuestionario</span>
+      </div>
+      <div class="nb-card-spacer"></div>
+      <div class="nb-due">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        Vence en 2 días
+      </div>
+      <button class="nb-card-cta">Abrir cuaderno</button>
+    </div>
+
+    <div class="nb-card">
+      <div class="nb-card-icon icon-purple">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>
+      </div>
+      <h3>Reto de Geometría</h3>
+      <div class="nb-chips">
+        <span class="nb-chip">IA socrática</span>
+        <span class="nb-chip">1 PDF</span>
+      </div>
+      <div class="nb-card-spacer"></div>
+      <div class="nb-due ok">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        Vence en 5 días
+      </div>
+      <button class="nb-card-cta">Abrir cuaderno</button>
+    </div>
+
+  </div>
+
+  <p class="section-label">Completados</p>
+
+  <div class="completed-list">
+
+    <div class="completed-row">
+      <div class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 11.5l2.5 2.5L16 9.5"/><circle cx="12" cy="12" r="9"/></svg></div>
+      <span class="completed-name">Números naturales y operaciones</span>
+      <div class="completed-score">
+        <svg viewBox="0 0 24 24"><path d="M12 3l2.5 5 5.5.5-4 4 1 5.5L12 15.5 6.5 18l1-5.5-4-4 5.5-.5z"/></svg>
+        10/10
+      </div>
+      <button class="completed-review">Repasar</button>
+    </div>
+
+    <div class="completed-row">
+      <div class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 11.5l2.5 2.5L16 9.5"/><circle cx="12" cy="12" r="9"/></svg></div>
+      <span class="completed-name">Suma de fracciones</span>
+      <div class="completed-score">
+        <svg viewBox="0 0 24 24"><path d="M12 3l2.5 5 5.5.5-4 4 1 5.5L12 15.5 6.5 18l1-5.5-4-4 5.5-.5z"/></svg>
+        9/10
+      </div>
+      <button class="completed-review">Repasar</button>
+    </div>
+
+    <div class="completed-row">
+      <div class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 11.5l2.5 2.5L16 9.5"/><circle cx="12" cy="12" r="9"/></svg></div>
+      <span class="completed-name">Potencias y raíces</span>
+      <div class="completed-score">
+        <svg viewBox="0 0 24 24"><path d="M12 3l2.5 5 5.5.5-4 4 1 5.5L12 15.5 6.5 18l1-5.5-4-4 5.5-.5z"/></svg>
+        8/10
+      </div>
+      <button class="completed-review">Repasar</button>
+    </div>
+
+    <div class="completed-row">
+      <div class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 11.5l2.5 2.5L16 9.5"/><circle cx="12" cy="12" r="9"/></svg></div>
+      <span class="completed-name">Álgebra básica — Variables y expresiones</span>
+      <div class="completed-score">
+        <svg viewBox="0 0 24 24"><path d="M12 3l2.5 5 5.5.5-4 4 1 5.5L12 15.5 6.5 18l1-5.5-4-4 5.5-.5z"/></svg>
+        10/10
+      </div>
+      <button class="completed-review">Repasar</button>
+    </div>
+
+  </div>
+
+</main>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      const bar = document.getElementById('opBar');
+      if (bar) bar.style.width = '80%';
+    });
+  });
+});
+</script>
+
+</body>
+</html>
