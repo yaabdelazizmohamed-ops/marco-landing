@@ -124,6 +124,9 @@ body { background: var(--product-soft-2); overflow-x: hidden; }
   position: relative;
   overflow: hidden;
   cursor: default;
+  min-height: 136px;
+  display: flex;
+  flex-direction: column;
   transition: transform var(--duration-base) var(--ease-soft),
               box-shadow var(--duration-base) var(--ease-soft);
 }
@@ -150,9 +153,10 @@ body { background: var(--product-soft-2); overflow-x: hidden; }
 }
 .kpi-value {
   font-family: var(--font-serif); font-style: italic;
-  font-size: 2.6rem; line-height: 1;
+  font-size: 2.6rem; line-height: 1.1;
   letter-spacing: -0.025em; color: var(--black);
   margin-bottom: var(--space-3); position: relative;
+  flex: 1; display: flex; align-items: flex-start;
 }
 .kpi-value .unit {
   font-family: var(--font-sans); font-style: normal;

@@ -285,9 +285,10 @@ body { display: flex; flex-direction: column; }
   background: var(--black);
 }
 .chat-avatar.is-user {
-  background: var(--product-deep); color: var(--white);
-  font-size: 12px; font-weight: var(--weight-medium);
-  font-family: var(--font-serif); font-style: italic;
+  background: var(--border-soft); color: var(--gray);
+  font-size: 11px; font-weight: var(--weight-medium);
+  font-family: var(--font-sans);
+  width: 22px; height: 22px;
 }
 
 .bubble {
@@ -299,16 +300,16 @@ body { display: flex; flex-direction: column; }
   word-wrap: break-word;
 }
 .bubble.from-marco {
-  background: var(--white);
-  color: var(--accent);
+  background: var(--product-soft);
+  color: var(--product-deep);
   border-bottom-left-radius: var(--space-2);
-  border: 1px solid var(--border-soft);
-  box-shadow: var(--shadow-sm);
+  border: 1px solid color-mix(in srgb, var(--product-accent) 20%, transparent);
 }
 .bubble.from-user {
-  background: var(--product-deep);
-  color: var(--white);
+  background: var(--note-bg);
+  color: var(--accent);
   border-bottom-right-radius: var(--space-2);
+  border: 1px solid var(--border-soft);
 }
 
 .bubble-cite {

@@ -102,6 +102,12 @@ body { background: var(--white); overflow-x: hidden; }
 .nb-due { display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-xs); color: var(--warning); font-weight: var(--weight-medium); margin-bottom: var(--space-4); }
 .nb-due svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .nb-due.ok { color: var(--gray); }
+.nb-due.overdue { color: var(--danger); }                                   /* hoy / vencido → rojo */
+
+/* Date-urgency badge pills (shared system with asignaturas.html) */
+.nb-badge { font-size: 10px; font-weight: var(--weight-semibold); letter-spacing: 0.05em; padding: 3px 8px; border-radius: var(--radius-pill); white-space: nowrap; }
+.badge-due { background: var(--warning-soft); color: var(--warning); }       /* 2-4 días → amber */
+.badge-overdue { background: var(--danger-soft); color: var(--danger); }    /* hoy / vencido → rojo */
 
 .nb-card-cta {
   width: 100%; padding: var(--space-3) var(--space-5);

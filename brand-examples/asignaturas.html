@@ -149,8 +149,9 @@ body { background: var(--white); overflow-x: hidden; }
 .notebook-detail { font-size: var(--text-xs); color: var(--gray); }
 
 .notebook-badge { font-size: 10px; font-weight: var(--weight-semibold); letter-spacing: 0.05em; padding: 3px 8px; border-radius: var(--radius-pill); white-space: nowrap; }
-.badge-new { background: var(--danger-soft); color: var(--danger); }
-.badge-due { background: var(--warning-soft); color: var(--warning); }
+.badge-new { background: var(--product-soft); color: var(--product-deep); }
+.badge-due { background: var(--warning-soft); color: var(--warning); }       /* 2-4 días → amber */
+.badge-overdue { background: var(--danger-soft); color: var(--danger); }    /* hoy / vencido → rojo */
 .badge-done { background: var(--success-soft); color: var(--success); }
 
 .notebook-action {
@@ -327,9 +328,9 @@ body { background: var(--white); overflow-x: hidden; }
       </div>
       <div class="notebook-meta">
         <div class="notebook-title">Redacción: Mi lugar favorito</div>
-        <div class="notebook-detail">Profa. Laura · Lengua · Vence mañana</div>
+        <div class="notebook-detail">Profa. Laura · Lengua · Vence hoy</div>
       </div>
-      <span class="notebook-badge badge-due">VENCE HOY</span>
+      <span class="notebook-badge badge-overdue">VENCE HOY</span>
       <button class="notebook-action action-secondary">Continuar</button>
     </div>
 

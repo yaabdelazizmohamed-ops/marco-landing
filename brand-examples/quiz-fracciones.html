@@ -49,7 +49,7 @@ body { background: var(--white); display: flex; flex-direction: column; overflow
 .question-area { margin-bottom: var(--space-8); }
 .question-tag { display: inline-flex; align-items: center; gap: var(--space-2); padding: 3px var(--space-3); background: var(--product-soft); color: var(--product-deep); border-radius: var(--radius-pill); font-size: 11px; font-weight: var(--weight-semibold); letter-spacing: 0.04em; margin-bottom: var(--space-4); }
 .question-tag svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.question-text { font-family: var(--font-serif); font-style: italic; font-size: 1.55rem; letter-spacing: -0.02em; line-height: var(--leading-snug); color: var(--black); }
+.question-text { font-family: var(--font-serif); font-style: normal; font-size: 1.55rem; letter-spacing: -0.02em; line-height: var(--leading-snug); color: var(--black); }
 
 /* Options */
 .options-list { display: flex; flex-direction: column; gap: var(--space-3); margin-bottom: var(--space-6); }
@@ -119,12 +119,21 @@ body { background: var(--white); display: flex; flex-direction: column; overflow
   padding: var(--space-3) var(--space-6); background: var(--product-deep);
   color: var(--white); border: none; border-radius: var(--radius-pill);
   font-size: var(--text-sm); font-weight: var(--weight-semibold);
-  cursor: pointer; white-space: nowrap; opacity: 0; pointer-events: none;
+  cursor: not-allowed; white-space: nowrap;
+  opacity: 0.35; pointer-events: none;
   transition: opacity 250ms ease, background var(--duration-fast) var(--ease-soft), transform var(--duration-fast) var(--ease-soft);
 }
-.quiz-next.visible { opacity: 1; pointer-events: auto; }
+.quiz-next.visible { opacity: 1; pointer-events: auto; cursor: pointer; }
 .quiz-next:hover { background: var(--product-accent); transform: translateX(2px); }
 .quiz-next svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Hint text shown before user picks an answer */
+.select-hint {
+  font-size: var(--text-xs); color: var(--gray);
+  font-style: italic; opacity: 1;
+  transition: opacity 200ms ease;
+}
+.select-hint.hidden { opacity: 0; pointer-events: none; }
 
 /* ─── Completion screen ─── */
 .completion {
@@ -224,11 +233,14 @@ body { background: var(--white); display: flex; flex-direction: column; overflow
     </div>
 
     <div class="quiz-actions">
-      <button class="quiz-skip" id="skipBtn" onclick="skipQuestion()">Saltar →</button>
-      <button class="quiz-next visible" id="nextBtn" style="opacity:0;pointer-events:none;" onclick="nextQuestion()">
-        Siguiente pregunta
-        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </button>
+      <span class="select-hint" id="selectHint">Selecciona una respuesta</span>
+      <div style="display:flex;align-items:center;gap:var(--space-3);">
+        <button class="quiz-skip" id="skipBtn" onclick="skipQuestion()">Saltar →</button>
+        <button class="quiz-next" id="nextBtn" onclick="nextQuestion()">
+          Siguiente pregunta
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -347,9 +359,10 @@ function renderQuestion() {
   const expl = document.getElementById('explanation');
   expl.classList.remove('visible');
   const nextBtn = document.getElementById('nextBtn');
-  nextBtn.style.opacity = '0';
-  nextBtn.style.pointerEvents = 'none';
+  nextBtn.classList.remove('visible');
   document.getElementById('skipBtn').style.display = '';
+  const hint = document.getElementById('selectHint');
+  if (hint) hint.classList.remove('hidden');
 }
 
 function selectOption(selected, correct, explanation) {
@@ -377,8 +390,8 @@ function selectOption(selected, correct, explanation) {
   nextBtn.innerHTML = isLast
     ? `Ver resultado <svg viewBox="0 0 24 24"><path d="M9 11.5l2.5 2.5L16 9.5"/></svg>`
     : `Siguiente pregunta <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>`;
-  nextBtn.style.opacity = '1';
-  nextBtn.style.pointerEvents = 'auto';
+  nextBtn.classList.add('visible');
+  document.getElementById('selectHint').classList.add('hidden');
   document.getElementById('skipBtn').style.display = 'none';
 
   // Update score counter
@@ -404,8 +417,8 @@ function skipQuestion() {
   nextBtn.innerHTML = isLast
     ? `Ver resultado <svg viewBox="0 0 24 24"><path d="M9 11.5l2.5 2.5L16 9.5"/></svg>`
     : `Siguiente pregunta <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>`;
-  nextBtn.style.opacity = '1';
-  nextBtn.style.pointerEvents = 'auto';
+  nextBtn.classList.add('visible');
+  document.getElementById('selectHint').classList.add('hidden');
   document.getElementById('skipBtn').style.display = 'none';
 }
 
