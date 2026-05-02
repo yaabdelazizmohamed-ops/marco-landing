@@ -43,7 +43,7 @@ body { background: var(--white); overflow-x: hidden; }
 .user-avatar { width: 30px; height: 30px; border-radius: var(--radius-pill); background: var(--product-deep); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: var(--weight-semibold); font-family: var(--font-serif); font-style: italic; }
 
 /* ─── Main ─── */
-.main { max-width: 800px; margin: 0 auto; padding: var(--space-8) var(--space-6) var(--space-16); }
+.main { max-width: 800px; margin: 0 auto; padding: var(--space-5) var(--space-6) var(--space-16); }
 
 /* ─── Page header ─── */
 .page-header { margin-bottom: var(--space-8); }
@@ -161,30 +161,13 @@ body { background: var(--white); overflow-x: hidden; }
 </head>
 <body>
 
-<header class="top-nav">
-  <div class="nav-left">
-    <a href="/" class="brand-mini" aria-label="Marco aprende">
-      <svg viewBox="100 75 175 80" xmlns="http://www.w3.org/2000/svg">
-        <rect x="108" y="80" width="122" height="50" fill="none" stroke="currentColor" stroke-width="1.5"/>
-        <text x="118" y="118" class="nb-marco">Marco</text>
-        <text x="199" y="146" class="nb-aprende">aprende</text>
-      </svg>
-    </a>
-    <button class="nav-back" aria-label="Volver" onclick="goTo(0)">
-      <svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-      Mis asignaturas
-    </button>
-  </div>
-  <div class="nav-right">
-    <button class="nav-btn" aria-label="Notificaciones">
-      <svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9z"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
-      <span class="notif-dot"></span>
-    </button>
-    <div class="user-avatar">A</div>
-  </div>
-</header>
 
 <main class="main">
+
+  <button onclick="goTo(0)" style="display:inline-flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.75rem;font-weight:500;color:var(--gray);padding:0 0 var(--space-4);transition:color .15s;" onmouseover="this.style.color='var(--black)'" onmouseout="this.style.color='var(--gray)'">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Mis asignaturas
+  </button>
 
   <div class="page-header">
     <div class="page-meta">

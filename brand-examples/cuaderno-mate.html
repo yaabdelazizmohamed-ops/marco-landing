@@ -393,39 +393,6 @@ body { display: flex; flex-direction: column; }
 <body>
 
 <!-- ═══ HEADER ═══ -->
-<header class="cuaderno-nav">
-  <div class="nav-left">
-    <button class="nav-burger" aria-label="Volver a cuadernos" onclick="goTo(1)" style="display:inline-flex;align-items:center;gap:6px;font-size:0.78rem;font-family:'DM Sans',sans-serif;font-weight:500;color:var(--gray);">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-      Cuadernos
-    </button>
-    <a href="/" class="brand-mini" aria-label="Marco aprende — inicio">
-      <svg viewBox="100 75 175 80" xmlns="http://www.w3.org/2000/svg">
-        <rect x="108" y="80" width="122" height="50" fill="none" stroke="currentColor" stroke-width="1.5"/>
-        <text x="118" y="118" class="nb-marco">Marco</text>
-        <text x="199" y="146" class="nb-aprende">aprende</text>
-      </svg>
-    </a>
-    <div class="nav-divider"></div>
-    <div class="nav-context">
-      <span class="nav-context-label">Cuaderno</span>
-      <span class="nav-context-title">Matemáticas · Unidad 2</span>
-    </div>
-  </div>
-
-  <div class="nav-progress" aria-label="Progreso de la unidad">
-    <div class="progress" style="height:5px"><div class="progress-bar" style="width:50%"></div></div>
-    <span class="nav-progress-pct">50%</span>
-  </div>
-
-  <div class="nav-right">
-    <button class="nav-icon-btn" aria-label="Notificaciones">
-      <svg class="icon" viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9z"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
-      <span class="nav-icon-dot"></span>
-    </button>
-    <div class="nav-avatar" aria-label="Perfil de Alex">A</div>
-  </div>
-</header>
 
 <!-- ═══ MAIN ═══ -->
 <main class="cuaderno-main">
@@ -435,7 +402,10 @@ body { display: flex; flex-direction: column; }
     <div class="notebook-inner">
 
       <div class="notebook-meta">
-        <span>Matemáticas</span>
+        <button onclick="goTo(1)" style="background:none;border:none;cursor:pointer;font:inherit;font-size:11px;color:var(--gray);letter-spacing:0.07em;text-transform:uppercase;font-weight:600;display:inline-flex;align-items:center;gap:4px;padding:0;transition:color .15s;" onmouseover="this.style.color='var(--black)'" onmouseout="this.style.color='var(--gray)'">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Matemáticas
+        </button>
         <span class="notebook-meta-sep">·</span>
         <span>Módulo 2</span>
         <span class="notebook-meta-sep">·</span>
