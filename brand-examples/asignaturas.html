@@ -216,7 +216,7 @@ body { background: var(--white); overflow-x: hidden; }
   <div class="subjects-grid">
 
     <!-- Matemáticas -->
-    <div class="subject-card has-pending" onclick="this.closest('.subject-card').style.transform='scale(0.98)';setTimeout(()=>this.closest('.subject-card').style.transform='',150)">
+    <div class="subject-card has-pending" onclick="goTo(1)" style="cursor:pointer;" role="button" tabindex="0">
       <span class="pending-badge">NUEVO</span>
       <div class="ring-wrap">
         <svg width="56" height="56" viewBox="0 0 56 56">
@@ -319,7 +319,7 @@ body { background: var(--white); overflow-x: hidden; }
         <div class="notebook-detail">Prof. Marcos · Matemáticas</div>
       </div>
       <span class="notebook-badge badge-new">NUEVO</span>
-      <button class="notebook-action action-primary">Empezar</button>
+      <button class="notebook-action action-primary" onclick="goTo(2)">Empezar</button>
     </div>
 
     <div class="notebook-row">
@@ -331,7 +331,7 @@ body { background: var(--white); overflow-x: hidden; }
         <div class="notebook-detail">Profa. Laura · Lengua · Vence hoy</div>
       </div>
       <span class="notebook-badge badge-overdue">VENCE HOY</span>
-      <button class="notebook-action action-secondary">Continuar</button>
+      <button class="notebook-action action-secondary" onclick="goTo(2)">Continuar</button>
     </div>
 
     <div class="notebook-row is-done">
@@ -351,6 +351,13 @@ body { background: var(--white); overflow-x: hidden; }
 </main>
 
 <script>
+/* Navigate to a screen index in the parent landing iframe system */
+function goTo(i) {
+  if (window.parent && window.parent !== window && typeof window.parent.showScreen === 'function') {
+    window.parent.showScreen(i);
+  }
+}
+
 /* Animate rings on load — stroke-dashoffset starts at full circumference and draws to target */
 document.addEventListener('DOMContentLoaded', () => {
   const rings = document.querySelectorAll('.ring-fill');

@@ -170,7 +170,7 @@ body { background: var(--white); overflow-x: hidden; }
         <text x="199" y="146" class="nb-aprende">aprende</text>
       </svg>
     </a>
-    <button class="nav-back" aria-label="Volver">
+    <button class="nav-back" aria-label="Volver" onclick="goTo(0)">
       <svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
       Mis asignaturas
     </button>
@@ -222,7 +222,7 @@ body { background: var(--white); overflow-x: hidden; }
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
         Vence en 2 días
       </div>
-      <button class="nb-card-cta">Abrir cuaderno</button>
+      <button class="nb-card-cta" onclick="goTo(2)">Abrir cuaderno</button>
     </div>
 
     <div class="nb-card">
@@ -239,7 +239,7 @@ body { background: var(--white); overflow-x: hidden; }
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
         Vence en 5 días
       </div>
-      <button class="nb-card-cta">Abrir cuaderno</button>
+      <button class="nb-card-cta" onclick="goTo(2)">Abrir cuaderno</button>
     </div>
 
   </div>
@@ -293,6 +293,13 @@ body { background: var(--white); overflow-x: hidden; }
 </main>
 
 <script>
+/* Navigate to a screen index in the parent landing iframe system */
+function goTo(i) {
+  if (window.parent && window.parent !== window && typeof window.parent.showScreen === 'function') {
+    window.parent.showScreen(i);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
