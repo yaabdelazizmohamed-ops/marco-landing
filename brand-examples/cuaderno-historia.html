@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cuaderno: Historia — Revolución Francesa · Marco</title>
+<meta name="description" content="Vista del cuaderno de Historia con Marco AI — método socrático.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0a0a'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='38' font-style='italic' fill='%23fafaf8' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles/tokens.css">
+<style>
+html, body { height: 100%; overflow: hidden; }
+body { display: flex; flex-direction: column; }
+
+/* ─── Main split layout ─── */
+.cuaderno-main {
+  display: grid; grid-template-columns: 1fr 400px;
+  flex: 1; min-height: 0;
+}
+
+/* ─── Notebook / folio (left) ─── */
+.notebook {
+  overflow-y: auto;
+  padding: var(--space-6) var(--space-6);
+  background: var(--white);
+  border-right: 1px solid var(--border-soft);
+}
+.notebook-inner { max-width: 600px; margin: 0 auto; }
+
+/* Document meta breadcrumb */
+.notebook-meta {
+  font-size: 11px; color: var(--gray);
+  letter-spacing: 0.07em; text-transform: uppercase; font-weight: var(--weight-semibold);
+  margin-bottom: var(--space-4);
+  display: flex; align-items: center; gap: var(--space-2);
+}
+.notebook-meta-sep { color: var(--border); }
+
+.unit-tag {
+  display: inline-block;
+  background: var(--product-soft);
+  color: var(--product-deep);
+  padding: 3px var(--space-3);
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.04em;
+  margin-bottom: var(--space-3);
+}
+
+.notebook h1 {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: var(--weight-regular);
+  font-size: 2.1rem;
+  letter-spacing: -0.03em;
+  line-height: var(--leading-tight);
+  color: var(--black);
+  margin-bottom: var(--space-3);
+}
+
+.notebook .lead {
+  font-size: var(--text-sm);
+  color: var(--gray);
+  margin-bottom: var(--space-6);
+  max-width: 56ch;
+  line-height: var(--leading-normal);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.notebook section { margin-bottom: var(--space-6); }
+.notebook h2 {
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  letter-spacing: -0.01em;
+  margin-bottom: var(--space-2);
+  color: var(--black);
+}
+.notebook p, .notebook li {
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--accent);
+  margin-bottom: var(--space-2);
+}
+.notebook p:last-child { margin-bottom: 0; }
+.notebook em { font-style: italic; font-family: var(--font-serif); }
+.notebook strong { font-weight: var(--weight-semibold); color: var(--black); }
+
+/* Tabla de estamentos */
+.staments-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  margin: var(--space-4) 0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border-soft);
+}
+.staments-table th {
+  background: var(--product-soft);
+  color: var(--product-deep);
+  font-weight: var(--weight-semibold);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: var(--space-2) var(--space-3);
+  text-align: left;
+}
+.staments-table td {
+  padding: var(--space-3) var(--space-3);
+  color: var(--accent);
+  border-bottom: 1px solid var(--border-soft);
+  vertical-align: top;
+}
+.staments-table tr:last-child td { border-bottom: none; }
+.staments-table tr:hover td { background: var(--product-soft-2); }
+.stament-name {
+  font-weight: var(--weight-semibold);
+  color: var(--black);
+}
+.stament-pct {
+  display: inline-block;
+  background: var(--product-soft);
+  color: var(--product-deep);
+  padding: 1px 6px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: var(--weight-semibold);
+}
+
+/* Callout concept block */
+.callout {
+  position: relative;
+  background: var(--product-soft);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-5) var(--space-4) var(--space-6);
+  margin: var(--space-5) 0;
+  overflow: hidden;
+}
+.callout::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px; background: var(--product-accent);
+  border-radius: 0 2px 2px 0;
+}
+.callout-label {
+  font-size: 11px; letter-spacing: 0.06em;
+  text-transform: uppercase; font-weight: var(--weight-semibold);
+  color: var(--product-accent); margin-bottom: var(--space-2);
+  display: flex; align-items: center; gap: var(--space-2);
+}
+.callout-label svg { width: 13px; height: 13px; flex-shrink: 0; }
+.callout p {
+  font-size: var(--text-sm); color: var(--product-deep);
+  margin: 0; line-height: var(--leading-normal);
+}
+
+/* Highlight de texto seleccionado (simula subrayado del PDF) */
+.text-highlight {
+  background: linear-gradient(to bottom, transparent 60%, color-mix(in srgb, var(--product-accent) 22%, transparent) 60%);
+  padding-bottom: 1px;
+}
+
+/* Active section */
+.notebook section.is-active {
+  position: relative;
+  padding: var(--space-5) var(--space-5) var(--space-5);
+  border-radius: var(--radius-lg);
+  background: var(--product-soft-2);
+  border: 1px dashed var(--product-accent);
+  margin-bottom: var(--space-10);
+}
+.notebook section.is-active::before {
+  content: 'EN ESTUDIO';
+  position: absolute; top: -9px; left: var(--space-5);
+  background: var(--white); padding: 0 var(--space-2);
+  font-size: 10px; letter-spacing: 0.08em; font-weight: var(--weight-semibold);
+  color: var(--product-accent);
+}
+
+/* ─── Marco panel (right) ─── */
+.marco-panel {
+  display: flex; flex-direction: column;
+  background: var(--note-bg);
+  min-height: 0;
+}
+.marco-header {
+  display: flex; align-items: center; gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--border-soft);
+  background: var(--white);
+  flex-shrink: 0;
+}
+
+/* Marco avatar — [M] brackets circle */
+.marco-avatar-wrap {
+  width: 38px; height: 38px; border-radius: var(--radius-pill);
+  background: var(--black);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; flex-shrink: 0;
+}
+.marco-avatar-wrap::after {
+  content: ''; position: absolute; bottom: 0; right: 0;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--success); border: 2px solid var(--white);
+}
+
+.marco-header-text { display: flex; flex-direction: column; flex: 1; }
+.marco-name {
+  font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--black);
+}
+.marco-role {
+  font-size: 11px; color: var(--gray); letter-spacing: 0.01em;
+}
+.marco-header-actions { display: flex; gap: var(--space-1); }
+
+/* Chat area */
+.marco-chat {
+  flex: 1; overflow-y: auto;
+  padding: var(--space-5);
+  display: flex; flex-direction: column; gap: var(--space-4);
+  scroll-behavior: smooth;
+}
+
+.chat-divider {
+  text-align: center;
+  color: var(--gray-soft);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  font-weight: var(--weight-semibold);
+  margin: var(--space-2) 0;
+  position: relative;
+  text-transform: uppercase;
+}
+.chat-divider::before, .chat-divider::after {
+  content: ''; position: absolute; top: 50%;
+  width: calc(50% - 26px); height: 1px; background: var(--border-soft);
+}
+.chat-divider::before { left: 0; }
+.chat-divider::after { right: 0; }
+
+/* Chat rows — avatar + bubble */
+.chat-row {
+  display: flex; gap: var(--space-2); align-items: flex-end;
+}
+.chat-row.is-user {
+  flex-direction: row-reverse;
+}
+
+/* Small avatar in chat */
+.chat-avatar {
+  width: 28px; height: 28px; border-radius: var(--radius-pill);
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--black);
+}
+.chat-avatar.is-user {
+  background: var(--border-soft); color: var(--gray);
+  font-size: 11px; font-weight: var(--weight-medium);
+  font-family: var(--font-sans);
+  width: 22px; height: 22px;
+}
+
+.bubble {
+  max-width: 84%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+  word-wrap: break-word;
+}
+.bubble.from-marco {
+  background: var(--product-soft);
+  color: var(--product-deep);
+  border-bottom-left-radius: var(--space-2);
+  border: 1px solid color-mix(in srgb, var(--product-accent) 20%, transparent);
+}
+.bubble.from-user {
+  background: var(--note-bg);
+  color: var(--accent);
+  border-bottom-right-radius: var(--space-2);
+  border: 1px solid var(--border-soft);
+}
+
+.bubble-cite {
+  background: color-mix(in srgb, var(--product-soft) 60%, var(--white));
+  border-left: 3px solid var(--product-accent);
+  padding: var(--space-2) var(--space-3);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: var(--text-xs);
+  color: var(--product-deep);
+  margin-top: var(--space-3);
+  font-style: italic;
+}
+.bubble-cite-label {
+  display: block; font-style: normal; text-transform: uppercase;
+  font-size: 10px; letter-spacing: 0.08em; font-weight: var(--weight-semibold);
+  color: var(--product-accent); margin-bottom: 3px;
+}
+
+/* Context chip — pasaje seleccionado */
+.context-chip {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  background: var(--product-soft);
+  border: 1px solid color-mix(in srgb, var(--product-accent) 25%, transparent);
+  border-radius: var(--radius-pill);
+  padding: 4px var(--space-3) 4px var(--space-2);
+  font-size: 11px; color: var(--product-deep);
+  font-weight: var(--weight-medium);
+  margin-bottom: var(--space-3);
+  max-width: 100%;
+}
+.context-chip svg { width: 12px; height: 12px; stroke: var(--product-accent); flex-shrink: 0; }
+.context-chip-text {
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 200px;
+}
+
+/* Composer */
+.marco-composer {
+  border-top: 1px solid var(--border-soft);
+  padding: var(--space-4) var(--space-5);
+  background: var(--white);
+  display: flex; flex-direction: column; gap: var(--space-2);
+  flex-shrink: 0;
+}
+.composer-context {
+  display: flex; align-items: center; gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--product-soft);
+  border-radius: var(--radius-sm);
+  font-size: 11px; color: var(--product-deep);
+  font-weight: var(--weight-medium);
+}
+.composer-context svg { width: 12px; height: 12px; stroke: var(--product-accent); flex-shrink: 0; }
+.composer-context-close {
+  margin-left: auto; background: none; border: none; cursor: pointer;
+  color: var(--gray); line-height: 1; padding: 0; font-size: 14px;
+  transition: color var(--duration-fast) var(--ease-soft);
+}
+.composer-context-close:hover { color: var(--black); }
+.composer-input-wrap {
+  display: flex; align-items: center; gap: var(--space-2);
+  background: var(--note-bg);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-pill);
+  padding: 5px 5px 5px var(--space-4);
+  transition: border-color var(--duration-fast) var(--ease-soft),
+              box-shadow var(--duration-fast) var(--ease-soft);
+}
+.composer-input-wrap:focus-within {
+  border-color: var(--product-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--product-accent) 12%, transparent);
+}
+.composer-input {
+  flex: 1; border: none; background: transparent; outline: none;
+  font-family: var(--font-sans); font-size: var(--text-sm);
+  color: var(--accent); padding: var(--space-2) 0;
+}
+.composer-input::placeholder { color: var(--gray-soft); }
+.composer-icon-btn {
+  width: 32px; height: 32px; border-radius: var(--radius-pill);
+  background: transparent; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gray); transition: all var(--duration-fast) var(--ease-soft);
+  flex-shrink: 0;
+}
+.composer-icon-btn:hover { color: var(--black); background: var(--white); }
+.composer-icon-btn.send {
+  background: var(--product-deep); color: var(--white);
+}
+.composer-icon-btn.send:hover { background: var(--product-accent); }
+.composer-icon-btn svg { width: 16px; height: 16px; }
+.composer-disclaimer {
+  font-size: 11px;
+  color: var(--gray-soft);
+  text-align: center;
+  letter-spacing: 0.01em;
+}
+
+/* Nav icon btn (used in header) */
+.nav-icon-btn {
+  width: 34px; height: 34px; border-radius: var(--radius-pill);
+  background: transparent; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gray); transition: all var(--duration-fast) var(--ease-soft);
+}
+.nav-icon-btn:hover { background: var(--note-bg); color: var(--black); }
+
+.icon { width: 1em; height: 1em; display: inline-block; vertical-align: -0.18em;
+  stroke: currentColor; fill: none; stroke-width: 1.6;
+  stroke-linecap: round; stroke-linejoin: round; }
+
+@media (max-width: 720px) {
+  .cuaderno-main { grid-template-columns: 1fr; }
+  .marco-panel { border-left: 0; border-top: 1px solid var(--border-soft); }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ MAIN ═══ -->
+<main class="cuaderno-main">
+
+  <!-- ─── Folio / Notebook ─── -->
+  <article class="notebook">
+    <div class="notebook-inner">
+
+      <div class="notebook-meta">
+        <button onclick="goTo(0)" style="background:none;border:none;cursor:pointer;font:inherit;font-size:11px;color:var(--gray);letter-spacing:0.07em;text-transform:uppercase;font-weight:600;display:inline-flex;align-items:center;gap:4px;padding:0;transition:color .15s;" onmouseover="this.style.color='var(--black)'" onmouseout="this.style.color='var(--gray)'">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Historia
+        </button>
+        <span class="notebook-meta-sep">·</span>
+        <span>2.º ESO</span>
+        <span class="notebook-meta-sep">·</span>
+        <span>Tema 3</span>
+      </div>
+
+      <span class="unit-tag">Unidad 3</span>
+      <h1>La Revolución Francesa</h1>
+      <p class="lead">Las causas, el estallido y las consecuencias de la Revolución Francesa (1789–1799). Al terminar esta unidad comprenderás por qué este acontecimiento cambió el mundo moderno.</p>
+
+      <section>
+        <h2>3.1 El Antiguo Régimen</h2>
+        <p>El <em>Antiguo Régimen</em> era el sistema político y social que existía en Francia (y en gran parte de Europa) antes de la Revolución. Se caracterizaba por una monarquía absoluta, una sociedad estamental rígida y una economía basada en los privilegios de la nobleza y el clero.</p>
+        <p>El rey Luis XVI concentraba todo el poder: legislaba, gobernaba y administraba justicia sin necesidad de rendir cuentas a nadie. Esta forma de gobierno se justificaba mediante la <strong>teoría del derecho divino</strong>: el rey gobernaba porque Dios así lo había dispuesto.</p>
+        <div class="callout">
+          <div class="callout-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16v.5"/></svg>
+            Concepto clave
+          </div>
+          <p>La monarquía absoluta no significa que el rey pueda hacer literalmente cualquier cosa: también estaba limitado por la costumbre, la Iglesia y los cuerpos privilegiados. Lo que la diferencia es la ausencia de un parlamento con poder legislativo real.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>3.2 La sociedad estamental</h2>
+        <p>La sociedad francesa del siglo <small>XVIII</small> se dividía en tres estamentos o estados, con derechos y obligaciones muy distintos. Los dos primeros eran privilegiados y estaban exentos de pagar la mayoría de los impuestos.</p>
+
+        <table class="staments-table">
+          <thead>
+            <tr>
+              <th>Estamento</th>
+              <th>Composición</th>
+              <th>% Población</th>
+              <th>Impuestos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="stament-name">Primer Estado</span><br>Clero</td>
+              <td>Obispos, sacerdotes, monjes</td>
+              <td><span class="stament-pct">~0,5 %</span></td>
+              <td>No pagaban · donativo voluntario</td>
+            </tr>
+            <tr>
+              <td><span class="stament-name">Segundo Estado</span><br>Nobleza</td>
+              <td>Nobleza de sangre y de toga</td>
+              <td><span class="stament-pct">~1,5 %</span></td>
+              <td>Exentos de impuestos directos</td>
+            </tr>
+            <tr>
+              <td><span class="stament-name">Tercer Estado</span><br>Pueblo llano</td>
+              <td>Burguesía, artesanos, campesinos</td>
+              <td><span class="stament-pct">~98 %</span></td>
+              <td>Cargaban con casi todos los impuestos</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="is-active">
+        <h2>3.3 La crisis del Estado francés</h2>
+        <p>A finales del siglo <small>XVIII</small>, Francia atravesaba una <strong>crisis financiera gravísima</strong>. Las guerras —incluida la participación francesa en la independencia de los Estados Unidos— habían agotado las arcas del Estado. La deuda pública era insostenible.</p>
+        <p>El ministro de finanzas <span class="text-highlight">Jacques Necker</span> intentó publicar las cuentas reales en su <em>Compte rendu au roi</em> (1781), revelando que los gastos de la corte superaban con creces los ingresos. Fue destituido por Luis XVI, lo que causó enorme indignación popular.</p>
+        <p>El problema de fondo era estructural: el Tercer Estado —la inmensa mayoría de la población— soportaba casi toda la carga fiscal, mientras los privilegiados estaban exentos. Cualquier reforma que intentase extender los impuestos a la nobleza chocaba con su resistencia.</p>
+        <div class="callout">
+          <div class="callout-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            Para conectar
+          </div>
+          <p>La crisis financiera no fue la única causa de la Revolución: también influyeron la crisis agraria de 1788 (malas cosechas → hambre), la influencia de las ideas ilustradas y el ejemplo de la Revolución americana.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>3.4 Los Estados Generales (1789)</h2>
+        <p>Ante la bancarrota, Luis XVI convocó los Estados Generales en mayo de 1789 —una asamblea de los tres estamentos que no se reunía desde 1614. El Tercer Estado llegó con <em>cahiers de doléances</em> (cuadernos de quejas) cargados de reivindicaciones.</p>
+        <p>El conflicto estalló cuando el Tercer Estado exigió votar por cabeza (un diputado = un voto) en lugar de por estamento. Al ser rechazada su petición, se autoproclamó <strong>Asamblea Nacional</strong> el 17 de junio de 1789. Era el inicio de la Revolución.</p>
+      </section>
+
+    </div>
+  </article>
+
+  <!-- ─── Marco AI panel ─── -->
+  <aside class="marco-panel" aria-label="Asistente Marco">
+
+    <div class="marco-header">
+      <div class="marco-avatar-wrap" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="4" y1="5" x2="4" y2="19" stroke="#fafaf8" stroke-width="1.4" stroke-linecap="round"/>
+          <line x1="4" y1="5" x2="7" y2="5" stroke="#fafaf8" stroke-width="1.4" stroke-linecap="round"/>
+          <line x1="4" y1="19" x2="7" y2="19" stroke="#fafaf8" stroke-width="1.4" stroke-linecap="round"/>
+          <line x1="20" y1="5" x2="20" y2="19" stroke="#fafaf8" stroke-width="1.4" stroke-linecap="round"/>
+          <line x1="20" y1="5" x2="17" y2="5" stroke="#fafaf8" stroke-width="1.4" stroke-linecap="round"/>
+          <line x1="20" y1="19" x2="17" y2="19" stroke="#fafaf8" stroke-width="1.4" stroke-linecap="round"/>
+          <text x="12" y="17.5" font-family="Georgia,serif" font-style="italic" font-size="12" fill="#fafaf8" text-anchor="middle">M</text>
+        </svg>
+      </div>
+      <div class="marco-header-text">
+        <span class="marco-name">Marco</span>
+        <span class="marco-role">Asistente de estudio · IA socrática</span>
+      </div>
+      <div class="marco-header-actions">
+        <button class="nav-icon-btn" aria-label="Más opciones" style="width:30px;height:30px;">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="19" cy="12" r="1" fill="currentColor"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="marco-chat">
+      <div class="chat-divider">Hoy — Historia · Tema 3</div>
+
+      <!-- Marco opens -->
+      <div class="chat-row">
+        <div class="chat-avatar" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <line x1="3" y1="4" x2="3" y2="20" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="3" y1="4" x2="6" y2="4" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="3" y1="20" x2="6" y2="20" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="21" y1="4" x2="21" y2="20" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="21" y1="4" x2="18" y2="4" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="21" y1="20" x2="18" y2="20" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
+            <text x="12" y="16" font-family="Georgia,serif" font-style="italic" font-size="10" fill="#fafaf8" text-anchor="middle">M</text>
+          </svg>
+        </div>
+        <div class="bubble from-marco">Hola Alex. Estás en la sección sobre la crisis del Estado francés. ¿Qué es lo que más te cuesta entender de este apartado?</div>
+      </div>
+
+      <!-- User -->
+      <div class="chat-row is-user">
+        <div class="bubble from-user">No entiendo bien por qué el Estado estaba en bancarrota si Francia era un país poderoso</div>
+        <div class="chat-avatar is-user" aria-label="Alex">A</div>
+      </div>
+
+      <!-- Marco socratic -->
+      <div class="chat-row">
+        <div class="chat-avatar" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <line x1="3" y1="4" x2="3" y2="20" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="3" y1="4" x2="6" y2="4" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="3" y1="20" x2="6" y2="20" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="21" y1="4" x2="21" y2="20" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="21" y1="4" x2="18" y2="4" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="21" y1="20" x2="18" y2="20" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
+            <text x="12" y="16" font-family="Georgia,serif" font-style="italic" font-size="10" fill="#fafaf8" text-anchor="middle">M</text>
+          </svg>
+        </div>
+        <div class="bubble from-marco">Buena pregunta. Imagina que tienes mucho dinero en casa pero gastas el doble de lo que ingresas cada mes. ¿Qué pasa con el tiempo?</div>
+      </div>
+
+      <!-- User -->
+      <div class="chat-row is-user">
+        <div class="bubble from-user">Que al final te quedas sin nada aunque empezaras con mucho</div>
+        <div class="chat-avatar is-user" aria-label="Alex">A</div>
+      </div>
+
+      <!-- Marco -->
+      <div class="chat-row">
+        <div class="chat-avatar" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <line x1="3" y1="4" x2="3" y2="20" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="3" y1="4" x2="6" y2="4" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="3" y1="20" x2="6" y2="20" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="21" y1="4" x2="21" y2="20" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="21" y1="4" x2="18" y2="4" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="21" y1="20" x2="18" y2="20" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
+            <text x="12" y="16" font-family="Georgia,serif" font-style="italic" font-size="10" fill="#fafaf8" text-anchor="middle">M</text>
+          </svg>
+        </div>
+        <div class="bubble from-marco">Exacto. Francia era poderosa militarmente pero gastaba enormes sumas en guerras y en mantener la corte de Versalles. Ahora dime: según la tabla del tema, ¿quién pagaba la mayor parte de los impuestos?</div>
+      </div>
+
+      <!-- User -->
+      <div class="chat-row is-user">
+        <div class="bubble from-user">El Tercer Estado, que era casi toda la población</div>
+        <div class="chat-avatar is-user" aria-label="Alex">A</div>
+      </div>
+
+      <!-- Marco with citation — referencing the selected text -->
+      <div class="chat-row">
+        <div class="chat-avatar" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <line x1="3" y1="4" x2="3" y2="20" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="3" y1="4" x2="6" y2="4" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="3" y1="20" x2="6" y2="20" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="21" y1="4" x2="21" y2="20" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="21" y1="4" x2="18" y2="4" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="21" y1="20" x2="18" y2="20" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
+            <text x="12" y="16" font-family="Georgia,serif" font-style="italic" font-size="10" fill="#fafaf8" text-anchor="middle">M</text>
+          </svg>
+        </div>
+        <div class="bubble from-marco">
+          Muy bien. Entonces: el Estado no podía cobrar impuestos a los privilegiados (nobleza y clero), el 98 % de la población ya pagaba al límite, y los gastos no paraban de crecer. ¿Se te ocurre qué debería haber hecho el rey para salir de esa trampa?
+          <div class="bubble-cite">
+            <span class="bubble-cite-label">Referencia · 3.3</span>
+            "Cualquier reforma que intentase extender los impuestos a la nobleza chocaba con su resistencia."
+          </div>
+        </div>
+      </div>
+
+      <!-- User -->
+      <div class="chat-row is-user">
+        <div class="bubble from-user">¿Obligar a la nobleza a pagar impuestos también?</div>
+        <div class="chat-avatar is-user" aria-label="Alex">A</div>
+      </div>
+
+      <!-- Marco final -->
+      <div class="chat-row">
+        <div class="chat-avatar" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <line x1="3" y1="4" x2="3" y2="20" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="3" y1="4" x2="6" y2="4" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="3" y1="20" x2="6" y2="20" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="21" y1="4" x2="21" y2="20" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="21" y1="4" x2="18" y2="4" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="21" y1="20" x2="18" y2="20" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
+            <text x="12" y="16" font-family="Georgia,serif" font-style="italic" font-size="10" fill="#fafaf8" text-anchor="middle">M</text>
+          </svg>
+        </div>
+        <div class="bubble from-marco">Eso es exactamente lo que intentaron varios ministros, incluido Necker. Y ahí está la clave de por qué fue tan difícil. Piensa: ¿por qué creía el rey que necesitaba convocar los Estados Generales para lograrlo?</div>
+      </div>
+
+    </div>
+
+    <div class="marco-composer">
+      <div class="composer-context">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="12" y2="17"/></svg>
+        Sobre la sección 3.3 — Crisis del Estado
+        <button class="composer-context-close" aria-label="Quitar contexto">×</button>
+      </div>
+      <div class="composer-input-wrap">
+        <input class="composer-input" placeholder="Pregunta a Marco sobre esta lección…" aria-label="Pregunta a Marco">
+        <button class="composer-icon-btn" aria-label="Adjuntar">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M21 12.5l-8.5 8.5a5.5 5.5 0 0 1-7.8-7.8l9-9a3.5 3.5 0 0 1 4.95 4.95l-9 9a1.5 1.5 0 0 1-2.12-2.12l8.5-8.5"/></svg>
+        </button>
+        <button class="composer-icon-btn" aria-label="Entrada de voz">
+          <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+        </button>
+        <button class="composer-icon-btn send" aria-label="Enviar">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+      <p class="composer-disclaimer">Marco puede cometer errores. Considera verificar la información importante.</p>
+    </div>
+
+  </aside>
+
+</main>
+
+<script>
+function goTo(i) {
+  if (window.parent && window.parent !== window && typeof window.parent.showScreen === 'function') {
+    window.parent.showScreen(i);
+  }
+}
+</script>
+</body>
+</html>

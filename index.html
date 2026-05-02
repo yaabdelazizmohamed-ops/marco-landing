@@ -2267,9 +2267,10 @@ body.intro-locked { overflow: hidden; }
     <div class="demo-tab-group">
       <span class="demo-tab-group-label">Alumno</span>
       <div class="demo-tab-group-chips">
-        <button class="demo-tab active" data-screen="0" onclick="showScreen(0)"><svg class="icon icon-inline" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h7v18H6a2 2 0 0 1-2-2V5z"/><path d="M13 3h5a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-5"/><path d="M8 7h2M8 11h2"/></svg>Asignaturas</button>
+        <button class="demo-tab" data-screen="0" onclick="showScreen(0)"><svg class="icon icon-inline" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h7v18H6a2 2 0 0 1-2-2V5z"/><path d="M13 3h5a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-5"/><path d="M8 7h2M8 11h2"/></svg>Asignaturas</button>
         <button class="demo-tab" data-screen="1" onclick="showScreen(1)"><svg class="icon icon-inline" viewBox="0 0 24 24"><path d="M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2V4z"/><path d="M5 18a2 2 0 0 1 2-2h12"/><path d="M9 8h6M9 12h4"/></svg>Cuadernos</button>
-        <button class="demo-tab" data-screen="2" onclick="showScreen(2)"><svg class="icon icon-inline" viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><path d="M12 7l1.5 3.5L17 12l-3.5 1.5L12 17l-1.5-3.5L7 12l3.5-1.5z"/></svg>Estudiar con IA</button>
+        <button class="demo-tab active" data-screen="2" onclick="showScreen(2)"><svg class="icon icon-inline" viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><path d="M12 7l1.5 3.5L17 12l-3.5 1.5L12 17l-1.5-3.5L7 12l3.5-1.5z"/></svg>Mates con IA</button>
+        <button class="demo-tab" data-screen="6" onclick="showScreen(6)"><svg class="icon icon-inline" viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><path d="M12 7l1.5 3.5L17 12l-3.5 1.5L12 17l-1.5-3.5L7 12l3.5-1.5z"/></svg>Historia con IA</button>
       </div>
     </div>
 
@@ -2298,7 +2299,7 @@ body.intro-locked { overflow: hidden; }
   <div class="app-frame reveal" style="position:relative;">
     <div class="app-topbar">
       <div class="app-dots"><span></span><span></span><span></span></div>
-      <span class="app-tab" id="app-tab-label">Tema 5 — Estudiando con Marco</span>
+      <span class="app-tab" id="app-tab-label">Matemáticas — Estudiando con Marco</span>
     </div>
 
     <!-- ════════════════════════════════════════════════════════════
@@ -2312,6 +2313,7 @@ body.intro-locked { overflow: hidden; }
       <iframe class="proto-frame" data-index="3" src="/brand-examples/panel-profesor.html" title="Panel profesor"></iframe>
       <iframe class="proto-frame" data-index="4" src="/brand-examples/quiz-fracciones.html" title="Quiz"></iframe>
       <iframe class="proto-frame" data-index="5" src="/brand-examples/panel-centro.html" title="Panel centro"></iframe>
+      <iframe class="proto-frame" data-index="6" src="/brand-examples/cuaderno-historia.html" title="Historia con IA"></iframe>
     </div>
 
     <!-- INICIO LEGACY (oculto, no se renderiza) — pantallas inline preservadas para referencia -->
@@ -3567,10 +3569,11 @@ if (navToggle && navLinks) {
 const tabLabels = [
   'Inicio — Mis asignaturas',
   'Matemáticas — Cuadernos',
-  'Tema 5 — Estudiando con Marco',
+  'Matemáticas — Estudiando con Marco',
   'Panel del Profesor',
   'Quiz — Fracciones',
-  'Panel del Centro'
+  'Panel del Centro',
+  'Historia — Revolución Francesa con Marco'
 ];
 
 function showScreen(i) {
