@@ -239,31 +239,38 @@ body.intro-locked .floating-cta { opacity: 0; pointer-events: none; }
 /* Profile toggle */
 .profile-toggle {
   display: inline-flex;
-  background: var(--light);
-  border-radius: 100px;
-  padding: 4px;
-  margin-bottom: 2rem;
+  gap: 0;
+  margin-bottom: 2.2rem;
   opacity: 0;
   animation: fadeUp 0.6s ease 0.15s forwards;
+  background: none;
+  padding: 0;
+  border-radius: 0;
 }
 
 .profile-btn {
   font-family: 'DM Sans', sans-serif;
-  font-size: 0.82rem;
-  font-weight: 500;
-  padding: 0.5rem 1.4rem;
-  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 400;
+  padding: 0.22rem 0.85rem;
+  border-radius: 0;
   border: none;
+  border-right: 1px solid var(--border);
   cursor: pointer;
   background: transparent;
   color: var(--gray);
-  transition: all 0.25s;
+  transition: color 0.2s;
+  letter-spacing: 0.01em;
 }
+.profile-btn:last-child { border-right: none; }
+.profile-btn:first-child { padding-left: 0; }
 
 .profile-btn.active {
-  background: var(--black);
-  color: var(--white);
+  background: transparent;
+  color: var(--black);
+  font-weight: 600;
 }
+.profile-btn:hover:not(.active) { color: var(--accent); }
 
 .hero h1 {
   font-family: 'Instrument Serif', serif;
@@ -2126,6 +2133,528 @@ body.intro-locked { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   .intro-splash { display: none !important; }
 }
+
+/* ── MICRO-COMPROMISO ── */
+.micro-q-section {
+  background: var(--light);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 3.5rem 2rem;
+  text-align: center;
+}
+.micro-q-inner { max-width: 560px; margin: 0 auto; }
+.micro-q-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 0.8rem;
+}
+.micro-q-title {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  color: var(--black);
+  letter-spacing: -0.02em;
+  margin-bottom: 1.8rem;
+  line-height: 1.2;
+}
+.micro-q-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+  margin-bottom: 1.2rem;
+}
+.micro-q-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.6rem 1.4rem;
+  border: 1.5px solid var(--border);
+  border-radius: 100px;
+  background: var(--white);
+  color: var(--black);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, color 0.2s, transform 0.15s;
+}
+.micro-q-btn:hover {
+  border-color: var(--black);
+  transform: translateY(-1px);
+}
+.micro-q-btn.selected {
+  background: var(--black);
+  color: var(--white);
+  border-color: var(--black);
+}
+.micro-q-skip {
+  font-size: 0.72rem;
+  color: var(--gray);
+  text-decoration: none;
+  opacity: 0.6;
+}
+.micro-q-skip:hover { opacity: 1; }
+
+/* Estado respondido */
+.micro-q-section.answered .micro-q-options { opacity: 0.5; pointer-events: none; }
+.micro-q-confirmed {
+  display: none;
+  font-size: 0.82rem;
+  color: var(--green);
+  margin-top: 0.6rem;
+  font-weight: 500;
+}
+.micro-q-section.answered .micro-q-confirmed { display: block; }
+
+/* ── PROOF: CARD FEATURED + TAG ── */
+.proof-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+.proof-card-tag {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 0.9rem;
+  opacity: 0.7;
+}
+.proof-card--featured {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto auto;
+  gap: 0 2rem;
+  background: var(--black);
+  border-left-color: var(--black);
+}
+.proof-card--featured .proof-card-tag {
+  color: rgba(255,255,255,0.45);
+  grid-column: 1;
+}
+.proof-card--featured .proof-quote {
+  color: var(--white);
+  font-size: 1.08rem;
+  font-style: italic;
+  grid-column: 1;
+  max-width: 56ch;
+}
+.proof-card--featured .proof-author {
+  color: var(--white);
+  grid-column: 1;
+}
+.proof-card--featured .proof-role {
+  color: rgba(255,255,255,0.45);
+  grid-column: 1;
+}
+
+@media (max-width: 640px) {
+  .proof-grid { grid-template-columns: 1fr; }
+  .proof-card--featured { grid-column: auto; display: block; }
+}
+
+/* ── FORM SECTION — LAYOUT 2 COLUMNAS ── */
+.form-section-inner {
+  max-width: 1020px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+.form-section-left .section-label { margin-bottom: 0.6rem; }
+.form-section-left .section-title { margin-bottom: 1rem; }
+.form-section-left .section-sub { font-size: 0.92rem; line-height: 1.6; }
+
+/* Urgency bar */
+.form-urgency-bar {
+  margin-top: 2rem;
+  padding: 1.2rem 1.4rem;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+}
+.form-urgency-slots {
+  font-size: 0.82rem;
+  margin-bottom: 0.7rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.2rem;
+}
+.form-urgency-filled {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  color: var(--white);
+  line-height: 1;
+}
+.form-urgency-total { color: rgba(255,255,255,0.55); }
+.form-urgency-track {
+  height: 4px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 100px;
+  margin-bottom: 0.6rem;
+  overflow: hidden;
+}
+.form-urgency-fill {
+  height: 100%;
+  background: var(--white);
+  border-radius: 100px;
+  transition: width 1s cubic-bezier(0.16,1,0.3,1);
+}
+.form-urgency-label {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.4);
+  margin: 0;
+}
+
+/* Trust list lateral */
+.form-trust-list {
+  margin-top: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+.form-trust-item {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.45);
+}
+.form-trust-item svg { flex-shrink: 0; stroke: rgba(255,255,255,0.35); }
+
+/* Ocultar form-wrap trust strip anterior */
+.form-wrap .form-trust { display: none; }
+
+@media (max-width: 860px) {
+  .form-section-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .form-section-left .section-title { font-size: 1.8rem; }
+  .form-urgency-bar { max-width: 480px; }
+}
+
+/* ── FLOAT EMAIL CAPTURE ── */
+.float-capture {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 300px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.4rem 1.5rem 1.2rem;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+  z-index: 900;
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.float-capture.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.float-capture.dismissed { display: none; }
+.float-capture-close {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.9rem;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: var(--gray);
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.2rem;
+}
+.float-capture-close:hover { color: var(--black); }
+.float-capture-title {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--black);
+  letter-spacing: -0.01em;
+  margin-bottom: 0.25rem;
+}
+.float-capture-sub {
+  font-size: 0.76rem;
+  color: var(--gray);
+  margin-bottom: 1rem;
+  line-height: 1.45;
+}
+.float-capture-form {
+  display: flex;
+  gap: 0.4rem;
+}
+.float-capture-input {
+  flex: 1;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  padding: 0.55rem 0.8rem;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  background: var(--white);
+  color: var(--black);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.float-capture-input:focus { border-color: var(--black); }
+.float-capture-input::placeholder { color: var(--gray); }
+.float-capture-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.55rem 0.9rem;
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+.float-capture-btn:hover { background: var(--accent); }
+.float-capture-fine {
+  font-size: 0.66rem;
+  color: var(--gray);
+  opacity: 0.6;
+  margin-top: 0.6rem;
+  text-align: center;
+}
+.float-capture-done .float-capture-title { color: var(--green); }
+.float-capture-done .float-capture-sub { display: none; }
+.float-capture-done .float-capture-form { display: none; }
+
+@media (max-width: 480px) {
+  .float-capture { width: calc(100vw - 2rem); right: 1rem; bottom: 1rem; }
+}
+
+/* ── HERO: SOCIAL PROOF BADGE + TIMING ── */
+.hero-proof-strip {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: 1.8rem;
+  opacity: 0;
+  animation: fadeUp 0.5s ease 0.4s forwards;
+}
+.hero-proof-count {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--black);
+}
+.hero-proof-avatars {
+  display: flex;
+}
+.hero-proof-avatars span {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--white);
+  font-size: 0.58rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--white);
+  margin-left: -7px;
+  letter-spacing: 0;
+}
+.hero-proof-avatars span:first-child { margin-left: 0; }
+.hero-proof-sep { width: 1px; height: 16px; background: var(--border); }
+.hero-timing-pill {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--gray);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.hero-timing-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #f59e0b;
+  flex-shrink: 0;
+  animation: pulse-amber 2s ease infinite;
+}
+@keyframes pulse-amber {
+  0%,100% { opacity:1; transform:scale(1); }
+  50% { opacity:0.45; transform:scale(0.8); }
+}
+
+/* ── HERO: CTA único ── */
+.hero-ctas-single { display: flex; flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+.hero-cta-text-link {
+  font-size: 0.8rem;
+  color: var(--gray);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: color 0.2s;
+}
+.hero-cta-text-link:hover { color: var(--black); }
+
+/* ── POST-DEMO INLINE CTA ── */
+.demo-inline-cta {
+  max-width: 640px;
+  margin: 3rem auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.4rem 1.8rem;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+}
+.demo-inline-cta-text p:first-child {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--black);
+  margin-bottom: 0.2rem;
+}
+.demo-inline-cta-text p:last-child {
+  font-size: 0.76rem;
+  color: var(--gray);
+}
+.demo-inline-cta-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.65rem 1.4rem;
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+  display: inline-block;
+}
+.demo-inline-cta-btn:hover { background: var(--accent); transform: translateY(-1px); }
+@media (max-width: 600px) {
+  .demo-inline-cta { flex-direction: column; align-items: flex-start; gap: 1rem; }
+}
+
+/* ── FAQ ── */
+.faq-section {
+  padding: 5rem 2rem;
+  background: var(--light);
+  border-top: 1px solid var(--border);
+}
+.faq-grid {
+  max-width: 720px;
+  margin: 2.5rem auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.faq-item {
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+.faq-item:first-child { border-top: 1px solid var(--border); }
+.faq-q {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 1.2rem 0;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--black);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+.faq-q-icon {
+  flex-shrink: 0;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.3s, border-color 0.2s;
+  font-size: 0.85rem;
+  color: var(--gray);
+}
+.faq-item.open .faq-q-icon { transform: rotate(45deg); border-color: var(--black); color: var(--black); }
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.38s cubic-bezier(0.16,1,0.3,1), padding 0.3s;
+  font-size: 0.88rem;
+  color: var(--gray);
+  line-height: 1.65;
+}
+.faq-item.open .faq-a { max-height: 300px; padding-bottom: 1.2rem; }
+.faq-a a { color: var(--black); }
+
+/* ── QUOTE ENCIMA DEL FORM ── */
+.form-director-quote {
+  background: transparent;
+  border-left: 3px solid rgba(255,255,255,0.25);
+  padding: 1.2rem 0 1.2rem 1.2rem;
+  margin-top: 2rem;
+}
+.form-director-quote blockquote {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: rgba(255,255,255,0.8);
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+.form-director-quote cite {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.38);
+  font-style: normal;
+  letter-spacing: 0.04em;
+}
+
+/* ── FORM SIMPLIFICADO: 4 campos ── */
+.form-simple { display: flex; flex-direction: column; gap: 1rem; }
+.form-simple-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+.form-submit-row { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.5rem; }
+.form-submit-btn {
+  width: 100%;
+  padding: 0.95rem 1.5rem;
+  background: var(--white);
+  color: var(--black);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
+  letter-spacing: 0.01em;
+}
+.form-submit-btn:hover { background: #eee; transform: translateY(-2px); }
+.form-submit-trust {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.68rem;
+  color: rgba(255,255,255,0.32);
+}
+.form-submit-trust svg { flex-shrink: 0; stroke: rgba(255,255,255,0.28); }
+
+@media (max-width: 480px) {
+  .form-simple-row { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body class="intro-locked">
@@ -2230,11 +2759,6 @@ body.intro-locked { overflow: hidden; }
 
 <!-- HERO -->
 <section class="hero" id="hero">
-  <span class="badge">
-    <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="#28ca41"/></svg>
-    Abierto a colegios piloto
-  </span>
-
   <div class="profile-toggle">
     <button class="profile-btn active" onclick="setProfile('centro')">Soy centro</button>
     <button class="profile-btn" onclick="setProfile('profesor')">Soy profesor/a</button>
@@ -2242,16 +2766,48 @@ body.intro-locked { overflow: hidden; }
   </div>
 
   <h1 id="heroTitle">Adoptar IA en el aula<br><em>sin perder el control.</em></h1>
-  <p class="hero-sub" id="heroSub">Visibilidad total sobre cómo estudian vuestros alumnos, qué departamentos adoptan la herramienta y dónde se concentran las dificultades. Datos reales para decisiones reales.</p>
+  <p class="hero-sub" id="heroSub">Visibilidad total sobre cómo estudian vuestros alumnos, qué profesores adoptan la herramienta y dónde se concentran las dificultades. Datos reales para decisiones reales.</p>
 
-  <div class="hero-ctas">
+  <!-- Social proof + timing — visible sin hacer scroll -->
+  <div class="hero-proof-strip">
+    <div class="hero-proof-count">
+      <div class="hero-proof-avatars">
+        <span>SC</span><span>MR</span><span>JP</span><span>AL</span><span>BF</span>
+      </div>
+      <span>5 directores ya han reservado plaza</span>
+    </div>
+    <div class="hero-proof-sep"></div>
+    <div class="hero-timing-pill">
+      <span class="hero-timing-dot"></span>
+      Plazas abiertas · cierre junio 2026
+    </div>
+  </div>
+
+  <div class="hero-ctas-single">
     <a href="#demo" class="cta-btn">
-      Ver la demo interactiva
+      Ver la demo del centro
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>
-    <a href="#feedback" class="cta-secondary">Solicitar piloto gratuito</a>
+    <a href="#feedback" class="hero-cta-text-link">
+      o solicitar plaza directamente →
+    </a>
   </div>
   <div class="scroll-hint">Explora la demo</div>
+</section>
+
+<!-- MICRO-COMPROMISO -->
+<section class="micro-q-section" id="micro-q">
+  <div class="micro-q-inner">
+    <p class="micro-q-label">Para personalizar lo que ves a continuación →</p>
+    <p class="micro-q-title">¿Cuántos alumnos tiene tu centro?</p>
+    <div class="micro-q-options" id="microQOptions">
+      <button class="micro-q-btn" onclick="selectMicroQ(this, 'menos200')">Menos de 200</button>
+      <button class="micro-q-btn" onclick="selectMicroQ(this, '200-500')">200 – 500</button>
+      <button class="micro-q-btn" onclick="selectMicroQ(this, '500-1000')">500 – 1.000</button>
+      <button class="micro-q-btn" onclick="selectMicroQ(this, 'mas1000')">Más de 1.000</button>
+    </div>
+    <a href="#demo" class="micro-q-skip">Saltar →</a>
+  </div>
 </section>
 
 <!-- DEMO -->
@@ -2269,7 +2825,7 @@ body.intro-locked { overflow: hidden; }
       <div class="demo-tab-group-chips">
         <button class="demo-tab" data-screen="0" onclick="showScreen(0)"><svg class="icon icon-inline" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h7v18H6a2 2 0 0 1-2-2V5z"/><path d="M13 3h5a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-5"/><path d="M8 7h2M8 11h2"/></svg>Asignaturas</button>
         <button class="demo-tab" data-screen="1" onclick="showScreen(1)"><svg class="icon icon-inline" viewBox="0 0 24 24"><path d="M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2V4z"/><path d="M5 18a2 2 0 0 1 2-2h12"/><path d="M9 8h6M9 12h4"/></svg>Cuadernos</button>
-        <button class="demo-tab active" data-screen="2" onclick="showScreen(2)"><svg class="icon icon-inline" viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><path d="M12 7l1.5 3.5L17 12l-3.5 1.5L12 17l-1.5-3.5L7 12l3.5-1.5z"/></svg>Mates con IA</button>
+        <button class="demo-tab" data-screen="2" onclick="showScreen(2)"><svg class="icon icon-inline" viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><path d="M12 7l1.5 3.5L17 12l-3.5 1.5L12 17l-1.5-3.5L7 12l3.5-1.5z"/></svg>Mates con IA</button>
         <button class="demo-tab" data-screen="6" onclick="showScreen(6)"><svg class="icon icon-inline" viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><path d="M12 7l1.5 3.5L17 12l-3.5 1.5L12 17l-1.5-3.5L7 12l3.5-1.5z"/></svg>Historia con IA</button>
       </div>
     </div>
@@ -2290,7 +2846,7 @@ body.intro-locked { overflow: hidden; }
     <div class="demo-tab-group">
       <span class="demo-tab-group-label">Dirección</span>
       <div class="demo-tab-group-chips">
-        <button class="demo-tab" data-screen="5" onclick="showScreen(5)"><svg class="icon icon-inline" viewBox="0 0 24 24"><path d="M3 21V10l9-6 9 6v11"/><path d="M9 21v-6h6v6"/><path d="M3 21h18"/></svg>Panel centro</button>
+        <button class="demo-tab active" data-screen="5" onclick="showScreen(5)"><svg class="icon icon-inline" viewBox="0 0 24 24"><path d="M3 21V10l9-6 9 6v11"/><path d="M9 21v-6h6v6"/><path d="M3 21h18"/></svg>Panel centro</button>
       </div>
     </div>
 
@@ -2309,7 +2865,7 @@ body.intro-locked { overflow: hidden; }
   <div class="app-frame reveal" style="position:relative;">
     <div class="app-topbar">
       <div class="app-dots"><span></span><span></span><span></span></div>
-      <span class="app-tab" id="app-tab-label">Matemáticas — Estudiando con Marco</span>
+      <span class="app-tab" id="app-tab-label">Panel del Centro</span>
     </div>
 
     <!-- ════════════════════════════════════════════════════════════
@@ -2319,10 +2875,10 @@ body.intro-locked { overflow: hidden; }
     <div class="app-iframe-wrap">
       <iframe class="proto-frame" data-index="0" src="/brand-examples/asignaturas.html" title="Asignaturas"></iframe>
       <iframe class="proto-frame" data-index="1" src="/brand-examples/cuadernos-mate.html" title="Cuadernos"></iframe>
-      <iframe class="proto-frame proto-frame--active" data-index="2" src="/brand-examples/cuaderno-mate.html" title="Estudiar con IA"></iframe>
+      <iframe class="proto-frame" data-index="2" src="/brand-examples/cuaderno-mate.html" title="Estudiar con IA"></iframe>
       <iframe class="proto-frame" data-index="3" src="/brand-examples/panel-profesor.html" title="Panel profesor"></iframe>
       <iframe class="proto-frame" data-index="4" src="/brand-examples/quiz-fracciones.html" title="Quiz"></iframe>
-      <iframe class="proto-frame" data-index="5" src="/brand-examples/panel-centro.html" title="Panel centro"></iframe>
+      <iframe class="proto-frame proto-frame--active" data-index="5" src="/brand-examples/panel-centro.html" title="Panel centro"></iframe>
       <iframe class="proto-frame" data-index="6" src="/brand-examples/cuaderno-historia.html" title="Historia con IA"></iframe>
       <iframe class="proto-frame" data-index="7" src="/brand-examples/panel-padre.html" title="Progreso de Alex"></iframe>
     </div>
@@ -2826,6 +3382,15 @@ body.intro-locked { overflow: hidden; }
   </div>
 </section>
 
+<!-- CTA INLINE POST-DEMO -->
+<div class="demo-inline-cta reveal">
+  <div class="demo-inline-cta-text">
+    <p>¿Es esto lo que buscáis para vuestro centro?</p>
+    <p>Piloto gratuito · septiembre 2026 · 3 plazas disponibles</p>
+  </div>
+  <a href="#feedback" class="demo-inline-cta-btn">Reservar una plaza →</a>
+</div>
+
 <!-- FEATURES -->
 <section class="features-section" id="features">
   <p class="section-label reveal">Para el alumno</p>
@@ -2932,22 +3497,32 @@ body.intro-locked { overflow: hidden; }
 
 <!-- SOCIAL PROOF -->
 <section class="proof-section" id="proof">
-  <p class="section-label reveal">Diseñado con profesores</p>
-  <h2 class="section-title reveal">Responde a problemas reales del aula</h2>
-  <p class="section-sub reveal">Estas son las situaciones que nos contaron profesores en más de 20 entrevistas. Marco nace para resolverlas.</p>
+  <p class="section-label reveal">Lo que nos dijeron</p>
+  <h2 class="section-title reveal">El problema lleva años en el aula.<br><em>La solución, no.</em></h2>
+  <p class="section-sub reveal">Más de 20 conversaciones con directores, profesores y familias. Estas son las frases que más se repitieron.</p>
 
   <div class="proof-grid">
+    <!-- Director primero — es el comprador -->
+    <div class="proof-card proof-card--featured reveal">
+      <div class="proof-card-tag">Dirección</div>
+      <div class="proof-quote">"Necesito demostrar al AMPA y al consejo escolar que las herramientas que compramos tienen impacto real. No con PDF de marketing — con datos."</div>
+      <div class="proof-author">Director de centro concertado</div>
+      <div class="proof-role">Madrid · 2.200 alumnos</div>
+    </div>
     <div class="proof-card reveal">
+      <div class="proof-card-tag">Profesor</div>
       <div class="proof-quote">"Mando ejercicios para casa y no tengo forma de saber si los han hecho solos o con ChatGPT. Solo veo el resultado, no el proceso."</div>
       <div class="proof-author">Profesora de Matemáticas</div>
       <div class="proof-role">Instituto público, Madrid · 14 años de experiencia</div>
     </div>
     <div class="proof-card reveal">
+      <div class="proof-card-tag">Profesor</div>
       <div class="proof-quote">"Hay alumnos que se pierden en el minuto 5 pero no preguntan hasta el examen. Si pudiera verlo antes, cambiaría completamente mi clase."</div>
       <div class="proof-author">Profesor de Ciencias</div>
       <div class="proof-role">Colegio concertado, Barcelona · 8 años de experiencia</div>
     </div>
     <div class="proof-card reveal">
+      <div class="proof-card-tag">Familia</div>
       <div class="proof-quote">"Mi hijo se frustra estudiando solo porque no sabe a quién preguntar. No necesita la respuesta — necesita que alguien le guíe."</div>
       <div class="proof-author">Madre de alumno de 3º ESO</div>
       <div class="proof-role">Valencia</div>
@@ -2977,39 +3552,185 @@ body.intro-locked { overflow: hidden; }
   </div>
 </section>
 
+<!-- FAQ -->
+<section class="faq-section">
+  <p class="section-label reveal">Preguntas frecuentes</p>
+  <h2 class="section-title reveal">Lo que suelen preguntar<br><em>los equipos directivos</em></h2>
+
+  <div class="faq-grid reveal">
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        ¿Quién accede a los datos de los alumnos?
+        <span class="faq-q-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-a">
+        Solo el propio alumno, su profesor asignado y el equipo directivo del centro. Marco nunca comparte datos con terceros ni los usa para entrenar modelos de IA. Todos los datos residen en servidores europeos bajo el marco RGPD y la LOPDGDD. Podemos firmar un DPA (Data Processing Agreement) con el centro antes del piloto.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        ¿Qué pasa si los profesores no adoptan la herramienta?
+        <span class="faq-q-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-a">
+        El piloto incluye una sesión de formación inicial con los profesores y un punto de contacto directo durante todo el trimestre. El dashboard de dirección muestra en tiempo real qué departamentos están adoptando la herramienta y cuáles necesitan más acompañamiento. Si tras 6 semanas la adopción no supera el 60%, analizamos con vosotros qué está pasando y ajustamos.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        ¿Cuánto cuesta después del piloto?
+        <span class="faq-q-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-a">
+        El piloto es completamente gratuito. El modelo de precio post-piloto es por centro y curso escolar, sin coste por alumno individual. Lo definiremos junto con los centros piloto antes de lanzar el precio público — los centros participantes tendrán acceso prioritario y condiciones preferentes durante los dos primeros años.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        ¿Se integra con nuestro LMS o plataforma actual?
+        <span class="faq-q-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-a">
+        Marco funciona de forma autónoma — no requiere integración con Moodle, Google Classroom ni ningún otro sistema para funcionar. El acceso es vía web en cualquier dispositivo. Durante el piloto evaluaremos qué integraciones tienen más valor para los centros participantes y las priorizaremos en el roadmap.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        ¿Cómo sé si el piloto está funcionando?
+        <span class="faq-q-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-a">
+        Desde el primer día tenéis acceso al Panel de Centro: adopción por departamento, alumnos activos, tiempo medio de estudio y alertas de grupos con baja participación. Cada mes enviamos un informe ejecutivo listo para presentar al claustro o al consejo escolar. Sin PDF de marketing — datos reales del uso en vuestro centro.
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- FORM -->
 <section class="form-section" id="feedback">
-  <p class="section-label reveal">Tu opinión moldea el producto</p>
-  <h2 class="section-title reveal">Ayúdanos a construirlo bien</h2>
-  <p class="section-sub reveal">Estamos en fase de desarrollo. Este formulario tarda 2 minutos y nos ayuda a tomar decisiones reales sobre qué construir primero.</p>
+  <div class="form-section-inner">
+    <div class="form-section-left reveal">
+      <p class="section-label" style="text-align:left;">Piloto 2026–2027</p>
+      <h2 class="section-title" style="text-align:left;font-size:clamp(2rem,4vw,3rem);">Reserva una plaza<br>para tu centro</h2>
+      <p class="section-sub" style="text-align:left;margin:0;">Seleccionaremos un máximo de 8 centros. Cuéntanos brevemente quién eres y te contactamos con una presentación a medida.</p>
 
-  <div class="form-wrap reveal">
+      <!-- Urgency counter — actualiza manualmente los números -->
+      <div class="form-urgency-bar">
+        <div class="form-urgency-slots">
+          <span class="form-urgency-filled" id="slotsCount">5</span>
+          <span class="form-urgency-total"> de 8 centros seleccionados</span>
+        </div>
+        <div class="form-urgency-track">
+          <div class="form-urgency-fill" style="width: 62.5%"></div><!-- 5/8 = 62.5% -->
+        </div>
+        <p class="form-urgency-label">3 plazas disponibles · Cierre septiembre 2026</p>
+      </div>
+
+      <div class="form-trust-list">
+        <div class="form-trust-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 4v5c0 5-3.7 9.3-9 11C6.7 21.3 3 17 3 12V7l9-4z"/></svg>
+          Sin permanencia · piloto gratuito
+        </div>
+        <div class="form-trust-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+          RGPD compliant · datos en Europa
+        </div>
+        <div class="form-trust-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Privacidad del menor garantizada
+        </div>
+      </div><!-- /.form-trust-list -->
+      <!-- Cita del director -->
+      <div class="form-director-quote">
+        <blockquote>"No con PDF de marketing — con datos."</blockquote>
+        <cite>Director de centro concertado · Madrid · 2.200 alumnos</cite>
+      </div>
+    </div>
+
+    <div class="form-section-right reveal">
+  <div class="form-wrap">
     <div id="form-content">
+
+      <!-- FORMULARIO SIMPLIFICADO — 4 campos, submit directo -->
+      <div class="form-simple" id="formSimple">
+        <div class="form-simple-row">
+          <div class="form-group">
+            <label class="form-label">Nombre</label>
+            <input class="form-input" type="text" placeholder="Tu nombre" id="formName" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Centro educativo</label>
+            <input class="form-input" type="text" placeholder="Nombre del colegio" id="formCenter" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Perfil</label>
+          <select class="form-select" id="formRole">
+            <option value="direccion">Director/a o equipo directivo</option>
+            <option value="profesor">Profesor/a</option>
+            <option value="padre">Padre / Madre</option>
+            <option value="alumno">Alumno/a</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email de contacto</label>
+          <input class="form-input" type="email" placeholder="tu@colegio.com" id="formEmail" />
+        </div>
+        <!-- Honeypot -->
+        <div style="position:absolute;left:-9999px;height:0;overflow:hidden;" aria-hidden="true">
+          <input type="text" id="formWebsite" tabindex="-1" autocomplete="off">
+        </div>
+        <div class="form-submit-row">
+          <button class="form-submit-btn" onclick="submitSimpleForm()">
+            Solicitar plaza en el piloto →
+          </button>
+          <div class="form-submit-trust">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l9 4v5c0 5-3.7 9.3-9 11C6.7 21.3 3 17 3 12V7l9-4z"/></svg>
+            RGPD compliant · datos en Europa · sin spam
+          </div>
+        </div>
+      </div>
+
+      <!-- THANK YOU (form simple) -->
+      <div class="thankyou" id="thankyouSimple" style="display:none;">
+        <div class="thankyou-icon"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3L17 9"/></svg></div>
+        <h3>Recibido — gracias.</h3>
+        <p>Os contactaremos en menos de 48h con los detalles del piloto. Si tenéis prisa: <a href="mailto:centros@marcoaprende.com" style="color:inherit;">centros@marcoaprende.com</a></p>
+      </div>
+
+      <!-- Formulario extendido legacy (oculto, accesible via URL param) -->
+      <div id="formExtended" style="display:none;">
       <div class="form-progress" id="formProgress">
         <div class="form-progress-step active"></div>
         <div class="form-progress-step"></div>
         <div class="form-progress-step"></div>
       </div>
 
-      <!-- Step 1: Segmentación -->
+      <!-- Step 1: Perfil -->
       <div class="form-step active" id="formStep1">
         <div class="form-group">
           <label class="form-label">¿Cuál es tu perfil?</label>
-          <select class="form-select" id="formRole" onchange="onRoleChange()">
+          <select class="form-select" id="formRoleLegacy" onchange="onRoleChange()">
             <option value="">Selecciona una opción</option>
-            <option value="profesor">Profesor/a</option>
-            <option value="alumno">Alumno/a</option>
             <option value="direccion">Director/a o equipo directivo</option>
+            <option value="profesor">Profesor/a</option>
             <option value="padre">Padre / Madre</option>
+            <option value="alumno">Alumno/a</option>
           </select>
         </div>
         <div class="form-group">
           <label class="form-label">Nombre <span class="form-label-hint">(opcional)</span></label>
-          <input class="form-input" type="text" placeholder="Tu nombre" id="formName" />
+          <input class="form-input" type="text" placeholder="Tu nombre" id="formNameLegacy" />
         </div>
         <div class="form-group">
           <label class="form-label">Centro educativo <span class="form-label-hint">(opcional)</span></label>
-          <input class="form-input" type="text" placeholder="Nombre del colegio o instituto" id="formCenter" />
+          <input class="form-input" type="text" placeholder="Nombre del colegio o instituto" id="formCenterLegacy" />
         </div>
         <div class="form-nav">
           <button class="form-btn-next" onclick="nextStep(2)">Siguiente →</button>
@@ -3229,7 +3950,7 @@ body.intro-locked { overflow: hidden; }
         </div>
         <div class="form-group">
           <label class="form-label">Email de contacto <span class="form-label-hint">(para mantenerte al tanto del lanzamiento)</span></label>
-          <input class="form-input" type="email" placeholder="tu@email.com" id="formEmail" />
+          <input class="form-input" type="email" placeholder="tu@email.com" id="formEmailLegacy" />
         </div>
         <div class="form-group">
           <label class="form-label">¿Algo más que quieras contarnos?</label>
@@ -3237,7 +3958,7 @@ body.intro-locked { overflow: hidden; }
         </div>
         <!-- Honeypot anti-bot: campo invisible que solo los bots rellenan -->
         <div style="position:absolute;left:-9999px;height:0;overflow:hidden;" aria-hidden="true">
-          <label>No rellenar este campo: <input type="text" id="formWebsite" tabindex="-1" autocomplete="off"></label>
+          <label>No rellenar este campo: <input type="text" id="formWebsiteLegacy" tabindex="-1" autocomplete="off"></label>
         </div>
 
         <div class="form-summary" id="formSummary"></div>
@@ -3285,8 +4006,23 @@ body.intro-locked { overflow: hidden; }
         <svg class="icon icon-inline" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>Te hemos enviado un email de confirmación
       </div>
     </div>
-  </div>
+    </div><!-- /.formExtended -->
+  </div><!-- /.form-wrap -->
+  </div><!-- /.form-section-right -->
+  </div><!-- /.form-section-inner -->
 </section>
+
+<!-- FLOAT EMAIL CAPTURE -->
+<div class="float-capture" id="floatCapture" aria-hidden="true">
+  <button class="float-capture-close" onclick="dismissFloatCapture()" aria-label="Cerrar">×</button>
+  <p class="float-capture-title">¿Te interesa el piloto?</p>
+  <p class="float-capture-sub">Déjanos tu email y te contactamos cuando haya plaza.</p>
+  <div class="float-capture-form">
+    <input class="float-capture-input" type="email" placeholder="tu@colegio.com" id="floatEmail" />
+    <button class="float-capture-btn" onclick="submitFloatCapture()">Apuntarme</button>
+  </div>
+  <p class="float-capture-fine">Sin spam · Datos en Europa · RGPD</p>
+</div>
 
 <!-- FOOTER -->
 <footer class="footer">
@@ -3722,13 +4458,13 @@ const MARCO_CONTACT_EMAIL = 'hola@marcoaprende.com';
 function collectFormData() {
   // Datos estructurados que van a columnas dedicadas en Airtable
   const data = {
-    email: document.getElementById('formEmail')?.value?.trim() || '',
-    nombre: document.getElementById('formName')?.value?.trim() || '',
-    rol: document.getElementById('formRole').value,
-    centro: document.getElementById('formCenter')?.value?.trim() || '',
+    email: document.getElementById('formEmailLegacy')?.value?.trim() || '',
+    nombre: document.getElementById('formNameLegacy')?.value?.trim() || '',
+    rol: document.getElementById('formRoleLegacy')?.value || '',
+    centro: document.getElementById('formCenterLegacy')?.value?.trim() || '',
     interesPiloto: document.getElementById('formPilot')?.value || '',
     mensaje: document.getElementById('formMessage')?.value?.trim() || '',
-    website: document.getElementById('formWebsite')?.value || '', // honeypot
+    website: document.getElementById('formWebsiteLegacy')?.value || '', // honeypot
   };
 
   // Datos completos: todas las respuestas estructuradas del paso 2 + 3
@@ -3802,7 +4538,7 @@ async function submitForm() {
   // Validación local: email obligatorio y bien formado
   if (!data.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
     alert('Por favor, introduce un email válido para que podamos contactarte.');
-    document.getElementById('formEmail')?.focus();
+    document.getElementById('formEmailLegacy')?.focus();
     return;
   }
 
@@ -3847,6 +4583,130 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.12 });
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── Formulario simplificado ──
+async function submitSimpleForm() {
+  const email = document.getElementById('formEmail')?.value?.trim();
+  const name  = document.getElementById('formName')?.value?.trim();
+  const center= document.getElementById('formCenter')?.value?.trim();
+  const role  = document.getElementById('formRole')?.value || 'direccion';
+  const honey = document.getElementById('formWebsite')?.value;
+
+  if (honey) return; // bot
+  if (!email || !email.includes('@')) {
+    document.getElementById('formEmail')?.focus();
+    return;
+  }
+
+  const btn = document.querySelector('.form-submit-btn');
+  if (btn) { btn.textContent = 'Enviando…'; btn.disabled = true; }
+
+  try {
+    await fetch('https://marcoaprende-landing-form.yaabdelaziz-mohamed.workers.dev', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email, nombre: name, centro: center, rol: role,
+        interesPiloto: 'si_mucho', origen: 'form-simple',
+        datosCompletos: { microQ: sessionStorage.getItem('marco_alumnos') || '' }
+      })
+    });
+  } catch(e) {}
+
+  document.getElementById('formSimple').style.display = 'none';
+  document.getElementById('thankyouSimple').style.display = 'flex';
+}
+
+// ── FAQ accordion ──
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  // cierra todos
+  document.querySelectorAll('.faq-item.open').forEach(el => {
+    el.classList.remove('open');
+    el.querySelector('button').setAttribute('aria-expanded', 'false');
+  });
+  if (!isOpen) {
+    item.classList.add('open');
+    btn.setAttribute('aria-expanded', 'true');
+  }
+}
+
+// ── Micro-compromiso ──
+function selectMicroQ(btn, value) {
+  const section = document.getElementById('micro-q');
+  document.querySelectorAll('.micro-q-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  section.classList.add('answered');
+  // Guarda en sessionStorage para pre-rellenar el form
+  sessionStorage.setItem('marco_alumnos', value);
+  // Pre-rellena el select de alumnos en el form si existe
+  const sel = document.getElementById('formAlumnos');
+  if (sel) sel.value = value;
+  // Navega suavemente al demo tras un breve momento
+  setTimeout(() => {
+    document.getElementById('demo')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 600);
+}
+
+// ── Float email capture ──
+(function() {
+  const capture = document.getElementById('floatCapture');
+  const form = document.getElementById('feedback');
+  if (!capture || !form) return;
+
+  let shown = false;
+  let dismissed = sessionStorage.getItem('marco_float_dismissed');
+  if (dismissed) return;
+
+  function checkScroll() {
+    if (shown || dismissed) return;
+    const scrolled = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+    // Mostrar al 65% de scroll pero no si el form ya es visible
+    const formRect = form.getBoundingClientRect();
+    const formVisible = formRect.top < window.innerHeight;
+    if (scrolled > 0.65 && !formVisible) {
+      capture.classList.add('visible');
+      capture.setAttribute('aria-hidden', 'false');
+      shown = true;
+    }
+    // Ocultar si el form entra en pantalla
+    if (formVisible && shown) {
+      capture.classList.remove('visible');
+    }
+  }
+
+  window.addEventListener('scroll', checkScroll, { passive: true });
+})();
+
+function dismissFloatCapture() {
+  const capture = document.getElementById('floatCapture');
+  if (!capture) return;
+  capture.classList.remove('visible');
+  capture.classList.add('dismissed');
+  sessionStorage.setItem('marco_float_dismissed', '1');
+}
+
+function submitFloatCapture() {
+  const emailEl = document.getElementById('floatEmail');
+  const email = emailEl?.value?.trim();
+  if (!email || !email.includes('@')) {
+    emailEl?.focus();
+    return;
+  }
+  const capture = document.getElementById('floatCapture');
+  capture.classList.add('float-capture-done');
+  capture.querySelector('.float-capture-title').textContent = '¡Apuntado!';
+  capture.querySelector('.float-capture-fine').textContent = 'Te contactamos antes de septiembre.';
+  sessionStorage.setItem('marco_float_dismissed', '1');
+  setTimeout(() => capture.classList.remove('visible'), 3000);
+  // Reutiliza el mismo Worker que el form principal
+  fetch('https://marcoaprende-landing-form.yaabdelaziz-mohamed.workers.dev', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, rol: 'float-capture', origen: 'float-scroll' })
+  }).catch(() => {});
+}
 </script>
 </body>
 </html>
