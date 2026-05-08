@@ -230,10 +230,10 @@ body { background: var(--product-soft-2); overflow-x: hidden; }
   flex-shrink: 0;
 }
 .dept-dot.c1 { background: var(--product-deep); }
-.dept-dot.c2 { background: #6366cc; }
-.dept-dot.c3 { background: #857bcc; }
-.dept-dot.c4 { background: #a69edb; }
-.dept-dot.c5 { background: #bfb8e8; }
+.dept-dot.c2 { background: var(--product-accent); }
+.dept-dot.c3 { background: color-mix(in srgb, var(--product-accent) 70%, var(--white)); }
+.dept-dot.c4 { background: color-mix(in srgb, var(--product-accent) 45%, var(--white)); }
+.dept-dot.c5 { background: color-mix(in srgb, var(--product-accent) 25%, var(--white)); }
 .dept-dot.c6 { background: var(--gray-soft); }
 
 .dept-bar-track {
@@ -245,10 +245,10 @@ body { background: var(--product-soft-2); overflow-x: hidden; }
   transition: width var(--duration-slow) var(--ease-out);
 }
 .dept-bar-fill.c1 { background: var(--product-deep); }
-.dept-bar-fill.c2 { background: #6366cc; }
-.dept-bar-fill.c3 { background: #857bcc; }
-.dept-bar-fill.c4 { background: #a69edb; }
-.dept-bar-fill.c5 { background: #bfb8e8; }
+.dept-bar-fill.c2 { background: var(--product-accent); }
+.dept-bar-fill.c3 { background: color-mix(in srgb, var(--product-accent) 70%, var(--white)); }
+.dept-bar-fill.c4 { background: color-mix(in srgb, var(--product-accent) 45%, var(--white)); }
+.dept-bar-fill.c5 { background: color-mix(in srgb, var(--product-accent) 25%, var(--white)); }
 .dept-bar-fill.c6 { background: var(--gray-soft); }
 
 .dept-pct {
@@ -389,6 +389,45 @@ body { background: var(--product-soft-2); overflow-x: hidden; }
 <body>
 
 <!-- ═══ NAV ═══ -->
+<nav class="dash-nav">
+  <div class="dash-nav-left">
+    <a href="#" class="dash-brand" aria-label="Marco aprende">
+      <svg viewBox="100 75 175 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="108" y="80" width="122" height="50" fill="none"/>
+        <line x1="160" y1="80" x2="160" y2="130" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="160" y1="80" x2="170" y2="80" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="160" y1="130" x2="170" y2="130" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="190" y1="80" x2="190" y2="130" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="190" y1="80" x2="180" y2="80" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="190" y1="130" x2="180" y2="130" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <defs>
+          <clipPath id="centroMarcoCl"><rect x="108" y="78" width="122" height="54"/></clipPath>
+          <clipPath id="centroAprendeCl"><rect x="199" y="130" width="72" height="22"/></clipPath>
+        </defs>
+        <g clip-path="url(#centroMarcoCl)"><text x="118" y="118" class="nb-marco">Marco</text></g>
+        <g clip-path="url(#centroAprendeCl)"><text x="199" y="146" class="nb-aprende">aprende</text></g>
+      </svg>
+    </a>
+    <div class="nav-divider"></div>
+    <div class="dash-tabs">
+      <button class="dash-tab active">Resumen</button>
+      <button class="dash-tab">Profesores</button>
+      <button class="dash-tab">Cursos</button>
+      <button class="dash-tab">Informes</button>
+    </div>
+  </div>
+  <div class="dash-nav-right">
+    <span class="dash-period">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      2º Trimestre · Abr 2026
+    </span>
+    <button class="dash-icon-btn" aria-label="Notificaciones">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span class="dash-dot"></span>
+    </button>
+    <div class="dash-avatar" aria-label="María Fuentes">MF</div>
+  </div>
+</nav>
 
 <!-- ═══ MAIN ═══ -->
 <main class="dash-main">
@@ -541,6 +580,10 @@ body { background: var(--product-soft-2); overflow-x: hidden; }
           <div class="alert-body">
             <div class="alert-title">Geografía 3ºB</div>
             <div class="alert-detail">42% de alumnos sin actividad en 5+ días. Requiere revisión inmediata.</div>
+            <div style="margin-top:var(--space-2);display:flex;gap:var(--space-2);">
+              <button style="font-size:11px;font-weight:var(--weight-semibold);padding:4px var(--space-3);border-radius:var(--radius-pill);border:none;cursor:pointer;background:var(--danger);color:var(--white);transition:opacity .15s;" onmouseover="this.style.opacity='.82'" onmouseout="this.style.opacity='1'" onclick="this.textContent='✓ Enviado'">Contactar con docente</button>
+              <button style="font-size:11px;font-weight:var(--weight-semibold);padding:4px var(--space-3);border-radius:var(--radius-pill);border:none;cursor:pointer;background:color-mix(in srgb,var(--danger) 12%,transparent);color:var(--danger);transition:background .15s;" onmouseover="this.style.background='color-mix(in srgb,var(--danger) 20%,transparent)'" onmouseout="this.style.background='color-mix(in srgb,var(--danger) 12%,transparent)'" onclick="this.textContent='Abriendo…'">Ver grupo</button>
+            </div>
           </div>
         </div>
 
@@ -589,7 +632,7 @@ body { background: var(--product-soft-2); overflow-x: hidden; }
 
         <div class="teacher-row">
           <div class="teacher-avatar-wrap">
-            <div class="teacher-avatar" style="background:#eeeefa;color:#2c2e7a;">C</div>
+            <div class="teacher-avatar" style="background:var(--product-soft);color:var(--product-deep);">C</div>
             <span class="teacher-status online"></span>
           </div>
           <div class="teacher-info">
@@ -629,6 +672,25 @@ body { background: var(--product-soft-2); overflow-x: hidden; }
   </div>
 
 </main>
+
+<script>
+function goTo(i) {
+  if (window.parent && window.parent !== window && typeof window.parent.showScreen === 'function') {
+    window.parent.showScreen(i);
+  }
+}
+// Animate evolution bars on load
+document.addEventListener('DOMContentLoaded', () => {
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    document.querySelectorAll('.evo-bar-fill').forEach(el => {
+      const h = el.style.height;
+      el.style.height = '0%';
+      el.style.transition = 'height 700ms cubic-bezier(0.16,1,0.3,1)';
+      requestAnimationFrame(() => { el.style.height = h; });
+    });
+  }));
+});
+</script>
 
 </body>
 </html>

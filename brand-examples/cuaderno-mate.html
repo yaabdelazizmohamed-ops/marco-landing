@@ -375,6 +375,40 @@ body { display: flex; flex-direction: column; }
   letter-spacing: 0.01em;
 }
 
+/* ─── Waiting state ─── */
+.chat-waiting {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  margin-top: var(--space-1);
+}
+.chat-waiting-dots {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.chat-waiting-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--product-accent);
+  opacity: 0.3;
+  animation: waiting-pulse 1.4s ease-in-out infinite;
+}
+.chat-waiting-dots span:nth-child(2) { animation-delay: 0.2s; }
+.chat-waiting-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes waiting-pulse {
+  0%, 80%, 100% { opacity: 0.3; transform: scale(1); }
+  40% { opacity: 1; transform: scale(1.25); }
+}
+.chat-waiting-label {
+  font-size: var(--text-xs);
+  color: var(--product-accent);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.01em;
+}
+
 .icon { width: 1em; height: 1em; display: inline-block; vertical-align: -0.18em;
   stroke: currentColor; fill: none; stroke-width: 1.6;
   stroke-linecap: round; stroke-linejoin: round; }
@@ -521,29 +555,7 @@ body { display: flex; flex-direction: column; }
             <text x="12" y="16" font-family="Georgia,serif" font-style="italic" font-size="10" fill="#fafaf8" text-anchor="middle">M</text>
           </svg>
         </div>
-        <div class="bubble from-marco">Buena pregunta. Vamos paso a paso. Imagina que tienes una pizza cortada en 3 trozos y otra cortada en 4 trozos. Si coges un trozo de cada pizza… ¿los trozos son del mismo tamaño?</div>
-      </div>
-
-      <!-- User message -->
-      <div class="chat-row is-user">
-        <div class="bubble from-user">No, uno es más grande que el otro</div>
-        <div class="chat-avatar is-user" aria-label="Alex">A</div>
-      </div>
-
-      <!-- Marco message -->
-      <div class="chat-row">
-        <div class="chat-avatar" aria-hidden="true">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <line x1="3" y1="4" x2="3" y2="20" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
-            <line x1="3" y1="4" x2="6" y2="4" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
-            <line x1="3" y1="20" x2="6" y2="20" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
-            <line x1="21" y1="4" x2="21" y2="20" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
-            <line x1="21" y1="4" x2="18" y2="4" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
-            <line x1="21" y1="20" x2="18" y2="20" stroke="#fafaf8" stroke-width="1.6" stroke-linecap="round"/>
-            <text x="12" y="16" font-family="Georgia,serif" font-style="italic" font-size="10" fill="#fafaf8" text-anchor="middle">M</text>
-          </svg>
-        </div>
-        <div class="bubble from-marco">Exacto. Entonces, ¿tiene sentido decir que tienes "2 trozos" sin más? ¿Qué necesitarías para poder compararlos o sumarlos?</div>
+        <div class="bubble from-marco">Buena pregunta. Imagina una pizza cortada en 3 trozos y otra en 4. Un trozo de cada una — ¿son iguales? ¿Qué necesitarías para poder sumarlos?</div>
       </div>
 
       <!-- User message -->
@@ -566,12 +578,16 @@ body { display: flex; flex-direction: column; }
           </svg>
         </div>
         <div class="bubble from-marco">
-          Justo eso. El m.c.m. es la herramienta que nos permite "cortar" las dos pizzas en trozos del mismo tamaño para poder sumarlos. Mira la sección 5.3:
-          <div class="bubble-cite">
-            <span class="bubble-cite-label">Referencia · 5.3</span>
-            "Una vez ambas fracciones tienen el mismo denominador, se suman los numeradores."
-          </div>
+          Exacto. Y si los trozos tienen que ser iguales para poder sumarlos — ¿qué denominador común usarías para ¹⁄₃ + ¹⁄₄? ¿Por qué ese y no, por ejemplo, el 12?
         </div>
+      </div>
+
+      <!-- Marco espera respuesta — estado "en vilo" -->
+      <div class="chat-waiting" role="status" aria-label="Marco espera tu respuesta">
+        <div class="chat-waiting-dots" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+        <span class="chat-waiting-label">Marco está esperando tu respuesta</span>
       </div>
 
     </div>
@@ -602,6 +618,12 @@ function goTo(i) {
     window.parent.showScreen(i);
   }
 }
+
+// Auto-scroll chat to bottom so the open question + waiting state are visible
+document.addEventListener('DOMContentLoaded', () => {
+  const waiting = document.querySelector('.chat-waiting');
+  if (waiting) waiting.scrollIntoView({ behavior: 'instant', block: 'end' });
+});
 </script>
 </body>
 </html>

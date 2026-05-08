@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marco — [Σ] → [Marco] animation demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="wordmark.css">
+<style>
+  /* Demo scaffold — no forma parte del logo */
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: #fafaf8;
+    color: #0a0a0a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    gap: 2rem;
+    margin: 0;
+  }
+  .demo-label {
+    font-size: 0.78rem;
+    color: #6b6b6b;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .demo-row {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+  }
+  .demo-dark {
+    background: #0a0a0a;
+    padding: 1.25rem 1.75rem;
+    border-radius: 12px;
+  }
+  .demo-dark .nav-brand { color: #fafaf8; }
+</style>
+</head>
+<body>
+
+<p class="demo-label">Hover · corchetes se abren · Σ se funde en M · "arco" aparece</p>
+
+<div class="demo-row">
+
+  <!-- Variante clara -->
+  <a href="#" class="nav-brand" aria-label="Marco">
+    <span class="nb-frame">
+      <svg class="nb-svg" viewBox="140 70 140 70" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- Vertical izquierdo (estático) -->
+        <line class="nb-l-v"     x1="148" y1="80"  x2="148" y2="130" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- Stubs izquierdos: 148→207 (59 u), revelados via stroke-dashoffset -->
+        <line class="nb-tl-stub" x1="148" y1="80"  x2="207" y2="80"  stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <line class="nb-bl-stub" x1="148" y1="130" x2="207" y2="130" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- Grupo derecho: translateX(+64) → vertical x=202→266; stubs x=202→143 pasan a x=266→207 -->
+        <g class="nb-right-group">
+          <line class="nb-r-v"     x1="202" y1="80"  x2="202" y2="130" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <!-- Stubs derechos: x=202→143 (59 u hacia la izquierda). -->
+          <line class="nb-tr-stub" x1="202" y1="80"  x2="143" y2="80"  stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <line class="nb-br-stub" x1="202" y1="130" x2="143" y2="130" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </g>
+        <!-- "arco" oculto por clipPath cuyo rect se escala en X -->
+        <defs>
+          <clipPath id="lightArcoClip">
+            <rect class="nb-arco-clip" x="190" y="78" width="64" height="54"/>
+          </clipPath>
+        </defs>
+        <g clip-path="url(#lightArcoClip)">
+          <text x="190" y="114" class="nb-arco">arco</text>
+        </g>
+        <!-- Σ: rota 90° CW al activar → se lee como M. Un solo elemento, sin crossfade. -->
+        <text x="175" y="119" class="nb-mark nb-mark-sigma" text-anchor="middle">&#x03A3;</text>
+      </svg>
+    </span>
+  </a>
+
+  <!-- Variante oscura -->
+  <div class="demo-dark">
+    <a href="#" class="nav-brand" aria-label="Marco">
+      <span class="nb-frame">
+        <svg class="nb-svg" viewBox="140 70 140 70" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <line class="nb-l-v"     x1="148" y1="80"  x2="148" y2="130" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <line class="nb-tl-stub" x1="148" y1="80"  x2="207" y2="80"  stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <line class="nb-bl-stub" x1="148" y1="130" x2="207" y2="130" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <g class="nb-right-group">
+            <line class="nb-r-v"     x1="202" y1="80"  x2="202" y2="130" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <line class="nb-tr-stub" x1="202" y1="80"  x2="143" y2="80"  stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <line class="nb-br-stub" x1="202" y1="130" x2="143" y2="130" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </g>
+          <defs>
+            <clipPath id="darkArcoClip">
+              <rect class="nb-arco-clip" x="190" y="78" width="64" height="54"/>
+            </clipPath>
+          </defs>
+          <g clip-path="url(#darkArcoClip)">
+            <text x="190" y="119" class="nb-arco" style="fill: currentColor;">arco</text>
+          </g>
+          <text x="175" y="119" class="nb-mark nb-mark-sigma" text-anchor="middle" style="fill: currentColor;">&#x03A3;</text>
+        </svg>
+      </span>
+    </a>
+  </div>
+
+</div>
+
+<p class="demo-label">[Σ] → Σ rota 90° CW (M) · recuadro se expande · "arco" se revela</p>
+
+</body>
+</html>

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resumen semanal — Alex · Marco</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0a0a'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='38' font-style='italic' fill='%23fafaf8' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles/tokens.css">
+<style>
+html, body { height: 100%; margin: 0; }
+body {
+  background: #e8e8e4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  font-family: var(--font-sans);
+  padding: var(--space-6) var(--space-4);
+}
+
+/* ─── Email client chrome ─── */
+.email-chrome {
+  width: 100%;
+  max-width: 680px;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+}
+
+/* Client toolbar */
+.email-toolbar {
+  background: #f5f5f3;
+  border-bottom: 1px solid var(--border);
+  padding: var(--space-3) var(--space-5);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+.toolbar-dots { display: flex; gap: 6px; }
+.toolbar-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+}
+.toolbar-dot.r { background: #ff6059; }
+.toolbar-dot.y { background: #febc2e; }
+.toolbar-dot.g { background: #28c840; }
+.toolbar-subject {
+  flex: 1;
+  font-size: var(--text-xs);
+  color: var(--gray);
+  text-align: center;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.01em;
+}
+
+/* Email meta */
+.email-meta {
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--border-soft);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+.sender-avatar {
+  width: 36px; height: 36px;
+  background: var(--black);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: var(--white);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+}
+.meta-info { flex: 1; }
+.meta-from {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--black);
+}
+.meta-from span { font-weight: var(--weight-normal); color: var(--gray); }
+.meta-to {
+  font-size: var(--text-xs);
+  color: var(--gray);
+  margin-top: 2px;
+}
+.meta-date {
+  font-size: var(--text-xs);
+  color: var(--gray);
+  white-space: nowrap;
+}
+
+/* ─── Email body ─── */
+.email-body {
+  padding: var(--space-8) var(--space-8);
+}
+
+/* Header */
+.email-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+.email-brand svg { display: block; width: 80px; height: auto; overflow: visible; }
+.nb-marco { font-family: var(--font-serif); font-style: italic; font-size: 38px; fill: var(--black); letter-spacing: -0.02em; }
+.nb-aprende { font-family: var(--font-sans); font-style: italic; font-weight: 400; font-size: 13px; fill: var(--accent); letter-spacing: -0.01em; }
+
+.email-headline {
+  font-size: 1.3rem;
+  font-weight: var(--weight-semibold);
+  color: var(--black);
+  line-height: 1.35;
+  margin-bottom: var(--space-2);
+}
+.email-subline {
+  font-size: var(--text-sm);
+  color: var(--gray);
+  margin-bottom: var(--space-8);
+  line-height: 1.5;
+}
+
+/* ─── Stats row ─── */
+.digest-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+.digest-stat {
+  background: var(--light);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  text-align: center;
+}
+.digest-stat-val {
+  font-size: 1.5rem;
+  font-weight: var(--weight-semibold);
+  color: var(--black);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 3px;
+}
+.digest-stat-val.streak { color: var(--warning); }
+.digest-stat-lbl {
+  font-size: 11px;
+  color: var(--gray);
+  line-height: 1.3;
+}
+
+/* ─── Subject progress ─── */
+.digest-section-title {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: var(--weight-semibold);
+  color: var(--gray);
+  margin-bottom: var(--space-3);
+}
+.subject-progress-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+.subject-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+.subject-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
+.subject-dot.active { background: var(--product-accent); }
+.subject-dot.done { background: var(--success); }
+.subject-dot.pending { background: var(--border); }
+.subject-name-label {
+  width: 110px;
+  font-size: var(--text-sm);
+  color: var(--black);
+  font-weight: var(--weight-medium);
+  flex-shrink: 0;
+}
+.subject-bar-wrap {
+  flex: 1;
+  height: 6px;
+  background: var(--border-soft);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+.subject-bar-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--product-accent);
+}
+.subject-bar-fill.done { background: var(--success); }
+.subject-pct-label {
+  font-size: 11px;
+  font-weight: var(--weight-semibold);
+  color: var(--gray);
+  width: 32px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ─── Achievements + attention ─── */
+.digest-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-5);
+  margin-bottom: var(--space-8);
+}
+
+.digest-card {
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  border: 1px solid var(--border-soft);
+}
+.digest-card.positive { background: var(--success-soft); border-color: color-mix(in srgb, var(--success) 15%, transparent); }
+.digest-card.attention { background: var(--warning-soft); border-color: color-mix(in srgb, var(--warning) 15%, transparent); }
+
+.digest-card-label {
+  font-size: 11px;
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-3);
+}
+.digest-card.positive .digest-card-label { color: var(--success); }
+.digest-card.attention .digest-card-label { color: var(--warning); }
+
+.digest-card-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--black);
+  line-height: 1.45;
+  margin-bottom: var(--space-2);
+}
+.digest-card-item:last-child { margin-bottom: 0; }
+.digest-card-item svg {
+  width: 13px; height: 13px; stroke: currentColor; fill: none;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  flex-shrink: 0; margin-top: 1px;
+}
+.digest-card.positive .digest-card-item svg { color: var(--success); }
+.digest-card.attention .digest-card-item svg { color: var(--warning); }
+
+/* ─── CTA ─── */
+.digest-cta-wrap {
+  text-align: center;
+  padding: var(--space-6) 0 var(--space-2);
+  border-top: 1px solid var(--border-soft);
+}
+.digest-cta-text {
+  font-size: var(--text-sm);
+  color: var(--gray);
+  margin-bottom: var(--space-4);
+  line-height: 1.5;
+}
+.digest-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--black);
+  color: var(--white);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  transition: background var(--duration-fast);
+}
+.digest-cta-btn:hover { background: var(--accent); }
+
+/* ─── Footer ─── */
+.email-footer {
+  padding: var(--space-6) var(--space-8);
+  background: var(--light);
+  border-top: 1px solid var(--border-soft);
+  font-size: 11px;
+  color: var(--gray);
+  text-align: center;
+  line-height: 1.6;
+}
+.email-footer a { color: var(--gray); }
+</style>
+</head>
+<body>
+
+<div class="email-chrome">
+
+  <!-- Simulación de cliente de correo -->
+  <div class="email-toolbar">
+    <div class="toolbar-dots" aria-hidden="true">
+      <div class="toolbar-dot r"></div>
+      <div class="toolbar-dot y"></div>
+      <div class="toolbar-dot g"></div>
+    </div>
+    <div class="toolbar-subject">Alex ha estudiado 5 días esta semana — resumen de Marco</div>
+  </div>
+
+  <!-- Meta del email -->
+  <div class="email-meta">
+    <div class="sender-avatar" aria-hidden="true">M</div>
+    <div class="meta-info">
+      <div class="meta-from">Marco <span>&lt;resumen@marcoaprende.com&gt;</span></div>
+      <div class="meta-to">Para: Carmen López &lt;carmen@email.com&gt;</div>
+    </div>
+    <div class="meta-date">Domingo, 3 may · 9:00</div>
+  </div>
+
+  <!-- Cuerpo del email -->
+  <div class="email-body">
+
+    <div class="email-brand">
+      <svg viewBox="100 75 175 80" xmlns="http://www.w3.org/2000/svg" aria-label="Marco aprende">
+        <rect x="108" y="80" width="122" height="50" fill="none" stroke="#0a0a0a" stroke-width="1.5"/>
+        <text x="118" y="118" class="nb-marco">Marco</text>
+        <text x="199" y="146" class="nb-aprende">aprende</text>
+      </svg>
+    </div>
+
+    <h1 class="email-headline">Alex ha tenido una buena semana.</h1>
+    <p class="email-subline">Aquí tienes el resumen de su actividad del 27 de abril al 3 de mayo. Ha estudiado 5 de 7 días — sigue su racha activa.</p>
+
+    <!-- Stats -->
+    <div class="digest-stats">
+      <div class="digest-stat">
+        <div class="digest-stat-val">5 días</div>
+        <div class="digest-stat-lbl">ha estudiado esta semana</div>
+      </div>
+      <div class="digest-stat">
+        <div class="digest-stat-val">4h 20m</div>
+        <div class="digest-stat-lbl">tiempo total con Marco</div>
+      </div>
+      <div class="digest-stat">
+        <div class="digest-stat-val streak">🔥 13</div>
+        <div class="digest-stat-lbl">días de racha activa</div>
+      </div>
+    </div>
+
+    <!-- Subject progress -->
+    <div class="digest-section-title">Progreso por asignatura</div>
+    <div class="subject-progress-list">
+      <div class="subject-row">
+        <div class="subject-dot active" aria-hidden="true"></div>
+        <div class="subject-name-label">Matemáticas</div>
+        <div class="subject-bar-wrap"><div class="subject-bar-fill" style="width:75%"></div></div>
+        <div class="subject-pct-label">75%</div>
+      </div>
+      <div class="subject-row">
+        <div class="subject-dot active" aria-hidden="true"></div>
+        <div class="subject-name-label">Historia</div>
+        <div class="subject-bar-wrap"><div class="subject-bar-fill" style="width:48%"></div></div>
+        <div class="subject-pct-label">48%</div>
+      </div>
+      <div class="subject-row">
+        <div class="subject-dot done" aria-hidden="true"></div>
+        <div class="subject-name-label">Ciencias</div>
+        <div class="subject-bar-wrap"><div class="subject-bar-fill done" style="width:100%"></div></div>
+        <div class="subject-pct-label" style="color:var(--success)">100%</div>
+      </div>
+      <div class="subject-row">
+        <div class="subject-dot pending" aria-hidden="true"></div>
+        <div class="subject-name-label">Inglés</div>
+        <div class="subject-bar-wrap"><div class="subject-bar-fill" style="width:0%"></div></div>
+        <div class="subject-pct-label" style="color:var(--gray)">—</div>
+      </div>
+    </div>
+
+    <!-- Logros + atención -->
+    <div class="digest-two-col">
+      <div class="digest-card positive">
+        <div class="digest-card-label">Esta semana</div>
+        <div class="digest-card-item">
+          <svg viewBox="0 0 24 24"><path d="M12 3l2.5 5 5.5.5-4 4 1 5.5L12 15.5 6.5 18l1-5.5-4-4 5.5-.5z"/></svg>
+          Ha resuelto fracciones mixtas por primera vez sin ayuda directa
+        </div>
+        <div class="digest-card-item">
+          <svg viewBox="0 0 24 24"><path d="M9 11.5l2.5 2.5L16 9.5"/><circle cx="12" cy="12" r="9"/></svg>
+          Completó Ciencias Naturales — Unidad 2 al 100%
+        </div>
+        <div class="digest-card-item">
+          <svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+          Subió al puesto 4 del grupo en progreso semanal
+        </div>
+      </div>
+      <div class="digest-card attention">
+        <div class="digest-card-label">A tener en cuenta</div>
+        <div class="digest-card-item">
+          <svg viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01"/><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+          Inglés sin abrir esta semana — próxima entrega el viernes
+        </div>
+        <div class="digest-card-item">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          Dificultad persistente en denominadores de 3 cifras — Marco está adaptando la aproximación
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="digest-cta-wrap">
+      <p class="digest-cta-text">Puedes ver el detalle de cada sesión, los cuadernos que ha trabajado y cómo ha progresado en el panel de familias.</p>
+      <a class="digest-cta-btn" href="#">
+        Ver el panel completo →
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Footer del email -->
+  <div class="email-footer">
+    Marco aprende · <a href="#">Privacidad</a> · <a href="#">Cancelar suscripción</a><br>
+    Recibes este resumen porque tienes vinculada la cuenta de Alex en el Colegio San Rafael.<br>
+    Datos procesados en servidores europeos · RGPD compliant.
+  </div>
+
+</div>
+
+<script>
+function goTo(i) {
+  if (window.parent && window.parent !== window && typeof window.parent.showScreen === 'function') {
+    window.parent.showScreen(i);
+  }
+}
+</script>
+</body>
+</html>
