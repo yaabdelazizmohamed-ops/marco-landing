@@ -204,46 +204,57 @@ body.intro-locked .floating-cta { opacity: 0; pointer-events: none; }
 /* Profile toggle */
 .profile-toggle {
   display: inline-flex;
+  position: relative;
   gap: 0;
   margin-bottom: 2.2rem;
   opacity: 0;
   animation: fadeUp 0.6s ease 0.15s forwards;
-  background: none;
-  padding: 0;
-  border-radius: 0;
+  background: var(--light);
+  padding: 4px;
+  border-radius: 9999px;
+}
+
+/* Píldora deslizante — posicionada vía JS */
+.profile-pill {
+  position: absolute;
+  top: 4px;
+  left: 0;
+  height: calc(100% - 8px);
+  background: var(--white);
+  border-radius: 9999px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.10), 0 0 0 0.5px rgba(0,0,0,0.04);
+  transition: left 0.3s cubic-bezier(0.5, 0, 0.2, 1),
+              width 0.3s cubic-bezier(0.5, 0, 0.2, 1);
+  pointer-events: none;
+  will-change: left, width;
 }
 
 .profile-btn {
   font-family: 'Fraunces', Georgia, serif;
   font-optical-sizing: auto;
   font-variation-settings: "opsz" 72;
-  font-size: 1.4rem;
+  font-size: 1.1rem;
   font-weight: 400;
-  padding: 0.55rem 1.4rem;
-  border-radius: 0;
+  padding: 0.55rem 1.6rem;
+  border-radius: 9999px;
   border: none;
-  border-right: 1px solid var(--border);
   cursor: pointer;
   background: transparent;
   color: var(--gray);
-  transition: color 0.2s;
+  transition: color 0.25s;
   letter-spacing: -0.01em;
+  position: relative;
+  z-index: 1;
+  white-space: nowrap;
 }
-.profile-btn:last-child { border-right: none; }
-.profile-btn:first-child { padding-left: 0; }
-
 .profile-btn.active {
-  background: transparent;
   color: var(--black);
   font-weight: 500;
   font-style: italic;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  text-decoration-thickness: 1.5px;
 }
-.profile-btn:hover:not(.active) { color: var(--black); text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; text-decoration-color: var(--gray-soft); }
+.profile-btn:hover:not(.active) { color: var(--black); }
 @media (max-width: 520px) {
-  .profile-btn { font-size: 1rem; padding: 0.4rem 0.9rem; }
+  .profile-btn { font-size: 0.95rem; padding: 0.45rem 1.1rem; }
 }
 
 .hero h1 {
@@ -2595,12 +2606,13 @@ body:not(.page-ready) .scroll-hint {
 <!-- HERO -->
 <section class="hero" id="hero">
   <div class="profile-toggle">
+    <div class="profile-pill" id="profilePill"></div>
     <button class="profile-btn" onclick="setProfile('centro')">Soy centro</button>
     <button class="profile-btn active" onclick="setProfile('profesor')">Soy profesor/a</button>
     <button class="profile-btn" onclick="setProfile('alumno')">Soy alumno/a</button>
   </div>
 
-  <h1 id="heroTitle">La IA que <em>enseña a pensar.</em></h1>
+  <h1 id="heroTitle">Marcoaprende no da respuestas automáticas, <em>enseña a buscarlas.</em></h1>
   <p class="hero-sub" id="heroSub">Una IA que no da respuestas — hace las preguntas correctas para que el alumno llegue solo a la solución. Tú ves exactamente dónde se atasca cada uno.</p>
 
   <!-- Estado honesto — sin números inventados -->
@@ -4004,9 +4016,17 @@ const ctaTexts = {
   centro: 'Hablemos de un piloto'
 };
 
+function movePill(btn) {
+  const pill = document.getElementById('profilePill');
+  if (!pill || !btn) return;
+  pill.style.left  = btn.offsetLeft + 'px';
+  pill.style.width = btn.offsetWidth + 'px';
+}
+
 function setProfile(profile) {
   document.querySelectorAll('.profile-btn').forEach(b => b.classList.remove('active'));
   event.target.classList.add('active');
+  movePill(event.target);
   document.getElementById('heroTitle').innerHTML = heroTitles[profile];
   document.getElementById('heroSub').textContent = heroSubs[profile];
   const ctaEl = document.getElementById('floatingCtaText');
@@ -4019,6 +4039,11 @@ function setProfile(profile) {
   const targetScreen = profileScreens[profile];
   if (targetScreen !== undefined) showScreen(targetScreen);
 }
+
+// Posiciona la píldora sobre el botón activo en cuanto las fuentes están listas
+document.fonts.ready.then(function() {
+  movePill(document.querySelector('.profile-btn.active'));
+});
 
 // ── Navbar scroll ──
 const navbar = document.getElementById('navbar');
