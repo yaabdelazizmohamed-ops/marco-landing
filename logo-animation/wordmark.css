@@ -1,0 +1,208 @@
+/*
+ * Marco — wordmark [Σ] → [Marco]
+ *
+ * Secuencia (puro CSS):
+ *   1.  Reposo: [Σ] entre corchetes contraídos (90 px).
+ *       La Σ está perfectamente erguida, sin inclinación.
+ *
+ *   2.  Activación (hover o .nb-active): todo ocurre en paralelo —
+ *       a. La Σ ROTA 90° CW alrededor de su centro geométrico exacto
+ *          (transform-box: fill-box + transform-origin: 50% 50%).
+ *          Al girar, sus trazos se leen como una 'M'. Duración: 650 ms.
+ *          No hay dos elementos de texto: es una sola Σ que rota.
+ *       b. Simultáneamente, el recuadro se expande hacia la derecha
+ *          (frame width 90 → 167 px; el corchete derecho se traslada
+ *          +60 px y los stubs izquierdos + derechos se dibujan hacia
+ *          el punto de unión en x=205, formando un rectángulo cerrado).
+ *          Duración: 750 ms, sin retraso.
+ *       c. "arco" se revela vía clipPath escalado en X mientras el
+ *          recuadro se abre (550 ms, retraso de 200 ms para que la M
+ *          ya sea legible antes de que aparezca el texto).
+ *
+ *   3.  Cierre (al perder hover): orden inverso suave —
+ *       "arco" se oculta (450 ms), el recuadro se contrae (750 ms)
+ *       y la Σ se des-rota de vuelta a 0°.
+ *
+ * Geometría del rectángulo (SVG units, viewBox 140 70 130 70):
+ *   - Vertical izquierdo:  x=148,  y=80→130
+ *   - Vertical derecho:    x=262,  y=80→130  (202 + 60 de translación)
+ *   - Stubs superiores:    x=148→205 (izq)  y  x=262→205 (der)  → unen en x=205
+ *   - Stubs inferiores:    ídem en y=130
+ *   → Rectángulo cerrado: 114 SVG-u de ancho × 50 SVG-u de alto
+ *
+ * Nota técnica: se animan únicamente `transform`, `stroke-dashoffset`
+ * y `clip-path` (via scaleX sobre el rect del clipPath). No se animan
+ * atributos SVG geométricos directos para compatibilidad con Safari 14+.
+ *
+ * Dependencias:
+ *   - Google Fonts: Fraunces (variable, opsz, wght)
+ */
+
+/* ── Contenedor del wordmark ── */
+.nav-brand {
+  display: inline-block;
+  color: var(--black, #0a0a0a);
+  text-decoration: none;
+  cursor: pointer;
+  line-height: 0;
+}
+
+/* ── Frame: clip exterior, controla cuánto del SVG es visible ── */
+.nav-brand .nb-frame {
+  display: block;
+  overflow: hidden;
+  width: 54px;
+  height: 60px;
+  transition: width 0.75s cubic-bezier(0.5, 0, 0.2, 1);
+}
+.nav-brand:hover .nb-frame,
+.nav-brand.nb-active .nb-frame {
+  width: 120px;
+  transition: width 0.75s cubic-bezier(0.5, 0, 0.2, 1);
+}
+
+/* ── SVG interno: tamaño fijo al ancho máximo (estado abierto) ── */
+.nav-brand .nb-svg {
+  display: block;
+  width: 120px;
+  height: 60px;
+  overflow: visible;
+}
+
+/* ── Tipografía común para la marca ── */
+.nav-brand .nb-mark {
+  font-family: 'Fraunces', Georgia, serif;
+  font-style: normal;
+  font-optical-sizing: auto;
+  font-variation-settings: "opsz" 96;
+  font-weight: 500;
+  font-size: 38px;
+  fill: var(--black, #0a0a0a);
+  /* Sin transform-box: los px de transform-origin se interpretan
+     directamente en coordenadas de usuario SVG, que es exactamente
+     lo que queremos para anclar el pivot con precisión. */
+}
+
+/* ── Σ — rota 90° CW al activar, convirtiéndose en M.
+        Es el ÚNICO elemento de texto de la marca; no hay
+        un elemento M separado. ── */
+.nav-brand .nb-mark-sigma {
+  /* Pivot exacto en coordenadas SVG:
+       x = 175  →  centro horizontal de la Σ (text-anchor="middle")
+       y = 106  →  centro visual de la caja del glifo
+                   (baseline y=119, cap-height ≈ 27 u sobre baseline
+                    → top ≈ 92, centro ≈ 105-106)
+     Sin transform-box, estos px se mapean 1:1 a unidades SVG,
+     lo que funciona correctamente en Safari/WebKit. */
+  transform-origin: 175px 106px;
+  transform: rotate(0deg);
+  opacity: 1;
+  /* Reverso: des-rota sincronizado con el cierre del recuadro. */
+  transition: transform 0.65s cubic-bezier(0.5, 0, 0.2, 1);
+}
+.nav-brand:hover .nb-mark-sigma,
+.nav-brand.nb-active .nb-mark-sigma {
+  /* Activo: Σ gira 90° CW → sus trazos se leen como 'M'.
+     La corrección translateX(-2px) actúa en espacio pre-rotación:
+     tras el giro de 90°CW, ese desplazamiento en X local se convierte
+     en un desplazamiento vertical en pantalla (↑ 2 SVG-units),
+     alineando las 'patas' de la M con el baseline de 'arco' (y=119).
+     Ajuste fino: entre translateX(-1px) y translateX(-3px)
+     según lo que veas en pantalla. */
+  transform-origin: 175px 106px;
+  transform: rotate(90deg) translateX(-2px);
+  opacity: 1;
+  /* Forward: rota en paralelo con la expansión del recuadro. */
+  transition: transform 0.65s cubic-bezier(0.5, 0, 0.2, 1);
+}
+
+/* ── "arco" — texto y reveal vía clip-path animado por transform ── */
+.nav-brand .nb-arco {
+  font-family: 'Fraunces', Georgia, serif;
+  font-style: normal;
+  font-optical-sizing: auto;
+  font-variation-settings: "opsz" 96;
+  font-weight: 500;
+  font-size: 38px;
+  letter-spacing: -0.01em;
+  fill: var(--black, #0a0a0a);
+}
+/* El rect del clipPath siempre está dimensionado al máximo y lo
+   escalamos en X desde la izquierda para revelar el texto. */
+.nav-brand .nb-arco-clip {
+  transform-box: fill-box;
+  transform-origin: left center;
+  transform: scaleX(0);
+  /* Reverso: se cierra inmediatamente junto con el recuadro */
+  transition: transform 0.45s cubic-bezier(0.5, 0, 0.2, 1);
+}
+.nav-brand:hover .nb-arco-clip,
+.nav-brand.nb-active .nb-arco-clip {
+  transform: scaleX(1);
+  /* Forward: empieza a revelarse mientras el recuadro se abre,
+     con un pequeño retraso para que la M ya esté visible */
+  transition: transform 0.55s cubic-bezier(0.5, 0, 0.2, 1) 200ms;
+}
+
+/* ── Animación de los corchetes ──
+   Geometría final (viewBox 140 70 140 70, SVG 197px, escala 1.407 px/u):
+     · Stubs izq: x=148→207 (59 u)  ·  Stubs der pre-translate: x=202→143 (59 u)
+     · translateX +64px → corchete der en x=266; stubs der en activo: x=266→207
+     · Stubs se unen en x=207 → rectángulo cerrado: 118u × 50u
+     · Gap [bracket→M] = Gap [o→bracket] = 14 u (simétrico) ✓
+   dasharray=59 / dashoffset=47 → 12 u visibles en reposo (nubs de [ y ]) */
+
+.nav-brand .nb-tl-stub,
+.nav-brand .nb-bl-stub {
+  stroke-dasharray: 59;
+  stroke-dashoffset: 47;
+  transition: stroke-dashoffset 0.75s cubic-bezier(0.5, 0, 0.2, 1);
+}
+.nav-brand:hover .nb-tl-stub,
+.nav-brand:hover .nb-bl-stub,
+.nav-brand.nb-active .nb-tl-stub,
+.nav-brand.nb-active .nb-bl-stub {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.75s cubic-bezier(0.5, 0, 0.2, 1);
+}
+
+/* Grupo derecho: translateX(+64px) lleva la vertical de x=202 → x=266
+   y los stubs de x=202→143 → x=266→207 (se unen con izquierdos en x=207). */
+.nav-brand .nb-right-group {
+  transform: translateX(0);
+  transition: transform 0.75s cubic-bezier(0.5, 0, 0.2, 1);
+}
+.nav-brand:hover .nb-right-group,
+.nav-brand.nb-active .nb-right-group {
+  transform: translateX(64px);
+  transition: transform 0.75s cubic-bezier(0.5, 0, 0.2, 1);
+}
+
+.nav-brand .nb-tr-stub,
+.nav-brand .nb-br-stub {
+  stroke-dasharray: 59;
+  stroke-dashoffset: 47;
+  transition: stroke-dashoffset 0.75s cubic-bezier(0.5, 0, 0.2, 1);
+}
+.nav-brand:hover .nb-tr-stub,
+.nav-brand:hover .nb-br-stub,
+.nav-brand.nb-active .nb-tr-stub,
+.nav-brand.nb-active .nb-br-stub {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.75s cubic-bezier(0.5, 0, 0.2, 1);
+}
+
+/* ── Accesibilidad: respeta prefers-reduced-motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .nav-brand .nb-frame,
+  .nav-brand .nb-mark-sigma,
+  .nav-brand .nb-arco-clip,
+  .nav-brand .nb-tl-stub,
+  .nav-brand .nb-bl-stub,
+  .nav-brand .nb-tr-stub,
+  .nav-brand .nb-br-stub,
+  .nav-brand .nb-right-group {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+}
