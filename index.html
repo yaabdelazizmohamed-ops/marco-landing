@@ -2052,24 +2052,14 @@ body.intro-locked .floating-cta { opacity: 0; pointer-events: none; }
   align-items: center;
   justify-content: center;
   pointer-events: none;
-  transition: background 0.5s ease, opacity 0.4s ease;
+  transition: opacity 0.5s ease;
 }
-.intro-splash svg {
-  width: min(200px, 40vw);
-  height: auto;
-  display: block;
+.intro-splash-scaler {
+  transform: scale(3);
   transform-origin: center center;
 }
-.intro-splash text.intro-sigma {
-  font-family: 'Fraunces', Georgia, serif;
-  font-style: normal;
-  font-size: 38px;
-  font-weight: 500;
-  fill: var(--black);
-}
-.intro-splash.intro-flying { background: transparent; }
-.intro-splash.intro-flying svg {
-  transition: transform 0.85s cubic-bezier(0.65, 0, 0.3, 1), opacity 0.4s ease;
+@media (max-width: 520px) {
+  .intro-splash-scaler { transform: scale(2); }
 }
 .intro-splash.intro-done { opacity: 0; }
 body.intro-locked { overflow: hidden; }
@@ -2529,49 +2519,31 @@ body:not(.page-ready) .scroll-hint {
 
 <!-- INTRO SPLASH [Σ] → vuela al navbar -->
 <div class="intro-splash" id="introSplash" aria-hidden="true">
-  <svg viewBox="130 62 90 76" xmlns="http://www.w3.org/2000/svg">
-    <!-- Vertical izquierdo -->
-    <line stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"
-          pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"
-          x1="160" y1="80" x2="160" y2="130">
-      <animate attributeName="stroke-dashoffset" from="1" to="0" begin="0.15s" dur="0.45s" fill="freeze"/>
-    </line>
-    <!-- Stub superior izquierdo -->
-    <line stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"
-          pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"
-          x1="160" y1="80" x2="172" y2="80">
-      <animate attributeName="stroke-dashoffset" from="1" to="0" begin="0.5s" dur="0.15s" fill="freeze"/>
-    </line>
-    <!-- Stub inferior izquierdo -->
-    <line stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"
-          pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"
-          x1="160" y1="130" x2="172" y2="130">
-      <animate attributeName="stroke-dashoffset" from="1" to="0" begin="0.5s" dur="0.15s" fill="freeze"/>
-    </line>
-    <!-- Vertical derecho -->
-    <line stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"
-          pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"
-          x1="190" y1="80" x2="190" y2="130">
-      <animate attributeName="stroke-dashoffset" from="1" to="0" begin="0.15s" dur="0.45s" fill="freeze"/>
-    </line>
-    <!-- Stub superior derecho -->
-    <line stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"
-          pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"
-          x1="190" y1="80" x2="178" y2="80">
-      <animate attributeName="stroke-dashoffset" from="1" to="0" begin="0.5s" dur="0.15s" fill="freeze"/>
-    </line>
-    <!-- Stub inferior derecho -->
-    <line stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"
-          pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"
-          x1="190" y1="130" x2="178" y2="130">
-      <animate attributeName="stroke-dashoffset" from="1" to="0" begin="0.5s" dur="0.15s" fill="freeze"/>
-    </line>
-    <!-- Σ aparece: rota en el mismo momento que los corchetes terminan -->
-    <text x="175" y="119" class="intro-sigma" text-anchor="middle" opacity="0">
-      &#x03A3;
-      <animate attributeName="opacity" from="0" to="1" begin="0.72s" dur="0.45s" fill="freeze"/>
-    </text>
-  </svg>
+  <div class="intro-splash-scaler">
+    <a class="nav-brand" id="splashBrand" tabindex="-1" aria-hidden="true">
+      <span class="nb-frame">
+        <svg class="nb-svg" viewBox="140 70 140 70" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <line class="nb-l-v"     x1="148" y1="80"  x2="148" y2="130" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <line class="nb-tl-stub" x1="148" y1="80"  x2="207" y2="80"  stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <line class="nb-bl-stub" x1="148" y1="130" x2="207" y2="130" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <g class="nb-right-group">
+            <line class="nb-r-v"     x1="202" y1="80"  x2="202" y2="130" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <line class="nb-tr-stub" x1="202" y1="80"  x2="143" y2="80"  stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <line class="nb-br-stub" x1="202" y1="130" x2="143" y2="130" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </g>
+          <defs>
+            <clipPath id="splashArcoClip">
+              <rect class="nb-arco-clip" x="190" y="78" width="64" height="54"/>
+            </clipPath>
+          </defs>
+          <g clip-path="url(#splashArcoClip)">
+            <text x="190" y="114" class="nb-arco">arco</text>
+          </g>
+          <text x="175" y="119" class="nb-mark nb-mark-sigma" text-anchor="middle">&#x03A3;</text>
+        </svg>
+      </span>
+    </a>
+  </div>
 </div>
 
 <!-- NAVBAR -->
@@ -3977,7 +3949,7 @@ body:not(.page-ready) .scroll-hint {
 </footer>
 
 <script>
-// ── Intro splash: skip on subsequent navs in same session, FLIP al navbar ──
+// ── Intro splash: animación CSS de apertura [Σ]→[Marco], luego fade out ──
 (function() {
   const splash = document.getElementById('introSplash');
   if (!splash) return;
@@ -3991,40 +3963,25 @@ body:not(.page-ready) .scroll-hint {
     body.classList.add('page-ready');
     return;
   }
-  // Animación SMIL termina ~1.2s. Mantener [Σ] visible ~0.6s, luego vuela y la página aparece.
-  setTimeout(() => {
-    const svg = splash.querySelector('svg');
-    const navFrame = document.getElementById('navBrandFrame');
-    if (!svg || !navFrame) {
-      splash.remove();
-      body.classList.remove('intro-locked');
-      body.classList.add('page-ready');
-      return;
-    }
-    // viewBox "130 62 90 76": sigma en x=175, corchetes en x=160/190.
-    // Centro horizontal del logo: x=175, que es (175-130)/90 = 50% del SVG.
-    const svgRect = svg.getBoundingClientRect();
-    const scaleSvg = svgRect.width / 90;  // viewBox width = 90
-    const frameCx = svgRect.left + ((175 - 130) / 90) * svgRect.width; // 50% del svg
-    const frameCy = svgRect.top  + ((106 - 62) / 76) * svgRect.height; // pivot Y de la Σ
-    const navRect   = navFrame.getBoundingClientRect();
-    const targetCx  = navRect.left + navRect.width / 2;
-    const targetCy  = navRect.top  + navRect.height / 2;
-    const finalScale = navRect.height / svgRect.height;
-    const tx = targetCx - frameCx;
-    const ty = targetCy - frameCy;
-    splash.classList.add('intro-flying');
-    svg.style.transformOrigin = `${frameCx - svgRect.left}px ${frameCy - svgRect.top}px`;
-    svg.style.transform = `translate(${tx}px, ${ty}px) scale(${finalScale})`;
-    // La página aparece en cuanto el logo empieza a volar
+  const splashBrand = document.getElementById('splashBrand');
+
+  // 300 ms → dispara la animación CSS de apertura (misma que hover del navbar)
+  setTimeout(function() {
+    if (splashBrand) splashBrand.classList.add('nb-active');
+  }, 300);
+
+  // 300 + 750 (transición) + 450 (hold) = 1 500 ms → fade out + revela la página
+  setTimeout(function() {
+    splash.classList.add('intro-done');   // opacity: 0, transición 0.5s
     body.classList.remove('intro-locked');
     body.classList.add('page-ready');
-    setTimeout(() => { svg.style.opacity = '0'; }, 650);
-    setTimeout(() => {
-      splash.remove();
-      try { sessionStorage.setItem('marcoIntroPlayed', '1'); } catch (e) {}
-    }, 1150);
-  }, 1800);
+  }, 1500);
+
+  // 1 500 + 550 ms → elimina el nodo del DOM
+  setTimeout(function() {
+    splash.remove();
+    try { sessionStorage.setItem('marcoIntroPlayed', '1'); } catch (e) {}
+  }, 2050);
 })();
 
 
