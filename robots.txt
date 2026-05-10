@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /brand-examples/
+Disallow: /app/
+Disallow: /api/
+Disallow: /admin/
+Disallow: /dashboard/
+
+Sitemap: https://marcoaprende.com/sitemap.xml
