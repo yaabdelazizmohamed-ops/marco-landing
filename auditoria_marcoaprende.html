@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auditoría SEO — marcoaprende.com</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #222536;
+    --border: #2e3148;
+    --text: #e8eaf0;
+    --muted: #8890a6;
+    --green: #22c55e;
+    --amber: #f59e0b;
+    --red: #ef4444;
+    --blue: #3b82f6;
+    --purple: #a78bfa;
+    --green-dim: rgba(34,197,94,0.12);
+    --amber-dim: rgba(245,158,11,0.12);
+    --red-dim: rgba(239,68,68,0.12);
+    --blue-dim: rgba(59,130,246,0.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+  .header { background: linear-gradient(135deg, #1a1d27 0%, #0f1117 100%); border-bottom: 1px solid var(--border); padding: 2.5rem 2rem 2rem; text-align: center; }
+  .header h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .header .url { color: var(--blue); font-size: 1.1rem; margin-bottom: 0.5rem; }
+  .header .date { color: var(--muted); font-size: 0.85rem; }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  /* SCORE HERO */
+  .score-hero { display: flex; align-items: center; gap: 2.5rem; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 2rem 2.5rem; margin-bottom: 2rem; }
+  .score-circle { position: relative; flex-shrink: 0; }
+  .score-circle svg { transform: rotate(-90deg); }
+  .score-circle .score-text { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; transform: none; }
+  .score-circle .score-num { font-size: 2.8rem; font-weight: 800; color: var(--amber); line-height: 1; }
+  .score-circle .score-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+  .score-meta h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .score-meta p { color: var(--muted); font-size: 0.9rem; max-width: 500px; }
+  .score-badges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+  .badge { padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+  .badge-green { background: var(--green-dim); color: var(--green); }
+  .badge-amber { background: var(--amber-dim); color: var(--amber); }
+  .badge-red { background: var(--red-dim); color: var(--red); }
+  .badge-blue { background: var(--blue-dim); color: var(--blue); }
+
+  /* CATEGORIES GRID */
+  .section-title { font-size: 1.1rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1.2rem; margin-top: 2.5rem; }
+  .categories-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+  .cat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem 1rem; }
+  .cat-card .cat-name { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.6rem; text-transform: uppercase; letter-spacing: 0.5px; }
+  .cat-card .cat-score { font-size: 2rem; font-weight: 800; line-height: 1; margin-bottom: 0.6rem; }
+  .score-green { color: var(--green); }
+  .score-amber { color: var(--amber); }
+  .score-red { color: var(--red); }
+  .cat-bar { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .cat-bar-fill { height: 100%; border-radius: 2px; transition: width 0.6s ease; }
+  .bar-green { background: var(--green); }
+  .bar-amber { background: var(--amber); }
+  .bar-red { background: var(--red); }
+
+  /* ISSUES TABLE */
+  .issues-list { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
+  .issue-item { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; display: flex; gap: 1rem; align-items: flex-start; }
+  .issue-item.critical { border-left: 3px solid var(--red); }
+  .issue-item.warning { border-left: 3px solid var(--amber); }
+  .issue-item.info { border-left: 3px solid var(--blue); }
+  .issue-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .issue-content .issue-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.2rem; }
+  .issue-content .issue-desc { color: var(--muted); font-size: 0.85rem; }
+  .issue-content .issue-fix { margin-top: 0.5rem; font-size: 0.82rem; background: var(--surface2); border-radius: 6px; padding: 0.5rem 0.75rem; color: var(--text); }
+  .impact-chip { margin-left: auto; flex-shrink: 0; padding: 0.15rem 0.6rem; border-radius: 12px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; }
+  .impact-alto { background: var(--red-dim); color: var(--red); }
+  .impact-medio { background: var(--amber-dim); color: var(--amber); }
+  .impact-bajo { background: var(--blue-dim); color: var(--blue); }
+
+  /* DETAIL SECTIONS */
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+  .detail-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; }
+  .detail-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+  .check-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .check-list li { font-size: 0.85rem; display: flex; gap: 0.6rem; align-items: flex-start; }
+  .check-list li .check { flex-shrink: 0; }
+  .ok { color: var(--green); }
+  .warn { color: var(--amber); }
+  .err { color: var(--red); }
+  .info-c { color: var(--blue); }
+
+  .code-block { background: var(--surface2); border-radius: 8px; padding: 0.75rem 1rem; font-size: 0.78rem; font-family: monospace; color: #a8b5cc; margin-top: 0.5rem; word-break: break-all; line-height: 1.6; }
+
+  /* QUICK WINS */
+  .quickwins { background: linear-gradient(135deg, rgba(167,139,250,0.08), rgba(59,130,246,0.05)); border: 1px solid rgba(167,139,250,0.2); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .quickwins h3 { color: var(--purple); font-size: 1rem; font-weight: 700; margin-bottom: 1rem; }
+  .qw-item { display: flex; gap: 0.75rem; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 0.875rem; }
+  .qw-item:last-child { border-bottom: none; }
+  .qw-num { color: var(--purple); font-weight: 700; flex-shrink: 0; }
+
+  /* PERFORMANCE TABLE */
+  .perf-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .perf-table th { text-align: left; color: var(--muted); font-weight: 600; padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border); }
+  .perf-table td { padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border); }
+  .perf-table tr:last-child td { border-bottom: none; }
+
+  footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.8rem; border-top: 1px solid var(--border); margin-top: 1rem; }
+
+  @media (max-width: 700px) {
+    .score-hero { flex-direction: column; text-align: center; }
+    .detail-grid { grid-template-columns: 1fr; }
+    .categories-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🔍 Auditoría SEO Completa</h1>
+  <div class="url">marcoaprende.com</div>
+  <div class="date">Generado el 10 de mayo de 2026</div>
+</div>
+
+<div class="container">
+
+  <!-- SCORE HERO -->
+  <div class="score-hero">
+    <div class="score-circle">
+      <svg width="120" height="120" viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="52" fill="none" stroke="#2e3148" stroke-width="10"/>
+        <circle cx="60" cy="60" r="52" fill="none" stroke="#f59e0b" stroke-width="10"
+          stroke-dasharray="326.7" stroke-dashoffset="113.5" stroke-linecap="round"/>
+      </svg>
+      <div class="score-text">
+        <span class="score-num">65</span>
+        <span class="score-label">/ 100</span>
+      </div>
+    </div>
+    <div class="score-meta">
+      <h2>SEO Medio — Con potencial claro</h2>
+      <p>La base técnica es sólida (velocidad, meta tags, schema) pero la estrategia de contenido está casi inexistente. Con un blog y páginas dedicadas por caso de uso, este sitio puede posicionarse muy bien en el segmento EdTech.</p>
+      <div class="score-badges">
+        <span class="badge badge-green">✓ Velocidad excelente</span>
+        <span class="badge badge-green">✓ Open Graph completo</span>
+        <span class="badge badge-green">✓ Schema.org rico</span>
+        <span class="badge badge-red">✗ Sin contenido blog</span>
+        <span class="badge badge-red">✗ Sin imágenes rastreables</span>
+        <span class="badge badge-amber">⚠ Solo 5 páginas indexadas</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <div class="section-title">Puntuación por categoría</div>
+  <div class="categories-grid">
+    <div class="cat-card">
+      <div class="cat-name">Meta Tags</div>
+      <div class="cat-score score-green">85</div>
+      <div class="cat-bar"><div class="cat-bar-fill bar-green" style="width:85%"></div></div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-name">Open Graph / Social</div>
+      <div class="cat-score score-green">97</div>
+      <div class="cat-bar"><div class="cat-bar-fill bar-green" style="width:97%"></div></div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-name">Schema.org</div>
+      <div class="cat-score score-green">88</div>
+      <div class="cat-bar"><div class="cat-bar-fill bar-green" style="width:88%"></div></div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-name">Técnico / Core Web</div>
+      <div class="cat-score score-amber">72</div>
+      <div class="cat-bar"><div class="cat-bar-fill bar-amber" style="width:72%"></div></div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-name">Contenido / Keywords</div>
+      <div class="cat-score score-red">52</div>
+      <div class="cat-bar"><div class="cat-bar-fill bar-red" style="width:52%"></div></div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-name">Imágenes</div>
+      <div class="cat-score score-red">35</div>
+      <div class="cat-bar"><div class="cat-bar-fill bar-red" style="width:35%"></div></div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-name">Arquitectura / Links</div>
+      <div class="cat-score score-red">48</div>
+      <div class="cat-bar"><div class="cat-bar-fill bar-red" style="width:48%"></div></div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-name">Sitemap / Rastreo</div>
+      <div class="cat-score score-amber">65</div>
+      <div class="cat-bar"><div class="cat-bar-fill bar-amber" style="width:65%"></div></div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-name">Mobile / Accesibilidad</div>
+      <div class="cat-score score-amber">75</div>
+      <div class="cat-bar"><div class="cat-bar-fill bar-amber" style="width:75%"></div></div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-name">Robots.txt</div>
+      <div class="cat-score score-green">90</div>
+      <div class="cat-bar"><div class="cat-bar-fill bar-green" style="width:90%"></div></div>
+    </div>
+  </div>
+
+  <!-- QUICK WINS -->
+  <div class="quickwins">
+    <h3>⚡ Quick Wins — Máximo impacto, mínimo esfuerzo</h3>
+    <div class="qw-item">
+      <span class="qw-num">1.</span>
+      <span>Añadir atributos <code>loading="lazy"</code> y usar etiquetas <code>&lt;img&gt;</code> reales (no CSS backgrounds) con <code>alt</code> descriptivo para que Google indexe las imágenes.</span>
+    </div>
+    <div class="qw-item">
+      <span class="qw-num">2.</span>
+      <span>Añadir <code>&lt;link rel="preload"&gt;</code> para la fuente Fraunces y los CSS críticos — reducirá el LCP medido por Google.</span>
+    </div>
+    <div class="qw-item">
+      <span class="qw-num">3.</span>
+      <span>Ampliar el title a 55-60 caracteres añadiendo la keyword "plataforma educativa IA" → <em>"Marco — Plataforma educativa IA que enseña a pensar | marcoaprende"</em></span>
+    </div>
+    <div class="qw-item">
+      <span class="qw-num">4.</span>
+      <span>Registrar perfil en Google Search Console y Bing Webmaster Tools para monitorizar posicionamiento real y errores de rastreo.</span>
+    </div>
+    <div class="qw-item">
+      <span class="qw-num">5.</span>
+      <span>Crear 3 páginas de aterrizaje diferenciadas: una para directores, una para profesores, una para familias. Cada una puede rankear en búsquedas distintas.</span>
+    </div>
+    <div class="qw-item">
+      <span class="qw-num">6.</span>
+      <span>Reducir el peso del HTML (241KB) extrayendo el CSS a un archivo externo con cache de larga duración. El HTML debería ser &lt;50KB.</span>
+    </div>
+  </div>
+
+  <!-- ISSUES -->
+  <div class="section-title">Problemas detectados — Priorizados por impacto</div>
+  <div class="issues-list">
+
+    <div class="issue-item critical">
+      <div class="issue-icon">🔴</div>
+      <div class="issue-content">
+        <div class="issue-title">Sin estrategia de contenido — Blog inexistente</div>
+        <div class="issue-desc">El sitio tiene solo 5 URLs indexadas (homepage + 4 páginas legales). Sin contenido editorial no hay forma de captar tráfico orgánico de long-tail. Los competidores en EdTech que publican artículos sobre "cómo mejorar el estudio", "IA en educación" o "técnicas de aprendizaje" generan miles de visitas mensuales.</div>
+        <div class="issue-fix">✅ Solución: Crear sección /blog con artículos orientados a keywords como "herramientas IA para profesores", "cómo estudiar con IA", "método socrático en aula". Mínimo 2 artículos/mes de 1.200+ palabras.</div>
+      </div>
+      <span class="impact-chip impact-alto">ALTO</span>
+    </div>
+
+    <div class="issue-item critical">
+      <div class="issue-icon">🔴</div>
+      <div class="issue-content">
+        <div class="issue-title">Cero imágenes rastreables por Google</div>
+        <div class="issue-desc">La web no usa ninguna etiqueta <code>&lt;img&gt;</code>. Todo el contenido visual (demostraciones, capturas, ilustraciones) está renderizado con CSS, SVG inline o canvas. Google no puede indexar estas imágenes ni mostrarlas en Google Images, perdiendo una fuente de tráfico adicional y señales de relevancia visual.</div>
+        <div class="issue-fix">✅ Solución: Convertir las imágenes de demostración y capturas de producto a etiquetas <code>&lt;img src="" alt="descripción keyword-rich"&gt;</code>. Añadir <code>loading="lazy"</code> y usar WebP con fallback.</div>
+      </div>
+      <span class="impact-chip impact-alto">ALTO</span>
+    </div>
+
+    <div class="issue-item critical">
+      <div class="issue-icon">🔴</div>
+      <div class="issue-content">
+        <div class="issue-title">Arquitectura de una sola página — Sin páginas dedicadas por keyword</div>
+        <div class="issue-desc">Toda la propuesta de valor está comprimida en la homepage con anclajes (#demo, #features). Cada audiencia (director, profesor, familia) y cada caso de uso merece una URL propia que pueda rankear independientemente. Actualmente, si un director busca "panel de control alumnos IA colegio", no hay página específica que pueda posicionar.</div>
+        <div class="issue-fix">✅ Solución: Crear /para-directores, /para-profesores, /como-funciona, /casos-de-uso. Cada página con su propio title, meta description, H1 y contenido único orientado a keywords específicas.</div>
+      </div>
+      <span class="impact-chip impact-alto">ALTO</span>
+    </div>
+
+    <div class="issue-item warning">
+      <div class="issue-icon">🟡</div>
+      <div class="issue-content">
+        <div class="issue-title">HTML demasiado pesado — 241KB en un solo archivo</div>
+        <div class="issue-desc">Todo el CSS (miles de líneas inline) está embebido directamente en el HTML. Esto hace que el archivo inicial sea 241KB, lo que impacta el First Contentful Paint (FCP) y el LCP, métricas que Google usa directamente para Core Web Vitals y posicionamiento.</div>
+        <div class="issue-fix">✅ Solución: Extraer el CSS a un archivo externo (<code>styles.css</code>) con <code>Cache-Control: max-age=31536000</code>. El HTML debería quedar en &lt;50KB. Añadir <code>&lt;link rel="preload" as="style"&gt;</code> para el CSS crítico.</div>
+      </div>
+      <span class="impact-chip impact-medio">MEDIO</span>
+    </div>
+
+    <div class="issue-item warning">
+      <div class="issue-icon">🟡</div>
+      <div class="issue-content">
+        <div class="issue-title">Title tag podría capturar más keywords</div>
+        <div class="issue-desc">El title actual tiene 46 caracteres: <em>"Marco — Estudiar con IA que enseña a pensar"</em>. El límite visible de Google es ~60 caracteres. Hay espacio para incluir términos de búsqueda más específicos que aumenten el CTR.</div>
+        <div class="issue-fix">✅ Propuesta: <em>"Marco — IA educativa que enseña a pensar | Para colegios"</em> (55 chars) o <em>"Marco: Plataforma IA para estudiar y aprender mejor"</em></div>
+      </div>
+      <span class="impact-chip impact-medio">MEDIO</span>
+    </div>
+
+    <div class="issue-item warning">
+      <div class="issue-icon">🟡</div>
+      <div class="issue-content">
+        <div class="issue-title">Sin breadcrumbs ni enlazado interno entre páginas</div>
+        <div class="issue-desc">Los únicos enlaces internos son anclas al mismo página (#demo, #features) y páginas legales. No hay una red de enlazado interno que distribuya PageRank entre páginas y ayude al rastreo. Google dificulta la priorización cuando todo apunta a la misma URL.</div>
+        <div class="issue-fix">✅ Solución: Una vez creadas páginas de contenido, enlazarlas desde la homepage y entre sí con texto de anclaje descriptivo. Añadir BreadcrumbList schema en páginas internas.</div>
+      </div>
+      <span class="impact-chip impact-medio">MEDIO</span>
+    </div>
+
+    <div class="issue-item warning">
+      <div class="issue-icon">🟡</div>
+      <div class="issue-content">
+        <div class="issue-title">Sin recurso preload para fuentes críticas</div>
+        <div class="issue-desc">Las fuentes Fraunces y DM Sans se cargan desde Google Fonts sin preload. Esto introduce un retraso visible en el renderizado del texto principal, afectando al CLS (Cumulative Layout Shift) y al LCP.</div>
+        <div class="issue-fix">✅ Añadir: <code>&lt;link rel="preload" href="[url-fuente]" as="font" type="font/woff2" crossorigin&gt;</code> para las variantes más usadas. Considerar auto-hospedar las fuentes para eliminar la dependencia externa.</div>
+      </div>
+      <span class="impact-chip impact-medio">MEDIO</span>
+    </div>
+
+    <div class="issue-item warning">
+      <div class="issue-icon">🟡</div>
+      <div class="issue-content">
+        <div class="issue-title">Solo Twitter/X en el perfil social — Sin LinkedIn ni Instagram</div>
+        <div class="issue-desc">El schema.org <code>sameAs</code> solo apunta a Twitter (@marcoaprende). Para un producto educativo dirigido a directores y profesores, LinkedIn es el canal más relevante. Instagram puede funcionar para la audiencia de estudiantes.</div>
+        <div class="issue-fix">✅ Crear perfiles en LinkedIn e Instagram, añadirlos al <code>sameAs</code> del schema Organization y en el footer de la web. Esto mejora el gráfico de entidades de Google.</div>
+      </div>
+      <span class="impact-chip impact-medio">MEDIO</span>
+    </div>
+
+    <div class="issue-item info">
+      <div class="issue-icon">🔵</div>
+      <div class="issue-content">
+        <div class="issue-title">Emails obfuscados con Cloudflare — Impacta parseo de datos</div>
+        <div class="issue-desc">Los emails del footer están codificados con protección Cloudflare (<code>/cdn-cgi/l/email-protection#...</code>). Aunque no impacta el SEO directamente, los scrapers de directorios y herramientas de citación no pueden extraer el email de contacto, lo que puede reducir las menciones.</div>
+        <div class="issue-fix">ℹ️ Valorar usar un formulario de contacto visible con los emails como texto en el schema ContactPoint (ya lo tiene) en lugar de solo en el HTML.</div>
+      </div>
+      <span class="impact-chip impact-bajo">BAJO</span>
+    </div>
+
+    <div class="issue-item info">
+      <div class="issue-icon">🔵</div>
+      <div class="issue-content">
+        <div class="issue-title">Schema foundingDate "2025" — Señal de dominio joven</div>
+        <div class="issue-desc">El schema Organization declara <code>foundingDate: "2025"</code>. Esto es correcto y honesto, pero Google tiende a rankear dominios jóvenes más abajo hasta que acumulan señales de autoridad (backlinks, CTR, tiempo en página). No es un error, es contexto.</div>
+        <div class="issue-fix">ℹ️ Estrategia: priorizar la obtención de backlinks de calidad (medios de educación, universidades, blogs de pedagogía) durante los primeros 12 meses para acelerar la autoridad de dominio.</div>
+      </div>
+      <span class="impact-chip impact-bajo">BAJO</span>
+    </div>
+
+  </div>
+
+  <!-- DETAIL SECTIONS -->
+  <div class="section-title">Análisis detallado</div>
+  <div class="detail-grid">
+
+    <div class="detail-card">
+      <h3>📋 Meta Tags</h3>
+      <ul class="check-list">
+        <li><span class="check ok">✓</span> <span>Title: "Marco — Estudiar con IA que enseña a pensar" <em>(46 chars)</em></span></li>
+        <li><span class="check ok">✓</span> <span>Meta description: 150 caracteres, bien redactada</span></li>
+        <li><span class="check ok">✓</span> <span>Meta robots: index, follow</span></li>
+        <li><span class="check ok">✓</span> <span>Canonical: https://marcoaprende.com/</span></li>
+        <li><span class="check ok">✓</span> <span>Charset: UTF-8</span></li>
+        <li><span class="check ok">✓</span> <span>Viewport: width=device-width, initial-scale=1.0</span></li>
+        <li><span class="check ok">✓</span> <span>lang="es" en el html tag</span></li>
+        <li><span class="check ok">✓</span> <span>hreflang: es + x-default</span></li>
+        <li><span class="check ok">✓</span> <span>meta author: Marco</span></li>
+        <li><span class="check warn">⚠</span> <span>Title con solo 46 chars — recomendado 55-60</span></li>
+        <li><span class="check warn">⚠</span> <span>Description podría llegar a 155 chars (5 más)</span></li>
+        <li><span class="check err">✗</span> <span>Sin meta keywords temáticas (aunque no es crítico)</span></li>
+      </ul>
+    </div>
+
+    <div class="detail-card">
+      <h3>📱 Open Graph & Twitter Card</h3>
+      <ul class="check-list">
+        <li><span class="check ok">✓</span> <span>og:type, og:title, og:description, og:url</span></li>
+        <li><span class="check ok">✓</span> <span>og:image 1200×630px con og:image:alt</span></li>
+        <li><span class="check ok">✓</span> <span>og:site_name y og:locale (es_ES)</span></li>
+        <li><span class="check ok">✓</span> <span>twitter:card summary_large_image</span></li>
+        <li><span class="check ok">✓</span> <span>twitter:site @marcoaprende</span></li>
+        <li><span class="check ok">✓</span> <span>twitter:creator @marcoaprende</span></li>
+        <li><span class="check ok">✓</span> <span>twitter:image:alt definido</span></li>
+        <li><span class="check warn">⚠</span> <span>OG description diferente a meta description (no es error, pero coherencia recomendada)</span></li>
+        <li><span class="check err">✗</span> <span>Sin og:image:type (añadir "image/jpeg")</span></li>
+      </ul>
+    </div>
+
+    <div class="detail-card">
+      <h3>🧩 Schema.org / Datos Estructurados</h3>
+      <ul class="check-list">
+        <li><span class="check ok">✓</span> <span>Organization con @id, name, url, logo</span></li>
+        <li><span class="check ok">✓</span> <span>WebSite con name y description</span></li>
+        <li><span class="check ok">✓</span> <span>WebPage con nombre y descripción</span></li>
+        <li><span class="check ok">✓</span> <span>FAQPage con 5+ preguntas → Rich Snippets potenciales</span></li>
+        <li><span class="check ok">✓</span> <span>ContactPoint para soporte y ventas</span></li>
+        <li><span class="check ok">✓</span> <span>sameAs apuntando a @marcoaprende Twitter</span></li>
+        <li><span class="check ok">✓</span> <span>Uso correcto de @graph para relacionar entidades</span></li>
+        <li><span class="check warn">⚠</span> <span>SoftwareApplication schema presente pero podría ser más completo (screenshots, featureList)</span></li>
+        <li><span class="check err">✗</span> <span>Sin BreadcrumbList</span></li>
+        <li><span class="check err">✗</span> <span>Sin Review/AggregateRating (si hay testimonios, añadirlos)</span></li>
+        <li><span class="check err">✗</span> <span>sameAs incompleto — faltan LinkedIn, Instagram</span></li>
+      </ul>
+    </div>
+
+    <div class="detail-card">
+      <h3>⚡ Rendimiento Técnico</h3>
+      <table class="perf-table">
+        <tr><th>Métrica</th><th>Valor</th><th>Estado</th></tr>
+        <tr><td>HTTP Status</td><td>200 OK</td><td class="ok">✓ Bien</td></tr>
+        <tr><td>TTFB (Time to First Byte)</td><td>78ms</td><td class="ok">✓ Excelente</td></tr>
+        <tr><td>Tiempo total (HTML)</td><td>164ms</td><td class="ok">✓ Excelente</td></tr>
+        <tr><td>Tamaño HTML</td><td>241 KB</td><td class="warn">⚠ Alto</td></tr>
+        <tr><td>Scripts defer/async</td><td>3 / 3</td><td class="ok">✓ Bien</td></tr>
+        <tr><td>Preload links</td><td>0</td><td class="err">✗ Ninguno</td></tr>
+        <tr><td>Imágenes lazy-load</td><td>0 img tags</td><td class="err">✗ Sin imgs</td></tr>
+        <tr><td>HTTPS</td><td>Sí</td><td class="ok">✓ Bien</td></tr>
+        <tr><td>Google Fonts externo</td><td>2 familias</td><td class="warn">⚠ Dependencia</td></tr>
+      </table>
+    </div>
+
+    <div class="detail-card">
+      <h3>🏗️ Estructura de Headings</h3>
+      <ul class="check-list">
+        <li><span class="check ok">✓</span> <span><strong>H1 (1):</strong> "Marcoaprende no da respuestas automáticas, enseña a buscarlas."</span></li>
+        <li><span class="check ok">✓</span> <span><strong>H2:</strong> "Una conversación que enseña a pensar"</span></li>
+        <li><span class="check ok">✓</span> <span><strong>H2:</strong> "No te lo contamos — te lo enseñamos"</span></li>
+        <li><span class="check ok">✓</span> <span><strong>H2:</strong> "Todo lo que le falta al estudio en solitario"</span></li>
+        <li><span class="check ok">✓</span> <span><strong>H2:</strong> "Pasa de intuir a saber lo que ocurre cuando estudian solos"</span></li>
+        <li><span class="check ok">✓</span> <span><strong>H2:</strong> "Por qué existe Marco" / "Lo que más se pregunta antes de decir que sí"</span></li>
+        <li><span class="check warn">⚠</span> <span>H1 no incluye keyword principal de búsqueda (ej. "IA educativa" o "plataforma IA colegios")</span></li>
+        <li><span class="check warn">⚠</span> <span>Los H3 son nombres de secciones de UI ("5.1 Concepto de fracción") — no optimizados para keywords</span></li>
+        <li><span class="check info-c">ℹ</span> <span>Jerarquía H1 → H2 → H3 correcta. Un solo H1. ✓</span></li>
+      </ul>
+    </div>
+
+    <div class="detail-card">
+      <h3>🗺️ Sitemap & robots.txt</h3>
+      <ul class="check-list">
+        <li><span class="check ok">✓</span> <span>sitemap.xml existe y es válido</span></li>
+        <li><span class="check ok">✓</span> <span>Sitemap referenciado en robots.txt</span></li>
+        <li><span class="check ok">✓</span> <span>lastmod actualizado (2026-05-09)</span></li>
+        <li><span class="check ok">✓</span> <span>Priority y changeFreq definidos</span></li>
+        <li><span class="check ok">✓</span> <span>robots.txt bien estructurado — bloquea /admin, /api, /app</span></li>
+        <li><span class="check ok">✓</span> <span>Allow: / permite rastreo de todo el contenido público</span></li>
+        <li><span class="check err">✗</span> <span>Solo 5 URLs en sitemap — muy limitado para SEO</span></li>
+        <li><span class="check err">✗</span> <span>Sin sitemap de imágenes (Google Image Sitemap)</span></li>
+        <li><span class="check warn">⚠</span> <span>Sin sitemap de video si se añade contenido multimedia</span></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- KEYWORD OPORTUNIDADES -->
+  <div class="section-title">Oportunidades de Keywords</div>
+  <div class="detail-card" style="margin-bottom: 2rem;">
+    <h3>🎯 Keywords con potencial sin cubrir</h3>
+    <table class="perf-table" style="margin-top: 0.5rem;">
+      <tr><th>Keyword</th><th>Intención</th><th>Dificultad estimada</th><th>Acción</th></tr>
+      <tr><td>IA educativa para colegios</td><td>Comercial</td><td class="warn">Media</td><td>Página dedicada</td></tr>
+      <tr><td>herramientas IA para profesores</td><td>Informacional</td><td class="ok">Baja</td><td>Artículo blog</td></tr>
+      <tr><td>cómo estudiar con inteligencia artificial</td><td>Informacional</td><td class="ok">Baja</td><td>Artículo blog</td></tr>
+      <tr><td>plataforma educativa IA España</td><td>Comercial</td><td class="warn">Media</td><td>Homepage + landing</td></tr>
+      <tr><td>método socrático digital aula</td><td>Informacional</td><td class="ok">Muy baja</td><td>Artículo blog</td></tr>
+      <tr><td>dashboard profesor seguimiento alumnos</td><td>Comercial</td><td class="ok">Baja</td><td>Página /para-profesores</td></tr>
+      <tr><td>piloto IA centro educativo</td><td>Transaccional</td><td class="ok">Muy baja</td><td>CTA + landing page</td></tr>
+      <tr><td>app para estudiar ESO bachillerato</td><td>Informacional</td><td class="warn">Media</td><td>Artículo + landing</td></tr>
+    </table>
+  </div>
+
+  <!-- PLAN DE ACCIÓN -->
+  <div class="section-title">Plan de acción recomendado</div>
+  <div class="issues-list">
+    <div class="issue-item" style="border-left: 3px solid var(--purple);">
+      <div class="issue-icon">📅</div>
+      <div class="issue-content">
+        <div class="issue-title">Semana 1–2 — Correcciones técnicas rápidas</div>
+        <div class="issue-desc">1) Extraer CSS a archivo externo<br>2) Añadir preload para fuentes críticas<br>3) Ampliar title tag (+10 chars con keyword)<br>4) Convertir 3-5 imágenes/demos a <code>&lt;img&gt;</code> con alt optimizado<br>5) Dar de alta en Google Search Console + Bing Webmaster</div>
+      </div>
+    </div>
+    <div class="issue-item" style="border-left: 3px solid var(--purple);">
+      <div class="issue-icon">📅</div>
+      <div class="issue-content">
+        <div class="issue-title">Mes 1 — Arquitectura de contenido</div>
+        <div class="issue-desc">1) Crear /para-directores y /para-profesores con contenido original<br>2) Crear /como-funciona con explicación paso a paso<br>3) Actualizar sitemap.xml con las nuevas URLs<br>4) Añadir enlazado interno desde homepage a las nuevas páginas<br>5) Completar sameAs con LinkedIn e Instagram</div>
+      </div>
+    </div>
+    <div class="issue-item" style="border-left: 3px solid var(--purple);">
+      <div class="issue-icon">📅</div>
+      <div class="issue-content">
+        <div class="issue-title">Meses 2–4 — Estrategia de contenido</div>
+        <div class="issue-desc">1) Lanzar blog en /blog<br>2) Publicar 2 artículos/mes sobre keywords de oportunidad detectadas<br>3) Empezar link building: notas de prensa en medios educativos, colaboraciones con bloggers del sector<br>4) Añadir testimonios con ReviewSchema si los hay<br>5) Crear Google My Business si tienen sede física</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Auditoría SEO generada automáticamente para marcoaprende.com &nbsp;·&nbsp; 10 de mayo de 2026
+</footer>
+
+</body>
+</html>

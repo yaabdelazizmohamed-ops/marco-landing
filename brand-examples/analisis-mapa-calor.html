@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"tertiary-fixed": "#e8cdfe", "primary-fixed": "#b8c8fc", "surface-container-low": "#f4f3fa", "surface-container": "#ededf6", "surface-bright": "#faf8fe", "on-secondary": "#faf8ff", secondary: "#595e72", "on-secondary-container": "#4c5165", "on-surface": "#30323a", "on-primary-container": "#30406c", tertiary: "#6c5680", "surface-container-highest": "#e1e2ec", "on-secondary-fixed-variant": "#565b6f", "inverse-on-surface": "#9d9ca2", "on-tertiary-container": "#57426a", "on-secondary-fixed": "#393f51", error: "#a83836", "on-primary-fixed": "#1b2c57", "inverse-primary": "#b8c8fc", "secondary-container": "#dde1fa", outline: "#787a84", "on-primary-fixed-variant": "#394a76", "on-error": "#fff7f6", "on-surface-variant": "#5d5f68", surface: "#faf8fe", background: "#faf8fe", "surface-variant": "#e1e2ec", primary: "#4e5e8b", "surface-dim": "#d8d9e4", "on-tertiary": "#fff6ff", "on-tertiary-fixed-variant": "#614c74", "on-tertiary-fixed": "#432f56", "on-background": "#30323a", "secondary-fixed-dim": "#cfd3eb", "tertiary-container": "#e8cdfe", "secondary-fixed": "#dde1fa", "tertiary-fixed-dim": "#dabfef", "surface-tint": "#4e5e8b", "error-container": "#fa746f", "outline-variant": "#b0b1bb", "surface-container-lowest": "#ffffff", "on-primary": "#f9f8ff", "on-error-container": "#6e0a12", "surface-container-high": "#e7e7f1", "primary-container": "#b8c8fc", "inverse-surface": "#0d0e12", "primary-fixed-dim": "#aabaed", "secondary-dim": "#4d5266", "error-dim": "#67040d", "tertiary-dim": "#604a73", "primary-dim": "#42527e"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {"margin-desktop": "40px", "margin-mobile": "16px", gutter: "24px", "container-max": "1200px", unit: "8px"}, fontFamily: {"body-main": ["Inter"], "headline-md": ["Inter"], "label-caps": ["Inter"], "display-lg": ["Inter"], "title-sm": ["Inter"], headline: ["Inter"], display: ["Inter"], body: ["Inter"], label: ["Inter"]}, fontSize: {"body-main": ["16px", {lineHeight: "1.6", letterSpacing: "0", fontWeight: "400"}], "headline-md": ["32px", {lineHeight: "1.2", letterSpacing: "-0.01em", fontWeight: "600"}], "label-caps": ["12px", {lineHeight: "1", letterSpacing: "0.05em", fontWeight: "600"}], "display-lg": ["48px", {lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "700"}], "title-sm": ["20px", {lineHeight: "1.4", letterSpacing: "0", fontWeight: "600"}]}}}};</script>
+<style>
+        body { background-color: #fbf8fd; font-family: 'Inter', sans-serif; }
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- TopAppBar from JSON Authority -->
+<header class="fixed top-0 w-full z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-100 dark:border-slate-800 shadow-sm">
+<div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+<div class="flex items-center gap-8">
+<svg viewBox="140 72 72 62" width="70" height="28" xmlns="http://www.w3.org/2000/svg" aria-label="Marco"><line x1="148" y1="80" x2="148" y2="130" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><line x1="148" y1="80" x2="163" y2="80" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><line x1="148" y1="130" x2="163" y2="130" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><line x1="202" y1="80" x2="202" y2="130" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><line x1="202" y1="80" x2="187" y2="80" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><line x1="202" y1="130" x2="187" y2="130" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><text x="175" y="119" font-family="Georgia,serif" font-size="42" font-style="italic" text-anchor="middle" fill="#0a0a0a">M</text></svg>
+<nav class="hidden md:flex gap-6 items-center">
+<a class="text-slate-500 hover:text-[#6a769b] transition-colors font-body-main text-sm" href="#">Dashboard</a>
+<a class="text-[#6a769b] border-b-2 border-[#6a769b] pb-2 font-bold font-body-main text-sm" href="#">Analytics</a>
+<a class="text-slate-500 hover:text-[#6a769b] transition-colors font-body-main text-sm" href="#">Classes</a>
+<a class="text-slate-500 hover:text-[#6a769b] transition-colors font-body-main text-sm" href="#">Resources</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 hover:bg-slate-50 rounded-lg transition-all active:scale-95">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-slate-500 hover:bg-slate-50 rounded-lg transition-all active:scale-95">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-primary-fixed overflow-hidden border border-outline-variant">
+<img alt="Teacher profile avatar" class="h-full w-full object-cover" data-alt="A professional and friendly portrait of a female teacher in a brightly lit modern office environment. She is smiling warmly at the camera, wearing professional attire. The background is softly blurred, showing a clean, organized educational space with books and a laptop, reflecting a calm and organized light-mode aesthetic consistent with high-end educational platforms." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBR_Jq4at2R6ZPjjTn8UlVwHQ7hqbb1kizUeO8k0P1GW6LZqnWPbeUoEdwR6FnoYtH0vQtNqFuRwLvVG4PSVIrGAQgqpPjyA6Klh0ftXnWQQvODh8p2DRpUWE0pgfHZH4D0jdVXfKIf-8CmXojy4txZcLcCJDa96uObEg7Sjdo5Hr2n3Xbel7Jrl7Fkt_FHydtJ4BmRQZfJMmy319rGKLfrbM3BXYhMquiG2-5-nhd4Ksfi3VfpYs7WEu3bZhhprKGo7zLsOIRzKgcn"/>
+</div>
+</div>
+</div>
+</header>
+<main class="pt-24 pb-32 max-w-7xl mx-auto px-6">
+<!-- Dashboard Header & Controls -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+<div>
+<h1 class="font-display-lg text-display-lg text-on-surface mb-2">Análisis de Clase</h1>
+<p class="text-on-surface-variant font-body-main">Visualización en tiempo real del progreso educativo y detección de obstáculos.</p>
+</div>
+<div class="flex gap-4">
+<div class="relative">
+<select class="appearance-none bg-surface-container-lowest border-none rounded-full px-6 py-3 pr-12 text-sm font-semibold text-primary shadow-sm ring-1 ring-outline-variant focus:ring-2 focus:ring-primary-container transition-all cursor-pointer">
+<option>Matemáticas - 4º ESO A</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary">expand_more</span>
+</div>
+<div class="relative">
+<select class="appearance-none bg-surface-container-lowest border-none rounded-full px-6 py-3 pr-12 text-sm font-semibold text-primary shadow-sm ring-1 ring-outline-variant focus:ring-2 focus:ring-primary-container transition-all cursor-pointer">
+<option>Unidad 2: Fracciones</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Upper Block (50/50) -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter mb-gutter">
+<!-- Evolution Card -->
+<div class="bg-surface-container-lowest rounded-xl p-10 shadow-sm border border-slate-50 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-6">
+<h2 class="font-title-sm text-title-sm text-on-surface">Evolución de la Clase</h2>
+<span class="bg-primary-fixed text-on-primary-fixed px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">Semanal</span>
+</div>
+<div class="h-48 w-full mt-4">
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 400 100">
+<path d="M0,80 C50,75 80,40 120,45 C160,50 200,20 250,25 C300,30 350,10 400,15" fill="none" stroke="#6a769b" stroke-linecap="round" stroke-width="3"></path>
+<circle cx="400" cy="15" fill="#6a769b" r="4"></circle>
+<path d="M0,80 C50,75 80,40 120,45 C160,50 200,20 250,25 C300,30 350,10 400,15 L400,100 L0,100 Z" fill="url(#gradient-evolution)" opacity="0.1"></path>
+<defs>
+<lineargradient id="gradient-evolution" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#6a769b"></stop>
+<stop offset="100%" stop-color="transparent"></stop>
+</lineargradient>
+</defs>
+</svg>
+</div>
+</div>
+<div class="mt-6 flex items-center gap-3 p-4 bg-surface-container-low rounded-xl">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">speed</span>
+<div>
+<p class="text-xs font-label-caps text-on-surface-variant uppercase">Velocidad media</p>
+<p class="text-sm font-bold text-on-surface">Buen ritmo • +12% vs unidad anterior</p>
+</div>
+</div>
+</div>
+<!-- Heatmap Card -->
+<div class="bg-surface-container-lowest rounded-xl p-10 shadow-sm border border-slate-50 flex flex-col">
+<div class="flex justify-between items-start mb-8">
+<div>
+<h2 class="font-title-sm text-title-sm text-on-surface">Mapa de Calor: Dónde se atascan</h2>
+<p class="text-sm text-on-surface-variant font-body-main mt-1">Análisis de puntos críticos por concepto</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">info</span>
+</div>
+<div class="space-y-4 flex-grow">
+<div class="group flex items-center justify-between p-4 bg-emerald-50 border border-emerald-100 rounded-xl transition-all hover:shadow-md">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold">5.1</div>
+<span class="font-body-main text-emerald-900 font-medium">Concepto de Fracción</span>
+</div>
+<span class="text-xs font-bold text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full uppercase">Dominado</span>
+</div>
+<div class="group flex items-center justify-between p-4 bg-emerald-50 border border-emerald-100 rounded-xl transition-all hover:shadow-md">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold">5.2</div>
+<span class="font-body-main text-emerald-900 font-medium">Equivalentes</span>
+</div>
+<span class="text-xs font-bold text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full uppercase">Progreso</span>
+</div>
+<div class="group flex items-center justify-between p-4 bg-error-container/20 border border-error/20 rounded-xl transition-all hover:shadow-md">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-error-container text-on-error-container flex items-center justify-center font-bold">5.3</div>
+<div>
+<span class="font-body-main text-on-error-container font-semibold block">Suma distinto denominador</span>
+<span class="text-xs text-error font-medium">Se requiere intervención docente</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-surface-container-highest">
+<p class="text-sm font-body-main text-on-surface-variant italic">
+<span class="text-primary font-bold">Nota de IA:</span> El 65% de las preguntas a Marco se concentran en el cálculo del m.c.m.
+                    </p>
+</div>
+</div>
+</div>
+<!-- Full Width Block -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm border border-slate-50 overflow-hidden">
+<div class="p-8 border-b border-surface-container-highest flex justify-between items-center">
+<h2 class="font-title-sm text-title-sm text-on-surface">Seguimiento Individual</h2>
+<div class="flex items-center gap-2 text-sm text-on-surface-variant">
+<span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+<span>24 Activos</span>
+<span class="w-3 h-3 rounded-full bg-error ml-4"></span>
+<span>2 Alertas</span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low text-on-surface-variant font-label-caps text-xs uppercase tracking-wider">
+<tr>
+<th class="px-8 py-4 font-semibold">Alumno</th>
+<th class="px-8 py-4 font-semibold">Progreso Unidad</th>
+<th class="px-8 py-4 font-semibold">Estado Marco IA</th>
+<th class="px-8 py-4 font-semibold text-right">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-highest">
+<!-- Alumno 1 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-white shadow-sm">
+<img alt="Carlos Gómez avatar" class="w-full h-full object-cover" data-alt="Close-up portrait of a young male student with a thoughtful expression, set in a bright, modern classroom with soft natural light. He is looking slightly off-camera, wearing a casual denim shirt. The aesthetic is clean, professional, and reflects a focused educational environment with high-key lighting and a soft neutral color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOW1OEZnwsD8KW_EGYu9pW5PMCHbFeEgW-vfaBcRRQh50KMn6hydjecJmcRPeOIppMw9nK81OzLuLcTC6kXZvMB8U_02hcmVBDZmALxgoUJ-8sVCA9pRWLlSVVqhiGlBiq1ImQoyE_J80WxBdQh043OvOPv92ZSIehgnGcRQp2NReHTzMqIlgcki2rY5SyL-jCGCi6h_RfsKaDZwiiVp4ZgfXrTdDGub9OPI-vImPhlAgFCsGBqotHynSLQXWtc4QfzVDA4oQI_fkQ"/>
+</div>
+<span class="font-body-main font-semibold text-on-surface">Carlos Gómez</span>
+</div>
+</td>
+<td class="px-8 py-5">
+<div class="w-full max-w-xs bg-surface-container rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 45%;"></div>
+</div>
+<span class="text-[10px] text-on-surface-variant mt-1 block">45% completado</span>
+</td>
+<td class="px-8 py-5">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-error-container/20 text-error">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                                    Requiere atención
+                                </span>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="px-4 py-2 rounded-full border border-primary text-primary text-xs font-bold hover:bg-primary hover:text-white transition-all active:scale-95">
+                                    Ver cuaderno y chat
+                                </button>
+</td>
+</tr>
+<!-- Alumno 2 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-white shadow-sm">
+<img alt="Lucía Martos avatar" class="w-full h-full object-cover" data-alt="A portrait of a young female student with a bright smile, positioned in a modern learning space with minimalist furniture and high-key, natural lighting. The color palette is dominated by soft whites and grays with subtle blue accents. The overall mood is optimistic, energetic, and highly professional, fitting a high-end digital learning platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqILPK_heqbxEAHt3CF4tQswXWHQasNi2ghwuo3FX4IXwnAqG6e82YgnkiBTP9cmYMXL6uH9a9Ax9-4u3Vr8JPn8Da1GVl92-EOkMY7CoSuhVwoRHR1quNH1gEM3W8tcgc0w-QSUtRoEUDTOalpqN4cR4-roWHfvEVcs94rxNVUghixlIz2QVfl5tnuUo188AKPQugkMlFiR0LAPHA7eDvLCgSO_MYN5VUeEiXDuR69YXAWOeScHfCvh1x9W3II6Ue5XHgLs7d62cp"/>
+</div>
+<span class="font-body-main font-semibold text-on-surface">Lucía Martos</span>
+</div>
+</td>
+<td class="px-8 py-5">
+<div class="w-full max-w-xs bg-surface-container rounded-full h-2">
+<div class="bg-emerald-500 h-2 rounded-full" style="width: 88%;"></div>
+</div>
+<span class="text-[10px] text-on-surface-variant mt-1 block">88% completado</span>
+</td>
+<td class="px-8 py-5">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-600">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                    Avanzando bien
+                                </span>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="px-4 py-2 rounded-full border border-primary text-primary text-xs font-bold hover:bg-primary hover:text-white transition-all active:scale-95">
+                                    Ver cuaderno y chat
+                                </button>
+</td>
+</tr>
+<!-- Alumno 3 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-white shadow-sm">
+<img alt="Mateo Ruiz avatar" class="w-full h-full object-cover" data-alt="Portrait of a male student with glasses, looking engaged and focused. The background is a clean, bright, minimalist study area with white walls and soft ambient lighting. The visual style is modern corporate, emphasizing a serious yet approachable educational atmosphere. The color scheme is light-mode oriented with soft neutral tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdyvPPOdZvWhBa2vqEfClvRkhvvX5iz7Rh2kFAMp6ctobmDiOXfn4IErt6u8IIBytunu-XhrFEocRqhWwxHrvRfdccf89VKgC1TBX__CwPoYNlpDn6L_6ZStAGdbD9g0R7RIEICr3-v_gaJNXJPVpxadEZ57EFIg7Mu7ztb8WOVZWFt811CdpVJ3rLaGd9xYIdMVibBHiNzuNMmq5UIT_Ii5F-NMNc-SklLLN1CKYipYEDKxevWynDwIpRt3mcxwdK3Akbb6tNiYFT"/>
+</div>
+<span class="font-body-main font-semibold text-on-surface">Mateo Ruiz</span>
+</div>
+</td>
+<td class="px-8 py-5">
+<div class="w-full max-w-xs bg-surface-container rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 62%;"></div>
+</div>
+<span class="text-[10px] text-on-surface-variant mt-1 block">62% completado</span>
+</td>
+<td class="px-8 py-5">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-600">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                    Avanzando bien
+                                </span>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="px-4 py-2 rounded-full border border-primary text-primary text-xs font-bold hover:bg-primary hover:text-white transition-all active:scale-95">
+                                    Ver cuaderno y chat
+                                </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-6 bg-surface-container-low/30 text-center">
+<button class="text-sm font-bold text-primary hover:underline transition-all">Ver todos los alumnos (26)</button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar from JSON Authority (Visible on Mobile) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg border-t border-slate-100 dark:border-slate-800 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] flex justify-around items-center h-20 px-4 pb-safe">
+<button class="flex flex-col items-center justify-center text-slate-400 hover:text-[#6a769b]">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[11px] font-semibold">Resumen</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-400 hover:text-[#6a769b]">
+<span class="material-symbols-outlined">bubble_chart</span>
+<span class="text-[11px] font-semibold">Mapa</span>
+</button>
+<button class="flex flex-col items-center justify-center text-[#6a769b] bg-[#6a769b]/10 rounded-xl px-3 py-1">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-[11px] font-semibold">Alumnos</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-400 hover:text-[#6a769b]">
+<span class="material-symbols-outlined">psychology</span>
+<span class="text-[11px] font-semibold">Alertas</span>
+</button>
+</nav>
+</body></html>

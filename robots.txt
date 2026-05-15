@@ -6,4 +6,7 @@ Disallow: /api/
 Disallow: /admin/
 Disallow: /dashboard/
 
+Crawl-delay: 1
+
 Sitemap: https://marcoaprende.com/sitemap.xml
+Sitemap: https://marcoaprende.com/sitemap-images.xml

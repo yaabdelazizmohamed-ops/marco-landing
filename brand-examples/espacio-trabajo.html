@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Marcoaprende - Workspace</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"on-tertiary-fixed": "#432f56", "on-secondary-fixed": "#393f51", "on-primary-container": "#30406c", "surface-container-high": "#e7e7f1", "primary-fixed": "#b8c8fc", "secondary-fixed-dim": "#cfd3eb", "on-error-container": "#6e0a12", "primary-fixed-dim": "#aabaed", "surface-bright": "#faf8fe", "on-error": "#fff7f6", "inverse-on-surface": "#9d9ca2", "on-secondary-fixed-variant": "#565b6f", "surface-tint": "#4e5e8b", background: "#faf8fe", "on-secondary": "#faf8ff", "tertiary-container": "#e8cdfe", "surface-container-low": "#f4f3fa", "on-background": "#30323a", secondary: "#595e72", "inverse-primary": "#b8c8fc", "on-tertiary-container": "#57426a", "inverse-surface": "#0d0e12", "tertiary-fixed-dim": "#dabfef", "on-surface-variant": "#5d5f68", "secondary-fixed": "#dde1fa", "tertiary-fixed": "#e8cdfe", "on-surface": "#30323a", "primary-container": "#b8c8fc", "secondary-container": "#dde1fa", "surface-dim": "#d8d9e4", "on-primary-fixed-variant": "#394a76", "on-primary-fixed": "#1b2c57", "on-tertiary-fixed-variant": "#614c74", "outline-variant": "#b0b1bb", "surface-container-lowest": "#ffffff", "on-primary": "#f9f8ff", "surface-variant": "#e1e2ec", "on-secondary-container": "#4c5165", outline: "#787a84", "surface-container-highest": "#e1e2ec", "surface-container": "#ededf6", surface: "#faf8fe", error: "#a83836", "error-container": "#fa746f", tertiary: "#6c5680", primary: "#4e5e8b", "on-tertiary": "#fff6ff", "secondary-dim": "#4d5266", "error-dim": "#67040d", "tertiary-dim": "#604a73", "primary-dim": "#42527e"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {"container-max": "1200px", gutter: "24px", "margin-mobile": "16px", unit: "8px", "margin-desktop": "40px"}, fontFamily: {"label-caps": ["Inter"], "body-main": ["Inter"], "headline-md": ["Inter"], "title-sm": ["Inter"], "display-lg": ["Inter"], headline: ["Inter"], display: ["Inter"], body: ["Inter"], label: ["Inter"]}, fontSize: {"label-caps": ["12px", {lineHeight: "1", letterSpacing: "0.05em", fontWeight: "600"}], "body-main": ["16px", {lineHeight: "1.6", letterSpacing: "0", fontWeight: "400"}], "headline-md": ["32px", {lineHeight: "1.2", letterSpacing: "-0.01em", fontWeight: "600"}], "title-sm": ["20px", {lineHeight: "1.4", letterSpacing: "0", fontWeight: "600"}], "display-lg": ["48px", {lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "700"}]}}}};</script>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-main text-body-main antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar Component -->
+<header class="bg-[#F8FAFC] dark:bg-slate-950 docked full-width top-0 z-50 border-b border-slate-200/60 dark:border-slate-800 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none flex justify-between items-center w-full px-8 h-16 sticky">
+<button aria-label="Menu" class="p-2 -ml-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors duration-200 active:scale-95 text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined" data-icon="menu" style="font-variation-settings: 'FILL' 0;">menu</span>
+</button>
+<div class="absolute left-1/2 -translate-x-1/2">
+<h1 class="text-xl font-bold text-slate-900 dark:text-white font-inter tracking-tight">Cuaderno: Historia - Tema 3</h1>
+</div>
+<div class="flex items-center gap-4">
+<button aria-label="Account" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors duration-200 active:scale-95 text-[#6366F1] dark:text-indigo-400">
+<span class="material-symbols-outlined" data-icon="account_circle" style="font-variation-settings: 'FILL' 0;">account_circle</span>
+</button>
+<img alt="Student Avatar" class="w-8 h-8 rounded-full object-cover ring-2 ring-primary-container/20" data-alt="close-up of a young student avatar smiling gently against a bright studio background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBajyHPsr8ZoPQmZlJcrYJL6b54rX_FdX-e1yu0v4_fi2akDG1v3_3JjpurA-iUKc4XejD3mxyDwZCIXHVISae5QOju8R3UP5J8EClgy5yfUyEfIHxnZ2qMkWyTCeVsZhrb9HikOly4kW2D0cAsZh2ojJGCimByjwYkzUcVuP54ZVHb8-XD2R0pOC0V9UYNukj9yj1M_BRa2oS0AtBmwz3PWDtghmFXPsP1Jiqs2sgEQ-b3JKe0W5PE6wM4oHXOKDWfCD7MmFINZHFK"/>
+</div>
+</header>
+<!-- Main Workspace -->
+<main class="flex-1 flex flex-col lg:flex-row overflow-hidden h-[calc(100vh-64px)]">
+<!-- Left 60%: Document Viewer (Folio Style) -->
+<section class="w-full lg:w-[60%] bg-surface flex flex-col overflow-y-auto border-r border-outline-variant/30">
+<div class="max-w-3xl mx-auto w-full p-8 md:p-12 lg:p-16">
+<!-- Folio Header -->
+<div class="mb-12 border-b border-outline-variant/50 pb-8">
+<span class="font-label-caps text-label-caps text-secondary mb-4 block uppercase">Historia Universal • Módulo 4</span>
+<h2 class="font-display-lg text-display-lg text-on-surface mb-6">El Ascenso y Caída del Imperio Romano</h2>
+<p class="font-title-sm text-title-sm text-on-surface-variant leading-relaxed">
+                        Un análisis profundo de las estructuras políticas, sociales y militares que permitieron a Roma dominar el mundo conocido, y las fisuras internas que finalmente llevaron a su colapso.
+                    </p>
+</div>
+<!-- Content Area -->
+<article class="prose prose-lg max-w-none prose-headings:font-headline-md prose-headings:text-on-surface prose-p:text-on-surface-variant prose-p:leading-[1.8] prose-a:text-primary prose-a:no-underline hover:prose-a:underline">
+<h3 class="font-headline-md text-headline-md mb-6 mt-12">La República y la Expansión</h3>
+<p class="mb-6">
+                        Antes de convertirse en un imperio, Roma fue una república. Este período se caracterizó por un complejo sistema de pesos y contrapesos gubernamentales, dominado por el Senado. La expansión no fue un proceso lineal ni pacífico; las Guerras Púnicas contra Cartago fueron decisivas.
+                    </p>
+<figure class="my-10 rounded-2xl overflow-hidden shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] border border-outline-variant/30 bg-surface-container-lowest">
+<img alt="Roman Colosseum" class="w-full h-auto object-cover" data-alt="dramatic wide shot of the Roman Colosseum at sunset with warm golden light highlighting the ancient stone arches" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoPzk6Y5yRe3_8f_phPffGol8-lttiE-DfFZ_D3R6I_GZUqelEBxjVfSyUcEUaHYuYs8V7PdeZRoWKBq06Iid3llxQCj_SLZP7MwFpW_ewxW4K8zQrAnBBgj3rc-e2ejPiSr8ruvw2aXbFc1g2qMx4LAlP2QI9KWfx3BW4FfmQwjXjP8KI8YNo7YwHlkH5yxeHBvye4I8OWGYj9XQqaLZfMzLh78V2YoOYQstNLF2yiYqQc9UE9nM6HVQBlF5ZjbtWPBzQPJNULZD5"/>
+<figcaption class="p-4 text-center font-label-caps text-label-caps text-secondary bg-surface-container-lowest border-t border-outline-variant/20">
+                            Fig 1. El Coliseo Romano, símbolo del poder imperial y la ingeniería cívica.
+                        </figcaption>
+</figure>
+<h3 class="font-headline-md text-headline-md mb-6 mt-12">La Transición al Imperio</h3>
+<p class="mb-6">
+                        El asesinato de Julio César en el 44 a.C. marcó el principio del fin de la República. Su heredero, Octavio (más tarde Augusto), consolidó el poder, marcando el inicio de la Pax Romana, un período de relativa paz y estabilidad en todo el imperio.
+                    </p>
+<div class="my-8 p-6 bg-surface-container-low rounded-xl border border-primary-container/20 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-2 h-full bg-primary-container rounded-l-xl"></div>
+<h4 class="font-title-sm text-title-sm text-on-surface mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="lightbulb" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+                            Concepto Clave: Pax Romana
+                        </h4>
+<p class="text-on-surface-variant m-0">
+                            La "Paz Romana" fue un largo período de hegemonía pacífica impuesta por el Imperio romano en sus dominios (siglos I y II d.C.). Esta estabilidad permitió un desarrollo comercial e infraestructural sin precedentes.
+                        </p>
+</div>
+</article>
+</div>
+</section>
+<!-- Right 40%: AI Chat Interface -->
+<section class="w-full lg:w-[40%] bg-surface-container-lowest flex flex-col h-full relative z-10 shadow-[-10px_0_30px_rgb(0,0,0,0.02)]">
+<!-- Chat Header -->
+<div class="px-6 py-5 border-b border-outline-variant/30 flex items-center gap-4 bg-surface-container-lowest/80 backdrop-blur-md sticky top-0 z-20">
+<div class="w-10 h-10 rounded-full bg-primary-container/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="smart_toy" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<div>
+<h2 class="font-title-sm text-title-sm text-on-surface">Marco</h2>
+<p class="font-label-caps text-label-caps text-secondary uppercase mt-1">Asistente de Estudio AI</p>
+</div>
+<button aria-label="Chat Options" class="ml-auto p-2 rounded-full hover:bg-surface-container transition-colors text-tertiary">
+<span class="material-symbols-outlined" data-icon="more_vert" style="font-variation-settings: 'FILL' 0;">more_vert</span>
+</button>
+</div>
+<!-- Chat History -->
+<div class="flex-1 overflow-y-auto p-6 space-y-6 scroll-smooth bg-surface-container-lowest">
+<!-- AI Message -->
+<div class="flex gap-4 max-w-[90%]">
+<div class="w-8 h-8 rounded-full bg-primary-container/10 flex items-center justify-center shrink-0 mt-1">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="smart_toy" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<div class="bg-surface-container-low px-5 py-4 rounded-2xl rounded-tl-sm text-on-surface-variant font-body-main text-body-main shadow-sm border border-outline-variant/20">
+<p>¡Hola! Veo que estás estudiando la historia de Roma. La lección trata sobre el paso de la República al Imperio. ¿Hay algún concepto específico que te gustaría repasar juntos?</p>
+</div>
+</div>
+<!-- Student Message -->
+<div class="flex gap-4 max-w-[90%] ml-auto flex-row-reverse">
+<img alt="Student" class="w-8 h-8 rounded-full object-cover shrink-0 mt-1" data-alt="close-up of a young student avatar smiling gently against a bright studio background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkv8pzHuC3CucSTzrqjnFGHF97ksMIWSd6_e031K2pQIdv8HeGjGysXEDbl7-F5BJQ9rpi80otwCQmFUo_gnpKScwGzm1ukOWtyqOYaSgOibB3nSS9pmzeq_j1BbbuSyqy2tVcxT6JkhZVOqmc_TA3h7OsXah7qyItpbZcJhHFmQZO2eb5aRhL2TyNWK15LlXKgttfPoXKj8zsFuc4b_oOktvFHO8ef6Pi-Iv-gh7Q5zBei6sAuyB8zY2p6ftkE06UlbacyTbVvYVR"/>
+<div class="bg-primary px-5 py-4 rounded-2xl rounded-tr-sm text-on-primary font-body-main text-body-main shadow-[0_4px_14px_rgba(70,72,212,0.15)]">
+<p>Sí, no entiendo muy bien por qué dicen que el asesinato de Julio César aceleró el fin de la República. ¿No se suponía que los senadores querían salvarla?</p>
+</div>
+</div>
+<!-- AI Message -->
+<div class="flex gap-4 max-w-[90%]">
+<div class="w-8 h-8 rounded-full bg-primary-container/10 flex items-center justify-center shrink-0 mt-1">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="smart_toy" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<div class="bg-surface-container-low px-5 py-4 rounded-2xl rounded-tl-sm text-on-surface-variant font-body-main text-body-main shadow-sm border border-outline-variant/20">
+<p>Es una excelente observación. Tienes razón, el grupo de senadores liderados por Bruto y Casio creían que matando a César "salvarían" la República de convertirse en una tiranía (ya que César se había nombrado dictador vitalicio).</p>
+<p class="mt-3">Sin embargo, lograron lo contrario. El asesinato provocó un vacío de poder y una serie de guerras civiles destructivas. El pueblo romano, que en gran medida apoyaba a César, se volvió contra los conspiradores.</p>
+<div class="mt-4 p-3 bg-surface-container-lowest rounded-lg border border-outline-variant/40 flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-0.5" data-icon="find_in_page" style="font-variation-settings: 'FILL' 0;">find_in_page</span>
+<div>
+<span class="block font-label-caps text-label-caps text-secondary mb-1">Referencia en el texto</span>
+<span class="text-sm text-on-surface">"El asesinato de Julio César en el 44 a.C. marcó el principio del fin..."</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Chat Input Area -->
+<div class="p-6 bg-surface-container-lowest border-t border-outline-variant/30">
+<div class="relative flex items-end gap-2 bg-[#F1F5F9] rounded-2xl p-2 transition-all duration-300 focus-within:bg-white focus-within:ring-2 focus-within:ring-primary/20 focus-within:shadow-[0_0_15px_rgba(70,72,212,0.1)]">
+<button aria-label="Attach file" class="p-3 text-secondary hover:text-primary transition-colors rounded-xl hover:bg-surface-container-low shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="attach_file" style="font-variation-settings: 'FILL' 0;">attach_file</span>
+</button>
+<textarea aria-label="Chat input" class="w-full bg-transparent border-none outline-none resize-none py-3 px-2 text-on-surface placeholder:text-secondary focus:ring-0 max-h-32 font-body-main text-body-main" placeholder="Pregunta a Marco sobre esta lección..." rows="1"></textarea>
+<button aria-label="Modo voz" onclick="window.location='modo-voz.html'" title="Cambiar a modo voz" class="p-3 text-primary hover:bg-primary hover:text-on-primary transition-colors rounded-xl shrink-0 flex items-center justify-center" style="cursor:pointer"><span class="material-symbols-outlined" data-icon="mic" style="font-variation-settings: 'FILL' 0;">mic</span></button><button aria-label="Send message" class="p-3 bg-primary text-on-primary rounded-xl hover:bg-primary-fixed-variant transition-colors shrink-0 flex items-center justify-center shadow-[0_4px_14px_rgba(70,72,212,0.2)]">
+<span class="material-symbols-outlined" data-icon="send" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div>
+<div class="mt-3 text-center">
+<span class="font-label-caps text-label-caps text-secondary">Marco puede cometer errores. Considera verificar la información importante.</span>
+</div>
+</div>
+</section>
+</main>
+</body></html>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <url>
+    <loc>https://marcoaprende.com/</loc>
+    <image:image>
+      <image:loc>https://marcoaprende.com/images/og-marco.jpg</image:loc>
+      <image:title>Marco — Plataforma IA educativa con método socrático</image:title>
+      <image:caption>Interfaz de Marco mostrando una conversación socrática entre la IA y un alumno sobre fracciones</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://marcoaprende.com/images/demo-alumno.webp</image:loc>
+      <image:title>Marco IA guiando al alumno con preguntas sobre fracciones</image:title>
+      <image:caption>Panel del alumno en Marco: cuaderno de matemáticas con chat socrático de IA en tiempo real</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://marcoaprende.com/images/demo-profesor.webp</image:loc>
+      <image:title>Panel del profesor en Marco — seguimiento individual de alumnos</image:title>
+      <image:caption>Dashboard del profesor mostrando progreso de alumnos, alertas de bloqueo y diagnóstico de Marco IA</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://marcoaprende.com/images/demo-director.webp</image:loc>
+      <image:title>Panel de dirección de centro en Marco — métricas de adopción</image:title>
+      <image:caption>Vista del director del centro con métricas de adopción por departamento y participación de alumnos</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://marcoaprende.com/como-funciona</loc>
+    <image:image>
+      <image:loc>https://marcoaprende.com/images/como-funciona-marco.webp</image:loc>
+      <image:title>Cómo funciona Marco — método socrático IA para colegios</image:title>
+      <image:caption>Diagrama explicativo del flujo socrático de Marco: alumno pregunta, IA guía con preguntas, profesor recibe alertas</image:caption>
+    </image:image>
+  </url>
+
+</urlset>
