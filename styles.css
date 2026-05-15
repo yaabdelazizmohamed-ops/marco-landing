@@ -2315,6 +2315,15 @@ body:not(.page-ready) .scroll-hint {
   .float-capture { width: calc(100vw - 2rem); right: 1rem; bottom: 1rem; }
 }
 
+/* Desktop: muestra float-capture (card email), oculta pill */
+@media (min-width: 769px) {
+  .floating-cta { display: none !important; }
+}
+/* Móvil: muestra floating-cta (pill), oculta card email */
+@media (max-width: 768px) {
+  .float-capture { display: none !important; }
+}
+
 /* ── HERO: SOCIAL PROOF BADGE + TIMING ── */
 .hero-proof-strip {
   display: inline-flex;
