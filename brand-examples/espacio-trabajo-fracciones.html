@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+
+<html class="" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Marcoaprende - Espacio de Trabajo</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration (Provided) -->
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"on-surface": "#30323a", outline: "#787a84", "on-primary-fixed-variant": "#394a76", background: "#faf8fe", "on-secondary-fixed": "#393f51", "on-secondary-fixed-variant": "#565b6f", "on-tertiary-fixed": "#432f56", tertiary: "#6c5680", surface: "#faf8fe", "surface-container-highest": "#e1e2ec", "inverse-on-surface": "#9d9ca2", "on-background": "#30323a", "on-secondary-container": "#4c5165", "tertiary-container": "#e8cdfe", primary: "#4e5e8b", "secondary-fixed": "#dde1fa", "inverse-primary": "#b8c8fc", "surface-variant": "#e1e2ec", "secondary-container": "#dde1fa", "tertiary-fixed-dim": "#dabfef", "on-tertiary-fixed-variant": "#614c74", "on-tertiary": "#fff6ff", "surface-tint": "#4e5e8b", "tertiary-fixed": "#e8cdfe", "surface-bright": "#faf8fe", "surface-container-lowest": "#ffffff", "on-primary-container": "#30406c", "primary-fixed": "#b8c8fc", "outline-variant": "#b0b1bb", "on-secondary": "#faf8ff", "on-primary": "#f9f8ff", "on-primary-fixed": "#1b2c57", "inverse-surface": "#0d0e12", error: "#a83836", "secondary-fixed-dim": "#cfd3eb", "surface-dim": "#d8d9e4", "error-container": "#fa746f", "surface-container-low": "#f4f3fa", "on-tertiary-container": "#57426a", secondary: "#595e72", "on-surface-variant": "#5d5f68", "primary-container": "#b8c8fc", "surface-container-high": "#e7e7f1", "surface-container": "#ededf6", "primary-fixed-dim": "#aabaed", "on-error-container": "#6e0a12", "on-error": "#fff7f6", "secondary-dim": "#4d5266", "error-dim": "#67040d", "tertiary-dim": "#604a73", "primary-dim": "#42527e"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {unit: "8px", "margin-mobile": "16px", "container-max": "1200px", "margin-desktop": "40px", gutter: "24px"}, fontFamily: {"title-sm": ["Inter"], "label-caps": ["Inter"], "headline-md": ["Inter"], "display-lg": ["Inter"], "body-main": ["Inter"], headline: ["Inter"], display: ["Inter"], body: ["Inter"], label: ["Inter"]}, fontSize: {"title-sm": ["20px", {lineHeight: "1.4", letterSpacing: "0", fontWeight: "600"}], "label-caps": ["12px", {lineHeight: "1", letterSpacing: "0.05em", fontWeight: "600"}], "headline-md": ["32px", {lineHeight: "1.2", letterSpacing: "-0.01em", fontWeight: "600"}], "display-lg": ["48px", {lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "700"}], "body-main": ["16px", {lineHeight: "1.6", letterSpacing: "0", fontWeight: "400"}]}}}};</script>
+<!-- Google Fonts: Inter for UI, Nunito for Document Reader -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Custom scrollbar for better UI feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d8e3fb; /* surface-variant */
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #c0c1ff; /* primary-fixed-dim */
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-main text-body-main h-screen flex flex-col overflow-hidden antialiased">
+<!-- Top App Bar (Workspace Header) -->
+<!-- Applying structural logic from Shared Components JSON + Custom Workspace Content -->
+<header class="bg-surface/80 backdrop-blur-md border-b border-outline-variant/40 flex justify-between items-center w-full px-8 h-16 shrink-0 z-50">
+<!-- Left: Branding / Context -->
+<div class="flex items-center gap-4 w-1/3">
+<button class="p-2 -ml-2 rounded-full hover:bg-surface-container transition-colors text-on-surface-variant flex items-center justify-center" style="">
+<span class="material-symbols-outlined text-[24px]" style="">menu</span>
+</button>
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-lg bg-primary-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px] fill" style="">auto_stories</span>
+</div>
+<h1 class="font-title-sm text-title-sm text-on-surface truncate" style="">Cuaderno: Matemática - Unidad 2</h1>
+</div>
+</div>
+<!-- Center: Progress Bar (Invisible Infrastructure style) -->
+<div class="w-1/3 flex flex-col items-center justify-center gap-2">
+<div class="flex justify-between w-full max-w-[240px] items-center">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase" style="">Progreso de la tarea</span>
+<span class="font-label-caps text-label-caps text-primary" style="">50%</span>
+</div>
+<div class="w-full max-w-[240px] h-2 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full w-1/2 shadow-[0_0_10px_rgba(70,72,212,0.4)]" style="width: 50%; shadow-[0_0_10px_rgba(70,72,212,0.4)]"></div>
+</div>
+</div>
+<!-- Right: Actions & Avatar -->
+<div class="flex items-center justify-end gap-4 w-1/3">
+<button class="p-2 rounded-full hover:bg-surface-container transition-colors text-on-surface-variant relative flex items-center justify-center" style="">
+<span class="material-symbols-outlined text-[24px]" style="">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<div class="w-10 h-10 rounded-full border-2 border-surface-container bg-surface-container-high overflow-hidden shrink-0 cursor-pointer hover:border-primary transition-colors">
+<img alt="Student Avatar" class="w-full h-full object-cover" data-alt="Portrait of a cheerful young student with short dark hair, soft natural lighting, simple neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgxYVmvAYMVGgkE7Gl2SzvEvykqTh4eqkgQUo0CL0ilwEWut71JQuKew2d71UFfXl2cZlYB_0PrA66bdMm9xEJqVxceZ2dNGOMv5_RkMKxC489FfzkbCIsPoc4CcQSm_JDPcHEBgE2TPFmAWt3UPYcPG0xSImAsaJaMmP5aY0izSEC3QqD2zl7jiciwA22fWLvG0WHyGohmfLGwdLyJFKsaHypSjml9xnDXZ9GGBSx_GgYHZjYwaK_Jff1VqWkiTI2wAo6NVJlcVjr" style=""/>
+</div>
+</div>
+</header>
+<!-- Main Workspace Area -->
+<main class="flex-1 flex overflow-hidden w-full relative">
+<!-- Left Pane: Document Viewer (60%) -->
+<section class="w-full md:w-[60%] h-full overflow-y-auto bg-background relative z-10 flex justify-center">
+<!-- Document Container -->
+<article class="w-full max-w-[800px] px-8 py-12 md:py-16 md:px-12 text-[#334155] font-display">
+<header class="mb-12">
+<div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-caps text-label-caps mb-6">
+<span class="material-symbols-outlined text-[16px]" style="">calculate</span>
+<span class="" style="">Unidad 2</span>
+</div>
+<h2 class="text-4xl md:text-5xl font-extrabold text-on-surface leading-tight tracking-tight mb-4 font-bold" style="">Fracciones</h2>
+<p class="text-xl text-on-surface-variant font-medium leading-relaxed font-normal" style="">Conceptos y operaciones básicas con fracciones.</p>
+</header>
+<div class="space-y-10 text-lg leading-[1.8]">
+<div>
+<h3 class="font-bold text-2xl text-on-surface mb-3" style="">5.1 Concepto de fracción</h3>
+<p class="font-normal" style="">Una fracción representa una parte de un todo. Se escribe como a/b, donde 'a' es el numerador (las partes que tomamos) y 'b' es el denominador (las partes iguales en que se divide el todo). El denominador nunca puede ser cero.</p>
+</div>
+<div>
+<h3 class="font-bold text-2xl text-on-surface mb-3" style="">5.2 Fracciones equivalentes</h3>
+<p class="font-normal" style="">Dos fracciones son equivalentes cuando representan la misma cantidad. Para comprobarlo, multiplicamos en cruz: a/b = c/d si a·d = b·c. Ejemplo: 2/4 = 3/6, ya que 2·6 = 4·3 = 12.</p>
+</div>
+<div class="relative group cursor-pointer my-10 p-2">
+<!-- Selection Box Overlay -->
+<div class="absolute -inset-1 z-20 pointer-events-none">
+<div class="w-full h-full border-2 border-dashed border-primary/60 bg-primary/5 rounded-xl relative">
+<!-- Corner Handles -->
+<div class="absolute -top-1 -left-1 w-2.5 h-2.5 bg-primary border border-white rounded-sm shadow-sm"></div>
+<div class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-primary border border-white rounded-sm shadow-sm"></div>
+<div class="absolute -bottom-1 -left-1 w-2.5 h-2.5 bg-primary border border-white rounded-sm shadow-sm"></div>
+<div class="absolute -bottom-1 -right-1 w-2.5 h-2.5 bg-primary border border-white rounded-sm shadow-sm"></div>
+</div>
+</div>
+<!-- Content -->
+<div class="relative z-10">
+<h3 class="font-bold text-2xl text-on-surface mb-3">5.3 Suma y resta de fracciones</h3>
+<p class="font-normal">Para sumar fracciones con el mismo denominador, se suman los numeradores y se mantiene el denominador: 2/7 + 3/7 = 5/7. Para sumar fracciones con distinto denominador, primero hay que encontrar el mínimo común múltiplo (m.c.m.) de los denominadores. Una vez que ambas fracciones tienen el mismo denominador, se suman los numeradores. Ejemplo resuelto: 1/3 + 1/4 -&gt; m.c.m.(3, 4) = 12. 1/3 = 4/12; 1/4 = 3/12. 4/12 + 3/12 = 7/12.</p>
+</div>
+</div>
+<div>
+<h3 class="font-bold text-2xl text-on-surface mb-3" style="">5.4 Multiplicación de fracciones</h3>
+<p class="font-normal" style="">Se multiplican los numeradores entre sí y los denominadores entre sí: (a/b) · (c/d) = (a·c)/(b·d). Después se simplifica el resultado si es posible.</p>
+</div>
+</div>
+</article>
+</section>
+<!-- Right Pane: AI Chat Assistant (40%) -->
+<aside class="hidden md:flex flex-col w-[40%] h-full bg-surface-container-lowest border-l border-outline-variant/30 shadow-[-10px_0_30px_rgba(0,0,0,0.02)] z-20">
+<!-- Chat Header -->
+<div class="px-6 py-4 border-b border-outline-variant/30 bg-surface-container-lowest flex items-center gap-4 shrink-0">
+<div class="relative">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary border-2 border-surface-container-lowest shadow-sm z-10 relative">
+<span class="material-symbols-outlined text-[24px] fill" style="">smart_toy</span>
+</div>
+<span class="absolute bottom-0 right-0 w-3 h-3 bg-[#10B981] border-2 border-surface-container-lowest rounded-full z-20"></span>
+</div>
+<div>
+<h3 class="font-title-sm text-[16px] leading-tight text-on-surface font-semibold" style="">Marco</h3>
+<p class="text-[13px] text-on-surface-variant" style="">Tu asistente de estudio</p>
+</div>
+<div class="ml-auto flex gap-2">
+<button class="p-2 rounded-full text-outline hover:bg-surface-container transition-colors flex items-center justify-center" style="">
+<span class="material-symbols-outlined text-[20px]" style="">push_pin</span>
+</button>
+<button class="p-2 rounded-full text-outline hover:bg-surface-container transition-colors flex items-center justify-center" style="">
+<span class="material-symbols-outlined text-[20px]" style="">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Chat Messages Area -->
+<div class="flex-1 overflow-y-auto p-6 flex flex-col gap-6 bg-surface/30"><div class="flex justify-center w-full"><span class="text-[11px] font-label-caps text-label-caps text-outline bg-surface-container px-3 py-1 rounded-full uppercase" style="">Hoy</span></div><!-- Marco 1 --><div class="flex items-end gap-3 max-w-[90%]"><div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center text-primary shrink-0 shadow-sm"><span class="material-symbols-outlined text-[18px] fill" style="">smart_toy</span></div><div class="bg-surface-container-highest text-on-surface p-4 rounded-2xl rounded-bl-sm shadow-sm"><p class="text-[15px] leading-relaxed" style="">Hola Carlos. Veo que has seleccionado el apartado sobre suma de fracciones con distinto denominador. ¿Qué es exactamente lo que no te queda claro?</p></div></div><!-- Carlos 1 --><div class="flex items-end gap-3 max-w-[90%] self-end"><div class="bg-primary text-on-primary p-4 rounded-2xl rounded-br-sm shadow-sm"><p class="text-[15px] leading-relaxed" style="">No entiendo por qué hay que buscar el m.c.m. para sumar fracciones</p></div></div><!-- Marco 2 --><div class="flex items-end gap-3 max-w-[90%]"><div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center text-primary shrink-0 shadow-sm"><span class="material-symbols-outlined text-[18px] fill" style="">smart_toy</span></div><div class="bg-surface-container-highest text-on-surface p-4 rounded-2xl rounded-bl-sm shadow-sm"><p class="text-[15px] leading-relaxed" style="">Buena pregunta. Vamos paso a paso. Imagina que tienes una pizza cortada en 3 trozos y otra cortada en 4 trozos. Si coges un trozo de cada pizza... ¿los trozos son del mismo tamaño?</p></div></div><!-- Carlos 2 --><div class="flex items-end gap-3 max-w-[90%] self-end"><div class="bg-primary text-on-primary p-4 rounded-2xl rounded-br-sm shadow-sm"><p class="text-[15px] leading-relaxed" style="">No, uno es más grande que el otro</p></div></div><!-- Marco 3 --><div class="flex items-end gap-3 max-w-[90%]"><div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center text-primary shrink-0 shadow-sm"><span class="material-symbols-outlined text-[18px] fill" style="">smart_toy</span></div><div class="bg-surface-container-highest text-on-surface p-4 rounded-2xl rounded-bl-sm shadow-sm"><p class="text-[15px] leading-relaxed" style="">Exacto. Entonces, ¿tiene sentido decir que tienes '2 trozos' sin más? ¿Qué necesitarías para poder compararlos o sumarlos?</p></div></div><!-- Carlos 3 --><div class="flex items-end gap-3 max-w-[90%] self-end"><div class="bg-primary text-on-primary p-4 rounded-2xl rounded-br-sm shadow-sm"><p class="text-[15px] leading-relaxed" style="">Que los trozos sean iguales?</p></div></div><!-- Marco 4 --><div class="flex items-end gap-3 max-w-[90%]"><div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center text-primary shrink-0 shadow-sm"><span class="material-symbols-outlined text-[18px] fill" style="">smart_toy</span></div><div class="bg-surface-container-highest text-on-surface p-4 rounded-2xl rounded-bl-sm shadow-sm"><p class="text-[15px] leading-relaxed" style="">Perfecto. Eso es exactamente lo que hace el m.c.m.: encontrar un tamaño de trozo que funcione para ambas pizzas. Si las cortas en 12 trozos iguales cada una... ¿cuántos trozos de esos 12 equivalen a 1/3 de pizza?</p></div></div><!-- Internal Note --><!-- Typing Indicator --><!-- Marco 4 --><div class="flex items-end gap-3 max-w-[90%]"><div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center text-primary shrink-0 shadow-sm"><span class="material-symbols-outlined text-[18px] fill">smart_toy</span></div><div class="bg-surface-container-highest text-on-surface p-4 rounded-2xl rounded-bl-sm shadow-sm"><p class="text-[15px] leading-relaxed">Perfecto. Eso es exactamente lo que hace el m.c.m.: encontrar un tamaño de trozo que funcione para ambas pizzas. Si las cortas en 12 trozos iguales cada una... ¿cuántos trozos de esos 12 equivalen a 1/3 de pizza?</p></div></div></div>
+<!-- Chat Input Area -->
+<div class="bg-surface-container-lowest pt-2 pb-6 px-4 shrink-0 flex flex-col gap-3">
+<!-- Suggestion Chips -->
+<!-- Input Field Container -->
+<div class="relative flex items-center bg-surface-container-low rounded-[24px] border border-transparent focus-within:border-primary focus-within:bg-surface-container-lowest focus-within:shadow-[0_0_0_4px_rgba(70,72,212,0.1)] transition-all duration-300 p-2">
+<button class="p-2 text-outline hover:text-primary transition-colors rounded-full hover:bg-surface-container flex items-center justify-center shrink-0" style="">
+<span class="material-symbols-outlined text-[22px]" style="">add_photo_alternate</span>
+</button>
+<input class="flex-1 bg-transparent border-none outline-none text-[15px] text-on-surface placeholder-outline px-2 h-10 w-full focus:ring-0" placeholder="Escribe tu pregunta aquí..." type="text"/>
+<button onclick="window.location='modo-voz.html'" title="Modo voz" class="p-2 text-primary bg-primary/10 hover:bg-primary hover:text-on-primary transition-colors rounded-full flex items-center justify-center shrink-0 mr-1" style="cursor:pointer">
+<span class="material-symbols-outlined text-[22px]" style="">mic</span>
+</button><button class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center shrink-0 hover:bg-surface-tint transition-transform hover:scale-105 shadow-sm" style="">
+<span class="material-symbols-outlined text-[20px] ml-1" style="">send</span>
+</button>
+</div>
+<div class="text-center">
+<span class="text-[10px] text-outline" style=""><br/></span>
+</div>
+</div>
+</aside>
+</main>
+</body></html>

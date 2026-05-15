@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Director's Dashboard - Marcoaprende</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Inter (Replacing Nunito per Design System mandate) -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"surface-bright": "#faf8fe", "secondary-fixed": "#dde1fa", "surface-container-highest": "#e1e2ec", "inverse-primary": "#b8c8fc", "on-secondary-fixed-variant": "#565b6f", "tertiary-container": "#e8cdfe", "inverse-surface": "#0d0e12", "tertiary-fixed": "#e8cdfe", "on-surface-variant": "#5d5f68", "primary-fixed-dim": "#aabaed", "on-secondary-container": "#4c5165", outline: "#787a84", secondary: "#595e72", "surface-container-low": "#f4f3fa", tertiary: "#6c5680", "primary-fixed": "#b8c8fc", primary: "#4e5e8b", "outline-variant": "#b0b1bb", "on-secondary": "#faf8ff", "on-error": "#fff7f6", error: "#a83836", "on-tertiary-container": "#57426a", "on-secondary-fixed": "#393f51", "surface-container": "#ededf6", "on-primary-fixed": "#1b2c57", "secondary-container": "#dde1fa", "primary-container": "#b8c8fc", "on-primary-container": "#30406c", "on-tertiary-fixed-variant": "#614c74", "inverse-on-surface": "#9d9ca2", background: "#faf8fe", "on-primary-fixed-variant": "#394a76", "on-surface": "#30323a", "on-background": "#30323a", "tertiary-fixed-dim": "#dabfef", "on-tertiary": "#fff6ff", "surface-tint": "#4e5e8b", "on-primary": "#f9f8ff", "secondary-fixed-dim": "#cfd3eb", "on-tertiary-fixed": "#432f56", "on-error-container": "#6e0a12", "surface-dim": "#d8d9e4", "surface-variant": "#e1e2ec", "surface-container-high": "#e7e7f1", surface: "#faf8fe", "surface-container-lowest": "#ffffff", "error-container": "#fa746f", "secondary-dim": "#4d5266", "error-dim": "#67040d", "tertiary-dim": "#604a73", "primary-dim": "#42527e"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {"container-max": "1200px", "margin-desktop": "40px", unit: "8px", "margin-mobile": "16px", gutter: "24px"}, fontFamily: {"headline-md": ["Inter"], "body-main": ["Inter"], "title-sm": ["Inter"], "display-lg": ["Inter"], "label-caps": ["Inter"], headline: ["Inter"], display: ["Inter"], body: ["Inter"], label: ["Inter"]}, fontSize: {"headline-md": ["32px", {lineHeight: "1.2", letterSpacing: "-0.01em", fontWeight: "600"}], "body-main": ["16px", {lineHeight: "1.6", letterSpacing: "0", fontWeight: "400"}], "title-sm": ["20px", {lineHeight: "1.4", letterSpacing: "0", fontWeight: "600"}], "display-lg": ["48px", {lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "700"}], "label-caps": ["12px", {lineHeight: "1", letterSpacing: "0.05em", fontWeight: "600"}]}}}};</script>
+<style>
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+</style>
+</head>
+<body class="bg-background text-on-background font-body-main antialiased min-h-screen flex flex-col">
+<!-- TopAppBar (Generated from Shared Components JSON) -->
+<header class="flex items-center justify-between px-8 py-4 w-full max-w-full bg-white/80 backdrop-blur-md docked full-width top-0 z-50 sticky border-b border-slate-200/60 shadow-sm font-sans antialiased text-sm font-medium">
+<!-- Brand Logo -->
+<div class="flex items-center"><svg viewBox="140 72 72 62" width="70" height="28" xmlns="http://www.w3.org/2000/svg" aria-label="Marco"><line x1="148" y1="80" x2="148" y2="130" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><line x1="148" y1="80" x2="163" y2="80" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><line x1="148" y1="130" x2="163" y2="130" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><line x1="202" y1="80" x2="202" y2="130" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><line x1="202" y1="80" x2="187" y2="80" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><line x1="202" y1="130" x2="187" y2="130" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><text x="175" y="119" font-family="Georgia,serif" font-size="42" font-style="italic" text-anchor="middle" fill="#0a0a0a">M</text></svg></div>
+<!-- Navigation Links -->
+<nav class="hidden md:flex items-center space-x-6">
+<a class="text-[#6a769b] border-b-2 border-[#6a769b] pb-4 -mb-4 transition-colors" href="#">Dashboard</a>
+<a class="text-slate-500 hover:text-[#6a769b] transition-colors" href="#">Academic</a>
+<a class="text-slate-500 hover:text-[#6a769b] transition-colors" href="#">Finance</a>
+<a class="text-slate-500 hover:text-[#6a769b] transition-colors" href="#">Staff</a>
+</nav>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-4">
+<span class="hidden lg:block text-slate-500 bg-slate-50 px-3 py-1 rounded-full">Q3 2024</span>
+<div class="flex items-center gap-2 text-slate-600">
+<button class="hover:bg-slate-50 rounded-full transition-all active:scale-95 duration-200 ease-in-out w-10 h-10 flex items-center justify-center">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="hover:bg-slate-50 rounded-full transition-all active:scale-95 duration-200 ease-in-out w-10 h-10 flex items-center justify-center">
+<span class="material-symbols-outlined">calendar_today</span>
+</button>
+</div>
+<div class="h-8 w-px bg-slate-200 mx-2"></div>
+<div class="flex items-center gap-3 cursor-pointer hover:bg-slate-50 p-1 pr-3 rounded-full transition-all active:scale-95 duration-200 ease-in-out">
+<img alt="Director Avatar" class="w-8 h-8 rounded-full object-cover border border-slate-200" data-alt="Professional headshot of a mature male school director in a light blue shirt smiling warmly against a blurred bright background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOkA4fYOf3Xie_pDkq6yxx2re636nXGEpC6oqvF-AXcWhXCzzrfZVqLNijImTWB-s6dQO6YJzOorsz6Edtq701QOWx0xqgKNdYoIgzlLwk8eYFpdqfwZmHsdy732RpEpaPzuJHAIry3qGkW6GaAOl6Cvg4nzz2XVdRAT8nxS9tbj3EBfL8WVW03FdBD8bidGEPRxmF1Rm4QpdF_f_p7Cs16BIKmaFd23kW2vd6zHghrzDzzlIASRYs5CuLWPZiE2pgprB5nwMaX_4C"/>
+<span class="text-slate-600 hidden md:block">Profile</span>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-grow w-full max-w-container-max mx-auto px-gutter py-margin-desktop space-y-[40px]">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h1 class="font-headline-md text-headline-md text-on-surface mb-2">Panel de Dirección</h1>
+<p class="font-body-main text-body-main text-secondary">Colegio San Rafael</p>
+</div>
+<div class="bg-surface-container-low text-secondary border border-outline-variant px-4 py-2 rounded-full font-label-caps text-label-caps flex items-center gap-2 w-fit">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+            Curso 2025-2026 - 2º Trimestre
+        </div>
+</div>
+<!-- KPI Row -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- KPI 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-6 border border-surface-container-highest shadow-sm flex flex-col gap-3 relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-24 h-24 bg-primary-fixed opacity-20 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+<p class="font-body-main text-body-main text-secondary relative z-10">Alumnos activos</p>
+<div class="font-display-lg text-display-lg text-on-surface relative z-10 tracking-tight">312</div>
+<div class="flex items-center gap-1.5 mt-1 bg-secondary-fixed/50 text-on-secondary-fixed-variant px-2.5 py-1 rounded-md w-fit relative z-10">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+<span class="font-label-caps text-label-caps">14 este mes</span>
+</div>
+</div>
+<!-- KPI 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-6 border border-surface-container-highest shadow-sm flex flex-col gap-3 relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-24 h-24 bg-tertiary-fixed opacity-20 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+<p class="font-body-main text-body-main text-secondary relative z-10">Profesores en plataforma</p>
+<div class="font-display-lg text-display-lg text-on-surface relative z-10 tracking-tight">18</div>
+<div class="flex items-center gap-1.5 mt-1 bg-secondary-fixed/50 text-on-secondary-fixed-variant px-2.5 py-1 rounded-md w-fit relative z-10">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+<span class="font-label-caps text-label-caps">3 vs mes anterior</span>
+</div>
+</div>
+<!-- KPI 3 -->
+<div class="bg-surface-container-lowest rounded-xl p-6 border border-surface-container-highest shadow-sm flex flex-col gap-3 relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-24 h-24 bg-primary-fixed opacity-20 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+<p class="font-body-main text-body-main text-secondary relative z-10">Adopción del centro</p>
+<div class="font-display-lg text-display-lg text-on-surface relative z-10 tracking-tight">91%</div>
+<div class="flex items-center gap-1.5 mt-1 bg-secondary-fixed/50 text-on-secondary-fixed-variant px-2.5 py-1 rounded-md w-fit relative z-10">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+<span class="font-label-caps text-label-caps">8% vs mes anterior</span>
+</div>
+</div>
+<!-- KPI 4 -->
+<div class="bg-surface-container-lowest rounded-xl p-6 border border-surface-container-highest shadow-sm flex flex-col gap-3 relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-24 h-24 bg-tertiary-fixed opacity-20 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+<p class="font-body-main text-body-main text-secondary relative z-10">Tiempo medio / alumno</p>
+<div class="font-display-lg text-display-lg text-on-surface relative z-10 tracking-tight">38<span class="text-title-sm font-title-sm text-secondary ml-1">min</span></div>
+<div class="flex items-center gap-1.5 mt-1 bg-secondary-fixed/50 text-on-secondary-fixed-variant px-2.5 py-1 rounded-md w-fit relative z-10">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+<span class="font-label-caps text-label-caps">5 min vs mes anterior</span>
+</div>
+</div>
+</section>
+<!-- Main Body Grid (60/40 Split) -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column (60%) -->
+<div class="lg:col-span-7 flex flex-col gap-gutter">
+<!-- Card A: Rendimiento por departamento -->
+<div class="bg-surface-container-lowest rounded-xl p-8 border border-surface-container-highest shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-title-sm text-title-sm text-on-surface">Rendimiento por departamento</h2>
+<button class="text-primary hover:bg-primary-fixed p-2 rounded-full transition-colors">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+<div class="space-y-6">
+<!-- Progress Item 1 -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<span class="font-body-main text-body-main text-on-surface font-medium flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+                                Matemáticas
+                            </span>
+<span class="font-body-main text-body-main text-secondary">87%</span>
+</div>
+<div class="w-full h-2.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full transition-all duration-1000 ease-out" style="width: 87%"></div>
+</div>
+</div>
+<!-- Progress Item 2 -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<span class="font-body-main text-body-main text-on-surface font-medium flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+                                Lengua
+                            </span>
+<span class="font-body-main text-body-main text-secondary">79%</span>
+</div>
+<div class="w-full h-2.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-tertiary rounded-full transition-all duration-1000 ease-out" style="width: 79%"></div>
+</div>
+</div>
+<!-- Progress Item 3 -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<span class="font-body-main text-body-main text-on-surface font-medium flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                                Ciencias
+                            </span>
+<span class="font-body-main text-body-main text-secondary">72%</span>
+</div>
+<div class="w-full h-2.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-secondary rounded-full transition-all duration-1000 ease-out" style="width: 72%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Card B: Evolución mensual (Chart Representation) -->
+<div class="bg-surface-container-lowest rounded-xl p-8 border border-surface-container-highest shadow-sm flex-grow">
+<div class="flex justify-between items-center mb-8">
+<h2 class="font-title-sm text-title-sm text-on-surface">Evolución mensual</h2>
+<div class="bg-surface-container-low rounded-lg p-1 flex">
+<button class="px-3 py-1 bg-surface-container-lowest shadow-sm rounded-md font-label-caps text-label-caps text-on-surface">Sept-Abr</button>
+<button class="px-3 py-1 rounded-md font-label-caps text-label-caps text-secondary hover:text-on-surface transition-colors">Anual</button>
+</div>
+</div>
+<!-- Abstract Chart Visualization using grid and styling to simulate a professional graph area -->
+<div class="relative h-[240px] w-full flex items-end justify-between px-2">
+<!-- Y-Axis lines -->
+<div class="absolute inset-0 flex flex-col justify-between z-0">
+<div class="w-full border-t border-outline-variant/30 border-dashed h-0"></div>
+<div class="w-full border-t border-outline-variant/30 border-dashed h-0"></div>
+<div class="w-full border-t border-outline-variant/30 border-dashed h-0"></div>
+<div class="w-full border-t border-outline-variant/30 border-dashed h-0"></div>
+<div class="w-full border-t border-outline-variant/30 border-solid h-0"></div>
+</div>
+<!-- Bars / Data points (simulated) -->
+<div class="w-8 h-[30%] bg-surface-container-highest rounded-t-sm relative z-10 group"><div class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-inverse-surface text-inverse-on-surface text-xs py-1 px-2 rounded transition-opacity">Sept</div></div>
+<div class="w-8 h-[45%] bg-surface-container-highest rounded-t-sm relative z-10 group"><div class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-inverse-surface text-inverse-on-surface text-xs py-1 px-2 rounded transition-opacity">Oct</div></div>
+<div class="w-8 h-[60%] bg-primary-fixed-dim rounded-t-sm relative z-10 group"><div class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-inverse-surface text-inverse-on-surface text-xs py-1 px-2 rounded transition-opacity">Nov</div></div>
+<div class="w-8 h-[55%] bg-surface-container-highest rounded-t-sm relative z-10 group"><div class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-inverse-surface text-inverse-on-surface text-xs py-1 px-2 rounded transition-opacity">Dic</div></div>
+<div class="w-8 h-[75%] bg-primary-fixed-dim rounded-t-sm relative z-10 group"><div class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-inverse-surface text-inverse-on-surface text-xs py-1 px-2 rounded transition-opacity">Ene</div></div>
+<div class="w-8 h-[85%] bg-primary rounded-t-sm relative z-10 shadow-[0_0_15px_rgba(81,93,129,0.3)] group"><div class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-inverse-surface text-inverse-on-surface text-xs py-1 px-2 rounded transition-opacity">Feb</div></div>
+<div class="w-8 h-[70%] bg-surface-container-highest rounded-t-sm relative z-10 group"><div class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-inverse-surface text-inverse-on-surface text-xs py-1 px-2 rounded transition-opacity">Mar</div></div>
+<div class="w-8 h-[90%] bg-primary rounded-t-sm relative z-10 shadow-[0_0_15px_rgba(81,93,129,0.3)] group"><div class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-inverse-surface text-inverse-on-surface text-xs py-1 px-2 rounded transition-opacity">Abr</div></div>
+</div>
+</div>
+</div>
+<!-- Right Column (40%) -->
+<div class="lg:col-span-5 flex flex-col gap-gutter">
+<!-- Card C: Alertas del centro -->
+<div class="bg-surface-container-lowest rounded-xl p-8 border border-surface-container-highest shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-title-sm text-title-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-error">campaign</span>
+                        Alertas del centro
+                    </h2>
+<span class="bg-surface-container-low text-secondary px-2 py-0.5 rounded-full font-label-caps text-label-caps">3 nuevas</span>
+</div>
+<div class="flex flex-col gap-3">
+<!-- Critical Alert -->
+<div class="bg-error-container text-on-error-container p-4 rounded-lg flex items-start gap-3 border border-error/20">
+<span class="material-symbols-outlined text-error mt-0.5" style="font-variation-settings: 'FILL' 1;">error</span>
+<div class="flex flex-col gap-1">
+<span class="font-body-main text-body-main font-semibold">Geografía 3ºB</span>
+<span class="font-body-main text-sm opacity-90">42% de alumnos sin actividad en 5+ días. Requiere revisión inmediata.</span>
+</div>
+</div>
+<!-- Info Alert 1 -->
+<div class="bg-surface-container text-on-surface-variant p-4 rounded-lg flex items-start gap-3 border border-outline-variant/30">
+<span class="material-symbols-outlined text-secondary mt-0.5">info</span>
+<div class="flex flex-col gap-1">
+<span class="font-body-main text-body-main font-semibold">Mantenimiento</span>
+<span class="font-body-main text-sm opacity-80">Actualización de plataforma programada para el viernes 23:00h.</span>
+</div>
+</div>
+<!-- Info Alert 2 -->
+<div class="bg-surface-container text-on-surface-variant p-4 rounded-lg flex items-start gap-3 border border-outline-variant/30">
+<span class="material-symbols-outlined text-secondary mt-0.5">lightbulb</span>
+<div class="flex flex-col gap-1">
+<span class="font-body-main text-body-main font-semibold">Nuevo recurso disponible</span>
+<span class="font-body-main text-sm opacity-80">Módulo de ciencias naturales añadido al repositorio compartido.</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card D: Profesores más activos -->
+<div class="bg-surface-container-lowest rounded-xl p-8 border border-surface-container-highest shadow-sm flex-grow">
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-title-sm text-title-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary">star</span>
+                        Profesores más activos
+                    </h2>
+</div>
+<div class="flex flex-col gap-4">
+<!-- Teacher 1 -->
+<div class="flex items-center justify-between p-3 hover:bg-surface-container-low rounded-lg transition-colors group cursor-pointer border border-transparent hover:border-outline-variant/20">
+<div class="flex items-center gap-4">
+<div class="relative">
+<img alt="Marta López Avatar" class="w-10 h-10 rounded-full object-cover" data-alt="Professional headshot of a female teacher smiling, wearing a dark blazer over a light shirt" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA94mLKQFfGcoVLJ2MVz_9IT2NsBft-LJgAMPR5vFoVMYXvKc56SxQAhH6gqt2lbZ7Y-634fb16wPJiQ2hLOc1jZyILqiXz4TKE6t9S8oKaH_bWpfwsFjrzK1o0KzdrekI6UDYQZRiYG1uN0wRXwCXg2NzIq6g4sbuliQdiORPBbUHYVdq420NoF6seqN9ZDHx2iLxkI7hv1BkLIEfUB1AvnZkyCWf_Zmsb4oLl50z9SXLzj4WPWveQlWvHozMwFAwoCfBpPbS3JQyy"/>
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-surface-container-lowest rounded-full flex items-center justify-center">
+<span class="w-2.5 h-2.5 bg-primary rounded-full"></span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="font-body-main text-body-main text-on-surface font-medium group-hover:text-primary transition-colors">Marta López</span>
+<span class="font-label-caps text-[11px] text-secondary">Matemáticas</span>
+</div>
+</div>
+<div class="bg-primary-fixed text-on-primary-fixed-variant px-3 py-1 rounded-full font-label-caps text-label-caps">
+                            87% particip.
+                        </div>
+</div>
+<div class="w-full h-px bg-surface-container-highest"></div>
+<!-- Teacher 2 -->
+<div class="flex items-center justify-between p-3 hover:bg-surface-container-low rounded-lg transition-colors group cursor-pointer border border-transparent hover:border-outline-variant/20">
+<div class="flex items-center gap-4">
+<div class="relative">
+<img alt="Carlos Ruiz Avatar" class="w-10 h-10 rounded-full object-cover" data-alt="Professional headshot of a male teacher with a slight smile, wearing a casual button-down shirt" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVjOjyD_DDJtpYjeFe7MZmeOYM7oqNHnYIdj_SobiRceIR9yIx5anL1qVPamgKmKbLN84ATCCQ5q2e2rkmN4dQGM-Njx18kdrhNhDxAsVR9CWQybdDVOqhAo1bhwGmuy2XMD0EYKDh-vWv18-U7qn-Ww-z872WjneX6nnRCi8hpdQFjpjy-Rya8NhtwVGvMl2Hxv8DQrs1Xb27NgdoI39Xf9ww2dB5OFNfgcIl-D3jrsZufC1GLKxNHWfFLwzpJ1YH6eM-2SVOJoiu"/>
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-surface-container-lowest rounded-full flex items-center justify-center">
+<span class="w-2.5 h-2.5 bg-tertiary rounded-full"></span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="font-body-main text-body-main text-on-surface font-medium group-hover:text-primary transition-colors">Carlos Ruiz</span>
+<span class="font-label-caps text-[11px] text-secondary">Historia</span>
+</div>
+</div>
+<div class="bg-tertiary-fixed text-on-tertiary-fixed-variant px-3 py-1 rounded-full font-label-caps text-label-caps">
+                            82% particip.
+                        </div>
+</div>
+<div class="w-full h-px bg-surface-container-highest"></div>
+<!-- Teacher 3 -->
+<div class="flex items-center justify-between p-3 hover:bg-surface-container-low rounded-lg transition-colors group cursor-pointer border border-transparent hover:border-outline-variant/20">
+<div class="flex items-center gap-4">
+<div class="relative">
+<img alt="Ana Jiménez Avatar" class="w-10 h-10 rounded-full object-cover" data-alt="Professional headshot of a female teacher with glasses smiling brightly in a well-lit room" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRdEPwMF657D0l57X5YA42_NqprRurs3Lq3jSzrP1AwycX4OlBxaZ1AOqEXi7PjytImaqlYmizaWhTFdvBQtg4tAu0W--YOwydSKhx6gSauFKNZNUlp_FuI1RoA06vuCkE9gFJITIsCNfNQxQyv-I4CLXnyRUG_0wMWGCHEYXjwqvrGTgk5ls0K1xOs1LCpkWjgVE6R8NG-M3L_xsBwcmb3ttiRVzvwwQqqN0arjChzP6nqaBLL9ac-KFOQhGmF33ZXX9gqcTKkXTa"/>
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-surface-container-lowest rounded-full flex items-center justify-center">
+<span class="w-2.5 h-2.5 bg-secondary rounded-full"></span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="font-body-main text-body-main text-on-surface font-medium group-hover:text-primary transition-colors">Ana Jiménez</span>
+<span class="font-label-caps text-[11px] text-secondary">Lengua y Lit.</span>
+</div>
+</div>
+<div class="bg-secondary-fixed text-on-secondary-fixed-variant px-3 py-1 rounded-full font-label-caps text-label-caps">
+                            78% particip.
+                        </div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+</body></html>

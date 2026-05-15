@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Matemáticas - Marcoaprende</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"surface-bright": "#faf8fe", "on-error": "#fff7f6", "on-secondary-fixed-variant": "#565b6f", "inverse-on-surface": "#9d9ca2", "on-error-container": "#6e0a12", "primary-fixed-dim": "#aabaed", "primary-fixed": "#b8c8fc", "secondary-fixed-dim": "#cfd3eb", "on-tertiary-fixed": "#432f56", "on-secondary-fixed": "#393f51", "surface-container-high": "#e7e7f1", "on-primary-container": "#30406c", "tertiary-fixed-dim": "#dabfef", "on-surface-variant": "#5d5f68", secondary: "#595e72", "on-background": "#30323a", "inverse-primary": "#b8c8fc", "on-tertiary-container": "#57426a", "inverse-surface": "#0d0e12", "surface-container-low": "#f4f3fa", "surface-tint": "#4e5e8b", "on-secondary": "#faf8ff", background: "#faf8fe", "tertiary-container": "#e8cdfe", "on-tertiary-fixed-variant": "#614c74", "on-primary-fixed": "#1b2c57", "surface-dim": "#d8d9e4", "on-primary-fixed-variant": "#394a76", "on-surface": "#30323a", "primary-container": "#b8c8fc", "secondary-container": "#dde1fa", "tertiary-fixed": "#e8cdfe", "secondary-fixed": "#dde1fa", tertiary: "#6c5680", primary: "#4e5e8b", "on-tertiary": "#fff6ff", outline: "#787a84", "surface-container-highest": "#e1e2ec", "surface-container": "#ededf6", surface: "#faf8fe", "error-container": "#fa746f", error: "#a83836", "surface-variant": "#e1e2ec", "on-primary": "#f9f8ff", "on-secondary-container": "#4c5165", "surface-container-lowest": "#ffffff", "outline-variant": "#b0b1bb", "secondary-dim": "#4d5266", "error-dim": "#67040d", "tertiary-dim": "#604a73", "primary-dim": "#42527e"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {unit: "8px", "margin-desktop": "40px", "margin-mobile": "16px", gutter: "24px", "container-max": "1200px"}, fontFamily: {"display-lg": ["Inter"], "title-sm": ["Inter"], "headline-md": ["Inter"], "body-main": ["Inter"], "label-caps": ["Inter"], headline: ["Inter"], display: ["Inter"], body: ["Inter"], label: ["Inter"]}, fontSize: {"display-lg": ["48px", {lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "700"}], "title-sm": ["20px", {lineHeight: "1.4", letterSpacing: "0", fontWeight: "600"}], "headline-md": ["32px", {lineHeight: "1.2", letterSpacing: "-0.01em", fontWeight: "600"}], "body-main": ["16px", {lineHeight: "1.6", letterSpacing: "0", fontWeight: "400"}], "label-caps": ["12px", {lineHeight: "1", letterSpacing: "0.05em", fontWeight: "600"}]}}}};</script>
+</head>
+<body class="bg-background text-on-background font-body-main text-body-main antialiased min-h-screen">
+<!-- TopAppBar -->
+<header class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md font-['Inter'] antialiased docked full-width top-0 sticky z-50 border-b border-slate-100 dark:border-slate-800 shadow-sm flex justify-between items-center w-full px-6 py-3">
+<div class="flex items-center gap-4">
+<button class="text-[#6a769b] dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors active:scale-95 p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="flex items-center"><svg viewBox="140 72 72 62" width="70" height="28" xmlns="http://www.w3.org/2000/svg" aria-label="Marco"><line x1="148" y1="80" x2="148" y2="130" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><line x1="148" y1="80" x2="163" y2="80" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><line x1="148" y1="130" x2="163" y2="130" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><line x1="202" y1="80" x2="202" y2="130" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><line x1="202" y1="80" x2="187" y2="80" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><line x1="202" y1="130" x2="187" y2="130" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><text x="175" y="119" font-family="Georgia,serif" font-size="42" font-style="italic" text-anchor="middle" fill="#0a0a0a">M</text></svg></div>
+</div>
+<div class="flex items-center gap-2">
+<button class="text-[#6a769b] dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors active:scale-95 p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-slate-100 hover:opacity-90 cursor-pointer ml-2">
+<img alt="Student profile avatar" class="w-full h-full object-cover" data-alt="close-up of a smiling young student in a brightly lit modern library setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHVxMdOD3at8rMn_4vwe2nrIy2Zwasauz2f1jAulDUwksYb1lvQuSIM1ATW41tUW4s7vTkKXyyk0GGRX4EE1phlFqDm55ReSwW22yGnEPa-H2ZqM1bvtdtIp-Y47Y7oObbNa88lZG2Kd8Kpp3g7S9_btWtHiYpKanS7K06hppsUNItUmcw-hsmaSihFlEfxFTWS59j1S-eWqIjCVT_QO8UKNiDWs_35xS_yEZibajRlG9Krc48skeSxfziIoraPh9arzMTkzRekFMl"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-8 md:py-12">
+<!-- Back Navigation -->
+<div class="mb-10">
+<a class="inline-flex items-center gap-2 text-primary hover:text-primary-container transition-colors group" href="dashboard-alumno.html">
+<span class="material-symbols-outlined text-xl group-hover:-translate-x-1 transition-transform">arrow_back</span>
+<span class="font-label-caps text-label-caps uppercase">Volver al Dashboard</span>
+</a>
+</div>
+<!-- Header Section -->
+<header class="mb-16">
+<h1 class="font-display-lg text-display-lg text-on-surface mb-8">Matemáticas</h1>
+<!-- Progress Widget -->
+<div class="bg-surface-lowest rounded-xl p-6 md:p-8 shadow-[0_4px_24px_rgba(0,0,0,0.02)] border border-surface-container-highest max-w-2xl">
+<div class="flex justify-between items-end mb-4">
+<span class="font-title-sm text-title-sm text-on-surface">Has completado 12 de 15 cuadernos</span>
+<span class="font-label-caps text-label-caps text-primary">80%</span>
+</div>
+<div class="w-full h-3 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-container rounded-full w-[80%] transition-all duration-1000 ease-out"></div>
+</div>
+</div>
+</header>
+<!-- Pendientes Section -->
+<section class="mb-20">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-8">Pendientes</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Card 1 -->
+<article class="bg-surface-lowest rounded-xl p-8 shadow-[0_8px_32px_rgba(0,0,0,0.03)] border border-surface-container hover:shadow-[0_12px_48px_rgba(0,0,0,0.06)] transition-all flex flex-col min-h-[320px]">
+<div class="mb-6 inline-flex items-center justify-center w-14 h-14 rounded-full bg-secondary-fixed text-on-secondary-fixed">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">calculate</span>
+</div>
+<h3 class="font-title-sm text-title-sm text-on-surface mb-3">Fracciones y Decimales</h3>
+<div class="flex flex-wrap gap-2 mb-6">
+<span class="px-3 py-1 bg-surface-container text-on-surface-variant font-label-caps text-label-caps rounded-full">IA</span>
+<span class="px-3 py-1 bg-surface-container text-on-surface-variant font-label-caps text-label-caps rounded-full">2 PDF</span>
+<span class="px-3 py-1 bg-surface-container text-on-surface-variant font-label-caps text-label-caps rounded-full">1 Cuestionario</span>
+</div>
+<div class="flex-grow"></div>
+<div class="flex items-center gap-2 text-secondary font-label-caps text-label-caps mb-6">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span>Vence en 2 días</span>
+</div>
+<button onclick="window.location='espacio-trabajo-fracciones.html'" class="w-full py-4 px-6 bg-primary text-on-primary font-label-caps text-label-caps rounded-full hover:bg-primary-container hover:text-on-primary-container transition-colors text-center cursor-pointer">
+                        Abrir Cuaderno
+                    </button>
+</article>
+<!-- Card 2 -->
+<article class="bg-surface-lowest rounded-xl p-8 shadow-[0_8px_32px_rgba(0,0,0,0.03)] border border-surface-container hover:shadow-[0_12px_48px_rgba(0,0,0,0.06)] transition-all flex flex-col min-h-[320px]">
+<div class="mb-6 inline-flex items-center justify-center w-14 h-14 rounded-full bg-tertiary-fixed text-on-tertiary-fixed">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">architecture</span>
+</div>
+<h3 class="font-title-sm text-title-sm text-on-surface mb-3">Reto de Geometría</h3>
+<div class="flex flex-wrap gap-2 mb-6">
+<span class="px-3 py-1 bg-surface-container text-on-surface-variant font-label-caps text-label-caps rounded-full">IA</span>
+<span class="px-3 py-1 bg-surface-container text-on-surface-variant font-label-caps text-label-caps rounded-full">1 PDF</span>
+</div>
+<div class="flex-grow"></div>
+<div class="flex items-center gap-2 text-secondary font-label-caps text-label-caps mb-6">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span>Vence en 5 días</span>
+</div>
+<button class="w-full py-4 px-6 bg-primary-container text-on-primary-container font-label-caps text-label-caps rounded-full hover:bg-primary hover:text-on-primary transition-colors text-center">
+                        Abrir Cuaderno
+                    </button>
+</article>
+</div>
+</section>
+<!-- Completados Section -->
+<section>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-8">Completados</h2>
+<div class="flex flex-col gap-unit">
+<!-- Row 1 -->
+<div class="bg-surface-lowest rounded-xl p-5 shadow-[0_2px_12px_rgba(0,0,0,0.02)] border border-surface-container flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-surface-container-lowest transition-colors">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary text-2xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-title-sm text-title-sm text-on-surface">Números Naturales</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2 bg-surface-container px-3 py-1.5 rounded-full">
+<span class="material-symbols-outlined text-sm text-on-surface-variant">star</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">10/10</span>
+</div>
+<a class="font-label-caps text-label-caps text-primary hover:text-primary-container underline underline-offset-4 decoration-primary/30 hover:decoration-primary transition-colors" href="#">
+                            Repasar
+                        </a>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="bg-surface-lowest rounded-xl p-5 shadow-[0_2px_12px_rgba(0,0,0,0.02)] border border-surface-container flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-surface-container-lowest transition-colors">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary text-2xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-title-sm text-title-sm text-on-surface">Suma de Fracciones</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2 bg-surface-container px-3 py-1.5 rounded-full">
+<span class="material-symbols-outlined text-sm text-on-surface-variant">star</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">9/10</span>
+</div>
+<a class="font-label-caps text-label-caps text-primary hover:text-primary-container underline underline-offset-4 decoration-primary/30 hover:decoration-primary transition-colors" href="#">
+                            Repasar
+                        </a>
+</div>
+</div>
+</div>
+</section>
+</main>
+</body></html>

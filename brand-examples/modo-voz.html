@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Marcoaprende - Voice Mode</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&amp;family=Inter:wght@400;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"tertiary-fixed-dim": "#dabfef", "surface-tint": "#4e5e8b", "error-container": "#fa746f", "outline-variant": "#b0b1bb", "surface-container-lowest": "#ffffff", "on-primary": "#f9f8ff", "on-error-container": "#6e0a12", "surface-container-high": "#e7e7f1", "primary-container": "#b8c8fc", "inverse-surface": "#0d0e12", "primary-fixed-dim": "#aabaed", "secondary-container": "#dde1fa", outline: "#787a84", "on-primary-fixed-variant": "#394a76", "on-error": "#fff7f6", "on-surface-variant": "#5d5f68", surface: "#faf8fe", background: "#faf8fe", "surface-variant": "#e1e2ec", primary: "#4e5e8b", "surface-dim": "#d8d9e4", "on-tertiary": "#fff6ff", "on-tertiary-fixed-variant": "#614c74", "on-tertiary-fixed": "#432f56", "on-background": "#30323a", "secondary-fixed-dim": "#cfd3eb", "tertiary-container": "#e8cdfe", "secondary-fixed": "#dde1fa", "on-secondary-container": "#4c5165", "on-surface": "#30323a", "on-primary-container": "#30406c", tertiary: "#6c5680", "surface-container-highest": "#e1e2ec", "on-secondary-fixed-variant": "#565b6f", "inverse-on-surface": "#9d9ca2", "on-tertiary-container": "#57426a", "on-secondary-fixed": "#393f51", error: "#a83836", "on-primary-fixed": "#1b2c57", "inverse-primary": "#b8c8fc", "tertiary-fixed": "#e8cdfe", "primary-fixed": "#b8c8fc", "surface-container-low": "#f4f3fa", "surface-container": "#ededf6", "surface-bright": "#faf8fe", "on-secondary": "#faf8ff", secondary: "#595e72", "secondary-dim": "#4d5266", "error-dim": "#67040d", "tertiary-dim": "#604a73", "primary-dim": "#42527e"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {"margin-desktop": "40px", unit: "8px", "margin-mobile": "16px", gutter: "24px", "container-max": "1200px"}, fontFamily: {"label-caps": ["Inter"], "title-sm": ["Inter"], "display-lg": ["Inter"], "headline-md": ["Inter"], "body-main": ["Inter"], nunito: ["Nunito"], headline: ["Inter"], display: ["Inter"], body: ["Inter"], label: ["Inter"]}, fontSize: {"label-caps": ["12px", {lineHeight: "1", letterSpacing: "0.05em", fontWeight: "600"}], "title-sm": ["20px", {lineHeight: "1.4", letterSpacing: "0", fontWeight: "600"}], "display-lg": ["48px", {lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "700"}], "headline-md": ["32px", {lineHeight: "1.2", letterSpacing: "-0.01em", fontWeight: "600"}], "body-main": ["16px", {lineHeight: "1.6", letterSpacing: "0", fontWeight: "400"}]}}}};</script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .audio-wave-bar {
+            width: 4px;
+            border-radius: 2px;
+            background-color: #6a769b;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-nunito selection:bg-primary-fixed-dim selection:text-on-primary-fixed">
+<!-- TopAppBar -->
+<header class="bg-white/80 backdrop-blur-md text-slate-600 font-['Nunito'] font-semibold text-sm border-b border-slate-100 shadow-sm flex justify-between items-center h-16 px-6 w-full z-50 sticky top-0">
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-slate-50 transition-colors rounded-full active:opacity-80">
+<span class="material-symbols-outlined text-slate-800">menu</span>
+</button>
+<svg viewBox="140 72 72 62" width="70" height="28" xmlns="http://www.w3.org/2000/svg" aria-label="Marco"><line x1="148" y1="80" x2="148" y2="130" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><line x1="148" y1="80" x2="163" y2="80" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><line x1="148" y1="130" x2="163" y2="130" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><line x1="202" y1="80" x2="202" y2="130" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><line x1="202" y1="80" x2="187" y2="80" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><line x1="202" y1="130" x2="187" y2="130" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><text x="175" y="119" font-family="Georgia,serif" font-size="42" font-style="italic" text-anchor="middle" fill="#0a0a0a">M</text></svg>
+</div>
+<div class="flex flex-col items-center w-1/3">
+<h1 class="text-sm font-bold text-slate-800 mb-1">Cuaderno: Inglés - Práctica Oral</h1>
+<div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-1/2 rounded-full"></div>
+</div>
+</div>
+<div class="flex items-center">
+<button class="flex items-center gap-2 p-1 pl-3 rounded-full border border-slate-100 hover:bg-slate-50 transition-all">
+<span class="text-xs font-bold text-slate-700">Estudiante</span>
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center overflow-hidden">
+<img alt="Profile" class="w-full h-full" data-alt="A clean, minimalist 3D avatar profile picture of a young male student with a friendly expression. The character is wearing a simple grey hoodie against a soft blue background. The art style is modern and polished, inspired by contemporary tech character design, matching the light-mode corporate aesthetic of the app." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBM1WlNDUd_XbfafUVDEUD6buVxpSHvpFsv_K1oMgxWXDGEaQzPvCx2AoMAXpepqCe336RCPcBNRYp5JQPkrkMAn9ee2Wryl3c92g1TVCTV5CU1Hxm3HrsmAe2A8lo5tldNnFUwTomyhz-hEgXF34SUw8i8Pj1cZrYQ4RAHL7sLYRYf0PJiUVHB4NDkh7r8DeZYwWW8LX7nD_IKMEbzA0rWHfkgPuJ-UXiz1lXjTxvPtyCpSDuxwsWke00cuAGAVUhRxn_8B6gsy856"/>
+</div>
+</button>
+</div>
+</header>
+<main class="flex h-[calc(100vh-64px)] w-full overflow-hidden">
+<!-- Left Panel: Digital Notebook (60%) -->
+<section class="w-[60%] h-full bg-surface-container-lowest p-margin-desktop overflow-y-auto">
+<div class="max-w-3xl mx-auto">
+<div class="flex items-center gap-3 mb-10">
+<span class="material-symbols-outlined text-primary p-2 bg-primary-fixed rounded-xl">menu_book</span>
+<div>
+<p class="text-label-caps font-label-caps text-outline uppercase tracking-widest">Lección 04</p>
+<h2 class="text-headline-md font-headline-md text-on-surface">Exploring London Highlights</h2>
+</div>
+</div>
+<!-- Notebook Canvas -->
+<div class="relative bg-white border border-slate-100 rounded-2xl p-12 shadow-sm min-h-[600px] leading-relaxed">
+<!-- Lines decoration -->
+<div class="absolute inset-0 pointer-events-none opacity-5" style="background-image: linear-gradient(#45464e 1px, transparent 1px); background-size: 100% 3rem; margin-top: 2rem;"></div>
+<article class="relative z-10 text-xl text-on-surface-variant font-medium space-y-6">
+<p>London is the capital of the UK. It is famous for its history and landmarks.</p>
+<!-- Selected Sentence Container -->
+<div class="relative inline-block my-2">
+<span class="relative z-10 px-1">The double-decker buses are iconic symbols of the city.</span>
+<!-- Selection Overlay -->
+<div class="absolute -inset-1 border-2 border-dashed border-primary bg-primary-fixed/20 rounded-lg">
+<!-- Handles -->
+<div class="absolute -top-1.5 -left-1.5 w-3 h-3 bg-primary border-2 border-white rounded-full"></div>
+<div class="absolute -top-1.5 -right-1.5 w-3 h-3 bg-primary border-2 border-white rounded-full"></div>
+<div class="absolute -bottom-1.5 -left-1.5 w-3 h-3 bg-primary border-2 border-white rounded-full"></div>
+<div class="absolute -bottom-1.5 -right-1.5 w-3 h-3 bg-primary border-2 border-white rounded-full"></div>
+</div>
+</div>
+<p>You can see the Big Ben near the river Thames.</p>
+</article>
+<div class="mt-16 pt-8 border-t border-slate-50">
+<img alt="London" class="rounded-xl grayscale opacity-40 mix-blend-multiply w-full h-48 object-cover" data-alt="A high-contrast architectural photograph of London's Houses of Parliament and Big Ben viewed across the River Thames. The lighting is bright and clear, reflecting a serene morning atmosphere. The image is styled with a slight desaturation and high-key brightness to match a minimalist, professional learning environment, maintaining a focus on historical grandeur and clarity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyV11CmpSZ4VL28DPEwOLPnvLdUPxs24IeCrGTe6YwK5-FHRkA6Du-sNY7413mw2305mII4hZdys93W_rSs971mbWT-CcDiUBvYWs2t6PpMvAj5ik559PDjtDSb3nXwuGYEtw7RzmBatq1THwSasw6iAocOdTxfbTVRCyvHXvxjnuHJKbJskEL5QJhc3LcMuQT2q3Y3XHa-JQs8I0M-hvoCh_A9IOBptAZ81Qzkz89GUy5zCHOZqwTpGuoLtf3he4FwlDRfp8VMlV8"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Panel: Voice Mode (40%) -->
+<section class="w-[40%] h-full bg-secondary-fixed/30 flex flex-col items-center justify-between py-16 px-12 border-l border-slate-100">
+<div class="text-center space-y-8">
+<div class="inline-flex items-center gap-2 px-4 py-1.5 bg-primary-fixed text-primary rounded-full text-xs font-bold uppercase tracking-wider">
+<span class="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
+                    En línea
+                </div>
+<h3 class="text-display-lg font-display-lg text-primary-container leading-tight px-4">
+                    Veo que has seleccionado esa frase. ¿Te animas a leerla en voz alta para practicar tu pronunciación?
+                </h3>
+</div>
+<!-- Audio Waveform Visualization -->
+<div class="flex items-center justify-center gap-2 h-48">
+<div class="audio-wave-bar h-8 animate-[bounce_1s_infinite_0s]"></div>
+<div class="audio-wave-bar h-16 animate-[bounce_1.2s_infinite_0.1s]"></div>
+<div class="audio-wave-bar h-32 animate-[bounce_1.4s_infinite_0.2s]"></div>
+<div class="audio-wave-bar h-24 animate-[bounce_1.1s_infinite_0.3s]"></div>
+<div class="audio-wave-bar h-40 animate-[bounce_1.5s_infinite_0.4s]"></div>
+<div class="audio-wave-bar h-28 animate-[bounce_1.3s_infinite_0.5s]"></div>
+<div class="audio-wave-bar h-36 animate-[bounce_1.6s_infinite_0.6s]"></div>
+<div class="audio-wave-bar h-20 animate-[bounce_1.2s_infinite_0.7s]"></div>
+<div class="audio-wave-bar h-12 animate-[bounce_1s_infinite_0.8s]"></div>
+</div>
+<!-- Controls -->
+<div class="flex items-center gap-8">
+<button class="w-16 h-16 rounded-full bg-white text-slate-400 shadow-md flex items-center justify-center transition-all hover:scale-105 active:scale-95">
+<span class="material-symbols-outlined text-2xl">mic_off</span>
+</button>
+<button class="w-24 h-24 rounded-full bg-error text-white shadow-xl flex items-center justify-center transition-all hover:scale-105 active:scale-90 ring-8 ring-error/10">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">call_end</span>
+</button>
+<button class="w-16 h-16 rounded-full bg-white text-slate-400 shadow-md flex items-center justify-center transition-all hover:scale-105 active:scale-95">
+<span class="material-symbols-outlined text-2xl">volume_up</span>
+</button>
+</div>
+<div class="text-slate-400 text-sm font-medium">
+                Sesión de voz activa • 04:22
+            </div>
+</section>
+</main>
+<!-- Floating Assistance (Optional, for flavor) -->
+<div class="fixed bottom-8 left-8 flex items-center gap-3">
+<div class="bg-primary-container text-white px-5 py-3 rounded-full shadow-lg font-bold text-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">lightbulb</span>
+<span>Consejo: Intenta acentuar 'iconic'</span>
+</div>
+</div>
+</body></html>

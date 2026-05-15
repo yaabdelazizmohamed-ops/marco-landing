@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Nunito:wght@400;600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Nunito', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {outline: "#787a84", "inverse-on-surface": "#9d9ca2", "on-background": "#30323a", "surface-bright": "#faf8fe", "surface-container-highest": "#e1e2ec", "on-tertiary": "#fff6ff", "inverse-primary": "#b8c8fc", "surface-container-lowest": "#ffffff", "on-surface-variant": "#5d5f68", "on-secondary-fixed": "#393f51", "primary-fixed": "#b8c8fc", "surface-dim": "#d8d9e4", tertiary: "#6c5680", "outline-variant": "#b0b1bb", "secondary-container": "#dde1fa", "on-tertiary-fixed-variant": "#614c74", "inverse-surface": "#0d0e12", surface: "#faf8fe", "primary-container": "#b8c8fc", "on-secondary-fixed-variant": "#565b6f", "surface-container-low": "#f4f3fa", "surface-container": "#ededf6", "error-container": "#fa746f", "on-primary-fixed-variant": "#394a76", "on-error": "#fff7f6", "on-tertiary-fixed": "#432f56", primary: "#4e5e8b", "surface-tint": "#4e5e8b", "on-primary": "#f9f8ff", "on-error-container": "#6e0a12", "on-secondary-container": "#4c5165", "on-primary-container": "#30406c", background: "#faf8fe", error: "#a83836", "tertiary-fixed": "#e8cdfe", "surface-variant": "#e1e2ec", secondary: "#595e72", "on-secondary": "#faf8ff", "on-tertiary-container": "#57426a", "secondary-fixed": "#dde1fa", "surface-container-high": "#e7e7f1", "secondary-fixed-dim": "#cfd3eb", "primary-fixed-dim": "#aabaed", "tertiary-container": "#e8cdfe", "on-primary-fixed": "#1b2c57", "tertiary-fixed-dim": "#dabfef", "on-surface": "#30323a", "secondary-dim": "#4d5266", "error-dim": "#67040d", "tertiary-dim": "#604a73", "primary-dim": "#42527e"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {gutter: "24px", unit: "8px", "margin-desktop": "40px", "margin-mobile": "16px", "container-max": "1200px"}, fontSize: {"title-sm": ["20px", {lineHeight: "1.4", letterSpacing: "0", fontWeight: "600"}], "label-caps": ["12px", {lineHeight: "1", letterSpacing: "0.05em", fontWeight: "600"}], "headline-md": ["32px", {lineHeight: "1.2", letterSpacing: "-0.01em", fontWeight: "600"}], "display-lg": ["48px", {lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "700"}], "body-main": ["16px", {lineHeight: "1.6", letterSpacing: "0", fontWeight: "400"}]}, fontFamily: {headline: ["Inter"], display: ["Inter"], body: ["Inter"], label: ["Inter"]}}}};</script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen flex justify-center">
+<!-- Mobile-Like Container -->
+<div class="w-full max-w-[480px] bg-white min-h-screen relative shadow-2xl flex flex-col overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="docked full-width top-0 sticky z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 shadow-sm flex items-center justify-between px-6 py-4 w-full">
+<button class="text-[#6a769b] hover:bg-slate-50 transition-colors active:scale-95 duration-200 p-2 rounded-full">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<svg viewBox="140 72 72 62" width="70" height="28" xmlns="http://www.w3.org/2000/svg" aria-label="Marco"><line x1="148" y1="80" x2="148" y2="130" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><line x1="148" y1="80" x2="163" y2="80" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><line x1="148" y1="130" x2="163" y2="130" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><line x1="202" y1="80" x2="202" y2="130" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><line x1="202" y1="80" x2="187" y2="80" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><line x1="202" y1="130" x2="187" y2="130" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><text x="175" y="119" font-family="Georgia,serif" font-size="42" font-style="italic" text-anchor="middle" fill="#0a0a0a">M</text></svg>
+<button class="text-[#6a769b] hover:bg-slate-50 transition-colors active:scale-95 duration-200 p-2 rounded-full relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+</header>
+<!-- Main Content -->
+<main class="flex-1 px-gutter py-unit pb-32 space-y-8">
+<!-- Hero Section -->
+<section class="text-center mt-6 space-y-4">
+<div class="inline-flex items-center px-4 py-2 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-bold text-sm shadow-sm">
+<span class="mr-1">🔥</span> Racha de 12 días
+                </div>
+<h2 class="text-headline-md font-headline-md text-on-surface">¡Gran semana para Alex!</h2>
+<p class="text-body-main font-body-main text-on-surface-variant max-w-[90%] mx-auto">
+                    Alex ha demostrado un progreso constante y gran dedicación esta semana.
+                </p>
+<div class="pt-4 px-4">
+<img class="w-full h-48 object-cover rounded-[32px] shadow-lg border-4 border-white" data-alt="A joyful scene of a diverse group of primary school children celebrating academic success in a bright, modern classroom. The setting is filled with natural sunlight filtering through large windows, highlighting soft pastel colors and light wood furniture. The overall aesthetic is clean, Apple-inspired, and minimalist, with a palette of muted blues and warm whites to evoke a sense of calm and educational achievement." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLxMfD9mTuFp27u1Mxa1WwfNTZrrCAF6mqXQMaAnQOqaq05uqePl-L-AGt7jJbqvDut9lIyfNdKKgywYUOAIzpnCG7GqMuDW8b8_COkT7YAQh-pPlccoswEjV851k59bl5v-vNvN9EVrN80xXtstrWdtQAZTV9L5BrED72yY_zUcN3QfsHNjBc1P5pg7QIt0UsMQjwROYxNlPsu6tVQs5QMcWlLvxkmQ7xJx215oEDdMcSr0IeJ3jOYRR4Kmo3R9YAuZt9DEvFrnGb"/>
+</div>
+</section>
+<!-- Metrics Grid -->
+<section class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-low p-6 rounded-[24px] flex flex-col items-center text-center space-y-2 shadow-sm border border-slate-100">
+<div class="w-12 h-12 bg-secondary-container rounded-2xl flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-primary" data-icon="schedule">schedule</span>
+</div>
+<span class="text-3xl font-extrabold text-on-surface">4.5</span>
+<span class="text-label-caps font-label-caps text-on-surface-variant">horas de estudio</span>
+</div>
+<div class="bg-surface-container-low p-6 rounded-[24px] flex flex-col items-center text-center space-y-2 shadow-sm border border-slate-100">
+<div class="w-12 h-12 bg-tertiary-fixed rounded-2xl flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-tertiary" data-icon="school">school</span>
+</div>
+<span class="text-3xl font-extrabold text-on-surface">3</span>
+<span class="text-label-caps font-label-caps text-on-surface-variant">conceptos dominados</span>
+</div>
+</section>
+<!-- Evolución del Aprendizaje -->
+<section class="space-y-4">
+<h3 class="text-title-sm font-title-sm text-on-surface px-2">Evolución del Aprendizaje</h3>
+<div class="bg-white rounded-[32px] overflow-hidden shadow-md border border-slate-50">
+<div class="p-6 bg-white flex items-start space-x-4">
+<div class="p-3 rounded-xl bg-slate-50">
+<span class="material-symbols-outlined text-slate-400" data-icon="history">history</span>
+</div>
+<div class="flex-1">
+<p class="text-label-caps font-label-caps text-slate-400 mb-1">ANTES</p>
+<p class="text-body-main font-body-main text-on-surface-variant">Resolución de problemas básicos de geometría</p>
+</div>
+</div>
+<div class="p-6 bg-secondary-fixed/30 flex items-start space-x-4">
+<div class="p-3 rounded-xl bg-white shadow-sm">
+<span class="material-symbols-outlined text-primary" data-icon="trending_up">trending_up</span>
+</div>
+<div class="flex-1">
+<p class="text-label-caps font-label-caps text-primary mb-1">AHORA</p>
+<p class="text-body-main font-body-main text-on-surface font-semibold">Cálculo de áreas en figuras compuestas, aplicando el método socrático con fluidez</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Logros Recientes Section -->
+<section class="space-y-4">
+<h3 class="text-title-sm font-title-sm text-on-surface px-2">Logros Recientes</h3>
+<div class="space-y-3">
+<div class="flex items-center p-4 bg-surface-container-highest/30 rounded-2xl border border-transparent hover:border-slate-200 transition-all active:scale-[0.98]">
+<div class="w-12 h-12 bg-[#ffd7f6] rounded-full flex items-center justify-center mr-4">
+<span class="material-symbols-outlined text-tertiary" data-icon="emoji_events">emoji_events</span>
+</div>
+<div class="flex-1">
+<h4 class="font-bold text-on-surface">Reto Perfecto</h4>
+<p class="text-sm text-on-surface-variant">Matemáticas - Unidad 2</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</div>
+<div class="flex items-center p-4 bg-surface-container-highest/30 rounded-2xl border border-transparent hover:border-slate-200 transition-all active:scale-[0.98]">
+<div class="w-12 h-12 bg-[#dae2ff] rounded-full flex items-center justify-center mr-4">
+<span class="material-symbols-outlined text-primary" data-icon="military_tech">military_tech</span>
+</div>
+<div class="flex-1">
+<h4 class="font-bold text-on-surface">Dominio de Fracciones</h4>
+<p class="text-sm text-on-surface-variant">Completado sin pistas</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pt-3 pb-8 bg-white rounded-t-[32px] border-t border-slate-100 shadow-[0_-4px_20px_0_rgba(0,0,0,0.05)] md:absolute">
+<a class="flex flex-col items-center justify-center text-slate-400 px-4 py-2 hover:opacity-80 transition-opacity active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="home">home</span>
+<span class="font-['Inter'] text-[11px] font-medium">Inicio</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-slate-50 text-[#6a769b] rounded-2xl px-4 py-2 hover:opacity-80 transition-opacity active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="insights" style="font-variation-settings: 'FILL' 1;">insights</span>
+<span class="font-['Inter'] text-[11px] font-medium">Progreso</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 px-4 py-2 hover:opacity-80 transition-opacity active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="emoji_events">emoji_events</span>
+<span class="font-['Inter'] text-[11px] font-medium">Logros</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 px-4 py-2 hover:opacity-80 transition-opacity active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="person">person</span>
+<span class="font-['Inter'] text-[11px] font-medium">Perfil</span>
+</a>
+</nav>
+</div>
+</body></html>

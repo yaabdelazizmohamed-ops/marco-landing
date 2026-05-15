@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Marcoaprende - Dashboard</title>
+<!-- Tailwind CSS with Config -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {tertiary: "#6c5680", "surface-container-lowest": "#ffffff", "tertiary-fixed": "#e8cdfe", "on-tertiary-container": "#57426a", "inverse-on-surface": "#9d9ca2", "secondary-container": "#dde1fa", "primary-fixed": "#b8c8fc", primary: "#4e5e8b", "surface-tint": "#4e5e8b", "surface-container": "#ededf6", "primary-container": "#b8c8fc", "on-error-container": "#6e0a12", "on-primary-fixed": "#1b2c57", "on-background": "#30323a", "on-primary": "#f9f8ff", "on-primary-container": "#30406c", "error-container": "#fa746f", "on-secondary-fixed-variant": "#565b6f", "secondary-fixed-dim": "#cfd3eb", "outline-variant": "#b0b1bb", "surface-dim": "#d8d9e4", "tertiary-fixed-dim": "#dabfef", "inverse-surface": "#0d0e12", secondary: "#595e72", "on-surface-variant": "#5d5f68", background: "#faf8fe", "surface-bright": "#faf8fe", "primary-fixed-dim": "#aabaed", "inverse-primary": "#b8c8fc", "surface-variant": "#e1e2ec", outline: "#787a84", "on-tertiary-fixed-variant": "#614c74", surface: "#faf8fe", "on-secondary-fixed": "#393f51", "secondary-fixed": "#dde1fa", "on-tertiary": "#fff6ff", "on-secondary": "#faf8ff", error: "#a83836", "surface-container-low": "#f4f3fa", "on-surface": "#30323a", "on-error": "#fff7f6", "surface-container-highest": "#e1e2ec", "on-tertiary-fixed": "#432f56", "tertiary-container": "#e8cdfe", "surface-container-high": "#e7e7f1", "on-secondary-container": "#4c5165", "on-primary-fixed-variant": "#394a76", "secondary-dim": "#4d5266", "error-dim": "#67040d", "tertiary-dim": "#604a73", "primary-dim": "#42527e"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {"container-max": "1200px", "margin-desktop": "40px", unit: "8px", "margin-mobile": "16px", gutter: "24px"}, fontFamily: {"body-main": ["Inter", "sans-serif"], "headline-md": ["Inter", "sans-serif"], "title-sm": ["Inter", "sans-serif"], "display-lg": ["Inter", "sans-serif"], "label-caps": ["Inter", "sans-serif"], headline: ["Inter"], display: ["Inter"], body: ["Inter"], label: ["Inter"]}, fontSize: {"body-main": ["16px", {lineHeight: "1.6", letterSpacing: "0", fontWeight: "400"}], "headline-md": ["32px", {lineHeight: "1.2", letterSpacing: "-0.01em", fontWeight: "600"}], "title-sm": ["20px", {lineHeight: "1.4", letterSpacing: "0", fontWeight: "600"}], "display-lg": ["48px", {lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "700"}], "label-caps": ["12px", {lineHeight: "1", letterSpacing: "0.05em", fontWeight: "600"}]}}}};</script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Nunito:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+</head>
+<body class="bg-background text-on-background font-body-main text-body-main antialiased min-h-screen pb-[100px] md:pb-0">
+<!-- TopAppBar -->
+<header class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl text-blue-600 dark:text-blue-400 font-['Nunito'] text-sm font-medium fixed top-0 w-full z-50 border-b border-slate-100 dark:border-slate-800 shadow-sm transition-colors">
+<div class="flex justify-between items-center px-6 py-3 max-w-7xl mx-auto">
+<!-- Leading Action -->
+<button class="p-2 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors active:scale-95 duration-200 rounded-full flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<!-- Brand Logo -->
+<div class="flex-1 md:ml-4 flex items-center"><svg viewBox="140 72 72 62" width="70" height="28" xmlns="http://www.w3.org/2000/svg" aria-label="Marco"><line x1="148" y1="80" x2="148" y2="130" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><line x1="148" y1="80" x2="163" y2="80" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><line x1="148" y1="130" x2="163" y2="130" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><line x1="202" y1="80" x2="202" y2="130" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><line x1="202" y1="80" x2="187" y2="80" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><line x1="202" y1="130" x2="187" y2="130" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/><text x="175" y="119" font-family="Georgia,serif" font-size="42" font-style="italic" text-anchor="middle" fill="#0a0a0a">M</text></svg></div>
+<!-- Trailing Actions & Avatar -->
+<div class="flex items-center gap-2">
+<button class="p-2 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors active:scale-95 duration-200 rounded-full flex items-center justify-center text-primary relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-2 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors active:scale-95 duration-200 rounded-full flex items-center justify-center text-primary hidden md:flex">
+<span class="material-symbols-outlined" data-icon="emoji_events">emoji_events</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden ml-2 border border-outline-variant bg-surface-container-high">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="Portrait of a young smiling student with short brown hair against a light grey background, soft studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6_5A1OCgnlfuIZvRijbZvbyRG7Ci0rh0pjKYulUskY3yBiUirxXn1ApO0GYAmefRYuc-aSdaOhmOJ0p7FHAV3DVJ3zgK_Hs_MxhS2_H2kucvZM6DRIJiK4ki8SGBTI7hBmQI9iRUjqea9EHMlSaiq5DOhUC-3JiFso4G2pEq8_f3MGIvFrfxEkTaKyPk2xX3VPVKYvLWOzd_AIKF6ZznXIUY5CwhST4WX8NuLiqZOs7RNz9VzAouCvgXlGaKh0b77utiM8kP3fSl5"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-[88px] max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<!-- Welcome Section -->
+<section class="mt-8 md:mt-12 mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+<div class="flex flex-col gap-2">
+<h1 class="font-headline-md text-headline-md text-on-background">¡Hola, Alex! 👋 ¿Qué vamos a aprender hoy?</h1>
+<p class="font-body-main text-body-main text-on-surface-variant">Tienes 3 cuadernos pendientes para esta semana</p>
+</div>
+<!-- Gamification Widget -->
+<div class="bg-tertiary-fixed text-on-tertiary-fixed-variant rounded-full px-4 py-2 flex items-center gap-2 shadow-sm">
+<span class="text-lg">🔥</span>
+<span class="font-label-caps text-label-caps uppercase tracking-wider">5 días seguidos estudiando</span>
+</div>
+</section>
+<!-- Subjects Grid -->
+<section class="mb-16">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Matemáticas Card -->
+<article onclick="window.location='detalle-matematicas.html'" style="cursor:pointer" class="bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-surface-variant/50 flex flex-col gap-6 hover:shadow-md transition-shadow ring-2 ring-transparent hover:ring-primary/20">
+<div class="w-12 h-12 rounded-xl bg-primary-fixed text-on-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl" data-icon="calculate" data-weight="fill" style="font-variation-settings: 'FILL' 1;">calculate</span>
+</div>
+<div>
+<h2 class="font-title-sm text-title-sm text-on-background mb-1">Matemáticas</h2>
+<p class="font-body-main text-sm text-on-surface-variant mb-4">Fracciones y Decimales</p>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center w-full">
+<span class="font-label-caps text-label-caps text-secondary">PROGRESO</span>
+<span class="font-label-caps text-label-caps text-primary">85%</span>
+</div>
+<div class="w-full h-2 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 85%;"></div>
+</div>
+</div>
+</div>
+</article>
+<!-- Historia Card -->
+<article class="bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-surface-variant/50 flex flex-col gap-6 hover:shadow-md transition-shadow">
+<div class="w-12 h-12 rounded-xl bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl" data-icon="history_edu" data-weight="fill" style="font-variation-settings: 'FILL' 1;">history_edu</span>
+</div>
+<div>
+<h2 class="font-title-sm text-title-sm text-on-background mb-1">Historia</h2>
+<p class="font-body-main text-sm text-on-surface-variant mb-4">Civilizaciones Antiguas</p>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center w-full">
+<span class="font-label-caps text-label-caps text-secondary">PROGRESO</span>
+<span class="font-label-caps text-label-caps text-primary">40%</span>
+</div>
+<div class="w-full h-2 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 40%;"></div>
+</div>
+</div>
+</div>
+</article>
+<!-- Lengua Card -->
+<article class="bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-surface-variant/50 flex flex-col gap-6 hover:shadow-md transition-shadow">
+<div class="w-12 h-12 rounded-xl bg-tertiary-fixed text-on-tertiary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl" data-icon="menu_book" data-weight="fill" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+</div>
+<div>
+<h2 class="font-title-sm text-title-sm text-on-background mb-1">Lengua</h2>
+<p class="font-body-main text-sm text-on-surface-variant mb-4">Comprensión Lectora</p>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center w-full">
+<span class="font-label-caps text-label-caps text-secondary">PROGRESO</span>
+<span class="font-label-caps text-label-caps text-primary">60%</span>
+</div>
+<div class="w-full h-2 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 60%;"></div>
+</div>
+</div>
+</div>
+</article>
+<!-- Ciencias Card -->
+<article class="bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-surface-variant/50 flex flex-col gap-6 hover:shadow-md transition-shadow">
+<div class="w-12 h-12 rounded-xl bg-primary-fixed-dim text-on-primary-fixed-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl" data-icon="science" data-weight="fill" style="font-variation-settings: 'FILL' 1;">science</span>
+</div>
+<div>
+<h2 class="font-title-sm text-title-sm text-on-background mb-1">Ciencias</h2>
+<p class="font-body-main text-sm text-on-surface-variant mb-4">El Sistema Solar</p>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center w-full">
+<span class="font-label-caps text-label-caps text-secondary">PROGRESO</span>
+<span class="font-label-caps text-label-caps text-primary">15%</span>
+</div>
+<div class="w-full h-2 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 15%;"></div>
+</div>
+</div>
+</div>
+</article>
+</div>
+</section>
+<!-- Pending Workbooks -->
+<section class="mb-16">
+<h2 class="font-title-sm text-title-sm text-on-background mb-6">Cuadernos asignados por tus profesores</h2>
+<div class="flex flex-col gap-unit">
+<!-- Workbook Row 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-4 md:p-6 shadow-sm border border-surface-variant/30 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary-fixed text-on-primary-fixed flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+</div>
+<div>
+<div class="flex items-center gap-2 mb-1">
+<h3 class="font-body-main font-semibold text-on-background">Reto de Geometría - Unidad 2</h3>
+<span class="bg-error-container text-on-error-container px-2 py-0.5 rounded-full font-label-caps text-[10px]">NUEVO</span>
+</div>
+<p class="font-body-main text-sm text-on-surface-variant">Prof. Marcos • Matemáticas</p>
+</div>
+</div>
+<button class="bg-primary hover:bg-primary-container text-on-primary font-body-main text-sm font-semibold px-6 py-2.5 rounded-xl transition-colors w-full md:w-auto">
+                        Empezar
+                    </button>
+</div>
+<!-- Workbook Row 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-4 md:p-6 shadow-sm border border-surface-variant/30 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined" data-icon="edit_document">edit_document</span>
+</div>
+<div>
+<h3 class="font-body-main font-semibold text-on-background mb-1">Redacción: Mi lugar favorito</h3>
+<p class="font-body-main text-sm text-on-surface-variant">Profa. Laura • Lengua • Vence mañana</p>
+</div>
+</div>
+<button class="bg-surface-variant hover:bg-surface-dim text-on-surface-variant font-body-main text-sm font-semibold px-6 py-2.5 rounded-xl transition-colors w-full md:w-auto border border-outline-variant">
+                        Continuar
+                    </button>
+</div>
+<!-- Workbook Row 3 -->
+<div class="bg-surface-container-lowest rounded-xl p-4 md:p-6 shadow-sm border border-surface-variant/30 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-surface-container-low transition-colors opacity-75">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
+</div>
+<div>
+<h3 class="font-body-main font-semibold text-on-background line-through mb-1">Cuestionario: Ecosistemas</h3>
+<p class="font-body-main text-sm text-on-surface-variant">Prof. Carlos • Ciencias • Completado</p>
+</div>
+</div>
+<button class="bg-transparent text-secondary font-body-main text-sm font-semibold px-6 py-2.5 rounded-xl transition-colors w-full md:w-auto border border-transparent hover:bg-surface-container-highest">
+                        Revisar
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg text-blue-600 dark:text-blue-400 font-['Nunito'] text-[10px] font-bold fixed bottom-0 w-full rounded-t-3xl border-t border-slate-100 dark:border-slate-800 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pt-2 pb-safe lg:hidden">
+<!-- Active Tab: Inicio -->
+<button class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/20 rounded-2xl px-4 py-1 active:scale-90 transition-transform opacity-80">
+<span class="material-symbols-outlined mb-1" data-icon="home" data-weight="fill" style="font-variation-settings: 'FILL' 1;">home</span>
+<span>Inicio</span>
+</button>
+<!-- Inactive Tab: Cursos -->
+<button class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 active:scale-90 transition-transform opacity-80 px-4 py-1 hover:bg-slate-50 rounded-2xl">
+<span class="material-symbols-outlined mb-1" data-icon="import_contacts">import_contacts</span>
+<span>Cursos</span>
+</button>
+<!-- Inactive Tab: Tareas -->
+<button class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 active:scale-90 transition-transform opacity-80 px-4 py-1 hover:bg-slate-50 rounded-2xl">
+<span class="material-symbols-outlined mb-1" data-icon="task_alt">task_alt</span>
+<span>Tareas</span>
+</button>
+<!-- Inactive Tab: Perfil -->
+<button class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 active:scale-90 transition-transform opacity-80 px-4 py-1 hover:bg-slate-50 rounded-2xl">
+<span class="material-symbols-outlined mb-1" data-icon="person">person</span>
+<span>Perfil</span>
+</button>
+</nav>
+</body></html>
