@@ -19,18 +19,35 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0a0a'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='38' font-style='italic' fill='%23fafaf8' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/styles/legal.css">
+<link rel="stylesheet" href="/logo-animation/wordmark.css">
 </head>
 <body>
 
 <header class="legal-nav">
-  <a href="/" class="legal-brand" aria-label="Marco aprende — inicio">
-    <svg viewBox="100 75 175 80" xmlns="http://www.w3.org/2000/svg" aria-label="Marco aprende">
-      <rect x="108" y="80" width="122" height="50" fill="none" stroke="currentColor" stroke-width="1.5"/>
-      <text x="118" y="118" class="legal-marco">Marco</text>
-      <text x="199" y="146" class="legal-aprende">aprende</text>
-    </svg>
+  <a href="/" class="nav-brand nb-active" aria-label="Marco — inicio">
+    <span class="nb-frame">
+      <svg class="nb-svg" viewBox="140 70 140 70" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <line class="nb-l-v" x1="148" y1="80" x2="148" y2="130" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <line class="nb-tl-stub" x1="148" y1="80" x2="207" y2="80" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <line class="nb-bl-stub" x1="148" y1="130" x2="207" y2="130" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <g class="nb-right-group">
+          <line class="nb-r-v" x1="202" y1="80" x2="202" y2="130" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <line class="nb-tr-stub" x1="202" y1="80" x2="143" y2="80" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <line class="nb-br-stub" x1="202" y1="130" x2="143" y2="130" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </g>
+        <defs>
+          <clipPath id="legalArcoClip">
+            <rect class="nb-arco-clip" x="190" y="78" width="64" height="54"/>
+          </clipPath>
+        </defs>
+        <g clip-path="url(#legalArcoClip)">
+          <text x="190" y="114" class="nb-arco">arco</text>
+        </g>
+        <text x="175" y="119" class="nb-mark nb-mark-sigma" text-anchor="middle">&#x03A3;</text>
+      </svg>
+    </span>
   </a>
   <a href="/" class="legal-back">← Volver a inicio</a>
 </header>
