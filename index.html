@@ -314,7 +314,7 @@
   <ul class="nav-links" id="navLinks">
     <li><a href="#demo">Demo</a></li>
     <li><a href="#features">Funcionalidades</a></li>
-    <li><a href="#proof">Testimonios</a></li>
+    <li><a href="#proof">El problema</a></li>
     <li><a href="#feedback" class="nav-link-feedback">Dar mi opinión</a></li>
   </ul>
 </nav>
@@ -363,8 +363,8 @@
 
   <div class="demo-profile-nav reveal">
     <div class="demo-profile-btns">
-      <button class="demo-profile-btn active" data-profile="alumno" onclick="switchProfile('alumno')">Alumno</button>
-      <button class="demo-profile-btn" data-profile="profesor" onclick="switchProfile('profesor')">Profesor</button>
+      <button class="demo-profile-btn" data-profile="alumno" onclick="switchProfile('alumno')">Alumno</button>
+      <button class="demo-profile-btn active" data-profile="profesor" onclick="switchProfile('profesor')">Profesor</button>
       <button class="demo-profile-btn" data-profile="direccion" onclick="switchProfile('direccion')">Dirección</button>
       <button class="demo-profile-btn" data-profile="padres" onclick="switchProfile('padres')">Padres</button>
     </div>
@@ -373,11 +373,13 @@
   <div class="app-frame reveal" style="position:relative;">
     <div class="app-topbar">
       <div class="app-dots"><span></span><span></span><span></span></div>
-      <span class="app-tab" id="app-tab-label">Vista del alumno</span>
+      <span class="app-tab" id="app-tab-label">Vista del profesor</span>
     </div>
 
+    <div style="padding:0.55rem 1rem 0;font-size:0.72rem;color:var(--gray);font-family:'DM Sans',sans-serif;font-style:italic;opacity:0.75;">Estás viendo la vista del profesor — cambia las pestañas de arriba para explorar lo que vería tu alumno.</div>
+
     <div class="app-iframe-wrap">
-      <iframe id="proto-frame" class="proto-frame proto-frame--active" src="/brand-examples/dashboard-alumno.html" title="Marco — prototipo interactivo"></iframe>
+      <iframe id="proto-frame" class="proto-frame proto-frame--active" src="/brand-examples/dashboard-profesor.html" title="Marco — prototipo interactivo"></iframe>
     </div>
 
     <!-- INICIO LEGACY (oculto, no se renderiza) — pantallas inline preservadas para referencia -->
@@ -994,6 +996,11 @@
       </div>
     </div>
   </div>
+
+  <div class="reveal" style="text-align:center;padding:2rem 0 0;border-top:1px solid var(--border);margin-top:2rem;">
+    <p style="font-size:0.85rem;color:var(--gray);margin:0 0 1.2rem;font-family:'DM Sans',sans-serif;">¿Conoces a alguien que se enfrenta a esto cada día?</p>
+    <a href="mailto:?subject=Esto%20me%20ha%20parecido%20interesante%20para%20el%20aula&body=He%20visto%20esta%20herramienta%20educativa%20sobre%20IA%20socr%C3%A1tica%20para%20el%20aula.%20Puede%20ser%20relevante%20para%20lo%20que%20coment%C3%A1bamos.%20%C3%89chale%20un%20ojo%20en%3A%20https%3A%2F%2Fmarcoaprende.com" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.65rem 1.6rem;border:1.5px solid var(--black);border-radius:var(--radius-pill);font-size:0.82rem;font-family:'DM Sans',sans-serif;font-weight:500;color:var(--black);text-decoration:none;letter-spacing:0.01em;transition:opacity 0.15s;" onmouseover="this.style.opacity='0.6'" onmouseout="this.style.opacity='1'">Compartir con un compañero →</a>
+  </div>
 </section>
 
 <!-- SOCIAL PROOF -->
@@ -1152,7 +1159,7 @@
   <div class="form-section-inner">
     <div class="form-section-left reveal">
       <p class="section-label" style="text-align:left;">Piloto 2026–2027</p>
-      <h2 class="section-title" style="text-align:left;font-size:clamp(2rem,4vw,3rem);">Reserva una plaza<br>para tu centro</h2>
+      <h2 class="section-title" id="formSectionTitle" style="text-align:left;font-size:clamp(2rem,4vw,3rem);">Reserva una plaza<br>para tu centro</h2>
       <p class="section-sub" style="text-align:left;margin:0;">Seleccionaremos un máximo de 3 centros. Cuéntanos brevemente quién eres y te contactamos con una presentación a medida.</p>
 
       <!-- Valor real de participar en el piloto -->
@@ -1161,11 +1168,7 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           Los primeros centros definen las funcionalidades del producto con nosotros
         </div>
-        <div class="form-pilot-perk">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          Piloto gratuito durante un trimestre completo
-        </div>
-        <div class="form-pilot-perk">
+        <div class="form-pilot-perk" style="margin-top:0.35rem;">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           Condiciones preferentes en el precio durante los dos primeros años
         </div>
@@ -1174,7 +1177,7 @@
       <div class="form-trust-list">
         <div class="form-trust-item">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 4v5c0 5-3.7 9.3-9 11C6.7 21.3 3 17 3 12V7l9-4z"/></svg>
-          Sin permanencia · piloto gratuito
+          Formación incluida · soporte directo
         </div>
         <div class="form-trust-item">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
@@ -1188,6 +1191,14 @@
     </div>
 
     <div class="form-section-right reveal">
+
+  <!-- Entrada rápida para profesores -->
+  <div id="profesorShortcut" style="position:relative;margin-bottom:1.2rem;padding:1rem 1.2rem;background:var(--surface,#f2f1ec);border-radius:var(--radius-md);border:1px solid var(--border);overflow:hidden;max-height:200px;opacity:1;transition:opacity 0.3s ease,max-height 0.35s ease,margin-bottom 0.35s ease,padding 0.35s ease;">
+    <button onclick="dismissProfesorShortcut()" aria-label="Cerrar" style="position:absolute;top:0.6rem;right:0.7rem;background:none;border:none;cursor:pointer;font-size:1rem;line-height:1;color:var(--gray);padding:0.2rem 0.3rem;opacity:0.6;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">×</button>
+    <p style="font-size:0.82rem;color:var(--gray);margin:0 0 0.75rem;font-family:'DM Sans',sans-serif;line-height:1.5;">¿Eres profesor/a? Cuéntanos tu situación en 2 minutos — sin comprometer nada.</p>
+    <button onclick="enterProfesorMode()" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.5rem 1.2rem;background:var(--black);border:none;border-radius:var(--radius-pill);font-size:0.8rem;font-family:'DM Sans',sans-serif;font-weight:500;color:#fafaf8;cursor:pointer;transition:opacity 0.15s;" onmouseover="this.style.opacity='0.75'" onmouseout="this.style.opacity='1'">Dar mi opinión como profesor →</button>
+  </div>
+
   <div class="form-wrap">
     <div id="form-content">
 
@@ -2060,6 +2071,22 @@ window.addEventListener('scroll', () => {
 
   const pastHero = window.scrollY > hero.offsetHeight * 0.8;
   floatingCta.classList.toggle('visible', pastHero);
+
+  const demoEl = document.getElementById('demo');
+  const ctaTextEl = document.getElementById('floatingCtaText');
+  if (demoEl && ctaTextEl) {
+    const pastDemo = window.scrollY > demoEl.offsetTop + demoEl.offsetHeight;
+    if (pastDemo) {
+      const activeBtn = document.querySelector('.profile-btn.active');
+      const m = activeBtn && activeBtn.getAttribute('onclick').match(/setProfile\('(\w+)'\)/);
+      const key = m ? m[1] : 'profesor';
+      ctaTextEl.textContent = ctaTexts[key] || 'Hablemos de un piloto';
+      floatingCta.setAttribute('href', '#feedback');
+    } else {
+      ctaTextEl.textContent = 'Explorar la demo';
+      floatingCta.setAttribute('href', '#demo');
+    }
+  }
 });
 
 // ── Mobile hamburger menu ──
@@ -2668,6 +2695,29 @@ function submitFloatCapture() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, rol: 'float-capture', origen: 'float-scroll' })
   }).catch(() => {});
+}
+
+function dismissProfesorShortcut() {
+  const el = document.getElementById('profesorShortcut');
+  if (!el) return;
+  el.style.opacity = '0';
+  el.style.maxHeight = '0';
+  el.style.marginBottom = '0';
+  el.style.padding = '0';
+  el.style.borderWidth = '0';
+  setTimeout(() => { el.style.display = 'none'; }, 370);
+}
+
+function enterProfesorMode() {
+  const roleSel = document.getElementById('formRole');
+  if (roleSel) {
+    roleSel.value = 'profesor';
+    onSimpleRoleChange('profesor');
+  }
+  const titleEl = document.getElementById('formSectionTitle');
+  if (titleEl) titleEl.innerHTML = 'Cuéntanos cómo<br>lo ves tú';
+  dismissProfesorShortcut();
+  setTimeout(() => document.getElementById('formName')?.focus(), 380);
 }
 </script>
 <script defer src="logo-animation/wordmark.js"></script>
