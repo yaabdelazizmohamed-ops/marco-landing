@@ -1398,7 +1398,172 @@
         </div>
       </div>
 
-      <!-- ESTADO 3: Confirmación final -->
+      <!-- ESTADO 3: Valoración de funcionalidades -->
+      <div id="formRatingsStep" style="display:none;">
+        <div class="ratings-header">
+          <p class="ratings-header-tag">Un último paso</p>
+          <p class="ratings-header-title">¿Qué te parece Marco?</p>
+          <p class="ratings-header-sub">Valora del 1 al 5 — un minuto que vale su peso en oro.</p>
+        </div>
+
+        <!-- Profesor -->
+        <div id="ratQProfesor" style="display:none;">
+          <div class="form-group">
+            <label class="form-label">¿Qué funcionalidades te parecen más útiles para tu clase?</label>
+            <div class="ratings-stack">
+              <div class="rating-row">
+                <span class="rating-row-label">IA socrática — te guía con preguntas, no da la respuesta</span>
+                <div class="rating-group" id="ratMetodo">
+                  <button class="rating-btn" data-group="ratMetodo" data-val="1" onclick="selectRatingBtn(this)">1</button><button class="rating-btn" data-group="ratMetodo" data-val="2" onclick="selectRatingBtn(this)">2</button><button class="rating-btn" data-group="ratMetodo" data-val="3" onclick="selectRatingBtn(this)">3</button><button class="rating-btn" data-group="ratMetodo" data-val="4" onclick="selectRatingBtn(this)">4</button><button class="rating-btn" data-group="ratMetodo" data-val="5" onclick="selectRatingBtn(this)">5</button>
+                </div>
+              </div>
+              <div class="rating-row">
+                <span class="rating-row-label">Mapa de calor de dudas por tema y grupo</span>
+                <div class="rating-group" id="ratMapa">
+                  <button class="rating-btn" data-group="ratMapa" data-val="1" onclick="selectRatingBtn(this)">1</button><button class="rating-btn" data-group="ratMapa" data-val="2" onclick="selectRatingBtn(this)">2</button><button class="rating-btn" data-group="ratMapa" data-val="3" onclick="selectRatingBtn(this)">3</button><button class="rating-btn" data-group="ratMapa" data-val="4" onclick="selectRatingBtn(this)">4</button><button class="rating-btn" data-group="ratMapa" data-val="5" onclick="selectRatingBtn(this)">5</button>
+                </div>
+              </div>
+              <div class="rating-row">
+                <span class="rating-row-label">Alertas de alumnos con dificultades persistentes</span>
+                <div class="rating-group" id="ratAlertas">
+                  <button class="rating-btn" data-group="ratAlertas" data-val="1" onclick="selectRatingBtn(this)">1</button><button class="rating-btn" data-group="ratAlertas" data-val="2" onclick="selectRatingBtn(this)">2</button><button class="rating-btn" data-group="ratAlertas" data-val="3" onclick="selectRatingBtn(this)">3</button><button class="rating-btn" data-group="ratAlertas" data-val="4" onclick="selectRatingBtn(this)">4</button><button class="rating-btn" data-group="ratAlertas" data-val="5" onclick="selectRatingBtn(this)">5</button>
+                </div>
+              </div>
+              <div class="rating-row">
+                <span class="rating-row-label">Cuadernos individuales con historial de sesiones</span>
+                <div class="rating-group" id="ratCuadernos">
+                  <button class="rating-btn" data-group="ratCuadernos" data-val="1" onclick="selectRatingBtn(this)">1</button><button class="rating-btn" data-group="ratCuadernos" data-val="2" onclick="selectRatingBtn(this)">2</button><button class="rating-btn" data-group="ratCuadernos" data-val="3" onclick="selectRatingBtn(this)">3</button><button class="rating-btn" data-group="ratCuadernos" data-val="4" onclick="selectRatingBtn(this)">4</button><button class="rating-btn" data-group="ratCuadernos" data-val="5" onclick="selectRatingBtn(this)">5</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dirección -->
+        <div id="ratQDireccion" style="display:none;">
+          <div class="form-group">
+            <label class="form-label">¿Qué funcionalidades interesan más a vuestro centro?</label>
+            <div class="ratings-stack">
+              <div class="rating-row">
+                <span class="rating-row-label">Visibilidad de rendimiento por grupo y aula</span>
+                <div class="rating-group" id="ratDirVisibilidad">
+                  <button class="rating-btn" data-group="ratDirVisibilidad" data-val="1" onclick="selectRatingBtn(this)">1</button><button class="rating-btn" data-group="ratDirVisibilidad" data-val="2" onclick="selectRatingBtn(this)">2</button><button class="rating-btn" data-group="ratDirVisibilidad" data-val="3" onclick="selectRatingBtn(this)">3</button><button class="rating-btn" data-group="ratDirVisibilidad" data-val="4" onclick="selectRatingBtn(this)">4</button><button class="rating-btn" data-group="ratDirVisibilidad" data-val="5" onclick="selectRatingBtn(this)">5</button>
+                </div>
+              </div>
+              <div class="rating-row">
+                <span class="rating-row-label">IA que enseña a pensar — no da respuestas directas</span>
+                <div class="rating-group" id="ratDirIA">
+                  <button class="rating-btn" data-group="ratDirIA" data-val="1" onclick="selectRatingBtn(this)">1</button><button class="rating-btn" data-group="ratDirIA" data-val="2" onclick="selectRatingBtn(this)">2</button><button class="rating-btn" data-group="ratDirIA" data-val="3" onclick="selectRatingBtn(this)">3</button><button class="rating-btn" data-group="ratDirIA" data-val="4" onclick="selectRatingBtn(this)">4</button><button class="rating-btn" data-group="ratDirIA" data-val="5" onclick="selectRatingBtn(this)">5</button>
+                </div>
+              </div>
+              <div class="rating-row">
+                <span class="rating-row-label">Cumplimiento RGPD — datos en servidores europeos</span>
+                <div class="rating-group" id="ratDirRGPD">
+                  <button class="rating-btn" data-group="ratDirRGPD" data-val="1" onclick="selectRatingBtn(this)">1</button><button class="rating-btn" data-group="ratDirRGPD" data-val="2" onclick="selectRatingBtn(this)">2</button><button class="rating-btn" data-group="ratDirRGPD" data-val="3" onclick="selectRatingBtn(this)">3</button><button class="rating-btn" data-group="ratDirRGPD" data-val="4" onclick="selectRatingBtn(this)">4</button><button class="rating-btn" data-group="ratDirRGPD" data-val="5" onclick="selectRatingBtn(this)">5</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Estarían interesados en un piloto gratuito de un trimestre?</label>
+            <select class="form-select" id="ratDirPiloto">
+              <option value="">Selecciona</option>
+              <option value="si">Sí, nos interesa</option>
+              <option value="quizas">Posiblemente, necesitamos más información</option>
+              <option value="no">No por ahora</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Padre/Madre -->
+        <div id="ratQPadre" style="display:none;">
+          <div class="form-group">
+            <label class="form-label">¿Qué te parece el enfoque de Marco? Valora del 1 al 5</label>
+            <div class="ratings-stack">
+              <div class="rating-row">
+                <span class="rating-row-label">IA que enseña a pensar — no le hace los deberes</span>
+                <div class="rating-group" id="ratPadreMetodo">
+                  <button class="rating-btn" data-group="ratPadreMetodo" data-val="1" onclick="selectRatingBtn(this)">1</button><button class="rating-btn" data-group="ratPadreMetodo" data-val="2" onclick="selectRatingBtn(this)">2</button><button class="rating-btn" data-group="ratPadreMetodo" data-val="3" onclick="selectRatingBtn(this)">3</button><button class="rating-btn" data-group="ratPadreMetodo" data-val="4" onclick="selectRatingBtn(this)">4</button><button class="rating-btn" data-group="ratPadreMetodo" data-val="5" onclick="selectRatingBtn(this)">5</button>
+                </div>
+              </div>
+              <div class="rating-row">
+                <span class="rating-row-label">Puedo ver cómo estudia mi hijo/a — transparencia para padres</span>
+                <div class="rating-group" id="ratPadreTransp">
+                  <button class="rating-btn" data-group="ratPadreTransp" data-val="1" onclick="selectRatingBtn(this)">1</button><button class="rating-btn" data-group="ratPadreTransp" data-val="2" onclick="selectRatingBtn(this)">2</button><button class="rating-btn" data-group="ratPadreTransp" data-val="3" onclick="selectRatingBtn(this)">3</button><button class="rating-btn" data-group="ratPadreTransp" data-val="4" onclick="selectRatingBtn(this)">4</button><button class="rating-btn" data-group="ratPadreTransp" data-val="5" onclick="selectRatingBtn(this)">5</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Sugerirías Marco al colegio de tu hijo/a?</label>
+            <select class="form-select" id="ratPadreRecom">
+              <option value="">Selecciona</option>
+              <option value="si">Sí, sin duda</option>
+              <option value="quizas">Posiblemente</option>
+              <option value="masinfo">Necesitaría saber más</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Alumno -->
+        <div id="ratQAlumno" style="display:none;">
+          <div class="form-group">
+            <label class="form-label">¿Qué te parece Marco? Valora del 1 al 5</label>
+            <div class="ratings-stack">
+              <div class="rating-row">
+                <span class="rating-row-label">Que te haga preguntas en vez de darte la respuesta</span>
+                <div class="rating-group" id="ratAlumnoMetodo">
+                  <button class="rating-btn" data-group="ratAlumnoMetodo" data-val="1" onclick="selectRatingBtn(this)">1</button><button class="rating-btn" data-group="ratAlumnoMetodo" data-val="2" onclick="selectRatingBtn(this)">2</button><button class="rating-btn" data-group="ratAlumnoMetodo" data-val="3" onclick="selectRatingBtn(this)">3</button><button class="rating-btn" data-group="ratAlumnoMetodo" data-val="4" onclick="selectRatingBtn(this)">4</button><button class="rating-btn" data-group="ratAlumnoMetodo" data-val="5" onclick="selectRatingBtn(this)">5</button>
+                </div>
+              </div>
+              <div class="rating-row">
+                <span class="rating-row-label">Que recuerde tus sesiones y sepa dónde lo dejaste</span>
+                <div class="rating-group" id="ratAlumnoMemoria">
+                  <button class="rating-btn" data-group="ratAlumnoMemoria" data-val="1" onclick="selectRatingBtn(this)">1</button><button class="rating-btn" data-group="ratAlumnoMemoria" data-val="2" onclick="selectRatingBtn(this)">2</button><button class="rating-btn" data-group="ratAlumnoMemoria" data-val="3" onclick="selectRatingBtn(this)">3</button><button class="rating-btn" data-group="ratAlumnoMemoria" data-val="4" onclick="selectRatingBtn(this)">4</button><button class="rating-btn" data-group="ratAlumnoMemoria" data-val="5" onclick="selectRatingBtn(this)">5</button>
+                </div>
+              </div>
+              <div class="rating-row">
+                <span class="rating-row-label">Tu valoración general de Marco</span>
+                <div class="rating-group" id="ratAlumnoGeneral">
+                  <button class="rating-btn" data-group="ratAlumnoGeneral" data-val="1" onclick="selectRatingBtn(this)">1</button><button class="rating-btn" data-group="ratAlumnoGeneral" data-val="2" onclick="selectRatingBtn(this)">2</button><button class="rating-btn" data-group="ratAlumnoGeneral" data-val="3" onclick="selectRatingBtn(this)">3</button><button class="rating-btn" data-group="ratAlumnoGeneral" data-val="4" onclick="selectRatingBtn(this)">4</button><button class="rating-btn" data-group="ratAlumnoGeneral" data-val="5" onclick="selectRatingBtn(this)">5</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Lo usarías si tu colegio lo tuviera?</label>
+            <select class="form-select" id="ratAlumnoUsaria">
+              <option value="">Selecciona</option>
+              <option value="si">Sí, seguro</option>
+              <option value="quizas_si">Probablemente sí</option>
+              <option value="nose">No lo sé</option>
+              <option value="quizas_no">Probablemente no</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Fallback sin perfil -->
+        <div id="ratQGeneral" style="display:none;">
+          <div class="form-group">
+            <label class="form-label">¿Qué te parece Marco en general? Valora del 1 al 5</label>
+            <div class="rating-group" id="ratGeneral">
+              <button class="rating-btn" data-group="ratGeneral" data-val="1" onclick="selectRatingBtn(this)">1</button><button class="rating-btn" data-group="ratGeneral" data-val="2" onclick="selectRatingBtn(this)">2</button><button class="rating-btn" data-group="ratGeneral" data-val="3" onclick="selectRatingBtn(this)">3</button><button class="rating-btn" data-group="ratGeneral" data-val="4" onclick="selectRatingBtn(this)">4</button><button class="rating-btn" data-group="ratGeneral" data-val="5" onclick="selectRatingBtn(this)">5</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-submit-row">
+          <button class="form-submit-btn" onclick="submitRatingsForm()">Enviar valoración →</button>
+        </div>
+        <div style="text-align:center;margin-top:0.9rem;">
+          <button onclick="skipRatingsForm()" style="background:none;border:none;color:var(--gray);font-size:0.78rem;cursor:pointer;text-decoration:underline;padding:0.3rem 0;">
+            Omitir y terminar
+          </button>
+        </div>
+      </div>
+
+      <!-- ESTADO 4: Confirmación final -->
       <div id="formFinalThanks" style="display:none;text-align:center;padding:2rem 0;">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.55;margin-bottom:1.2rem;"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3L17 9"/></svg>
         <p style="font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:clamp(2.4rem,6vw,3.6rem);font-weight:400;letter-spacing:-0.02em;line-height:1;color:#fff;margin:0 0 0.7rem;">Todo listo.</p>
@@ -2339,11 +2504,76 @@ function submitOptionalForm() {
     });
   } catch(e) {}
 
-  transitionFormTo('formThanksStep', 'formFinalThanks');
+  showRatingSection(role);
+  transitionFormTo('formThanksStep', 'formRatingsStep');
 }
 
 function skipOptionalForm() {
-  transitionFormTo('formThanksStep', 'formFinalThanks');
+  showRatingSection(_simpleFormRole);
+  transitionFormTo('formThanksStep', 'formRatingsStep');
+}
+
+// ── Paso de valoración de funcionalidades ──
+function selectRatingBtn(btn) {
+  const group = btn.dataset.group;
+  if (group) document.querySelectorAll(`[data-group="${group}"]`).forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+function collectRating(groupId) {
+  const sel = document.querySelector(`[data-group="${groupId}"].selected`);
+  return sel ? sel.dataset.val : '';
+}
+
+function showRatingSection(role) {
+  ['ratQProfesor','ratQDireccion','ratQPadre','ratQAlumno','ratQGeneral'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.style.display = 'none';
+  });
+  const map = { profesor:'ratQProfesor', direccion:'ratQDireccion', padre:'ratQPadre', alumno:'ratQAlumno' };
+  const target = document.getElementById(map[role] || 'ratQGeneral');
+  if (target) target.style.display = 'block';
+}
+
+function submitRatingsForm() {
+  const role = _simpleFormRole;
+  let ratings = { rol: role, fase: 'ratings' };
+
+  if (role === 'profesor') {
+    ratings.metodo    = collectRating('ratMetodo');
+    ratings.mapa      = collectRating('ratMapa');
+    ratings.alertas   = collectRating('ratAlertas');
+    ratings.cuadernos = collectRating('ratCuadernos');
+  } else if (role === 'direccion') {
+    ratings.visibilidad = collectRating('ratDirVisibilidad');
+    ratings.ia          = collectRating('ratDirIA');
+    ratings.rgpd        = collectRating('ratDirRGPD');
+    ratings.piloto      = document.getElementById('ratDirPiloto')?.value;
+  } else if (role === 'padre') {
+    ratings.metodo    = collectRating('ratPadreMetodo');
+    ratings.transp    = collectRating('ratPadreTransp');
+    ratings.recomenda = document.getElementById('ratPadreRecom')?.value;
+  } else if (role === 'alumno') {
+    ratings.metodo   = collectRating('ratAlumnoMetodo');
+    ratings.memoria  = collectRating('ratAlumnoMemoria');
+    ratings.general  = collectRating('ratAlumnoGeneral');
+    ratings.usaria   = document.getElementById('ratAlumnoUsaria')?.value;
+  } else {
+    ratings.general = collectRating('ratGeneral');
+  }
+
+  try {
+    fetch('https://marcoaprende-landing-form.yaabdelaziz-mohamed.workers.dev', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: _simpleFormEmail, rol: role, origen: 'form-ratings', datosCompletos: ratings })
+    });
+  } catch(e) {}
+
+  transitionFormTo('formRatingsStep', 'formFinalThanks');
+}
+
+function skipRatingsForm() {
+  transitionFormTo('formRatingsStep', 'formFinalThanks');
 }
 
 // ── FAQ accordion ──
