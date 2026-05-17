@@ -2522,6 +2522,120 @@ body:not(.page-ready) .scroll-hint {
   .form-simple-row { grid-template-columns: 1fr; }
 }
 
+/* ── Chip pills (quick-select tags) ── */
+.chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.chip-btn {
+  padding: 0.38rem 0.9rem;
+  background: #161616;
+  border: 1px solid #2a2a2a;
+  border-radius: 9999px;
+  color: #777;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.76rem;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.15s ease;
+  user-select: none;
+  line-height: 1.5;
+}
+
+.chip-btn:hover {
+  border-color: #555;
+  color: #ccc;
+}
+
+.chip-btn.selected {
+  background: var(--white);
+  color: var(--black);
+  border-color: var(--white);
+  font-weight: 600;
+  transform: scale(1.03);
+}
+
+/* ── Animated form dynamic block ── */
+.form-dynamic-block {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  margin-top: -1rem;
+  transition: max-height 0.44s cubic-bezier(0.4,0,0.2,1),
+              opacity 0.3s ease 0.08s,
+              margin-top 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+
+.form-dynamic-block.visible {
+  max-height: 600px;
+  opacity: 1;
+  margin-top: 0;
+}
+
+/* ── Big "Gracias" state ── */
+.thanks-big {
+  text-align: center;
+  padding: 1.8rem 0 1.5rem;
+}
+
+.thanks-word {
+  font-family: 'Fraunces', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(3.8rem, 10vw, 6rem);
+  color: var(--white);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin: 0 0 0.55rem;
+}
+
+.thanks-sub {
+  font-size: 0.88rem;
+  color: #666;
+  font-weight: 300;
+  margin: 0;
+  line-height: 1.65;
+}
+
+.thanks-divider {
+  width: 32px;
+  height: 1px;
+  background: #2a2a2a;
+  margin: 1.4rem auto;
+}
+
+.thanks-invite {
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: #aaa;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ── Final tiny confirmation ── */
+.thanks-final {
+  text-align: center;
+  padding: 2.5rem 0;
+}
+
+.thanks-final p {
+  color: #777;
+  font-size: 0.88rem;
+  font-weight: 300;
+  line-height: 1.8;
+}
+
+/* ── Form state animations ── */
+@keyframes formSlideIn {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.form-state-enter {
+  animation: formSlideIn 0.38s cubic-bezier(0.4,0,0.2,1) both;
+}
+
 /* ── PROTOTIPO SHOWCASE ── */
 .showcase-section {
   background: var(--black);
