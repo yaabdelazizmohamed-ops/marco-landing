@@ -2472,17 +2472,17 @@ body:not(.page-ready) .scroll-hint {
   margin-top: var(--space-6);
 }
 .faq-tab {
-  padding: var(--space-2) var(--space-5);
-  font-family: var(--font-sans); font-size: var(--text-sm); font-weight: var(--weight-medium);
+  padding: 0.55rem 1.4rem;
+  font-family: var(--font-sans); font-size: 0.875rem; font-weight: 500;
   border-radius: var(--radius-pill); border: 1.5px solid var(--border);
   background: transparent; color: var(--gray); cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-soft);
+  transition: all 0.18s ease;
+  letter-spacing: -0.01em;
 }
-.faq-tab:hover { color: var(--black); border-color: var(--accent); }
-.faq-tab.active { background: var(--black); color: var(--white); border-color: var(--black); }
+.faq-tab:hover { color: var(--black); border-color: #aaa; }
+.faq-tab.active { background: var(--black); color: var(--white); border-color: var(--black); font-weight: 600; }
 .faq-group { display: none; }
-.faq-group.active { display: flex; flex-direction: column; gap: 0; }
-.faq-item.open .faq-a { max-height: 400px; padding-bottom: 1.2rem; }
+.faq-group.active { display: flex; flex-direction: column; gap: 0.55rem; }
 .faq-grid {
   max-width: 720px;
   margin: 2.5rem auto 0;
@@ -2491,16 +2491,26 @@ body:not(.page-ready) .scroll-hint {
   gap: 0;
 }
 .faq-item {
-  border-bottom: 1px solid var(--border);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
   overflow: hidden;
+  background: var(--white);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
-.faq-item:first-child { border-top: 1px solid var(--border); }
+.faq-item:hover {
+  border-color: #bbb;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+}
+.faq-item.open {
+  border-color: var(--black);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
 .faq-q {
   width: 100%;
   background: none;
   border: none;
   text-align: left;
-  padding: 1.2rem 0;
+  padding: 1.25rem 1.4rem;
   font-family: 'DM Sans', sans-serif;
   font-size: 0.95rem;
   font-weight: 500;
@@ -2510,28 +2520,36 @@ body:not(.page-ready) .scroll-hint {
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
+  line-height: 1.4;
 }
 .faq-q-icon {
   flex-shrink: 0;
-  width: 18px; height: 18px;
+  width: 22px; height: 22px;
   border-radius: 50%;
   border: 1.5px solid var(--border);
   display: flex; align-items: center; justify-content: center;
-  transition: transform 0.3s, border-color 0.2s;
-  font-size: 0.85rem;
+  transition: transform 0.3s ease, border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+  font-size: 0.8rem;
   color: var(--gray);
+  line-height: 1;
 }
-.faq-item.open .faq-q-icon { transform: rotate(45deg); border-color: var(--black); color: var(--black); }
+.faq-item.open .faq-q-icon {
+  transform: rotate(45deg);
+  border-color: var(--black);
+  background: var(--black);
+  color: var(--white);
+}
 .faq-a {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.38s cubic-bezier(0.16,1,0.3,1), padding 0.3s;
-  font-size: 0.88rem;
+  transition: max-height 0.38s cubic-bezier(0.16,1,0.3,1), padding 0.3s ease;
+  font-size: 0.875rem;
   color: var(--gray);
-  line-height: 1.65;
+  line-height: 1.7;
+  padding: 0 1.4rem;
 }
-.faq-item.open .faq-a { max-height: 300px; padding-bottom: 1.2rem; }
-.faq-a a { color: var(--black); }
+.faq-item.open .faq-a { max-height: 400px; padding: 0 1.4rem 1.5rem; }
+.faq-a a { color: var(--black); text-decoration: underline; }
 
 /* ── QUOTE ENCIMA DEL FORM ── */
 .form-director-quote {
