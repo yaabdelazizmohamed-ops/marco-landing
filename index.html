@@ -715,7 +715,7 @@
           <div style="font-size:0.72rem;color:var(--gray);">Panel del centro</div>
           <div style="font-family:'Fraunces',Georgia,serif;font-size:1.2rem;">Colegio San Rafael · Vista dirección</div>
         </div>
-        <div style="font-size:0.72rem;color:var(--gray);">Curso 2025–2026 · 2º Trimestre</div>
+        <div style="font-size:0.72rem;color:var(--gray);">Curso 2026–2027 · 2º Trimestre</div>
       </div>
 
       <!-- KPIs del centro -->
@@ -1153,7 +1153,7 @@
     <div class="form-section-left reveal">
       <p class="section-label" style="text-align:left;">Piloto 2026–2027</p>
       <h2 class="section-title" style="text-align:left;font-size:clamp(2rem,4vw,3rem);">Reserva una plaza<br>para tu centro</h2>
-      <p class="section-sub" style="text-align:left;margin:0;">Seleccionaremos un máximo de 8 centros. Cuéntanos brevemente quién eres y te contactamos con una presentación a medida.</p>
+      <p class="section-sub" style="text-align:left;margin:0;">Seleccionaremos un máximo de 3 centros. Cuéntanos brevemente quién eres y te contactamos con una presentación a medida.</p>
 
       <!-- Valor real de participar en el piloto -->
       <div class="form-pilot-perks">
@@ -1191,42 +1191,98 @@
   <div class="form-wrap">
     <div id="form-content">
 
-      <!-- FORMULARIO SIMPLIFICADO — 4 campos, submit directo (oculto; se activa con ?form=simple) -->
-      <div class="form-simple" id="formSimple" style="display:none;">
+      <!-- ESTADO 1: Formulario de contacto -->
+      <div class="form-simple" id="formSimple">
         <div class="form-simple-row">
-          <div class="form-group">
+          <div class="form-group" style="margin-bottom:0;">
             <label class="form-label">Nombre</label>
-            <input class="form-input" type="text" placeholder="Tu nombre" id="formName" />
+            <input class="form-input" type="text" placeholder="Tu nombre" id="formName" autocomplete="given-name" />
           </div>
-          <div class="form-group">
-            <label class="form-label">Centro educativo</label>
-            <input class="form-input" type="text" placeholder="Nombre del colegio" id="formCenter" />
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label">Perfil</label>
+            <select class="form-select" id="formRole" onchange="onSimpleRoleChange(this.value)">
+              <option value="">¿Quién eres?</option>
+              <option value="profesor">Profesor/a</option>
+              <option value="direccion">Director/a · equipo directivo</option>
+              <option value="padre">Padre / Madre</option>
+              <option value="alumno">Alumno/a</option>
+            </select>
           </div>
         </div>
-        <div class="form-group">
-          <label class="form-label">Perfil</label>
-          <select class="form-select" id="formRole">
-            <option value="direccion">Director/a o equipo directivo</option>
-            <option value="profesor">Profesor/a</option>
-            <option value="padre">Padre / Madre</option>
-            <option value="alumno">Alumno/a</option>
-          </select>
+
+        <!-- Centro -->
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label">Centro <span class="form-label-hint">(opcional)</span></label>
+          <input class="form-input" type="text" placeholder="Nombre del colegio o instituto" id="formCentro" autocomplete="organization" />
         </div>
-        <div class="form-group">
+
+        <!-- Bloque dinámico de chips — aparece al elegir perfil -->
+        <div class="form-dynamic-block" id="simpleChipsBlock">
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label" id="simpleChipsLabel"></label>
+
+            <!-- Profesor -->
+            <div class="chip-group" id="simpleChipsProfesor" style="display:none;">
+              <button type="button" class="chip-btn" data-val="rezago" onclick="toggleChip(this)">Alumnos que se quedan atrás</button>
+              <button type="button" class="chip-btn" data-val="opacidad" onclick="toggleChip(this)">No sé qué pasa cuando estudian solos</button>
+              <button type="button" class="chip-btn" data-val="tiempo" onclick="toggleChip(this)">Poco tiempo para atender a todos</button>
+              <button type="button" class="chip-btn" data-val="deberes" onclick="toggleChip(this)">Deberes copiados con IA</button>
+            </div>
+
+            <!-- Dirección -->
+            <div id="simpleChipsDireccion" style="display:none;">
+              <div class="chip-group" id="chipsDirObjetivo">
+                <button type="button" class="chip-btn" data-val="resultados" onclick="toggleChip(this)">Mejorar resultados académicos</button>
+                <button type="button" class="chip-btn" data-val="diferenciacion" onclick="toggleChip(this)">Diferenciación del centro</button>
+                <button type="button" class="chip-btn" data-val="digitalizacion" onclick="toggleChip(this)">Digitalización pedagógica</button>
+                <button type="button" class="chip-btn" data-val="fracaso" onclick="toggleChip(this)">Reducir fracaso escolar</button>
+              </div>
+              <div style="margin-top:0.7rem;">
+                <label class="form-label" style="margin-bottom:0.4rem;">Tipo de centro</label>
+                <div class="chip-group" id="chipsDirTipo">
+                  <button type="button" class="chip-btn" data-val="publico" data-group="dirTipo" onclick="toggleChip(this)">Público</button>
+                  <button type="button" class="chip-btn" data-val="concertado" data-group="dirTipo" onclick="toggleChip(this)">Concertado</button>
+                  <button type="button" class="chip-btn" data-val="privado" data-group="dirTipo" onclick="toggleChip(this)">Privado</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Padre/Madre -->
+            <div class="chip-group" id="simpleChipsPadre" style="display:none;">
+              <button type="button" class="chip-btn" data-val="copia" onclick="toggleChip(this)">Usa IA para copiar los deberes</button>
+              <button type="button" class="chip-btn" data-val="soloestudio" onclick="toggleChip(this)">No sabe estudiar solo/a</button>
+              <button type="button" class="chip-btn" data-val="resultados" onclick="toggleChip(this)">Malos resultados</button>
+              <button type="button" class="chip-btn" data-val="motivacion" onclick="toggleChip(this)">Falta de motivación</button>
+            </div>
+
+            <!-- Alumno -->
+            <div id="simpleChipsAlumno" style="display:none;">
+              <div class="chip-group" id="chipsAlumnoMateria">
+                <button type="button" class="chip-btn" data-val="mates" onclick="toggleChip(this)">Matemáticas</button>
+                <button type="button" class="chip-btn" data-val="lengua" onclick="toggleChip(this)">Lengua</button>
+                <button type="button" class="chip-btn" data-val="historia" onclick="toggleChip(this)">Historia</button>
+                <button type="button" class="chip-btn" data-val="ingles" onclick="toggleChip(this)">Inglés</button>
+                <button type="button" class="chip-btn" data-val="ciencias" onclick="toggleChip(this)">Ciencias</button>
+                <button type="button" class="chip-btn" data-val="otra" onclick="toggleChip(this)">Otra</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group" style="margin-bottom:0;">
           <label class="form-label">Email de contacto</label>
-          <input class="form-input" type="email" placeholder="tu@colegio.com" id="formEmail" />
+          <input class="form-input" type="email" placeholder="tu@colegio.com" id="formEmail" autocomplete="email" />
         </div>
-        <div class="form-group">
-          <label class="form-label">¿Hay algún compañero/a de claustro a quien se lo recomendarías? <span class="form-label-hint">(opcional)</span></label>
-          <input class="form-input" type="text" placeholder="Nombre y centro, si lo sabes" id="formRecommend" />
-        </div>
+
         <!-- Honeypot -->
         <div style="position:absolute;left:-9999px;height:0;overflow:hidden;" aria-hidden="true">
           <input type="text" id="formWebsite" tabindex="-1" autocomplete="off">
         </div>
+
         <div class="form-submit-row">
           <button class="form-submit-btn" onclick="submitSimpleForm()">
-            Solicitar plaza en el piloto →
+            Contactar con el equipo →
           </button>
           <div class="form-submit-trust">
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l9 4v5c0 5-3.7 9.3-9 11C6.7 21.3 3 17 3 12V7l9-4z"/></svg>
@@ -1235,15 +1291,287 @@
         </div>
       </div>
 
-      <!-- THANK YOU (form simple) -->
-      <div class="thankyou" id="thankyouSimple" style="display:none;">
-        <div class="thankyou-icon"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3L17 9"/></svg></div>
-        <h3>Recibido — gracias.</h3>
-        <p>Os contactaremos en menos de 48h con los detalles del piloto. Si tenéis prisa: <a href="mailto:centros@marcoaprende.com" style="color:inherit;">centros@marcoaprende.com</a></p>
+      <!-- ESTADO 2: Gracias grande + preguntas opcionales (~3 min) -->
+      <div id="formThanksStep" style="display:none;">
+        <div class="thanks-big">
+          <p class="thanks-word">Gracias.</p>
+          <p class="thanks-sub">Hemos registrado tu interés — te contactamos en menos de 48h.</p>
+          <div class="thanks-divider"></div>
+          <p class="thanks-invite" id="thanksInviteText">Si tienes 3 minutos, cuéntanos un poco más.<br>Nos ayuda a preparar la propuesta a tu medida.</p>
+        </div>
+
+        <!-- Preguntas para profesor -->
+        <div id="optQProfesor" style="display:none;">
+          <div class="form-group">
+            <label class="form-label">¿Qué herramientas digitales usan tus alumnos cuando estudian solos?</label>
+            <div class="checkbox-group" id="optHerramientas">
+              <label class="checkbox-item"><input type="checkbox" value="ninguna"> Ninguna específica</label>
+              <label class="checkbox-item"><input type="checkbox" value="chatgpt"> ChatGPT u otra IA genérica</label>
+              <label class="checkbox-item"><input type="checkbox" value="youtube"> YouTube / vídeos</label>
+              <label class="checkbox-item"><input type="checkbox" value="google"> Google / búsquedas</label>
+              <label class="checkbox-item"><input type="checkbox" value="lms"> Plataformas del centro (Moodle, Classroom...)</label>
+              <label class="checkbox-item"><input type="checkbox" value="apps"> Apps educativas (Khan Academy, Photomath...)</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Sabes qué partes del temario generan más dudas en tu clase? ¿Cómo lo detectas hoy?</label>
+            <textarea class="form-textarea" id="optDudas" placeholder="Cuéntanos cómo detectas las dificultades de tus alumnos..."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Qué tendría que tener sí o sí para que lo propusieras en tu centro?</label>
+            <textarea class="form-textarea" id="optEsencial" placeholder="Lo imprescindible para planteártelo..."></textarea>
+          </div>
+        </div>
+
+        <!-- Preguntas para dirección -->
+        <div id="optQDireccion" style="display:none;">
+          <div class="form-group">
+            <label class="form-label">¿Qué datos sobre el rendimiento académico consultáis habitualmente?</label>
+            <div class="checkbox-group" id="optDatosDir">
+              <label class="checkbox-item"><input type="checkbox" value="notas"> Notas y calificaciones</label>
+              <label class="checkbox-item"><input type="checkbox" value="asistencia"> Asistencia</label>
+              <label class="checkbox-item"><input type="checkbox" value="comparativa"> Comparativa entre grupos</label>
+              <label class="checkbox-item"><input type="checkbox" value="alertas"> Alertas de alumnos en riesgo</label>
+              <label class="checkbox-item"><input type="checkbox" value="ninguno"> Ningún sistema sistemático</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Qué frena la adopción de nuevas herramientas digitales en vuestro centro?</label>
+            <textarea class="form-textarea" id="optFrenoDir" placeholder="Tiempo, formación, presupuesto, burocracia..."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Qué necesitaría ver para plantearte un piloto con Marco?</label>
+            <textarea class="form-textarea" id="optPilotoDir" placeholder="Qué evidencia o garantías necesitarías..."></textarea>
+          </div>
+        </div>
+
+        <!-- Preguntas para padre/madre -->
+        <div id="optQPadre" style="display:none;">
+          <div class="form-group">
+            <label class="form-label">¿Con qué frecuencia supervisa el estudio de su hijo/a en casa?</label>
+            <div class="checkbox-group" id="optFrecuenciaPadre">
+              <label class="checkbox-item"><input type="radio" name="optFrecuencia" value="diario"> A diario</label>
+              <label class="checkbox-item"><input type="radio" name="optFrecuencia" value="semanal"> Varias veces por semana</label>
+              <label class="checkbox-item"><input type="radio" name="optFrecuencia" value="quincenal"> Una vez por semana o menos</label>
+              <label class="checkbox-item"><input type="radio" name="optFrecuencia" value="rara"> Raramente</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Qué le preocupa más del tiempo que su hijo/a pasa con pantallas estudiando?</label>
+            <textarea class="form-textarea" id="optPreocupaPadre" placeholder="Qué le inquieta o le cuesta controlar..."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Qué le daría confianza para que su hijo/a usara una herramienta de IA educativa?</label>
+            <textarea class="form-textarea" id="optConfianzaPadre" placeholder="Privacidad, supervisión, aval del centro..."></textarea>
+          </div>
+        </div>
+
+        <!-- Preguntas para alumno -->
+        <div id="optQAlumno" style="display:none;">
+          <div class="form-group">
+            <label class="form-label">¿Qué haces cuando te atascas con algo que no entiendes?</label>
+            <div class="checkbox-group" id="optAtascoAlumno">
+              <label class="checkbox-item"><input type="checkbox" value="profe"> Le pregunto al profe</label>
+              <label class="checkbox-item"><input type="checkbox" value="amigo"> Le pregunto a un amigo</label>
+              <label class="checkbox-item"><input type="checkbox" value="youtube"> Busco en YouTube</label>
+              <label class="checkbox-item"><input type="checkbox" value="chatgpt"> Uso ChatGPT u otra IA</label>
+              <label class="checkbox-item"><input type="checkbox" value="rindo"> Me rindo y paso a otra cosa</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Qué materia te resulta más difícil estudiar solo/a?</label>
+            <textarea class="form-textarea" id="optDificilAlumno" placeholder="Cuéntanos en qué te atascas más..."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Qué haría que una herramienta como Marco valiera la pena para ti?</label>
+            <textarea class="form-textarea" id="optEngancheAlumno" placeholder="Qué tendría que hacer para que te resultara útil..."></textarea>
+          </div>
+        </div>
+
+        <div class="form-submit-row">
+          <button class="form-submit-btn" onclick="submitOptionalForm()">Enviar y listo →</button>
+        </div>
+        <div style="text-align:center;margin-top:0.9rem;">
+          <button onclick="skipOptionalForm()" style="background:none;border:none;color:var(--gray);font-size:0.78rem;cursor:pointer;text-decoration:underline;padding:0.3rem 0;">
+            Prefiero esperar tu email
+          </button>
+        </div>
       </div>
 
-      <!-- Formulario dinámico multi-paso con preguntas por perfil -->
-      <div id="formExtended">
+      <!-- ESTADO 3: Valoración de funcionalidades -->
+      <div id="formRatingsStep" style="display:none;">
+        <div class="ratings-header">
+          <p class="ratings-header-tag">Un último paso</p>
+          <p class="ratings-header-title">¿Qué te parece Marco?</p>
+          <p class="ratings-header-sub">Valora del 1 al 5 — un minuto que vale su peso en oro.</p>
+        </div>
+
+        <!-- Profesor -->
+        <div id="ratQProfesor" style="display:none;">
+          <div class="form-group">
+            <label class="form-label">¿Qué funcionalidades te parecen más útiles para tu clase?</label>
+            <div class="ratings-stack">
+              <div class="rating-row">
+                <span class="rating-row-label">IA socrática — te guía con preguntas, no da la respuesta</span>
+                <div class="rating-group" id="ratMetodo">
+                  <button class="rating-btn" data-group="ratMetodo" data-val="1" onclick="selectRatingBtn(this)">1</button><button class="rating-btn" data-group="ratMetodo" data-val="2" onclick="selectRatingBtn(this)">2</button><button class="rating-btn" data-group="ratMetodo" data-val="3" onclick="selectRatingBtn(this)">3</button><button class="rating-btn" data-group="ratMetodo" data-val="4" onclick="selectRatingBtn(this)">4</button><button class="rating-btn" data-group="ratMetodo" data-val="5" onclick="selectRatingBtn(this)">5</button>
+                </div>
+              </div>
+              <div class="rating-row">
+                <span class="rating-row-label">Mapa de calor de dudas por tema y grupo</span>
+                <div class="rating-group" id="ratMapa">
+                  <button class="rating-btn" data-group="ratMapa" data-val="1" onclick="selectRatingBtn(this)">1</button><button class="rating-btn" data-group="ratMapa" data-val="2" onclick="selectRatingBtn(this)">2</button><button class="rating-btn" data-group="ratMapa" data-val="3" onclick="selectRatingBtn(this)">3</button><button class="rating-btn" data-group="ratMapa" data-val="4" onclick="selectRatingBtn(this)">4</button><button class="rating-btn" data-group="ratMapa" data-val="5" onclick="selectRatingBtn(this)">5</button>
+                </div>
+              </div>
+              <div class="rating-row">
+                <span class="rating-row-label">Alertas de alumnos con dificultades persistentes</span>
+                <div class="rating-group" id="ratAlertas">
+                  <button class="rating-btn" data-group="ratAlertas" data-val="1" onclick="selectRatingBtn(this)">1</button><button class="rating-btn" data-group="ratAlertas" data-val="2" onclick="selectRatingBtn(this)">2</button><button class="rating-btn" data-group="ratAlertas" data-val="3" onclick="selectRatingBtn(this)">3</button><button class="rating-btn" data-group="ratAlertas" data-val="4" onclick="selectRatingBtn(this)">4</button><button class="rating-btn" data-group="ratAlertas" data-val="5" onclick="selectRatingBtn(this)">5</button>
+                </div>
+              </div>
+              <div class="rating-row">
+                <span class="rating-row-label">Cuadernos individuales con historial de sesiones</span>
+                <div class="rating-group" id="ratCuadernos">
+                  <button class="rating-btn" data-group="ratCuadernos" data-val="1" onclick="selectRatingBtn(this)">1</button><button class="rating-btn" data-group="ratCuadernos" data-val="2" onclick="selectRatingBtn(this)">2</button><button class="rating-btn" data-group="ratCuadernos" data-val="3" onclick="selectRatingBtn(this)">3</button><button class="rating-btn" data-group="ratCuadernos" data-val="4" onclick="selectRatingBtn(this)">4</button><button class="rating-btn" data-group="ratCuadernos" data-val="5" onclick="selectRatingBtn(this)">5</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dirección -->
+        <div id="ratQDireccion" style="display:none;">
+          <div class="form-group">
+            <label class="form-label">¿Qué funcionalidades interesan más a vuestro centro?</label>
+            <div class="ratings-stack">
+              <div class="rating-row">
+                <span class="rating-row-label">Visibilidad de rendimiento por grupo y aula</span>
+                <div class="rating-group" id="ratDirVisibilidad">
+                  <button class="rating-btn" data-group="ratDirVisibilidad" data-val="1" onclick="selectRatingBtn(this)">1</button><button class="rating-btn" data-group="ratDirVisibilidad" data-val="2" onclick="selectRatingBtn(this)">2</button><button class="rating-btn" data-group="ratDirVisibilidad" data-val="3" onclick="selectRatingBtn(this)">3</button><button class="rating-btn" data-group="ratDirVisibilidad" data-val="4" onclick="selectRatingBtn(this)">4</button><button class="rating-btn" data-group="ratDirVisibilidad" data-val="5" onclick="selectRatingBtn(this)">5</button>
+                </div>
+              </div>
+              <div class="rating-row">
+                <span class="rating-row-label">IA que enseña a pensar — no da respuestas directas</span>
+                <div class="rating-group" id="ratDirIA">
+                  <button class="rating-btn" data-group="ratDirIA" data-val="1" onclick="selectRatingBtn(this)">1</button><button class="rating-btn" data-group="ratDirIA" data-val="2" onclick="selectRatingBtn(this)">2</button><button class="rating-btn" data-group="ratDirIA" data-val="3" onclick="selectRatingBtn(this)">3</button><button class="rating-btn" data-group="ratDirIA" data-val="4" onclick="selectRatingBtn(this)">4</button><button class="rating-btn" data-group="ratDirIA" data-val="5" onclick="selectRatingBtn(this)">5</button>
+                </div>
+              </div>
+              <div class="rating-row">
+                <span class="rating-row-label">Cumplimiento RGPD — datos en servidores europeos</span>
+                <div class="rating-group" id="ratDirRGPD">
+                  <button class="rating-btn" data-group="ratDirRGPD" data-val="1" onclick="selectRatingBtn(this)">1</button><button class="rating-btn" data-group="ratDirRGPD" data-val="2" onclick="selectRatingBtn(this)">2</button><button class="rating-btn" data-group="ratDirRGPD" data-val="3" onclick="selectRatingBtn(this)">3</button><button class="rating-btn" data-group="ratDirRGPD" data-val="4" onclick="selectRatingBtn(this)">4</button><button class="rating-btn" data-group="ratDirRGPD" data-val="5" onclick="selectRatingBtn(this)">5</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Estarían interesados en un piloto gratuito de un trimestre?</label>
+            <select class="form-select" id="ratDirPiloto">
+              <option value="">Selecciona</option>
+              <option value="si">Sí, nos interesa</option>
+              <option value="quizas">Posiblemente, necesitamos más información</option>
+              <option value="no">No por ahora</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Padre/Madre -->
+        <div id="ratQPadre" style="display:none;">
+          <div class="form-group">
+            <label class="form-label">¿Qué te parece el enfoque de Marco? Valora del 1 al 5</label>
+            <div class="ratings-stack">
+              <div class="rating-row">
+                <span class="rating-row-label">IA que enseña a pensar — no le hace los deberes</span>
+                <div class="rating-group" id="ratPadreMetodo">
+                  <button class="rating-btn" data-group="ratPadreMetodo" data-val="1" onclick="selectRatingBtn(this)">1</button><button class="rating-btn" data-group="ratPadreMetodo" data-val="2" onclick="selectRatingBtn(this)">2</button><button class="rating-btn" data-group="ratPadreMetodo" data-val="3" onclick="selectRatingBtn(this)">3</button><button class="rating-btn" data-group="ratPadreMetodo" data-val="4" onclick="selectRatingBtn(this)">4</button><button class="rating-btn" data-group="ratPadreMetodo" data-val="5" onclick="selectRatingBtn(this)">5</button>
+                </div>
+              </div>
+              <div class="rating-row">
+                <span class="rating-row-label">Puedo ver cómo estudia mi hijo/a — transparencia para padres</span>
+                <div class="rating-group" id="ratPadreTransp">
+                  <button class="rating-btn" data-group="ratPadreTransp" data-val="1" onclick="selectRatingBtn(this)">1</button><button class="rating-btn" data-group="ratPadreTransp" data-val="2" onclick="selectRatingBtn(this)">2</button><button class="rating-btn" data-group="ratPadreTransp" data-val="3" onclick="selectRatingBtn(this)">3</button><button class="rating-btn" data-group="ratPadreTransp" data-val="4" onclick="selectRatingBtn(this)">4</button><button class="rating-btn" data-group="ratPadreTransp" data-val="5" onclick="selectRatingBtn(this)">5</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Sugerirías Marco al colegio de tu hijo/a?</label>
+            <select class="form-select" id="ratPadreRecom">
+              <option value="">Selecciona</option>
+              <option value="si">Sí, sin duda</option>
+              <option value="quizas">Posiblemente</option>
+              <option value="masinfo">Necesitaría saber más</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Alumno -->
+        <div id="ratQAlumno" style="display:none;">
+          <div class="form-group">
+            <label class="form-label">¿Qué te parece Marco? Valora del 1 al 5</label>
+            <div class="ratings-stack">
+              <div class="rating-row">
+                <span class="rating-row-label">Que te haga preguntas en vez de darte la respuesta</span>
+                <div class="rating-group" id="ratAlumnoMetodo">
+                  <button class="rating-btn" data-group="ratAlumnoMetodo" data-val="1" onclick="selectRatingBtn(this)">1</button><button class="rating-btn" data-group="ratAlumnoMetodo" data-val="2" onclick="selectRatingBtn(this)">2</button><button class="rating-btn" data-group="ratAlumnoMetodo" data-val="3" onclick="selectRatingBtn(this)">3</button><button class="rating-btn" data-group="ratAlumnoMetodo" data-val="4" onclick="selectRatingBtn(this)">4</button><button class="rating-btn" data-group="ratAlumnoMetodo" data-val="5" onclick="selectRatingBtn(this)">5</button>
+                </div>
+              </div>
+              <div class="rating-row">
+                <span class="rating-row-label">Que recuerde tus sesiones y sepa dónde lo dejaste</span>
+                <div class="rating-group" id="ratAlumnoMemoria">
+                  <button class="rating-btn" data-group="ratAlumnoMemoria" data-val="1" onclick="selectRatingBtn(this)">1</button><button class="rating-btn" data-group="ratAlumnoMemoria" data-val="2" onclick="selectRatingBtn(this)">2</button><button class="rating-btn" data-group="ratAlumnoMemoria" data-val="3" onclick="selectRatingBtn(this)">3</button><button class="rating-btn" data-group="ratAlumnoMemoria" data-val="4" onclick="selectRatingBtn(this)">4</button><button class="rating-btn" data-group="ratAlumnoMemoria" data-val="5" onclick="selectRatingBtn(this)">5</button>
+                </div>
+              </div>
+              <div class="rating-row">
+                <span class="rating-row-label">Tu valoración general de Marco</span>
+                <div class="rating-group" id="ratAlumnoGeneral">
+                  <button class="rating-btn" data-group="ratAlumnoGeneral" data-val="1" onclick="selectRatingBtn(this)">1</button><button class="rating-btn" data-group="ratAlumnoGeneral" data-val="2" onclick="selectRatingBtn(this)">2</button><button class="rating-btn" data-group="ratAlumnoGeneral" data-val="3" onclick="selectRatingBtn(this)">3</button><button class="rating-btn" data-group="ratAlumnoGeneral" data-val="4" onclick="selectRatingBtn(this)">4</button><button class="rating-btn" data-group="ratAlumnoGeneral" data-val="5" onclick="selectRatingBtn(this)">5</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">¿Lo usarías si tu colegio lo tuviera?</label>
+            <select class="form-select" id="ratAlumnoUsaria">
+              <option value="">Selecciona</option>
+              <option value="si">Sí, seguro</option>
+              <option value="quizas_si">Probablemente sí</option>
+              <option value="nose">No lo sé</option>
+              <option value="quizas_no">Probablemente no</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Fallback sin perfil -->
+        <div id="ratQGeneral" style="display:none;">
+          <div class="form-group">
+            <label class="form-label">¿Qué te parece Marco en general? Valora del 1 al 5</label>
+            <div class="rating-group" id="ratGeneral">
+              <button class="rating-btn" data-group="ratGeneral" data-val="1" onclick="selectRatingBtn(this)">1</button><button class="rating-btn" data-group="ratGeneral" data-val="2" onclick="selectRatingBtn(this)">2</button><button class="rating-btn" data-group="ratGeneral" data-val="3" onclick="selectRatingBtn(this)">3</button><button class="rating-btn" data-group="ratGeneral" data-val="4" onclick="selectRatingBtn(this)">4</button><button class="rating-btn" data-group="ratGeneral" data-val="5" onclick="selectRatingBtn(this)">5</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-submit-row">
+          <button class="form-submit-btn" onclick="submitRatingsForm()">Enviar valoración →</button>
+        </div>
+        <div style="text-align:center;margin-top:0.9rem;">
+          <button onclick="skipRatingsForm()" style="background:none;border:none;color:var(--gray);font-size:0.78rem;cursor:pointer;text-decoration:underline;padding:0.3rem 0;">
+            Omitir y terminar
+          </button>
+        </div>
+      </div>
+
+      <!-- ESTADO 4: Confirmación final -->
+      <div id="formFinalThanks" style="display:none;text-align:center;padding:2rem 0;">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.55;margin-bottom:1.2rem;"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3L17 9"/></svg>
+        <p style="font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:clamp(2.4rem,6vw,3.6rem);font-weight:400;letter-spacing:-0.02em;line-height:1;color:#fff;margin:0 0 0.7rem;">Todo listo.</p>
+        <p style="font-size:0.85rem;color:#888;font-weight:300;line-height:1.75;margin:0;">Hemos apuntado tus respuestas — nos vemos en el inbox.<br><a href="mailto:hola@marcoaprende.com" style="color:#bbb;">hola@marcoaprende.com</a></p>
+      </div>
+
+      <!-- Formulario dinámico multi-paso con preguntas por perfil (disponible para referencia) -->
+      <div id="formExtended" style="display:none;">
       <div class="form-progress" id="formProgress">
         <div class="form-progress-step active"></div>
         <div class="form-progress-step"></div>
@@ -2019,40 +2347,233 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// ── Formulario simplificado ──
-async function submitSimpleForm() {
-  const email = document.getElementById('formEmail')?.value?.trim();
-  const name  = document.getElementById('formName')?.value?.trim();
-  const center= document.getElementById('formCenter')?.value?.trim();
-  const role  = document.getElementById('formRole')?.value || 'direccion';
-  const honey = document.getElementById('formWebsite')?.value;
+// ── Formulario simplificado — estado compartido ──
+let _simpleFormEmail = '';
+let _simpleFormRole  = '';
 
-  if (honey) return; // bot
-  if (!email || !email.includes('@')) {
-    document.getElementById('formEmail')?.focus();
-    return;
+// Transición suave entre estados del formulario
+function transitionFormTo(hideId, showId) {
+  const hideEl = document.getElementById(hideId);
+  const showEl = document.getElementById(showId);
+  if (!hideEl || !showEl) return;
+  hideEl.style.transition = 'opacity 0.22s ease, transform 0.22s ease';
+  hideEl.style.opacity = '0';
+  hideEl.style.transform = 'translateY(-10px)';
+  setTimeout(() => {
+    hideEl.style.display = 'none';
+    hideEl.style.opacity = '';
+    hideEl.style.transform = '';
+    showEl.style.display = 'block';
+    showEl.style.opacity = '0';
+    showEl.style.transform = 'translateY(18px)';
+    showEl.style.transition = 'none';
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      showEl.style.transition = 'opacity 0.38s ease, transform 0.38s cubic-bezier(0.4,0,0.2,1)';
+      showEl.style.opacity = '1';
+      showEl.style.transform = 'translateY(0)';
+    }));
+  }, 220);
+}
+
+// Chips: toggle selección (data-group = single-select)
+function toggleChip(btn) {
+  const group = btn.dataset.group;
+  if (group) {
+    btn.closest('[id]').querySelectorAll(`[data-group="${group}"]`).forEach(b => b.classList.remove('selected'));
   }
+  btn.classList.toggle('selected');
+}
 
-  const btn = document.querySelector('.form-submit-btn');
+function collectChips(containerId) {
+  const el = document.getElementById(containerId);
+  return el ? [...el.querySelectorAll('.chip-btn.selected')].map(b => b.dataset.val) : [];
+}
+
+// Chips del formulario principal — cambia con el perfil
+function onSimpleRoleChange(role) {
+  const block = document.getElementById('simpleChipsBlock');
+  const label = document.getElementById('simpleChipsLabel');
+  const chipDivs = { profesor:'simpleChipsProfesor', direccion:'simpleChipsDireccion', padre:'simpleChipsPadre', alumno:'simpleChipsAlumno' };
+  Object.values(chipDivs).forEach(id => { const el = document.getElementById(id); if (el) el.style.display = 'none'; });
+  if (!role) { block.classList.remove('visible'); return; }
+  const labels = {
+    profesor:  '¿Qué te preocupa más en tus clases?',
+    direccion: '¿Qué busca principalmente vuestro centro?',
+    padre:     '¿Qué le preocupa más del estudio de su hijo/a?',
+    alumno:    '¿Qué materia te resulta más difícil?'
+  };
+  if (label) label.textContent = (labels[role] || '') + ' ';
+  const target = document.getElementById(chipDivs[role]);
+  if (target) target.style.display = '';
+  block.classList.add('visible');
+}
+
+async function submitSimpleForm() {
+  const email  = document.getElementById('formEmail')?.value?.trim();
+  const name   = document.getElementById('formName')?.value?.trim();
+  const role   = document.getElementById('formRole')?.value || '';
+  const centro = document.getElementById('formCentro')?.value?.trim();
+  const honey  = document.getElementById('formWebsite')?.value;
+
+  if (honey) return;
+  if (!email || !email.includes('@')) { document.getElementById('formEmail')?.focus(); return; }
+
+  _simpleFormEmail = email;
+  _simpleFormRole  = role || 'no_indicado';
+
+  const btn = document.querySelector('#formSimple .form-submit-btn');
   if (btn) { btn.textContent = 'Enviando…'; btn.disabled = true; }
+
+  // Recoger chips seleccionadas según perfil
+  let chips = {};
+  if (role === 'profesor') {
+    chips.preocupaciones = collectChips('simpleChipsProfesor');
+  } else if (role === 'direccion') {
+    chips.objetivos  = collectChips('chipsDirObjetivo');
+    chips.tipoCentro = collectChips('chipsDirTipo')[0] || '';
+  } else if (role === 'padre') {
+    chips.preocupaciones = collectChips('simpleChipsPadre');
+  } else if (role === 'alumno') {
+    chips.materias = collectChips('chipsAlumnoMateria');
+  }
 
   try {
     await fetch('https://marcoaprende-landing-form.yaabdelaziz-mohamed.workers.dev', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        email, nombre: name, centro: center, rol: role,
+        email, nombre: name, rol: role || 'no_indicado',
+        centro: centro || '',
         interesPiloto: 'si_mucho', origen: 'form-simple',
-        datosCompletos: {
-          microQ: sessionStorage.getItem('marco_alumnos') || '',
-          recomendaria_a: document.getElementById('formRecommend')?.value?.trim() || ''
-        }
+        datosCompletos: { rol: role, centro, chips }
       })
     });
   } catch(e) {}
 
-  document.getElementById('formSimple').style.display = 'none';
-  document.getElementById('thankyouSimple').style.display = 'flex';
+  showOptionalQuestions(role);
+  transitionFormTo('formSimple', 'formThanksStep');
+}
+
+function showOptionalQuestions(role) {
+  ['optQProfesor','optQDireccion','optQPadre','optQAlumno'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.style.display = 'none';
+  });
+  const invites = {
+    profesor:  'Si tienes 3 minutos, cuéntanos cómo es tu clase.\nNos ayuda a preparar la propuesta a tu medida.',
+    direccion: 'Si tienes 3 minutos, cuéntanos cómo funciona vuestro centro.\nPreparamos la presentación específica para vosotros.',
+    padre:     'Si tienes 3 minutos, cuéntanos sobre el estudio de tu hijo/a.\nAdaptamos Marco a su perfil.',
+    alumno:    'Una última cosa — cuéntanos cómo estudias.\nLo usamos para ajustar Marco a ti.',
+    no_indicado: 'Si tienes 3 minutos, cuéntanos un poco más.\nNos ayuda a preparar la propuesta a tu medida.'
+  };
+  const map = { profesor:'optQProfesor', direccion:'optQDireccion', padre:'optQPadre', alumno:'optQAlumno' };
+  const r = role || 'no_indicado';
+  const target = document.getElementById(map[r]);
+  if (target) target.style.display = 'block';
+  const inviteEl = document.getElementById('thanksInviteText');
+  if (inviteEl) inviteEl.innerHTML = (invites[r] || invites.no_indicado).replace('\n', '<br>');
+}
+
+function submitOptionalForm() {
+  const role = _simpleFormRole;
+  let datosCompletos = { rol: role, fase: 'optional' };
+
+  if (role === 'profesor') {
+    datosCompletos.herramientas = [...document.querySelectorAll('#optHerramientas input:checked')].map(cb => cb.value);
+    datosCompletos.dudas        = document.getElementById('optDudas')?.value?.trim();
+    datosCompletos.esencial     = document.getElementById('optEsencial')?.value?.trim();
+  } else if (role === 'direccion') {
+    datosCompletos.datos  = [...document.querySelectorAll('#optDatosDir input:checked')].map(cb => cb.value);
+    datosCompletos.freno  = document.getElementById('optFrenoDir')?.value?.trim();
+    datosCompletos.piloto = document.getElementById('optPilotoDir')?.value?.trim();
+  } else if (role === 'padre') {
+    const freq = document.querySelector('input[name="optFrecuencia"]:checked');
+    datosCompletos.frecuencia = freq ? freq.value : '';
+    datosCompletos.preocupa   = document.getElementById('optPreocupaPadre')?.value?.trim();
+    datosCompletos.confianza  = document.getElementById('optConfianzaPadre')?.value?.trim();
+  } else if (role === 'alumno') {
+    datosCompletos.atasco   = [...document.querySelectorAll('#optAtascoAlumno input:checked')].map(cb => cb.value);
+    datosCompletos.dificil  = document.getElementById('optDificilAlumno')?.value?.trim();
+    datosCompletos.enganche = document.getElementById('optEngancheAlumno')?.value?.trim();
+  }
+
+  try {
+    fetch('https://marcoaprende-landing-form.yaabdelaziz-mohamed.workers.dev', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: _simpleFormEmail, rol: role, origen: 'form-optional', datosCompletos })
+    });
+  } catch(e) {}
+
+  showRatingSection(role);
+  transitionFormTo('formThanksStep', 'formRatingsStep');
+}
+
+function skipOptionalForm() {
+  showRatingSection(_simpleFormRole);
+  transitionFormTo('formThanksStep', 'formRatingsStep');
+}
+
+// ── Paso de valoración de funcionalidades ──
+function selectRatingBtn(btn) {
+  const group = btn.dataset.group;
+  if (group) document.querySelectorAll(`[data-group="${group}"]`).forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+function collectRating(groupId) {
+  const sel = document.querySelector(`[data-group="${groupId}"].selected`);
+  return sel ? sel.dataset.val : '';
+}
+
+function showRatingSection(role) {
+  ['ratQProfesor','ratQDireccion','ratQPadre','ratQAlumno','ratQGeneral'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.style.display = 'none';
+  });
+  const map = { profesor:'ratQProfesor', direccion:'ratQDireccion', padre:'ratQPadre', alumno:'ratQAlumno' };
+  const target = document.getElementById(map[role] || 'ratQGeneral');
+  if (target) target.style.display = 'block';
+}
+
+function submitRatingsForm() {
+  const role = _simpleFormRole;
+  let ratings = { rol: role, fase: 'ratings' };
+
+  if (role === 'profesor') {
+    ratings.metodo    = collectRating('ratMetodo');
+    ratings.mapa      = collectRating('ratMapa');
+    ratings.alertas   = collectRating('ratAlertas');
+    ratings.cuadernos = collectRating('ratCuadernos');
+  } else if (role === 'direccion') {
+    ratings.visibilidad = collectRating('ratDirVisibilidad');
+    ratings.ia          = collectRating('ratDirIA');
+    ratings.rgpd        = collectRating('ratDirRGPD');
+    ratings.piloto      = document.getElementById('ratDirPiloto')?.value;
+  } else if (role === 'padre') {
+    ratings.metodo    = collectRating('ratPadreMetodo');
+    ratings.transp    = collectRating('ratPadreTransp');
+    ratings.recomenda = document.getElementById('ratPadreRecom')?.value;
+  } else if (role === 'alumno') {
+    ratings.metodo   = collectRating('ratAlumnoMetodo');
+    ratings.memoria  = collectRating('ratAlumnoMemoria');
+    ratings.general  = collectRating('ratAlumnoGeneral');
+    ratings.usaria   = document.getElementById('ratAlumnoUsaria')?.value;
+  } else {
+    ratings.general = collectRating('ratGeneral');
+  }
+
+  try {
+    fetch('https://marcoaprende-landing-form.yaabdelaziz-mohamed.workers.dev', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: _simpleFormEmail, rol: role, origen: 'form-ratings', datosCompletos: ratings })
+    });
+  } catch(e) {}
+
+  transitionFormTo('formRatingsStep', 'formFinalThanks');
+}
+
+function skipRatingsForm() {
+  transitionFormTo('formRatingsStep', 'formFinalThanks');
 }
 
 // ── FAQ accordion ──
