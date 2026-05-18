@@ -22,13 +22,13 @@ const S = {
 
 function BrowserChrome({ children }: { children: React.ReactNode }) {
   return (
-    <div style={{
+    <div className="bc-outer" style={{
       position: 'fixed', inset: 0,
       background: 'linear-gradient(135deg, #d4d3d0 0%, #c8c7c4 100%)',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       padding: '2rem 1.5rem',
     }}>
-      <div style={{
+      <div className="bc-inner" style={{
         width: '100%', maxWidth: '840px',
         height: 'calc(100vh - 4rem)',
         maxHeight: '780px',
@@ -38,7 +38,7 @@ function BrowserChrome({ children }: { children: React.ReactNode }) {
         display: 'flex', flexDirection: 'column',
         overflow: 'hidden',
       }}>
-        <div style={{
+        <div className="bc-bar" style={{
           background: '#ebebeb', borderBottom: '1px solid #d0d0d0',
           padding: '10px 16px',
           display: 'flex', alignItems: 'center', gap: '8px',

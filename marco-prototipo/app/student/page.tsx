@@ -710,6 +710,7 @@ function MarcoAvatar({ size = 26 }: { size?: number }) {
 function BrowserChrome({ children, leaving = false }: { children: React.ReactNode; leaving?: boolean }) {
   return (
     <motion.div
+      className="bc-outer"
       initial={{ opacity: 0 }}
       animate={{ opacity: leaving ? 0 : 1 }}
       transition={{ duration: leaving ? 0.26 : 0.2 }}
@@ -721,6 +722,7 @@ function BrowserChrome({ children, leaving = false }: { children: React.ReactNod
       }}
     >
       <motion.div
+        className="bc-inner"
         initial={{ y: 12, opacity: 0 }}
         animate={leaving ? { y: 18, opacity: 0 } : { y: 0, opacity: 1 }}
         transition={{ duration: leaving ? 0.2 : 0.22, ease: [0.16, 1, 0.3, 1] }}
@@ -736,7 +738,7 @@ function BrowserChrome({ children, leaving = false }: { children: React.ReactNod
         }}
       >
         {/* Chrome top bar */}
-        <div style={{
+        <div className="bc-bar" style={{
           background: '#ebebeb', borderBottom: '1px solid #d0d0d0',
           padding: '10px 16px',
           display: 'flex', alignItems: 'center', gap: '8px',
@@ -1040,10 +1042,10 @@ function HomeScreen({ subjects, onSelect, logout }: { subjects: Subject[]; onSel
       <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} onLogout={logout} />
       <AppNavbar onMenuToggle={() => setSidebarOpen(s => !s)} right={<NavWordmark clipId="navbarArco" />} />
 
-      <div style={{ flex: 1, overflow: 'hidden', display: 'flex' }}>
+      <div className="mobile-stack" style={{ flex: 1, overflow: 'hidden', display: 'flex' }}>
 
         {/* ── Left: Subjects ── */}
-        <div style={{ flex: '0 0 58%', overflowY: 'auto', padding: '1.125rem 1rem 1.125rem 1.25rem', borderRight: `1px solid ${T.borderSoft}` }}>
+        <div className="panel-left" style={{ flex: '0 0 58%', overflowY: 'auto', padding: '1.125rem 1rem 1.125rem 1.25rem', borderRight: `1px solid ${T.borderSoft}` }}>
           <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}>
             <p style={{
               fontFamily: "'DM Sans', sans-serif",
@@ -1107,7 +1109,7 @@ function HomeScreen({ subjects, onSelect, logout }: { subjects: Subject[]; onSel
         </div>
 
         {/* ── Right: Assigned notebooks ── */}
-        <div style={{ flex: '0 0 42%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+        <div className="panel-right" style={{ flex: '0 0 42%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
           <div style={{ flex: 1, overflowY: 'auto', padding: '1.125rem 1.25rem 0.5rem 1rem' }}>
           <motion.div initial={{ opacity: 0, x: 6 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.28, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}>
             <p style={{

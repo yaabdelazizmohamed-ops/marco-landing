@@ -210,3 +210,59 @@ body {
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
 }
+
+/* ══════════════════════════════════════════════
+   Mobile responsive — browser chrome + layouts
+   ══════════════════════════════════════════════ */
+
+/* Browser chrome: full-screen on mobile */
+@media (max-width: 768px) {
+  .bc-outer {
+    padding: 0 !important;
+    background: var(--white) !important;
+    align-items: stretch !important;
+    justify-content: stretch !important;
+  }
+  .bc-inner {
+    max-width: 100% !important;
+    width: 100% !important;
+    height: 100dvh !important;
+    max-height: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+  .bc-bar { display: none !important; }
+}
+
+/* Two-column flex splits → stack on mobile */
+@media (max-width: 768px) {
+  .mobile-stack {
+    flex-direction: column !important;
+    overflow-y: auto !important;
+  }
+  .mobile-stack > .panel-left,
+  .mobile-stack > .panel-right {
+    flex: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border);
+    min-height: 0;
+    overflow-y: visible !important;
+  }
+  .mobile-stack > .panel-left { max-height: 55vh; overflow-y: auto !important; }
+  .mobile-stack > .panel-right { border-bottom: none; flex: 1 !important; overflow-y: auto !important; }
+}
+
+/* Stat grids: 4 cols → 2 cols on mobile */
+@media (max-width: 640px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .stats-grid-4 { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
+/* Dashboard right column: sidebar stacks below on mobile */
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr !important;
+  }
+}

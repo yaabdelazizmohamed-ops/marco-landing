@@ -85,6 +85,7 @@ const INITIAL_CONTENT: TeacherBloque[] = [
 function BrowserChrome({ children }: { children: React.ReactNode }) {
   return (
     <motion.div
+      className="bc-outer"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2 }}
@@ -96,6 +97,7 @@ function BrowserChrome({ children }: { children: React.ReactNode }) {
       }}
     >
       <motion.div
+        className="bc-inner"
         initial={{ y: 12, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
@@ -107,7 +109,7 @@ function BrowserChrome({ children }: { children: React.ReactNode }) {
           display: 'flex', flexDirection: 'column', overflow: 'hidden',
         }}
       >
-        <div style={{
+        <div className="bc-bar" style={{
           background: '#ebebeb', borderBottom: '1px solid #d0d0d0',
           padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0,
         }}>
@@ -324,10 +326,10 @@ function HomeTeacher({
         </div>
       </div>
 
-      <div style={{ flex: 1, overflow: 'hidden', display: 'flex' }}>
+      <div className="mobile-stack" style={{ flex: 1, overflow: 'hidden', display: 'flex' }}>
 
         {/* Izquierda: grid de grupos */}
-        <div style={{
+        <div className="panel-left" style={{
           flex: '0 0 55%', overflowY: 'auto',
           padding: '1.125rem 1rem 1.25rem 1.25rem',
           borderRight: `1px solid ${T.borderSoft}`,
@@ -421,7 +423,7 @@ function HomeTeacher({
         </div>
 
         {/* Derecha: panel de resumen */}
-        <div style={{ flex: 1, overflowY: 'auto', padding: '1.125rem 1.25rem 1.25rem 1rem' }}>
+        <div className="panel-right" style={{ flex: 1, overflowY: 'auto', padding: '1.125rem 1.25rem 1.25rem 1rem' }}>
           <AnimatePresence mode="wait">
             {active ? (
               <motion.div
@@ -695,7 +697,7 @@ function DashboardView({
                 ))}
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: '1.25rem' }}>
+              <div className="dashboard-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: '1.25rem' }}>
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }}
                   style={{ background: T.white, border: `1.5px solid ${T.border}`, borderRadius: '20px', overflow: 'hidden' }}
                 >
