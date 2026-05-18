@@ -13,23 +13,15 @@ import {
 import { useRouter } from 'next/navigation';
 import { pushMessage, pushActivity } from '@/lib/demoStore';
 
-/* ── Tokens — dark editorial "pizarra" ── */
+/* ── Tokens ── */
 const T = {
-  bg:          '#0c0e16',   // negro azulado profundo
-  white:       '#161b2c',   // superficie primaria (tarjetas)
-  black:       '#e8e3d8',   // texto principal (cream cálido)
-  gray:        '#8890a8',   // gris lavanda apagado
-  soft:        '#505878',   // más oscuro / placeholders
-  border:      '#252d48',   // borde oscuro violáceo
-  borderSoft:  '#1c2238',   // borde muy sutil
-  note:        '#1a2034',   // superficie secundaria
-  deep:        '#9498ff',   // violeta brillante (primario oscuro)
-  accent:      '#8082ff',   // violeta acento
-  violet:      '#1c2252',   // superficie violeta oscura
-  violet2:     '#141840',   // violeta más profundo
-  success:     '#34d399',   successSoft: '#081e12',
-  warn:        '#fbbf24',   warnSoft:    '#1e1500',
-  danger:      '#f87171',   dangerSoft:  '#22080a',
+  bg: '#fafaf8', white: '#ffffff', black: '#0a0a0a',
+  gray: '#6b6b6b', soft: '#9a9a96', border: '#e0dfd9',
+  borderSoft: '#ebebe6', note: '#f7f6f2',
+  deep: '#2c2e7a', accent: '#6366cc', violet: '#eeeefa', violet2: '#f5f5fc',
+  success: '#2d6a4f', successSoft: '#e7f1ec',
+  warn: '#b45309', warnSoft: '#fef3c7',
+  danger: '#b91c1c', dangerSoft: '#fee2e2',
 };
 
 /* ── Types ── */
@@ -284,15 +276,15 @@ const SUBJECTS: Subject[] = [
   },
 ];
 
-/* ── Subject accent colors — dark mode ── */
+/* ── Subject accent colors ── */
 const SUBJECT_COLORS: Record<string, { pill: string; color: string; hover: string; border: string; progress: string }> = {
-  mates:     { pill: '#1a1d52', color: '#a0a4ff', hover: '#14173c', border: '#4a4ccc', progress: '#9498ff' },
-  historia:  { pill: '#2a1600', color: '#fbbf24', hover: '#1e0e00', border: '#b45309', progress: '#f59e0b' },
-  bio:       { pill: '#091d0e', color: '#34d399', hover: '#061408', border: '#16a34a', progress: '#34d399' },
-  ingles:    { pill: '#08143e', color: '#60a5fa', hover: '#040c28', border: '#2563eb', progress: '#60a5fa' },
-  lengua:    { pill: '#280a1e', color: '#f472b6', hover: '#1c0614', border: '#db2777', progress: '#f472b6' },
-  fyq:       { pill: '#2a0e00', color: '#fb923c', hover: '#1c0800', border: '#ea580c', progress: '#fb923c' },
-  tecnologia:{ pill: '#021828', color: '#38bdf8', hover: '#011018', border: '#0284c7', progress: '#38bdf8' },
+  mates:   { pill: '#eeeefa', color: '#2c2e7a', hover: '#d8d8f8', border: '#b8b9e6', progress: '#6366cc' },
+  historia:{ pill: '#fef3c7', color: '#92400e', hover: '#fde68a', border: '#f59e0b', progress: '#d97706' },
+  bio:     { pill: '#d1fae5', color: '#065f46', hover: '#a7f3d0', border: '#34d399', progress: '#10b981' },
+  ingles:    { pill: '#dbeafe', color: '#1e3a8a', hover: '#bfdbfe', border: '#60a5fa', progress: '#3b82f6' },
+  lengua:    { pill: '#fce7f3', color: '#9d174d', hover: '#fbcfe8', border: '#f472b6', progress: '#ec4899' },
+  fyq:       { pill: '#ffedd5', color: '#7c2d12', hover: '#fed7aa', border: '#fb923c', progress: '#f97316' },
+  tecnologia:{ pill: '#e0f2fe', color: '#0c4a6e', hover: '#bae6fd', border: '#38bdf8', progress: '#0ea5e9' },
 };
 const SC = (id: string) => SUBJECT_COLORS[id] ?? SUBJECT_COLORS['mates'];
 
@@ -583,93 +575,93 @@ const _svgBg = (svg: string): string =>
   `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
 
 const CUADERNO_CHAT_STYLE: Record<string, React.CSSProperties> = {
-  mc1: { /* Matemáticas — símbolos flotando en oscuro */
-    backgroundColor: '#0d1020',
+  mc1: { /* Matemáticas — símbolos matemáticos flotando */
+    backgroundColor: '#f7f7fc',
     backgroundImage: _svgBg(
       `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">` +
-      `<text x="14" y="36" font-family="Georgia,serif" font-size="22" fill="rgba(148,152,255,0.28)" transform="rotate(-10 14 36)">π</text>` +
-      `<text x="95" y="22" font-family="Georgia,serif" font-size="17" fill="rgba(148,152,255,0.22)">∑</text>` +
-      `<text x="156" y="58" font-family="Georgia,serif" font-size="18" fill="rgba(148,152,255,0.24)">√2</text>` +
-      `<text x="32" y="90" font-family="Georgia,serif" font-size="14" fill="rgba(148,152,255,0.20)">x²</text>` +
-      `<text x="118" y="102" font-family="Georgia,serif" font-size="20" fill="rgba(148,152,255,0.26)">∫</text>` +
-      `<text x="62" y="132" font-family="Georgia,serif" font-size="21" fill="rgba(148,152,255,0.22)" transform="rotate(5 62 132)">∞</text>` +
-      `<text x="154" y="150" font-family="Georgia,serif" font-size="14" fill="rgba(148,152,255,0.20)">Δx</text>` +
-      `<text x="18" y="172" font-family="Georgia,serif" font-size="17" fill="rgba(148,152,255,0.24)" transform="rotate(-8 18 172)">θ</text>` +
-      `<text x="90" y="186" font-family="Georgia,serif" font-size="15" fill="rgba(148,152,255,0.20)">≠</text>` +
-      `<text x="168" y="194" font-family="Georgia,serif" font-size="13" fill="rgba(148,152,255,0.22)">±</text>` +
+      `<text x="14" y="36" font-family="Georgia,serif" font-size="22" fill="rgba(99,102,204,0.14)" transform="rotate(-10 14 36)">π</text>` +
+      `<text x="95" y="22" font-family="Georgia,serif" font-size="17" fill="rgba(99,102,204,0.11)">∑</text>` +
+      `<text x="156" y="58" font-family="Georgia,serif" font-size="18" fill="rgba(99,102,204,0.12)">√2</text>` +
+      `<text x="32" y="90" font-family="Georgia,serif" font-size="14" fill="rgba(99,102,204,0.10)">x²</text>` +
+      `<text x="118" y="102" font-family="Georgia,serif" font-size="20" fill="rgba(99,102,204,0.13)">∫</text>` +
+      `<text x="62" y="132" font-family="Georgia,serif" font-size="21" fill="rgba(99,102,204,0.11)" transform="rotate(5 62 132)">∞</text>` +
+      `<text x="154" y="150" font-family="Georgia,serif" font-size="14" fill="rgba(99,102,204,0.10)">Δx</text>` +
+      `<text x="18" y="172" font-family="Georgia,serif" font-size="17" fill="rgba(99,102,204,0.12)" transform="rotate(-8 18 172)">θ</text>` +
+      `<text x="90" y="186" font-family="Georgia,serif" font-size="15" fill="rgba(99,102,204,0.10)">≠</text>` +
+      `<text x="168" y="194" font-family="Georgia,serif" font-size="13" fill="rgba(99,102,204,0.11)">±</text>` +
       `</svg>`
     ),
     backgroundSize: '200px 200px',
   },
 
-  hc1: { /* Historia — cifras romanas en ámbar oscuro */
-    backgroundColor: '#0f0900',
+  hc1: { /* Historia — pergamino con numeración romana */
+    backgroundColor: '#fdf4d8',
     backgroundImage: [
-      'radial-gradient(ellipse at 0% 0%, rgba(251,191,36,0.06) 0%, transparent 50%)',
-      'radial-gradient(ellipse at 100% 100%, rgba(251,191,36,0.04) 0%, transparent 50%)',
+      'radial-gradient(ellipse at 0% 0%, rgba(160,110,40,0.12) 0%, transparent 45%)',
+      'radial-gradient(ellipse at 100% 100%, rgba(140,95,30,0.10) 0%, transparent 45%)',
       _svgBg(
         `<svg xmlns="http://www.w3.org/2000/svg" width="220" height="220">` +
-        `<text x="18" y="42" font-family="Georgia,serif" font-size="16" fill="rgba(251,191,36,0.22)" transform="rotate(-5 18 42)">MCMXIV</text>` +
-        `<text x="118" y="26" font-family="Georgia,serif" font-size="20" fill="rgba(251,191,36,0.18)">SPQR</text>` +
-        `<text x="165" y="84" font-family="Georgia,serif" font-size="14" fill="rgba(251,191,36,0.20)" transform="rotate(8 165 84)">CDLXXVI</text>` +
-        `<text x="14" y="114" font-family="Georgia,serif" font-size="18" fill="rgba(251,191,36,0.18)">MMXXIV</text>` +
-        `<text x="100" y="138" font-family="Georgia,serif" font-size="22" fill="rgba(251,191,36,0.16)" transform="rotate(-3 100 138)">I · V · X</text>` +
-        `<text x="160" y="168" font-family="Georgia,serif" font-size="16" fill="rgba(251,191,36,0.20)">LXX</text>` +
-        `<text x="26" y="194" font-family="Georgia,serif" font-size="14" fill="rgba(251,191,36,0.18)" transform="rotate(4 26 194)">CCCXLIV</text>` +
-        `<text x="104" y="214" font-family="Georgia,serif" font-size="16" fill="rgba(251,191,36,0.16)">DCCCLXII</text>` +
+        `<text x="18" y="42" font-family="Georgia,serif" font-size="16" fill="rgba(146,64,14,0.12)" transform="rotate(-5 18 42)">MCMXIV</text>` +
+        `<text x="118" y="26" font-family="Georgia,serif" font-size="20" fill="rgba(146,64,14,0.10)">SPQR</text>` +
+        `<text x="165" y="84" font-family="Georgia,serif" font-size="14" fill="rgba(146,64,14,0.11)" transform="rotate(8 165 84)">CDLXXVI</text>` +
+        `<text x="14" y="114" font-family="Georgia,serif" font-size="18" fill="rgba(146,64,14,0.10)">MMXXIV</text>` +
+        `<text x="100" y="138" font-family="Georgia,serif" font-size="22" fill="rgba(146,64,14,0.09)" transform="rotate(-3 100 138)">I · V · X</text>` +
+        `<text x="160" y="168" font-family="Georgia,serif" font-size="16" fill="rgba(146,64,14,0.11)">LXX</text>` +
+        `<text x="26" y="194" font-family="Georgia,serif" font-size="14" fill="rgba(146,64,14,0.10)" transform="rotate(4 26 194)">CCCXLIV</text>` +
+        `<text x="104" y="214" font-family="Georgia,serif" font-size="16" fill="rgba(146,64,14,0.09)">DCCCLXII</text>` +
         `</svg>`
       ),
     ].join(', '),
     backgroundSize: '100% 100%, 100% 100%, 220px 220px',
   },
 
-  bc1: { /* Biología — células en verde oscuro */
-    backgroundColor: '#081008',
+  bc1: { /* Biología — células con núcleo */
+    backgroundColor: '#f1faf4',
     backgroundImage: _svgBg(
       `<svg xmlns="http://www.w3.org/2000/svg" width="110" height="110">` +
-      `<ellipse cx="30" cy="28" rx="21" ry="18" fill="none" stroke="rgba(52,211,153,0.26)" stroke-width="1.2"/>` +
-      `<circle cx="30" cy="28" r="6" fill="rgba(52,211,153,0.14)" stroke="rgba(52,211,153,0.30)" stroke-width="0.8"/>` +
-      `<ellipse cx="78" cy="24" rx="18" ry="22" fill="none" stroke="rgba(52,211,153,0.22)" stroke-width="1.2" transform="rotate(15 78 24)"/>` +
-      `<circle cx="78" cy="24" r="5" fill="rgba(52,211,153,0.12)" stroke="rgba(52,211,153,0.26)" stroke-width="0.8"/>` +
-      `<ellipse cx="24" cy="76" rx="23" ry="17" fill="none" stroke="rgba(52,211,153,0.24)" stroke-width="1.2" transform="rotate(-10 24 76)"/>` +
-      `<circle cx="24" cy="76" r="7" fill="rgba(52,211,153,0.14)" stroke="rgba(52,211,153,0.30)" stroke-width="0.8"/>` +
-      `<ellipse cx="78" cy="80" rx="19" ry="22" fill="none" stroke="rgba(52,211,153,0.20)" stroke-width="1.2" transform="rotate(8 78 80)"/>` +
-      `<circle cx="78" cy="80" r="5" fill="rgba(52,211,153,0.12)" stroke="rgba(52,211,153,0.26)" stroke-width="0.8"/>` +
+      `<ellipse cx="30" cy="28" rx="21" ry="18" fill="none" stroke="rgba(16,185,129,0.14)" stroke-width="1.2"/>` +
+      `<circle cx="30" cy="28" r="6" fill="rgba(16,185,129,0.10)" stroke="rgba(16,185,129,0.16)" stroke-width="0.8"/>` +
+      `<ellipse cx="78" cy="24" rx="18" ry="22" fill="none" stroke="rgba(16,185,129,0.12)" stroke-width="1.2" transform="rotate(15 78 24)"/>` +
+      `<circle cx="78" cy="24" r="5" fill="rgba(16,185,129,0.09)" stroke="rgba(16,185,129,0.14)" stroke-width="0.8"/>` +
+      `<ellipse cx="24" cy="76" rx="23" ry="17" fill="none" stroke="rgba(16,185,129,0.13)" stroke-width="1.2" transform="rotate(-10 24 76)"/>` +
+      `<circle cx="24" cy="76" r="7" fill="rgba(16,185,129,0.10)" stroke="rgba(16,185,129,0.16)" stroke-width="0.8"/>` +
+      `<ellipse cx="78" cy="80" rx="19" ry="22" fill="none" stroke="rgba(16,185,129,0.11)" stroke-width="1.2" transform="rotate(8 78 80)"/>` +
+      `<circle cx="78" cy="80" r="5" fill="rgba(16,185,129,0.09)" stroke="rgba(16,185,129,0.14)" stroke-width="0.8"/>` +
       `</svg>`
     ),
     backgroundSize: '110px 110px',
   },
 
-  ec1: { /* Inglés — cuaderno rayado en azul oscuro */
-    backgroundColor: '#08101e',
+  ec1: { /* Inglés — cuaderno rayado con margen */
+    backgroundColor: '#f4f8ff',
     backgroundImage: _svgBg(
       `<svg xmlns="http://www.w3.org/2000/svg" width="360" height="28">` +
-      `<line x1="0" y1="27.5" x2="360" y2="27.5" stroke="rgba(96,165,250,0.22)" stroke-width="1"/>` +
-      `<line x1="44" y1="0" x2="44" y2="28" stroke="rgba(248,113,113,0.16)" stroke-width="1"/>` +
+      `<line x1="0" y1="27.5" x2="360" y2="27.5" stroke="rgba(59,130,246,0.13)" stroke-width="1"/>` +
+      `<line x1="44" y1="0" x2="44" y2="28" stroke="rgba(220,80,80,0.10)" stroke-width="1"/>` +
       `</svg>`
     ),
     backgroundSize: '360px 28px',
   },
 
-  tc1: { /* Tecnología — circuito impreso en azul oscuro */
-    backgroundColor: '#060e18',
+  tc1: { /* Tecnología — trazado de circuito impreso */
+    backgroundColor: '#f2f9fd',
     backgroundImage: _svgBg(
       `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">` +
-      `<line x1="0" y1="25" x2="38" y2="25" stroke="rgba(56,189,248,0.26)" stroke-width="1.5"/>` +
-      `<line x1="62" y1="25" x2="100" y2="25" stroke="rgba(56,189,248,0.26)" stroke-width="1.5"/>` +
-      `<line x1="0" y1="75" x2="28" y2="75" stroke="rgba(56,189,248,0.22)" stroke-width="1.5"/>` +
-      `<line x1="72" y1="75" x2="100" y2="75" stroke="rgba(56,189,248,0.22)" stroke-width="1.5"/>` +
-      `<line x1="25" y1="0" x2="25" y2="13" stroke="rgba(56,189,248,0.26)" stroke-width="1.5"/>` +
-      `<line x1="25" y1="37" x2="25" y2="100" stroke="rgba(56,189,248,0.26)" stroke-width="1.5"/>` +
-      `<line x1="75" y1="0" x2="75" y2="63" stroke="rgba(56,189,248,0.22)" stroke-width="1.5"/>` +
-      `<line x1="75" y1="87" x2="75" y2="100" stroke="rgba(56,189,248,0.22)" stroke-width="1.5"/>` +
-      `<circle cx="25" cy="25" r="4" fill="rgba(56,189,248,0.12)" stroke="rgba(56,189,248,0.36)" stroke-width="1.5"/>` +
-      `<circle cx="75" cy="75" r="4" fill="rgba(56,189,248,0.12)" stroke="rgba(56,189,248,0.32)" stroke-width="1.5"/>` +
-      `<rect x="44" y="43" width="12" height="8" rx="1" fill="rgba(56,189,248,0.08)" stroke="rgba(56,189,248,0.28)" stroke-width="1"/>` +
-      `<line x1="44" y1="46" x2="40" y2="46" stroke="rgba(56,189,248,0.26)" stroke-width="1"/>` +
-      `<line x1="44" y1="50" x2="40" y2="50" stroke="rgba(56,189,248,0.26)" stroke-width="1"/>` +
-      `<line x1="56" y1="46" x2="60" y2="46" stroke="rgba(56,189,248,0.26)" stroke-width="1"/>` +
-      `<line x1="56" y1="50" x2="60" y2="50" stroke="rgba(56,189,248,0.26)" stroke-width="1"/>` +
+      `<line x1="0" y1="25" x2="38" y2="25" stroke="rgba(14,165,233,0.14)" stroke-width="1.5"/>` +
+      `<line x1="62" y1="25" x2="100" y2="25" stroke="rgba(14,165,233,0.14)" stroke-width="1.5"/>` +
+      `<line x1="0" y1="75" x2="28" y2="75" stroke="rgba(14,165,233,0.12)" stroke-width="1.5"/>` +
+      `<line x1="72" y1="75" x2="100" y2="75" stroke="rgba(14,165,233,0.12)" stroke-width="1.5"/>` +
+      `<line x1="25" y1="0" x2="25" y2="13" stroke="rgba(14,165,233,0.14)" stroke-width="1.5"/>` +
+      `<line x1="25" y1="37" x2="25" y2="100" stroke="rgba(14,165,233,0.14)" stroke-width="1.5"/>` +
+      `<line x1="75" y1="0" x2="75" y2="63" stroke="rgba(14,165,233,0.12)" stroke-width="1.5"/>` +
+      `<line x1="75" y1="87" x2="75" y2="100" stroke="rgba(14,165,233,0.12)" stroke-width="1.5"/>` +
+      `<circle cx="25" cy="25" r="4" fill="rgba(14,165,233,0.08)" stroke="rgba(14,165,233,0.22)" stroke-width="1.5"/>` +
+      `<circle cx="75" cy="75" r="4" fill="rgba(14,165,233,0.08)" stroke="rgba(14,165,233,0.20)" stroke-width="1.5"/>` +
+      `<rect x="44" y="43" width="12" height="8" rx="1" fill="rgba(14,165,233,0.06)" stroke="rgba(14,165,233,0.16)" stroke-width="1"/>` +
+      `<line x1="44" y1="46" x2="40" y2="46" stroke="rgba(14,165,233,0.14)" stroke-width="1"/>` +
+      `<line x1="44" y1="50" x2="40" y2="50" stroke="rgba(14,165,233,0.14)" stroke-width="1"/>` +
+      `<line x1="56" y1="46" x2="60" y2="46" stroke="rgba(14,165,233,0.14)" stroke-width="1"/>` +
+      `<line x1="56" y1="50" x2="60" y2="50" stroke="rgba(14,165,233,0.14)" stroke-width="1"/>` +
       `</svg>`
     ),
     backgroundSize: '100px 100px',
@@ -723,7 +715,7 @@ function BrowserChrome({ children, leaving = false }: { children: React.ReactNod
       transition={{ duration: leaving ? 0.26 : 0.2 }}
       style={{
         position: 'fixed', inset: 0,
-        background: 'linear-gradient(135deg, #14161e 0%, #0c0e16 100%)',
+        background: 'linear-gradient(135deg, #d4d3d0 0%, #c8c7c4 100%)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         padding: '2rem 1.5rem',
       }}
@@ -738,14 +730,14 @@ function BrowserChrome({ children, leaving = false }: { children: React.ReactNod
           maxHeight: '720px',
           background: T.white,
           borderRadius: '12px',
-          boxShadow: '0 32px 80px rgba(0,0,0,0.60)',
+          boxShadow: '0 32px 80px rgba(0,0,0,0.28)',
           display: 'flex', flexDirection: 'column',
           overflow: 'hidden',
         }}
       >
         {/* Chrome top bar */}
         <div style={{
-          background: '#1e2030', borderBottom: '1px solid #2a2e48',
+          background: '#ebebeb', borderBottom: '1px solid #d0d0d0',
           padding: '10px 16px',
           display: 'flex', alignItems: 'center', gap: '8px',
           flexShrink: 0,
@@ -755,15 +747,15 @@ function BrowserChrome({ children, leaving = false }: { children: React.ReactNod
           ))}
           <div style={{
             flex: 1, maxWidth: '420px', margin: '0 auto',
-            background: '#141828', border: '1px solid #2a2e48',
+            background: '#ffffff', border: '1px solid #c8c8c8',
             borderRadius: '6px', padding: '4px 12px',
             display: 'flex', alignItems: 'center', gap: '6px',
           }}>
             <svg width="10" height="12" viewBox="0 0 10 12" fill="none">
-              <rect x="1" y="5" width="8" height="7" rx="1.5" fill="#5a6080"/>
-              <path d="M2.5 5V3.5a2.5 2.5 0 015 0V5" stroke="#5a6080" strokeWidth="1.2" fill="none"/>
+              <rect x="1" y="5" width="8" height="7" rx="1.5" fill="#6b6b6b"/>
+              <path d="M2.5 5V3.5a2.5 2.5 0 015 0V5" stroke="#6b6b6b" strokeWidth="1.2" fill="none"/>
             </svg>
-            <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '12px', color: '#8890a8' }}>
+            <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '12px', color: '#3c3c3c' }}>
               app.marcoaprende.com
             </span>
           </div>
@@ -1142,8 +1134,8 @@ function HomeScreen({ subjects, onSelect, logout }: { subjects: Subject[]; onSel
               onMouseEnter={(e: React.MouseEvent<HTMLDivElement>) => { e.currentTarget.style.borderColor = T.deep; e.currentTarget.style.boxShadow = `0 4px 14px ${T.accent}22`; }}
               onMouseLeave={(e: React.MouseEvent<HTMLDivElement>) => { e.currentTarget.style.borderColor = T.accent; e.currentTarget.style.boxShadow = 'none'; }}
             >
-              <div style={{ width: 34, height: 34, borderRadius: '50%', background: T.violet, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                <Clipboard size={15} color={T.deep} strokeWidth={1.75} />
+              <div style={{ width: 34, height: 34, borderRadius: '50%', background: '#dbeafe', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <Clipboard size={15} color="#1d4ed8" strokeWidth={1.75} />
               </div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', marginBottom: '2px', flexWrap: 'nowrap' }}>
@@ -1178,8 +1170,8 @@ function HomeScreen({ subjects, onSelect, logout }: { subjects: Subject[]; onSel
               onMouseEnter={(e: React.MouseEvent<HTMLDivElement>) => (e.currentTarget.style.borderColor = T.soft)}
               onMouseLeave={(e: React.MouseEvent<HTMLDivElement>) => (e.currentTarget.style.borderColor = T.border)}
             >
-              <div style={{ width: 34, height: 34, borderRadius: '50%', background: T.note, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                <FileText size={15} color={T.gray} strokeWidth={1.75} />
+              <div style={{ width: 34, height: 34, borderRadius: '50%', background: '#dbeafe', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <FileText size={15} color="#1d4ed8" strokeWidth={1.75} />
               </div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '0.8rem', fontWeight: 600, color: T.black, margin: '0 0 2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
@@ -1189,7 +1181,7 @@ function HomeScreen({ subjects, onSelect, logout }: { subjects: Subject[]; onSel
                   Profa. Laura · Lengua · <span style={{ color: T.warn, fontWeight: 500 }}>Vence mañana</span>
                 </p>
               </div>
-              <button style={{ background: T.note, color: T.gray, fontFamily: "'DM Sans', sans-serif", fontSize: '0.72rem', fontWeight: 500, padding: '0.3rem 0.7rem', borderRadius: '9999px', border: 'none', cursor: 'pointer', flexShrink: 0, whiteSpace: 'nowrap' }}>
+              <button style={{ background: '#f1f5f9', color: T.gray, fontFamily: "'DM Sans', sans-serif", fontSize: '0.72rem', fontWeight: 500, padding: '0.3rem 0.7rem', borderRadius: '9999px', border: 'none', cursor: 'pointer', flexShrink: 0, whiteSpace: 'nowrap' }}>
                 Continuar
               </button>
             </motion.div>
@@ -1204,8 +1196,8 @@ function HomeScreen({ subjects, onSelect, logout }: { subjects: Subject[]; onSel
                 opacity: 0.58,
               }}
             >
-              <div style={{ width: 34, height: 34, borderRadius: '50%', background: T.borderSoft, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                <CheckCircle2 size={15} color={T.soft} strokeWidth={1.75} />
+              <div style={{ width: 34, height: 34, borderRadius: '50%', background: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <CheckCircle2 size={15} color="#94a3b8" strokeWidth={1.75} />
               </div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '0.8rem', fontWeight: 600, color: T.gray, margin: '0 0 2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
@@ -1389,8 +1381,8 @@ function SubjectScreen({
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
                         {leccion.cuadernos.map((c, ci) => {
                           const isTeoria = c.tipo === 'teoria';
-                          const tipoBg    = isTeoria ? T.violet  : '#2a0e00';
-                          const tipoColor = isTeoria ? T.accent  : '#fb923c';
+                          const tipoBg    = isTeoria ? T.violet  : '#fff7ed';
+                          const tipoColor = isTeoria ? T.accent  : '#c2410c';
                           const tipoLabel = isTeoria ? 'Teoría'  : 'Práctica';
                           return (
                             <motion.div
@@ -1558,7 +1550,7 @@ function ChatScreen({
                 border: m.role === 'marco' ? `1.5px solid ${T.border}` : 'none',
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: '0.875rem',
-                color: m.role === 'marco' ? T.black : '#fff',
+                color: m.role === 'marco' ? T.black : T.white,
                 lineHeight: 1.55,
               }}>
                 {m.text}
@@ -2141,7 +2133,7 @@ function CuadernoScreen({
                     border: m.role === 'marco' ? `1.5px solid ${T.border}` : 'none',
                     fontFamily: "'DM Sans', sans-serif",
                     fontSize: '0.8125rem',
-                    color: m.role === 'marco' ? T.black : '#fff',
+                    color: m.role === 'marco' ? T.black : T.white,
                     lineHeight: 1.55,
                   }}>
                     {m.text}
