@@ -1,0 +1,212 @@
+@import "tailwindcss";
+
+/* ── Marco design tokens ── */
+:root {
+  --black:          #0a0a0a;
+  --white:          #fafaf8;
+  --gray:           #6b6b6b;
+  --gray-soft:      #9a9a96;
+  --light:          #f0efeb;
+  --accent:         #1a1a1a;
+  --border:         #e0dfd9;
+  --border-soft:    #ebebe6;
+  --note-bg:        #f7f6f2;
+
+  --product-deep:   #2c2e7a;
+  --product-accent: #6366cc;
+  --product-soft:   #eeeefa;
+  --product-soft-2: #f5f5fc;
+
+  --font-serif:     'Instrument Serif', Georgia, serif;
+  --font-sans:      'DM Sans', system-ui, sans-serif;
+  --font-fraunces:  'Fraunces', Georgia, serif;
+
+  --radius-sm:  8px;
+  --radius-md:  16px;
+  --radius-lg:  24px;
+  --radius-xl:  32px;
+  --radius-pill: 9999px;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.5, 0, 0.2, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  background: var(--white);
+  color: var(--black);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+}
+
+/* ══════════════════════════════════════════════
+   Wordmark — [Σ] → [Marco] animation
+   Port of logo-animation/wordmark.css
+   ══════════════════════════════════════════════ */
+
+.nav-brand {
+  display: inline-block;
+  color: var(--black);
+  text-decoration: none;
+  cursor: default;
+  line-height: 0;
+}
+
+.nav-brand .nb-frame {
+  display: block;
+  overflow: hidden;
+  width: 54px;
+  height: 60px;
+  transition: width 0.75s var(--ease-soft);
+}
+
+.nav-brand.nb-active .nb-frame {
+  width: 120px;
+}
+
+.nav-brand .nb-svg {
+  display: block;
+  width: 120px;
+  height: 60px;
+  overflow: visible;
+}
+
+.nav-brand .nb-mark {
+  font-family: var(--font-fraunces);
+  font-style: normal;
+  font-optical-sizing: auto;
+  font-variation-settings: "opsz" 96;
+  font-weight: 500;
+  font-size: 38px;
+  fill: currentColor;
+}
+
+.nav-brand .nb-mark-sigma {
+  transform-origin: 175px 106px;
+  transform: rotate(0deg);
+  transition: transform 0.65s var(--ease-soft);
+}
+
+.nav-brand.nb-active .nb-mark-sigma {
+  transform: rotate(90deg) translateX(-2px);
+}
+
+.nav-brand .nb-arco {
+  font-family: var(--font-fraunces);
+  font-style: normal;
+  font-optical-sizing: auto;
+  font-variation-settings: "opsz" 96;
+  font-weight: 500;
+  font-size: 38px;
+  letter-spacing: -0.01em;
+  fill: currentColor;
+}
+
+.nav-brand .nb-arco-clip {
+  transform-box: fill-box;
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 0.45s var(--ease-soft);
+}
+
+.nav-brand.nb-active .nb-arco-clip {
+  transform: scaleX(1);
+  transition: transform 0.55s var(--ease-soft) 200ms;
+}
+
+.nav-brand .nb-tl-stub,
+.nav-brand .nb-bl-stub {
+  stroke-dasharray: 59;
+  stroke-dashoffset: 47;
+  transition: stroke-dashoffset 0.75s var(--ease-soft);
+}
+
+.nav-brand.nb-active .nb-tl-stub,
+.nav-brand.nb-active .nb-bl-stub {
+  stroke-dashoffset: 0;
+}
+
+.nav-brand .nb-right-group {
+  transform: translateX(0);
+  transition: transform 0.75s var(--ease-soft);
+}
+
+.nav-brand.nb-active .nb-right-group {
+  transform: translateX(64px);
+}
+
+.nav-brand .nb-tr-stub,
+.nav-brand .nb-br-stub {
+  stroke-dasharray: 59;
+  stroke-dashoffset: 47;
+  transition: stroke-dashoffset 0.75s var(--ease-soft);
+}
+
+.nav-brand.nb-active .nb-tr-stub,
+.nav-brand.nb-active .nb-br-stub {
+  stroke-dashoffset: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-brand .nb-frame,
+  .nav-brand .nb-mark-sigma,
+  .nav-brand .nb-arco-clip,
+  .nav-brand .nb-tl-stub,
+  .nav-brand .nb-bl-stub,
+  .nav-brand .nb-tr-stub,
+  .nav-brand .nb-br-stub,
+  .nav-brand .nb-right-group {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+}
+
+/* ── Hero wordmark: scaled 2x for login page ── */
+.wordmark-hero .nb-frame {
+  width: 108px;  /* 54 × 2 */
+  height: 120px;
+  transition: width 0.75s var(--ease-soft);
+}
+
+.wordmark-hero.nb-active .nb-frame {
+  width: 240px;  /* 120 × 2 */
+}
+
+.wordmark-hero .nb-svg {
+  width: 240px;  /* 120 × 2 */
+  height: 120px;
+}
+
+/* ── Role card interactive states ── */
+.role-card {
+  transition: border-color 0.2s ease, background 0.2s ease,
+              transform 0.2s var(--ease-out), box-shadow 0.2s ease;
+}
+
+.role-card:not(:disabled):hover {
+  border-color: var(--product-accent) !important;
+  background: var(--product-soft-2) !important;
+}
+
+/* ── Wordmark static (no animation — for in-app navbar) ── */
+.wordmark-static,
+.wordmark-static * {
+  transition: none !important;
+  transition-duration: 0ms !important;
+}
+
+/* ── Loading spinner ── */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.spinner {
+  width: 26px;
+  height: 26px;
+  border: 2px solid var(--product-soft);
+  border-top-color: var(--product-deep);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
