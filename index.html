@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es" dir="ltr">
 <head>
 <meta charset="UTF-8">
@@ -357,527 +357,165 @@
 
 <!-- DEMO -->
 <section class="demo-section" id="demo">
-  <p class="section-label reveal">Así funciona</p>
-  <h2 class="section-title reveal">No te lo contamos — te lo enseñamos</h2>
-  <p class="section-sub reveal">Elige un perfil y explora haciendo clic — como lo haría cada usuario. Navega de pantalla en pantalla interactuando con la plataforma.</p>
+  <p class="section-label reveal">Cómo funciona</p>
+  <h2 class="section-title reveal">Hace preguntas. <em>No da respuestas.</em></h2>
+  <p class="section-sub reveal">Marco guía al alumno con la pregunta correcta en el momento correcto. El profesor ve, en tiempo real, exactamente dónde se atascó cada uno.</p>
 
-  <div class="demo-profile-nav reveal">
-    <div class="demo-profile-btns">
-      <button class="demo-profile-btn" data-profile="alumno" onclick="switchProfile('alumno')">Alumno</button>
-      <button class="demo-profile-btn active" data-profile="profesor" onclick="switchProfile('profesor')">Profesor</button>
-      <button class="demo-profile-btn" data-profile="direccion" onclick="switchProfile('direccion')">Dirección</button>
-      <button class="demo-profile-btn" data-profile="padres" onclick="switchProfile('padres')">Padres</button>
+  <div class="how-flow reveal">
+    <div class="how-step">
+      <span class="how-num">01</span>
+      <h3 class="how-title">El alumno se bloquea</h3>
+      <p class="how-desc">Abre Marco mientras estudia. No busca la respuesta en Google — le plantea su duda a la IA.</p>
+    </div>
+    <div class="how-arrow" aria-hidden="true">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </div>
+    <div class="how-step">
+      <span class="how-num">02</span>
+      <h3 class="how-title">Marco pregunta, no responde</h3>
+      <p class="how-desc">En lugar de dar la solución, guía con la pregunta que le hace pensar. El alumno llega solo.</p>
+    </div>
+    <div class="how-arrow" aria-hidden="true">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </div>
+    <div class="how-step">
+      <span class="how-num">03</span>
+      <h3 class="how-title">El profesor actúa con datos</h3>
+      <p class="how-desc">Sabe qué concepto atascó a cada alumno. No al final del examen — mientras está ocurriendo.</p>
     </div>
   </div>
 
-  <div class="app-frame reveal" style="position:relative;">
-    <div class="app-topbar">
-      <div class="app-dots"><span></span><span></span><span></span></div>
-      <span class="app-tab" id="app-tab-label">Vista del profesor</span>
-    </div>
+  <div class="split-preview reveal">
 
-    <div style="padding:0.55rem 1rem 0;font-size:0.72rem;color:var(--gray);font-family:'DM Sans',sans-serif;font-style:italic;opacity:0.75;">Estás viendo la vista del profesor — cambia las pestañas de arriba para explorar lo que vería tu alumno.</div>
-
-    <div class="app-iframe-wrap">
-      <iframe id="proto-frame" class="proto-frame proto-frame--active" src="/brand-examples/dashboard-profesor.html" title="Marco — prototipo interactivo"></iframe>
-    </div>
-
-    <!-- INICIO LEGACY (oculto, no se renderiza) — pantallas inline preservadas para referencia -->
-    <div class="screens-legacy-hidden" style="display:none !important;visibility:hidden;" aria-hidden="true">
-    <div class="screen" id="screen-0">
-      <div class="welcome-bar">
-        <div class="welcome-info">
-          <div class="welcome-sub">Buenos días,</div>
-          <div class="welcome-name">Carlos García</div>
+    <!-- Columna alumno -->
+    <div class="split-col">
+      <p class="split-eyebrow">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 19V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v7"/><path d="M4 15h10"/><path d="M4 11h12"/><path d="M16 17l2 2 4-4"/></svg>
+        El alumno estudia
+      </p>
+      <div class="convo-card">
+        <div class="convo-header">
+          <div class="convo-mark" aria-hidden="true">
+            <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+              <line x1="10" y1="14" x2="10" y2="46" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+              <line x1="10" y1="14" x2="14" y2="14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+              <line x1="10" y1="46" x2="14" y2="46" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+              <line x1="50" y1="14" x2="50" y2="46" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+              <line x1="50" y1="14" x2="46" y2="14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+              <line x1="50" y1="46" x2="46" y2="46" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+              <text x="30" y="40" text-anchor="middle" font-family="'Fraunces',Georgia,serif" font-style="italic" font-size="32" fill="currentColor">M</text>
+            </svg>
+          </div>
+          <div class="convo-meta">
+            <span class="convo-name">Marco</span>
+            <span class="convo-subject">Matemáticas · Pendiente de una recta</span>
+          </div>
+          <div class="convo-badge"><span class="convo-dot"></span>socrático</div>
         </div>
-        <div class="streak-badge"><svg class="icon" viewBox="0 0 24 24" style="stroke-width:1.8;"><path d="M12 3c1 3 3 4 3 7a3 3 0 0 1-6 0c0-1.3.5-2 1-3"/><path d="M7 14c0-1 .5-2 1-2.5C8 13 9 14 9 15a3 3 0 1 0 6 0c0-2.5-2-3-2-5 2 1.5 4 3.5 4 6.5a5 5 0 1 1-10 0z"/></svg>7 días seguidos</div>
-      </div>
-
-      <div class="notification-bar">
-        <span class="notif-dot"></span>
-        Tienes un ejercicio pendiente en <strong style="margin-left:3px;">Matemáticas</strong>
-        <span style="margin-left:auto;font-size:0.72rem;opacity:0.6;">Hace 2h</span>
-      </div>
-
-      <div class="subjects-grid">
-        <div class="subject-card" onclick="showScreen(1)">
-          <span class="subject-pending"></span>
-          <div class="subject-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M3 20L12 4l9 16z"/><path d="M8 17h8"/></svg></div>
-          <div class="subject-name">Matemáticas</div>
-          <div class="subject-meta">3 cuadernos · Tema 5</div>
-          <div class="progress-bar-mini"><div class="fill" style="width:65%"></div></div>
+        <div class="convo-messages">
+          <div class="convo-msg convo-msg--ai">
+            ¿Qué representa la pendiente de esta recta? Piensa en qué cambia cuando la pendiente es más grande.
+          </div>
+          <div class="convo-msg convo-msg--student">
+            Que es más inclinada, ¿no?
+          </div>
+          <div class="convo-msg convo-msg--ai convo-msg--delayed">
+            Correcto. Ahora sé más preciso: si x aumenta 1 unidad, ¿cuánto aumenta y?
+          </div>
+          <div class="convo-typing convo-msg--delayed2" aria-label="El alumno está escribiendo">
+            <span></span><span></span><span></span>
+          </div>
         </div>
-        <div class="subject-card">
-          <div class="subject-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M3 5c3-1 6-1 9 1v15c-3-2-6-2-9-1z"/><path d="M21 5c-3-1-6-1-9 1v15c3-2 6-2 9-1z"/></svg></div>
-          <div class="subject-name">Lengua</div>
-          <div class="subject-meta">2 cuadernos · Tema 8</div>
-          <div class="progress-bar-mini"><div class="fill" style="width:82%"></div></div>
-        </div>
-        <div class="subject-card">
-          <div class="subject-icon"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><ellipse cx="12" cy="12" rx="4" ry="9"/></svg></div>
-          <div class="subject-name">Geografía</div>
-          <div class="subject-meta">1 cuaderno · Tema 3</div>
-          <div class="progress-bar-mini"><div class="fill" style="width:40%"></div></div>
-        </div>
-        <div class="subject-card">
-          <div class="subject-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M9 3h6"/><path d="M10 3v6L4 19a2 2 0 0 0 1.7 3h12.6A2 2 0 0 0 20 19l-6-10V3"/><path d="M7.5 14h9"/></svg></div>
-          <div class="subject-name">Ciencias</div>
-          <div class="subject-meta">2 cuadernos · Tema 6</div>
-          <div class="progress-bar-mini"><div class="fill" style="width:73%"></div></div>
-        </div>
-        <div class="subject-card">
-          <div class="subject-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/><path d="M8 10h8M8 13h5"/></svg></div>
-          <div class="subject-name">Inglés</div>
-          <div class="subject-meta">4 cuadernos · Unit 7</div>
-          <div class="progress-bar-mini"><div class="fill" style="width:91%"></div></div>
-        </div>
-        <div class="subject-card">
-          <div class="subject-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M3 9l9-5 9 5"/><path d="M3 9h18"/><path d="M5 9v9M9 9v9M15 9v9M19 9v9"/><path d="M3 21h18"/></svg></div>
-          <div class="subject-name">Historia</div>
-          <div class="subject-meta">1 cuaderno · Tema 4</div>
-          <div class="progress-bar-mini"><div class="fill" style="width:28%"></div></div>
+        <div class="convo-footer">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          Marco no confirma ni explica — espera a que el alumno razone.
         </div>
       </div>
     </div>
 
-    <!-- Screen 1: Cuadernos -->
-    <div class="screen" id="screen-1">
-      <div class="notebooks-header">
-        <button class="back-btn" onclick="showScreen(0)">←</button>
-        <div>
-          <div style="font-size:0.72rem;color:var(--gray);">Asignatura</div>
-          <div style="font-weight:500;display:inline-flex;align-items:center;gap:0.4rem;"><svg class="icon" viewBox="0 0 24 24" style="font-size:0.95rem;"><path d="M3 20L12 4l9 16z"/><path d="M8 17h8"/></svg> Matemáticas</div>
-        </div>
-      </div>
-      <div class="notebook-list">
-        <div class="notebook-item" onclick="showScreen(2)">
-          <div class="notebook-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2V4z"/><path d="M5 18a2 2 0 0 1 2-2h12"/><path d="M9 8h6M9 12h4"/></svg></div>
-          <div class="notebook-info">
-            <div class="notebook-title">Tema 5 — Fracciones</div>
-            <div class="notebook-detail">
-              <span>Hoy · 45 min</span>
-              <span>·</span>
-              <span>En progreso</span>
-            </div>
-            <div class="notebook-summary">"Suma de fracciones con distinto denominador — m.c.m."</div>
-          </div>
-          <div class="notebook-progress">
-            <svg viewBox="0 0 42 42"><circle cx="21" cy="21" r="18" fill="none" stroke="#e0dfd9" stroke-width="3"/><circle cx="21" cy="21" r="18" fill="none" stroke="#0a0a0a" stroke-width="3" stroke-dasharray="113" stroke-dashoffset="39" stroke-linecap="round"/></svg>
-            <div class="pct-text">65%</div>
-          </div>
-        </div>
-        <div class="notebook-item">
-          <div class="notebook-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2V4z"/><path d="M5 18a2 2 0 0 1 2-2h12"/><path d="M9 8h6M9 12h4"/></svg></div>
-          <div class="notebook-info">
-            <div class="notebook-title">Tema 4 — Decimales</div>
-            <div class="notebook-detail">
-              <span>Ayer · 32 min</span>
-              <span>·</span>
-              <span>Completado</span>
-            </div>
-            <div class="notebook-summary">"Operaciones con decimales y redondeo"</div>
-          </div>
-          <div class="notebook-progress">
-            <svg viewBox="0 0 42 42"><circle cx="21" cy="21" r="18" fill="none" stroke="#e0dfd9" stroke-width="3"/><circle cx="21" cy="21" r="18" fill="none" stroke="#2d6a4f" stroke-width="3" stroke-dasharray="113" stroke-dashoffset="0" stroke-linecap="round"/></svg>
-            <div class="pct-text">100%</div>
-          </div>
-        </div>
-        <div class="notebook-item">
-          <div class="notebook-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2V4z"/><path d="M5 18a2 2 0 0 1 2-2h12"/><path d="M9 8h6M9 12h4"/></svg></div>
-          <div class="notebook-info">
-            <div class="notebook-title">Repaso examen parcial</div>
-            <div class="notebook-detail">
-              <span>Hace 3 días · 58 min</span>
-              <span>·</span>
-              <span>Completado</span>
-            </div>
-            <div class="notebook-summary">"Repaso general de temas 1–4 con ejercicios"</div>
-          </div>
-          <div class="notebook-progress">
-            <svg viewBox="0 0 42 42"><circle cx="21" cy="21" r="18" fill="none" stroke="#e0dfd9" stroke-width="3"/><circle cx="21" cy="21" r="18" fill="none" stroke="#2d6a4f" stroke-width="3" stroke-dasharray="113" stroke-dashoffset="0" stroke-linecap="round"/></svg>
-            <div class="pct-text">100%</div>
-          </div>
-        </div>
-      </div>
-      <button class="new-notebook-btn" onclick="openModal()">+ Nuevo cuaderno</button>
+    <!-- Separador -->
+    <div class="split-sep" aria-hidden="true">
+      <div class="split-sep-line"></div>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      <div class="split-sep-line"></div>
     </div>
 
-    <!-- Screen 2: Cuaderno abierto -->
-    <div class="screen" id="screen-2">
-      <div class="notebook-open-header">
-        <button class="back-btn" onclick="showScreen(1)">←</button>
-        <div style="font-weight:500;font-size:0.85rem;">Tema 5 — Fracciones</div>
-        <div class="ai-mode-badge ai-mode-strict">
-          <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" fill="currentColor"/></svg>
-          IA modo estricto
+    <!-- Columna profesor -->
+    <div class="split-col">
+      <p class="split-eyebrow">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1" opacity=".5" fill="currentColor" stroke="none"/><rect x="3" y="14" width="7" height="7" rx="1" opacity=".8" fill="currentColor" stroke="none"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        El profesor lo ve en tiempo real
+      </p>
+      <div class="teacher-panel-card">
+        <div class="tpc-header">
+          <span class="tpc-title">Panel · Matemáticas · 3.º ESO A</span>
+          <span class="tpc-live"><span class="convo-dot"></span>en vivo</span>
         </div>
-      </div>
-      <div class="notebook-layout notebook-layout-3">
-        <div class="pdf-panel">
-          <div class="pdf-label" style="display:inline-flex;align-items:center;gap:0.4rem;"><svg class="icon" viewBox="0 0 24 24"><path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg> Temario · Tema 5 — Fracciones</div>
-          <div class="pdf-content">
-            <h5>5.1 Concepto de fracción</h5>
-            Una fracción representa una parte de un todo. Se escribe como <strong>a/b</strong>, donde <em>a</em> es el numerador (las partes que tomamos) y <em>b</em> es el denominador (las partes iguales en que se divide el todo). El denominador nunca puede ser cero.
 
-            <h5>5.2 Fracciones equivalentes</h5>
-            Dos fracciones son equivalentes cuando representan la misma cantidad. Para comprobarlo, multiplicamos en cruz: a/b = c/d si a·d = b·c. Ejemplo: 2/4 = 3/6, ya que 2·6 = 4·3 = 12.
+        <div class="tpc-heatmap">
+          <p class="tpc-label">Dónde se atasca la clase</p>
+          <div class="tpc-row">
+            <span class="tpc-row-name">5.3 Pendiente de la recta</span>
+            <div class="tpc-bar-wrap"><div class="tpc-bar tpc-bar--high"></div></div>
+            <span class="tpc-row-count heat-high-text">5 alumnos</span>
+          </div>
+          <div class="tpc-row">
+            <span class="tpc-row-name">5.1 Ecuación de la recta</span>
+            <div class="tpc-bar-wrap"><div class="tpc-bar tpc-bar--med"></div></div>
+            <span class="tpc-row-count heat-med-text">3 alumnos</span>
+          </div>
+          <div class="tpc-row">
+            <span class="tpc-row-name">5.2 Intersección con ejes</span>
+            <div class="tpc-bar-wrap"><div class="tpc-bar tpc-bar--ok"></div></div>
+            <span class="tpc-row-count heat-ok-text">1 alumno</span>
+          </div>
+        </div>
 
-            <h5>5.3 Suma y resta de fracciones</h5>
-            Para sumar fracciones con el mismo denominador, se suman los numeradores y se mantiene el denominador: 2/7 + 3/7 = 5/7.<br><br>
-            <span class="pdf-highlight">Para sumar fracciones con distinto denominador, primero hay que encontrar el mínimo común múltiplo (m.c.m.) de los denominadores. Una vez que ambas fracciones tienen el mismo denominador, se suman los numeradores.</span><br><br>
-            <strong>Ejemplo resuelto:</strong><br>
-            1/3 + 1/4<br>
-            m.c.m.(3, 4) = 12<br>
-            1/3 = 4/12 &nbsp;(multiplicamos numerador y denominador por 4)<br>
-            1/4 = 3/12 &nbsp;(multiplicamos numerador y denominador por 3)<br>
-            4/12 + 3/12 = <strong>7/12</strong>
-
-            <h5>5.4 Multiplicación de fracciones</h5>
-            Se multiplican los numeradores entre sí y los denominadores entre sí: (a/b) · (c/d) = (a·c)/(b·d). Después se simplifica el resultado si es posible.
+        <div class="tpc-feed">
+          <p class="tpc-label">Actividad reciente</p>
+          <div class="tpc-feed-item">
+            <span class="tpc-avatar">AS</span>
+            <span class="tpc-feed-name">Ana S.</span>
+            <span class="tpc-feed-detail">3 preguntas abiertas · activa</span>
+            <span class="tpc-feed-time tpc-feed-now">ahora</span>
           </div>
-        </div>
-        <div class="chat-panel">
-          <div class="chat-header">
-            <div class="marco-mark marco-mark--online">
-              <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <line x1="10" y1="14" x2="10" y2="46" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
-                <line x1="10" y1="14" x2="14" y2="14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
-                <line x1="10" y1="46" x2="14" y2="46" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
-                <line x1="50" y1="14" x2="50" y2="46" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
-                <line x1="50" y1="14" x2="46" y2="14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
-                <line x1="50" y1="46" x2="46" y2="46" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
-                <text x="30" y="40" text-anchor="middle" font-family="'Fraunces', Georgia, serif" font-style="italic" font-size="32" fill="currentColor">M</text>
-              </svg>
-            </div>
-            <div class="chat-header-text">
-              <span class="chat-header-name">Marco</span>
-              <span class="chat-header-mode">Tu asistente de estudio</span>
-            </div>
-            <div class="chat-header-badge"><div class="ai-dot"></div>Modo estricto</div>
+          <div class="tpc-feed-item">
+            <span class="tpc-avatar">CR</span>
+            <span class="tpc-feed-name">Carlos R.</span>
+            <span class="tpc-feed-detail">Sesión abierta en Funciones</span>
+            <span class="tpc-feed-time">2 min</span>
           </div>
-          <div class="chat-messages" id="chatMessages">
-            <div class="msg ai">Hola Carlos. Veo que has seleccionado el apartado sobre suma de fracciones con distinto denominador. ¿Qué es exactamente lo que no te queda claro?</div>
-            <div class="msg user">No entiendo por qué hay que buscar el m.c.m. para sumar fracciones</div>
-            <div class="msg ai">Buena pregunta. Vamos paso a paso. Imagina que tienes una pizza cortada en 3 trozos y otra cortada en 4 trozos. Si coges un trozo de cada pizza... ¿los trozos son del mismo tamaño?</div>
-            <div class="msg user">No, uno es más grande que el otro</div>
-            <div class="msg ai">Exacto. Entonces, ¿tiene sentido decir que tienes "2 trozos" sin más? ¿Qué necesitarías para poder compararlos o sumarlos?</div>
-            <div class="msg user">Que los trozos sean iguales?</div>
-            <div class="msg ai">Perfecto. Eso es exactamente lo que hace el m.c.m.: encontrar un tamaño de trozo que funcione para ambas pizzas. Si las cortas en 12 trozos iguales cada una... ¿cuántos trozos de esos 12 equivalen a 1/3 de pizza?<span class="thinking">— Nota interna: Carlos está razonando bien — voy guiando sin dar la respuesta</span></div>
-          </div>
-          <div class="chat-input-area">
-            <input class="chat-input" placeholder="Escribe tu respuesta..." disabled />
-            <button class="chat-send">↑</button>
-          </div>
-        </div>
-        <div class="notes-panel">
-          <div class="notes-header" style="display:inline-flex;align-items:center;gap:0.4rem;"><svg class="icon" viewBox="0 0 24 24"><path d="M4 20h16"/><path d="M14 4l4 4-9 9H5v-4z"/></svg> Mis notas</div>
-          <div class="note-item">
-            Para sumar fracciones → los trozos tienen que ser del mismo tamaño
-            <span class="note-time">Hace 8 min</span>
-          </div>
-          <div class="note-item">
-            m.c.m. = buscar un denominador común donde "encajen" los dos
-            <span class="note-time">Hace 3 min</span>
-          </div>
-          <button class="add-note-btn">+ Añadir nota</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Screen 3: Panel profesor -->
-    <div class="screen" id="screen-3">
-      <div class="teacher-header">
-        <div>
-          <div style="font-size:0.72rem;color:var(--gray);">Panel del profesor</div>
-          <div style="font-family:'Fraunces',Georgia,serif;font-size:1.2rem;">Matemáticas · 4ºA</div>
-        </div>
-        <div style="font-size:0.72rem;color:var(--gray);">Semana 14–20 abril</div>
-      </div>
-
-      <div class="teacher-grid">
-        <div class="stat-card">
-          <div class="stat-value">24</div>
-          <div class="stat-label">Alumnos activos</div>
-          <div class="stat-change up">↑ 2 vs semana anterior</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">87%</div>
-          <div class="stat-label">Participación semanal</div>
-          <div class="stat-change up">↑ 5% vs semana anterior</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">42<span style="font-size:0.7rem;font-family:'DM Sans'"> min</span></div>
-          <div class="stat-label">Tiempo medio de estudio</div>
-          <div class="stat-change up">↑ 8 min vs semana anterior</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">3.2</div>
-          <div class="stat-label">Sesiones / alumno</div>
-          <div class="stat-change down">↓ 0.4 vs semana anterior</div>
-        </div>
-      </div>
-
-      <div class="teacher-columns">
-        <div>
-          <div class="teacher-card" style="margin-bottom:0.8rem;">
-            <div class="teacher-card-title"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="11" y="3" width="6" height="6" rx="1" fill="currentColor" stroke="none" opacity="0.5"/><rect x="3" y="11" width="6" height="6" rx="1" fill="currentColor" stroke="none" opacity="0.85"/><rect x="11" y="11" width="6" height="6" rx="1"/></svg> Mapa de dudas — Tema 5: Fracciones</div>
-            <div class="heatmap-doc">
-              <div class="heatmap-doc-line heat-ok"><span class="heat-indicator"></span> 5.1 Concepto de fracción</div>
-              <div class="heatmap-doc-line heat-low"><span class="heat-indicator"></span> 5.2 Fracciones equivalentes</div>
-              <div class="heatmap-doc-line heat-high"><span class="heat-indicator"></span> 5.3 Suma y resta (m.c.m.)</div>
-              <div class="heatmap-doc-line heat-med"><span class="heat-indicator"></span> 5.4 Multiplicación</div>
-            </div>
-            <div class="heatmap-legend">
-              <span class="legend-item"><span class="legend-dot" style="background:#22c55e"></span> Sin problemas</span>
-              <span class="legend-item"><span class="legend-dot" style="background:#eab308"></span> Algunas dudas</span>
-              <span class="legend-item"><span class="legend-dot" style="background:#f97316"></span> Dudas frecuentes</span>
-              <span class="legend-item"><span class="legend-dot" style="background:#ef4444"></span> Punto crítico</span>
-            </div>
-          </div>
-          <div class="teacher-card">
-            <div class="teacher-card-title"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> Actividad reciente</div>
-            <div class="feed-item"><span class="feed-time">Hace 20 min</span> María García abrió un cuaderno de Fracciones</div>
-            <div class="feed-item"><span class="feed-time">Hace 45 min</span> Carlos Ruiz completó el quiz del Tema 5</div>
-            <div class="feed-item"><span class="feed-time">Hace 1h</span> Lucía Martín guardó 3 notas en su cuaderno</div>
-            <div class="feed-item"><span class="feed-time">Hace 3h</span> Pablo Sánchez pidió ayuda con el m.c.m.</div>
-            <div class="feed-item" style="color:var(--red);font-weight:500;display:flex;align-items:center;gap:0.4rem;"><span class="feed-time" style="color:var(--red);display:inline-flex;align-items:center;gap:0.25rem;"><svg class="icon" viewBox="0 0 24 24"><path d="M12 4l10 17H2z"/><path d="M12 10v5"/><circle cx="12" cy="18.2" r="0.6" fill="currentColor"/></svg> Alerta</span> 3 alumnos llevan 3+ días sin actividad</div>
-          </div>
-        </div>
-        <div>
-          <div class="teacher-card">
-            <div class="teacher-card-title"><svg class="icon" viewBox="0 0 24 24"><path d="M12 4l10 17H2z"/><path d="M12 10v5"/><circle cx="12" cy="18.2" r="0.6" fill="currentColor"/></svg> Alumnos con más dificultades esta semana</div>
-            <div class="student-risk-item">
-              <div class="student-avatar">AS</div>
-              <div class="student-risk-info">
-                <div class="student-risk-name">Ana Sánchez</div>
-                <div class="student-risk-detail">5 preguntas sobre m.c.m. · 0/3 en quiz · Última sesión: hoy</div>
-              </div>
-              <span class="student-risk-action">Ver cuaderno</span>
-            </div>
-            <div class="student-risk-item">
-              <div class="student-avatar">DL</div>
-              <div class="student-risk-info">
-                <div class="student-risk-name">Diego López</div>
-                <div class="student-risk-detail">3 sesiones sin avance · 1/3 en quiz · Última sesión: ayer</div>
-              </div>
-              <span class="student-risk-action">Ver cuaderno</span>
-            </div>
-            <div class="student-risk-item">
-              <div class="student-avatar">EM</div>
-              <div class="student-risk-info">
-                <div class="student-risk-name">Elena Moreno</div>
-                <div class="student-risk-detail">Sin actividad en 4 días · No ha hecho el quiz</div>
-              </div>
-              <span class="student-risk-action">Ver cuaderno</span>
-            </div>
+          <div class="tpc-feed-item">
+            <span class="tpc-avatar">MG</span>
+            <span class="tpc-feed-name">María G.</span>
+            <span class="tpc-feed-detail">Sin actividad desde ayer</span>
+            <span class="tpc-feed-time tpc-feed-warn">⚠</span>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Screen 4: Quiz -->
-    <div class="screen" id="screen-4">
-      <div class="quiz-header">
-        <div>
-          <button class="back-btn" onclick="showScreen(2)" style="display:inline-flex;">←</button>
-          <span style="font-weight:500;font-size:0.85rem;margin-left:0.5rem;">Quiz — Fracciones</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:0.8rem;">
-          <span class="quiz-progress-text">Pregunta 2 de 3</span>
-          <div class="quiz-progress-bar"><div class="fill" style="width:66%"></div></div>
-        </div>
+  </div>
+
+  <div class="demo-gate reveal">
+    <div class="demo-gate-content">
+      <div class="demo-gate-icon" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <path d="M8 13h8M8 17h5"/>
+        </svg>
       </div>
-
-      <div class="quiz-question-card">
-        <div class="quiz-q-num">Pregunta 2</div>
-        <div class="quiz-q-text">¿Cuál es el resultado de sumar 2/5 + 1/3?</div>
-        <div class="quiz-options">
-          <div class="quiz-option" onclick="selectQuizOption(this, false)">
-            <span class="opt-letter">A</span> 3/8
-          </div>
-          <div class="quiz-option" onclick="selectQuizOption(this, false)">
-            <span class="opt-letter">B</span> 3/15
-          </div>
-          <div class="quiz-option" onclick="selectQuizOption(this, true)">
-            <span class="opt-letter">C</span> 11/15
-          </div>
-          <div class="quiz-option" onclick="selectQuizOption(this, false)">
-            <span class="opt-letter">D</span> 7/15
-          </div>
-        </div>
-      </div>
-
-      <div class="quiz-feedback" id="quizFeedback"></div>
-    </div>
-
-    <!-- Screen 5: Panel centro -->
-    <div class="screen" id="screen-5">
-      <div class="teacher-header">
-        <div>
-          <div style="font-size:0.72rem;color:var(--gray);">Panel del centro</div>
-          <div style="font-family:'Fraunces',Georgia,serif;font-size:1.2rem;">Colegio San Rafael · Vista dirección</div>
-        </div>
-        <div style="font-size:0.72rem;color:var(--gray);">Curso 2026–2027 · 2º Trimestre</div>
-      </div>
-
-      <!-- KPIs del centro -->
-      <div class="teacher-grid">
-        <div class="stat-card">
-          <div class="stat-value">312</div>
-          <div class="stat-label">Alumnos activos</div>
-          <div class="stat-change up">↑ 14 este mes</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">18</div>
-          <div class="stat-label">Profesores usando la plataforma</div>
-          <div class="stat-change up">↑ 3 vs mes anterior</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">91%</div>
-          <div class="stat-label">Adopción del centro</div>
-          <div class="stat-change up">↑ 8% vs mes anterior</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">38<span style="font-size:0.7rem;font-family:'DM Sans'"> min</span></div>
-          <div class="stat-label">Tiempo medio estudio / alumno</div>
-          <div class="stat-change up">↑ 5 min vs mes anterior</div>
-        </div>
-      </div>
-
-      <div class="teacher-columns">
-        <!-- Rendimiento por departamento -->
-        <div>
-          <div class="teacher-card" style="margin-bottom:0.8rem;">
-            <div class="teacher-card-title"><svg class="icon" viewBox="0 0 24 24"><path d="M4 21V10M10 21V4M16 21V13M22 21V8"/><path d="M3 21h19"/></svg> Rendimiento por departamento</div>
-            <div style="display:flex;flex-direction:column;gap:0.4rem;">
-              <div style="display:flex;align-items:center;gap:0.6rem;padding:0.4rem 0.5rem;background:var(--white);border-radius:6px;">
-                <span style="font-size:0.75rem;width:100px;">Matemáticas</span>
-                <div style="flex:1;height:6px;background:var(--border);border-radius:100px;overflow:hidden;"><div style="width:87%;height:100%;background:var(--green);border-radius:100px;"></div></div>
-                <span style="font-size:0.7rem;color:var(--gray);width:32px;text-align:right;">87%</span>
-              </div>
-              <div style="display:flex;align-items:center;gap:0.6rem;padding:0.4rem 0.5rem;background:var(--white);border-radius:6px;">
-                <span style="font-size:0.75rem;width:100px;">Lengua</span>
-                <div style="flex:1;height:6px;background:var(--border);border-radius:100px;overflow:hidden;"><div style="width:79%;height:100%;background:var(--green);border-radius:100px;"></div></div>
-                <span style="font-size:0.7rem;color:var(--gray);width:32px;text-align:right;">79%</span>
-              </div>
-              <div style="display:flex;align-items:center;gap:0.6rem;padding:0.4rem 0.5rem;background:var(--white);border-radius:6px;">
-                <span style="font-size:0.75rem;width:100px;">Ciencias</span>
-                <div style="flex:1;height:6px;background:var(--border);border-radius:100px;overflow:hidden;"><div style="width:72%;height:100%;background:var(--amber);border-radius:100px;"></div></div>
-                <span style="font-size:0.7rem;color:var(--gray);width:32px;text-align:right;">72%</span>
-              </div>
-              <div style="display:flex;align-items:center;gap:0.6rem;padding:0.4rem 0.5rem;background:var(--white);border-radius:6px;">
-                <span style="font-size:0.75rem;width:100px;">Historia</span>
-                <div style="flex:1;height:6px;background:var(--border);border-radius:100px;overflow:hidden;"><div style="width:68%;height:100%;background:var(--amber);border-radius:100px;"></div></div>
-                <span style="font-size:0.7rem;color:var(--gray);width:32px;text-align:right;">68%</span>
-              </div>
-              <div style="display:flex;align-items:center;gap:0.6rem;padding:0.4rem 0.5rem;background:var(--white);border-radius:6px;">
-                <span style="font-size:0.75rem;width:100px;">Inglés</span>
-                <div style="flex:1;height:6px;background:var(--border);border-radius:100px;overflow:hidden;"><div style="width:91%;height:100%;background:var(--green);border-radius:100px;"></div></div>
-                <span style="font-size:0.7rem;color:var(--gray);width:32px;text-align:right;">91%</span>
-              </div>
-              <div style="display:flex;align-items:center;gap:0.6rem;padding:0.4rem 0.5rem;background:var(--white);border-radius:6px;">
-                <span style="font-size:0.75rem;width:100px;">Geografía</span>
-                <div style="flex:1;height:6px;background:var(--border);border-radius:100px;overflow:hidden;"><div style="width:64%;height:100%;background:var(--red);border-radius:100px;"></div></div>
-                <span style="font-size:0.7rem;color:var(--gray);width:32px;text-align:right;">64%</span>
-              </div>
-            </div>
-            <div style="font-size:0.65rem;color:var(--gray);margin-top:0.5rem;">% participación semanal media del departamento</div>
-          </div>
-
-          <div class="teacher-card">
-            <div class="teacher-card-title"><svg class="icon" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg> Evolución mensual</div>
-            <div style="display:flex;gap:0.5rem;align-items:flex-end;height:80px;padding:0.5rem 0;">
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:0.2rem;">
-                <div style="width:100%;background:var(--border);border-radius:4px 4px 0 0;height:35%;"></div>
-                <span style="font-size:0.6rem;color:var(--gray);">Sep</span>
-              </div>
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:0.2rem;">
-                <div style="width:100%;background:var(--border);border-radius:4px 4px 0 0;height:48%;"></div>
-                <span style="font-size:0.6rem;color:var(--gray);">Oct</span>
-              </div>
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:0.2rem;">
-                <div style="width:100%;background:var(--border);border-radius:4px 4px 0 0;height:55%;"></div>
-                <span style="font-size:0.6rem;color:var(--gray);">Nov</span>
-              </div>
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:0.2rem;">
-                <div style="width:100%;background:var(--border);border-radius:4px 4px 0 0;height:52%;"></div>
-                <span style="font-size:0.6rem;color:var(--gray);">Dic</span>
-              </div>
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:0.2rem;">
-                <div style="width:100%;background:var(--border);border-radius:4px 4px 0 0;height:70%;"></div>
-                <span style="font-size:0.6rem;color:var(--gray);">Ene</span>
-              </div>
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:0.2rem;">
-                <div style="width:100%;background:var(--border);border-radius:4px 4px 0 0;height:78%;"></div>
-                <span style="font-size:0.6rem;color:var(--gray);">Feb</span>
-              </div>
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:0.2rem;">
-                <div style="width:100%;background:var(--border);border-radius:4px 4px 0 0;height:85%;"></div>
-                <span style="font-size:0.6rem;color:var(--gray);">Mar</span>
-              </div>
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:0.2rem;">
-                <div style="width:100%;background:var(--black);border-radius:4px 4px 0 0;height:91%;"></div>
-                <span style="font-size:0.6rem;color:var(--black);font-weight:600;">Abr</span>
-              </div>
-            </div>
-            <div style="font-size:0.65rem;color:var(--gray);">Adopción del centro (% alumnos activos / matriculados)</div>
-          </div>
-        </div>
-
-        <!-- Alertas y profesores -->
-        <div>
-          <div class="teacher-card" style="margin-bottom:0.8rem;">
-            <div class="teacher-card-title"><svg class="icon" viewBox="0 0 24 24"><path d="M12 4l10 17H2z"/><path d="M12 10v5"/><circle cx="12" cy="18.2" r="0.6" fill="currentColor"/></svg> Alertas del centro</div>
-            <div class="feed-item" style="color:var(--red);font-weight:500;"><span class="feed-time" style="color:var(--red);">Crítica</span> Geografía 3ºB: 42% de alumnos sin actividad en 5+ días</div>
-            <div class="feed-item" style="color:var(--amber);font-weight:500;"><span class="feed-time" style="color:var(--amber);">Media</span> Historia 2ºA: participación cayó un 15% esta semana</div>
-            <div class="feed-item"><span class="feed-time">Info</span> Inglés 4ºA: mejor ratio de la semana — 91% participación</div>
-            <div class="feed-item"><span class="feed-time">Info</span> 3 profesores aún no han revisado sus paneles esta semana</div>
-          </div>
-
-          <div class="teacher-card">
-            <div class="teacher-card-title"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg> Profesores más activos</div>
-            <div class="student-risk-item">
-              <div class="student-avatar">ML</div>
-              <div class="student-risk-info">
-                <div class="student-risk-name">Marta López</div>
-                <div class="student-risk-detail">Matemáticas · Revisa panel 5 veces/semana · 87% particip.</div>
-              </div>
-            </div>
-            <div class="student-risk-item">
-              <div class="student-avatar">JR</div>
-              <div class="student-risk-info">
-                <div class="student-risk-name">Javier Rodríguez</div>
-                <div class="student-risk-detail">Inglés · Revisa panel 4 veces/semana · 91% particip.</div>
-              </div>
-            </div>
-            <div class="student-risk-item">
-              <div class="student-avatar">CF</div>
-              <div class="student-risk-info">
-                <div class="student-risk-name">Carmen Fernández</div>
-                <div class="student-risk-detail">Lengua · Revisa panel 3 veces/semana · 79% particip.</div>
-              </div>
-            </div>
-            <div style="text-align:center;margin-top:0.6rem;">
-              <span style="font-size:0.7rem;color:var(--gray);text-decoration:underline;cursor:pointer;">Ver todos los profesores →</span>
-            </div>
-          </div>
-        </div>
+      <div class="demo-gate-text">
+        <p class="demo-gate-eyebrow">Solo en demo</p>
+        <h3 class="demo-gate-title">El cuaderno inteligente</h3>
+        <p class="demo-gate-desc">La pantalla donde el alumno trabaja con Marco: temario, conversación y notas propias en una sola vista. Lo mostramos en persona — sin compromiso.</p>
       </div>
     </div>
-
-    <!-- New notebook modal -->
-    <div class="modal-overlay" id="newNotebookModal">
-      <div class="modal-box">
-        <h4>Nuevo cuaderno</h4>
-        <p>¿Sobre qué tema quieres estudiar?</p>
-        <input class="modal-input" placeholder="Ej: Tema 6 — Proporcionalidad" />
-        <div class="modal-actions">
-          <button class="modal-btn-secondary" onclick="closeModal()">Cancelar</button>
-          <button class="modal-btn-primary" onclick="closeModal()">Crear cuaderno</button>
-        </div>
-      </div>
-    </div>
-    </div><!-- /.screens-legacy-hidden -->
+    <a href="#contacto" class="demo-gate-cta">
+      Solicitar demo
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
   </div>
 </section>
 
@@ -1070,7 +708,7 @@
           <span class="faq-q-icon" aria-hidden="true">+</span>
         </button>
         <div class="faq-a">
-          El piloto es gratuito. El precio post-piloto será por centro y curso escolar, sin coste por alumno individual. Lo definiremos junto con los centros piloto — los primeros participantes tendrán condiciones preferentes durante los dos primeros años.
+          El piloto tiene un precio reducido — no es gratuito, pero está muy por debajo del precio de lanzamiento. El precio post-piloto será por centro y curso escolar, sin coste por alumno individual. Los centros que participen en el piloto tendrán condiciones preferentes durante los dos primeros años siguientes.
         </div>
       </div>
 
@@ -2050,9 +1688,6 @@ function setProfile(profile) {
   // Pre-select rol en formulario
   const roleSel = document.getElementById('formRole');
   if (roleSel) roleSel.value = profile === 'centro' ? 'direccion' : profile;
-  // Sincronizar demo con el perfil elegido
-  const heroToDemo = { profesor: 'profesor', centro: 'direccion', alumno: 'alumno' };
-  if (heroToDemo[profile]) switchProfile(heroToDemo[profile]);
 }
 
 // Posiciona la píldora sobre el botón activo en cuanto las fuentes están listas
@@ -2105,78 +1740,9 @@ if (navToggle && navLinks) {
   });
 }
 
-// ── Demo prototype ──
-const profileScreens = {
-  alumno:    { src: '/brand-examples/dashboard-alumno.html',    label: 'Vista del alumno' },
-  profesor:  { src: '/brand-examples/dashboard-profesor.html',  label: 'Vista del profesor' },
-  direccion: { src: '/brand-examples/panel-direccion.html',     label: 'Vista de dirección' },
-  padres:    { src: '/brand-examples/vista-familias.html',      label: 'Vista de familias' }
-};
-
-function switchProfile(profile) {
-  document.querySelectorAll('.demo-profile-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.profile === profile);
-  });
-  const frame = document.getElementById('proto-frame');
-  const cfg = profileScreens[profile];
-  if (frame && cfg) {
-    frame.src = cfg.src;
-    const label = document.getElementById('app-tab-label');
-    if (label) label.textContent = cfg.label;
-  }
-}
-
+function switchProfile() {}
 function showScreen() {}
 
-// ── Modal ──
-function openModal() {
-  document.getElementById('newNotebookModal').classList.add('active');
-}
-
-function closeModal() {
-  document.getElementById('newNotebookModal').classList.remove('active');
-}
-
-// ── Quiz ──
-function selectQuizOption(el, isCorrect) {
-  const options = el.parentElement.querySelectorAll('.quiz-option');
-  const alreadyAnswered = el.parentElement.querySelector('.quiz-option.correct, .quiz-option.wrong');
-  if (alreadyAnswered) return;
-
-  options.forEach(o => {
-    if (o.dataset.correct === undefined) {
-      // Mark the correct one
-    }
-  });
-
-  if (isCorrect) {
-    el.classList.add('correct');
-    showQuizFeedback(true);
-  } else {
-    el.classList.add('wrong');
-    // Find and highlight correct
-    options.forEach(o => {
-      if (o.onclick && o.onclick.toString().includes('true')) {
-        o.classList.add('correct');
-      }
-    });
-    // Fallback: mark third option as correct
-    if (!el.parentElement.querySelector('.correct')) {
-      options[2].classList.add('correct');
-    }
-    showQuizFeedback(false);
-  }
-}
-
-function showQuizFeedback(correct) {
-  const fb = document.getElementById('quizFeedback');
-  if (correct) {
-    fb.innerHTML = '<div class="quiz-feedback-header"><svg class="icon icon-inline" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.8 2.8L16 9.5"/></svg> ¡Correcto!</div>Exacto. Para sumar 2/5 + 1/3, buscamos el m.c.m. de 5 y 3, que es 15. Convertimos: 2/5 = 6/15 y 1/3 = 5/15. Entonces 6/15 + 5/15 = 11/15. ¿Podrías explicar con tus palabras por qué necesitamos el m.c.m.?';
-  } else {
-    fb.innerHTML = '<div class="quiz-feedback-header"><svg class="icon icon-inline" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></svg> No exactamente</div>Piensa en lo que hemos trabajado en el cuaderno. Si tienes una pizza cortada en 5 trozos y otra en 3 trozos, ¿puedes sumar trozos directamente? ¿Qué tamaño de trozo necesitas para que funcione con las dos pizzas? Recuerda: el m.c.m. de 5 y 3 es 15. Prueba a convertir cada fracción a quinceavo.';
-  }
-  fb.classList.add('visible');
-}
 
 // ── Rating ──
 function selectRating(btn) {
