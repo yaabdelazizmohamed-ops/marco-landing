@@ -713,8 +713,9 @@ body.intro-locked .floating-cta { opacity: 0; pointer-events: none; }
 }
 
 .convo-mark {
-  width: 36px;
-  height: 36px;
+  width: auto;
+  height: 34px;
+  padding: 0 10px;
   border-radius: 10px;
   background: #eeeefa;
   color: #2c2e7a;
@@ -725,8 +726,8 @@ body.intro-locked .floating-cta { opacity: 0; pointer-events: none; }
 }
 
 .convo-mark svg {
-  width: 22px;
-  height: 22px;
+  width: 68px;
+  height: 34px;
 }
 
 .convo-meta {
