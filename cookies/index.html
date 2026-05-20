@@ -17,9 +17,7 @@
 <meta property="og:site_name" content="Marco">
 <meta property="og:locale" content="es_ES">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0a0a'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='38' font-style='italic' fill='%23fafaf8' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles/fonts.css">
 <link rel="stylesheet" href="/styles/legal.css">
 <link rel="stylesheet" href="/logo-animation/wordmark.css">
 </head>
@@ -64,7 +62,7 @@
   <section>
     <h2>Cookies que usamos en marcoaprende.com</h2>
     <p><strong>Ninguna.</strong></p>
-    <p>marcoaprende.com no utiliza cookies de seguimiento, ni cookies de analítica de terceros, ni cookies publicitarias. Tampoco utilizamos balizas web (web beacons), píxeles de seguimiento ni huellas digitales de navegador (browser fingerprinting).</p>
+    <p>marcoaprende.com no utiliza cookies de seguimiento, ni cookies de analítica de terceros, ni cookies publicitarias. Tampoco utilizamos balizas web (web beacons), píxeles de seguimiento ni huellas digitales de navegador (browser fingerprinting). Tampoco cargamos fuentes, scripts ni recursos de terceros que puedan transmitir datos de los visitantes a servidores externos.</p>
     <p>Esta es una decisión consciente: queremos que la confianza de nuestros usuarios — y especialmente de los centros educativos que nos confiarán datos sensibles — empiece desde el primer click.</p>
   </section>
 
@@ -78,6 +76,21 @@
       <li>Los datos se procesan conforme al RGPD.</li>
     </ul>
     <p>Por estas características, Cloudflare Web Analytics está reconocida como una alternativa de medición que <strong>no requiere consentimiento previo</strong> ni banner de cookies.</p>
+  </section>
+
+  <section>
+    <h2>Almacenamiento de sesión (sessionStorage)</h2>
+    <p>El sitio utiliza <code>sessionStorage</code> del navegador — distinto de las cookies — para dos funciones estrictamente de experiencia de usuario:</p>
+    <ul>
+      <li>Recordar que ya has visto la animación de entrada (no se repite en la misma pestaña).</li>
+      <li>Recordar que has cerrado una notificación flotante opcional.</li>
+    </ul>
+    <p>El <code>sessionStorage</code> se elimina automáticamente cuando cierras la pestaña, no se envía a ningún servidor y no te identifica como persona. No se usa con fines de seguimiento ni analítica.</p>
+  </section>
+
+  <section>
+    <h2>Fuentes tipográficas</h2>
+    <p>Las fuentes utilizadas en este sitio (Fraunces, Instrument Serif, DM Sans) se sirven directamente desde los servidores de <strong>marcoaprende.com</strong> — no desde Google Fonts ni ningún CDN externo. Ninguna petición de fuentes transmite datos a terceros.</p>
   </section>
 
   <section>
